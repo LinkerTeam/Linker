@@ -1,0 +1,6 @@
+## Ignore File ##
+
+Servers/
+RemoteSystemsTempFiles/
+.recommenders/
+.metadata/
