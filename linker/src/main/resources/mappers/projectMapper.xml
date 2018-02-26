@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linker.mapper.projectMapper">
+	<!-- project생성 -->
+	<insert id="createProject">
+		INSERT INTO project(title, u_id, t_id, ps_id) VALUES(#{title}, #{u_id}, #{t_id}, #{ps_id});
+	</insert>
+
+	<!-- 프로젝트리스트 표시(숨기기제외) -->
+	<select id="listProject">
+		SELECT id, title, u_id, cdate, t_id, ps_id 
+		FROM project
+		JOIN user ON user.id = project.u_id
+		WHERE project.t_id = #{t_id}
+		AND project.ps_id IN (1, 2);;
+	</select>
+
+	<update id="modifyProject">
+			
+	</update>
+</mapper>
