@@ -9,16 +9,33 @@
 		INSERT INTO project(title, u_id, t_id, ps_id) VALUES(#{title}, #{u_id}, #{t_id}, #{ps_id});
 	</insert>
 
-	<!-- 프로젝트리스트 표시(숨기기제외) -->
-	<select id="listProject">
-		SELECT id, title, u_id, cdate, t_id, ps_id 
+	<!-- 프로젝트리스트 표시(숨기기제외/가리기) -->
+	<select id="listProject" resultType="projectVO">
+		SELECT 
+		project.id, title, 
+		u_id, project.cdate, 
+		t_id, ps_id,
+		email AS writerEmail,
+		nickname AS writerNickname
 		FROM project
 		JOIN user ON user.id = project.u_id
-		WHERE project.t_id = #{t_id}
-		AND project.ps_id IN (1, 2);;
+		WHERE project.t_id = #{teamID}
+		AND project.ps_id IN (1, 2)
+		ORDER BY project.cdate DESC
+		LIMIT 0, 10;
 	</select>
 
+	<sql id="updateProject">
+		<if test="title != null"> SET title = #{title}	</if>
+		<if test="ps_id != 0"> SET ps_id = #{ps_id} </if>
+	</sql>
 	<update id="modifyProject">
-			
+		UPDATE project 
+		<include refid="updateProject"></include>
+		WHERE id = #{id}
+		AND u_id = #{u_id}
 	</update>
+
+
+
 </mapper>
