@@ -3,13 +3,28 @@ package com.linker.domain;
 import java.sql.Date;
 
 public class ProjectVO {
+
 	private int id;
 	private String title;
 	private int u_id;
 	private int t_id;
 	private int ps_id;
 	private Date cdate;
+	private String writerEmail;
+	private String writerNickName;
 	
+	public String getWriterEmail() {
+		return writerEmail;
+	}
+	public void setWriterEmail(String writerEmail) {
+		this.writerEmail = writerEmail;
+	}
+	public String getWriterNickName() {
+		return writerNickName;
+	}
+	public void setWriterNickName(String writerNickName) {
+		this.writerNickName = writerNickName;
+	}
 	public Date getCdate() {
 		return cdate;
 	}
@@ -49,6 +64,6 @@ public class ProjectVO {
 	@Override
 	public String toString() {
 		return "ProjectVO [id=" + id + ", title=" + title + ", u_id=" + u_id + ", t_id=" + t_id + ", ps_id=" + ps_id
-				+ ", cdate=" + cdate + "]";
+				+ ", cdate=" + cdate + ", writerEmail=" + writerEmail + ", writerNickName=" + writerNickName + "]";
 	}
 }
