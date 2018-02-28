@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linker.mapper.teamMapper">
+<!-- team 생성 -->
+	<insert id="createTeam">
+		INSERT INTO team(id, name) VALUES(#{id}, #{name});
+	</insert>
+	
+		<sql id="updateProject">
+		<if test="name != null"> SET name = #{name}</if>
+	</sql>
+<!-- team수정(이름) -->
+	<update id="modifyTeam">
+		UPDATE team 
+		<include refid="updateTeam"></include>
+		WHERE id = #{id}
+	</update>
+<!-- team출력 -->
+	<select id="listTeam" resultType="teamVO">
+		SELECT t.name, t.cdate 
+		FROM team AS t, team_has_user AS thu 
+		WHERE t.id = thu.y_id 
+		AND thu.u_id = #{id}
+	</select>
+</mapper>
