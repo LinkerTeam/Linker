@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.linker.mapper.CardlistMapper">
+	
+	<!-- 카드리스트 생성 -->
+	<insert id="createCardlist">
+	INSERT INTO cardlist (p_id, u_id, title)
+	VALUES (#{p_id}, #{u_id}, #{title});
+	</insert>
+	
+	<!-- 카드리스트 제목 수정 -->
+	<update id="updateTitle">
+	UPDATE cardlist
+	SET title = #{title}
+	WHERE id = #{id}
+	</update>
+	
+	<!-- 카드리스트 상태 수정 -->
+	<update id="updateState">
+	UPDATE cardlist
+	SET ps_id = #{ps_id}
+	WHERE id = #{id}
+	</update>
+	
+	<!-- 진행중인 카드리스트 조회 -->
+	<select id="viewListsInProgress" resultType="com.linker.domain.CardlistVO">
+	<![CDATA[
+	SELECT *
+	FROM cardlist
+	WHERE id > 0 AND ps_id = 1
+	ORDER BY id DESC
+	]]>
+	</select>
+	
+</mapper>
