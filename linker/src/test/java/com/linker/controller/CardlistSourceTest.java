@@ -31,24 +31,24 @@ public class CardlistSourceTest {
 //		CardlistVO cardlist = new CardlistVO();
 //		cardlist.setP_id(1);
 //		cardlist.setU_id(4);
-//		cardlist.setTitle("주문조회");
+//		cardlist.setTitle("사이트 맵");
 //		cldao.createCardlist(cardlist);
 //	}
 	
 	// 진행중인 카드리스트 조회
-	@Test
-	public void testViewLists()throws Exception {
-		List<CardlistVO> cls = cldao.viewListsInProgress();
-		for(int i=0; i<cls.size(); i++)
-			logger.info(i+"     "+cls.get(i).toString());
-	}
+//	@Test
+//	public void testSelectLists()throws Exception {
+//		List<CardlistVO> cls = cldao.selectListInProgress();
+//		for(int i=0; i<cls.size(); i++)
+//			logger.info(i+"     "+cls.get(i).toString());
+//	}
 
 	// 카드리스트 제목 수정
 //	@Test
 //	public void testToChangeTitle()throws Exception {
 //		CardlistVO cardlist = new CardlistVO();
-//		cardlist.setId(5);
-//		cardlist.setTitle("주문조회 변경");
+//		cardlist.setId(7);
+//		cardlist.setTitle("사이트맵 변경");
 //		cldao.updateTitle(cardlist);
 //	}
 	
@@ -56,7 +56,7 @@ public class CardlistSourceTest {
 //	@Test
 //	public void testToChageState()throws Exception {
 //		CardlistVO cardlist = new CardlistVO();
-//		cardlist.setId(4);
+//		cardlist.setId(7);
 //		cardlist.setPs_id(CardlistDAO.CARDLIST_STATE_ACHIEVEMENT);
 //		cldao.updateState(cardlist);
 //	}

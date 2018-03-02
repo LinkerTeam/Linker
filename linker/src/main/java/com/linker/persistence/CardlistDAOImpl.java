@@ -37,8 +37,8 @@ public class CardlistDAOImpl implements CardlistDAO{
 
 	// 진행중인 카드리스트 조회
 	@Override
-	public List<CardlistVO> viewListsInProgress() throws Exception {
-		return session.selectList(namespace+".viewListsInProgress");
+	public List<CardlistVO> selectListInProgress() throws Exception {
+		return session.selectList(namespace+".selectListInProgress");
 	}
 	
 }

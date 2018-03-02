@@ -10,7 +10,7 @@ public class CardlistVO {
 	private String title;	// 카드리스트 제목
 	private Date cdate;		// 카드리스트 생성 시간
 	private Date udate;		// 카드리스트 업데이트 시간
-	private Integer ps_id;	// 카드 상태 코드
+	private Integer ps_id;	// 카드리스트 상태 코드
 	
 	public Integer getId() {
 		return id;

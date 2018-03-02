@@ -5,6 +5,7 @@ import java.util.List;
 import com.linker.domain.CardlistVO;
 
 public interface CardlistDAO {
+	
 	// 카드리스트 상태  진행중
 	public Integer CARDLIST_STATE_INPROGRESS = 1;
 	// 카드리스트 상태  달성
@@ -19,5 +20,5 @@ public interface CardlistDAO {
 	// 카드리스트 상태 수정
 	public void updateState(CardlistVO vo)throws Exception;
 	// 진행중인 카드리스트 조회
-	public List<CardlistVO> viewListsInProgress()throws Exception;
+	public List<CardlistVO> selectListInProgress()throws Exception;
 }
