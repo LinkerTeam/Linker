@@ -11,34 +11,34 @@
 	
 <!-- member 표시 -->
 <select id="listMember" resultType="memberVO">
-	SELECT u.id, nickname, t.name, auth, thu.t_id
+	SELECT thu.u_id, nickname, t.name, auth, thu.t_id
 	FROM user AS u
 	JOIN team_has_user AS thu ON u.id=thu.u_id
 	JOIN team AS t ON t.id=thu.t_id
 	WHERE thu.t_id IN (
 			SELECT t_id 
 			FROM team_has_user
-			WHERE u_id= #{id}
+			WHERE u_id= #{userId}
 			)
 </select>
 
 <!-- member 생성/ 권한 필요? -->
 <insert id="createMember">
-	INSERT INTO team_has_user(t_id, auth, u_id) values (#{t_id},#{auth},#{u_id});
+	INSERT INTO team_has_user(t_id, auth, u_id) VALUES (#{teamId},#{auth},#{userId});
 </insert>
 
 <!-- member 추방/ 권한 필요 -->
 <delete id="deleteMember">
 	DELETE FROM team_has_user
-	WHERE u_id=#{u_id}
-	AND t_id=#{t_id}
+	WHERE u_id=#{userId}
+	AND t_id=#{teamId}
 </delete>
 
 <!-- member 수정(권한수정)/권한 필요 -->
 <update id="modifyMember">
 	UPDATE team_has_user
 	<include refid="updateMember"></include>
-	WHERE IF=u_id=#{u_id}
-	AND t_id=#{t_id}
+	WHERE u_id=#{userId}
+	AND t_id=#{teamId}
 </update>
 </mapper>

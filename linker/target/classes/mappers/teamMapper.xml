@@ -5,31 +5,42 @@
 
 <mapper namespace="com.linker.mapper.teamMapper">
 
-	<sql id="updateProject">
-		<if test="name != null"> SET name = #{name}</if>
+	<sql id="updateTeam">
+		<if test="teamName != null and auth == 0"> SET name = #{teamName}</if>
 	</sql>
-	
+	<sql id="deleteTeam">
+		<if test="auth == 0">id = #{teamId}</if>
+	</sql>
 	<!-- team 생성 -->
 	<insert id="createTeam">
-		INSERT INTO team(id, name) VALUES(#{id}, #{name});
+		INSERT INTO team(name) VALUES( #{teamName});
 	</insert>
 	
 	<!-- team수정(이름) /권한 필요 -->
 	<update id="modifyTeam">
 		UPDATE team
 		<include refid="updateTeam"></include>
-		WHERE id = #{id}
+		WHERE id = #{teamId}
 	</update>
 	
 	<!-- team출력 -->
 	<select id="listTeam" resultType="teamVO">
-		SELECT t.name, t.cdate
-		FROM team AS t
-		JOIN team_has_user AS thu ON t.id= thu.t_id
+		<!-- SELECT u_id, t_id, team.name, team.cdate
+		FROM team_has_user 
+		JOIN team ON team.id=t_id
+		WHERE u_id=#{userId}
+		; -->
+		SELECT u_id, t_id, team.name, team.cdate
+		FROM team_has_user 
+		JOIN team ON team.id=t_id
+		WHERE u_id=#{userId}
+		;
 	</select>
 	
 	<!-- team 삭제 /권한 필요-->
-	<select id="deleteTeam" resultType="teamVO">
-		SELECT t.name, t.cdate
-	</select>
+	<delete id="deleteTeam">
+		DELETE FROM team
+		WHERE 
+		<include refid="deleteTeam"></include>
+	</delete>
 </mapper>
