@@ -13,9 +13,12 @@ import com.linker.domain.ProjectVO;
 public class ProjectDAOImpl implements ProjectDAO {
 
 	private static String namespace = "com.linker.mapper.projectMapper";
-
+   
+	
 	@Inject
 	SqlSession session;
+	
+
 
 	// 프로젝트 생성
 	@Override
