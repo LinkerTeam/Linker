@@ -23,6 +23,7 @@
 	
 	<context:component-scan base-package="com.linker.controller" />
 	
+<<<<<<< HEAD
 	 <beans:bean id="loginInterceptor" class="com.linker.interceptor.LoginInterceptor"></beans:bean>
 	 
 	 	   
@@ -52,6 +53,8 @@
 	   
 	   </interceptors>
 	
+=======
+>>>>>>> master
 	
 	
 </beans:beans>
