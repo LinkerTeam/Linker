@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 		
 	<!-- 진행 상태의 카드리스트 조회 -->
-	<select id="selectListInProgress" resultType="com.linker.domain.CardlistVO">
+	<select id="selectListInProgress" resultType="CardlistVO">
 	<![CDATA[
 	SELECT c.id, c.p_id, c.u_id, c.title, c.cdate, c.udate, c.ps_id
 	FROM cardlist c

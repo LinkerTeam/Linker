@@ -10,36 +10,36 @@ import org.springframework.stereotype.Repository;
 import com.linker.domain.TeamVO;
 
 @Repository
-public class TeamDAOImpl implements TeamDAO{
+public class TeamDAOImpl implements TeamDAO {
 
 	private static String namespace = "com.linker.mapper.teamMapper";
-	
+
 	@Inject
 	SqlSession session;
-	
-	//팀생성
+
+	// 팀생성
 	@Override
 	public int createTeam(TeamVO vo) throws Exception {
-		return session.insert(namespace+".createTeam", vo);
+		return session.insert(namespace + ".createTeam", vo);
 	}
 
-	//팀출력
+	// 팀출력
 	@Override
 	public List<TeamVO> listTeam(int userId) throws Exception {
-		return session.selectList(namespace+".listTeam",userId);
+		return session.selectList(namespace + ".listTeam", userId);
 	}
-	
-	//팀이름수정
+
+	// 팀이름수정
 	@Override
 	public int modifyTeam(TeamVO vo) throws Exception {
-		return session.update(namespace+".modifyTeam", vo);
+		return session.update(namespace + ".modifyTeam", vo);
 	}
-	
-	//팀삭제
+
+	// 팀삭제
 	@Override
 	public int deleteTeam(TeamVO vo) throws Exception {
-		return session.delete(namespace+".deleteTeam", vo);
-		
+		return session.delete(namespace + ".deleteTeam", vo);
+
 	}
 
 }

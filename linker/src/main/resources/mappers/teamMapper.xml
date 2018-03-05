@@ -25,11 +25,6 @@
 	
 	<!-- team출력 -->
 	<select id="listTeam" resultType="teamVO">
-		<!-- SELECT u_id, t_id, team.name, team.cdate
-		FROM team_has_user 
-		JOIN team ON team.id=t_id
-		WHERE u_id=#{userId}
-		; -->
 		SELECT u_id, t_id, team.name, team.cdate
 		FROM team_has_user 
 		JOIN team ON team.id=t_id

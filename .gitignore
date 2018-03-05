@@ -4,5 +4,7 @@ Servers/
 RemoteSystemsTempFiles/
 .recommenders/
 .metadata/
-pom.properties
-MANIFEST.MF
+
+*.class
+*.MF
+*.class

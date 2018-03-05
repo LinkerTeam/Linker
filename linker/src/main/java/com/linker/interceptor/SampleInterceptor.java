@@ -16,32 +16,29 @@ public class SampleInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("post handler.........");
-		 Object result = modelAndView.getModel().get("result");
-		
-		   System.out.println(result);
-		  if(result!= null) {
-	                   request.getSession().setAttribute("result", result);
-	                  response.sendRedirect("/doA");
-		  }
-	
-	
-		
+		Object result = modelAndView.getModel().get("result");
+
+		System.out.println(result);
+		if (result != null) {
+			request.getSession().setAttribute("result", result);
+			response.sendRedirect("/doA");
+		}
+
 	}
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
-	System.out.println("pre handle......");
-	
-	HandlerMethod method = (HandlerMethod)handler;
-	Method methodObj = method.getMethod();
-	
-	System.out.println("Bean:"+method.getBean());
-	System.out.println("Method:"+methodObj);
-	
+		System.out.println("pre handle......");
+
+		HandlerMethod method = (HandlerMethod) handler;
+		Method methodObj = method.getMethod();
+
+		System.out.println("Bean:" + method.getBean());
+		System.out.println("Method:" + methodObj);
+
 		return true;
 	}
-	
 
 }
