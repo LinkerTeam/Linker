@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.linker.mapper.teamMapper">
+
+	<sql id="updateTeam">
+		<if test="teamName != null and auth == 0"> SET name = #{teamName}</if>
+	</sql>
+	<sql id="deleteTeam">
+		<if test="auth == 0">id = #{teamId}</if>
+	</sql>
+	<!-- team 생성 -->
+	<insert id="createTeam">
+		INSERT INTO team(name) VALUES( #{teamName});
+	</insert>
+	
+	<!-- team수정(이름) /권한 필요 -->
+	<update id="modifyTeam">
+		UPDATE team
+		<include refid="updateTeam"></include>
+		WHERE id = #{teamId}
+	</update>
+	
+	<!-- team출력 -->
+	<select id="listTeam" resultType="teamVO">
+		<!-- SELECT u_id, t_id, team.name, team.cdate
+		FROM team_has_user 
+		JOIN team ON team.id=t_id
+		WHERE u_id=#{userId}
+		; -->
+		SELECT u_id, t_id, team.name, team.cdate
+		FROM team_has_user 
+		JOIN team ON team.id=t_id
+		WHERE u_id=#{userId}
+		;
+	</select>
+	
+	<!-- team 삭제 /권한 필요-->
+	<delete id="deleteTeam">
+		DELETE FROM team
+		WHERE 
+		<include refid="deleteTeam"></include>
+	</delete>
+</mapper>
