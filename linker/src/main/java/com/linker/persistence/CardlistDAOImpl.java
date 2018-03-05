@@ -23,22 +23,16 @@ public class CardlistDAOImpl implements CardlistDAO{
 		session.insert(namespace+".createCardlist", vo);
 	}
 
-	// 카드리스트 제목 수정
+	// 카드리스트 수정
 	@Override
-	public void updateTitle(CardlistVO vo) throws Exception {
-		session.update(namespace+".updateTitle", vo);
-	}
-	
-	// 카드리스트 상태 수정
-	@Override
-	public void updateState(CardlistVO vo) throws Exception {
-		session.update(namespace+".updateState", vo);
+	public void updateCardlist(CardlistVO vo) throws Exception {
+		session.update(namespace+".updateCardlist", vo);
 	}
 
-	// 진행중인 카드리스트 조회
+	// 진행 상태의 카드리스트 조회
 	@Override
-	public List<CardlistVO> selectListInProgress() throws Exception {
-		return session.selectList(namespace+".selectListInProgress");
+	public List<CardlistVO> selectListInProgress(int projectID) throws Exception {
+		return session.selectList(namespace+".selectListInProgress", projectID);
 	}
 	
 }
