@@ -8,30 +8,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 카드리스트 생성 -->
 	<insert id="createCardlist">
 	INSERT INTO cardlist (p_id, u_id, title)
-	VALUES (#{p_id}, #{u_id}, #{title});
+	VALUES (#{p_id}, #{u_id}, #{title})
 	</insert>
 	
-	<!-- 카드리스트 제목 수정 -->
-	<update id="updateTitle">
+	<!-- 카드리스트  수정 -->
+	<update id="updateCardlist">
 	UPDATE cardlist
-	SET title = #{title}
+	SET title = #{title}, ps_id = #{ps_id}
 	WHERE id = #{id}
 	</update>
-	
-	<!-- 카드리스트 상태 수정 -->
-	<update id="updateState">
-	UPDATE cardlist
-	SET ps_id = #{ps_id}
-	WHERE id = #{id}
-	</update>
-	
-	<!-- 진행중인 카드리스트 조회 -->
+		
+	<!-- 진행 상태의 카드리스트 조회 -->
 	<select id="selectListInProgress" resultType="com.linker.domain.CardlistVO">
 	<![CDATA[
-	SELECT *
-	FROM cardlist
-	WHERE id > 0 AND ps_id = 1
-	ORDER BY id DESC
+	SELECT c.id, c.p_id, c.u_id, c.title, c.cdate, c.udate, c.ps_id
+	FROM cardlist c
+	JOIN project p
+	ON c.p_id = p.id
+	JOIN pcl_status ps
+	ON c.ps_id = ps.id
+	WHERE c.p_id = #{projectID} AND c.ps_id = 1
+	ORDER BY c.id DESC
 	]]>
 	</select>
 	

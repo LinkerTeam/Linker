@@ -19,9 +19,13 @@ import com.linker.persistence.CardlistDAO;
 public class CardlistSourceTest {
 	
 	@Inject
-	private CardlistDAO cldao;
+	private CardlistDAO dao;
 	
 	private static Logger logger = LoggerFactory.getLogger(CardlistSourceTest.class);
+	
+	private final int CARDLIST_STATE_INPROGRESS = 1;
+	private final int CARDLIST_STATE_ACHIEVEMENT = 2;
+	private final int CARDLIST_STATE_HIDING = 3;
 	
 	//메소드 테스트
 	
@@ -31,41 +35,44 @@ public class CardlistSourceTest {
 //		CardlistVO cardlist = new CardlistVO();
 //		cardlist.setP_id(1);
 //		cardlist.setU_id(4);
-//		cardlist.setTitle("사이트 맵");
-//		cldao.createCardlist(cardlist);
+//		cardlist.setTitle("제휴 할인사");
+//		dao.createCardlist(cardlist);
 //	}
 	
-	// 진행중인 카드리스트 조회
-//	@Test
-//	public void testSelectLists()throws Exception {
-//		List<CardlistVO> cls = cldao.selectListInProgress();
-//		for(int i=0; i<cls.size(); i++)
-//			logger.info(i+"     "+cls.get(i).toString());
-//	}
+	// 진행 상태의 카드리스트 조회
+	@Test
+	public void testSelectLists()throws Exception {
+		int projectID = 2;
+		List<CardlistVO> cardlists = dao.selectListInProgress(projectID);
+		for(int i=0; i<cardlists.size(); i++)
+			logger.info(i+"     "+cardlists.get(i).toString());
+	}
 
 	// 카드리스트 제목 수정
 //	@Test
 //	public void testToChangeTitle()throws Exception {
 //		CardlistVO cardlist = new CardlistVO();
-//		cardlist.setId(7);
-//		cardlist.setTitle("사이트맵 변경");
-//		cldao.updateTitle(cardlist);
+//		cardlist.setId(10);
+//		cardlist.setTitle("회원가입 상세 페이지");
+//	    cardlist.setPs_id(1);
+//		dao.updateCardlist(cardlist);
 //	}
 	
 	// 카드리스트 상태 수정
 //	@Test
 //	public void testToChageState()throws Exception {
 //		CardlistVO cardlist = new CardlistVO();
-//		cardlist.setId(7);
-//		cardlist.setPs_id(CardlistDAO.CARDLIST_STATE_ACHIEVEMENT);
-//		cldao.updateState(cardlist);
+//		cardlist.setId(17);
+//		cardlist.setTitle("제휴 할인사");
+//		cardlist.setPs_id(CARDLIST_STATE_ACHIEVEMENT);
+//		dao.updateCardlist(cardlist);
 //	}
 	
 //	@Test
 //	public void testToChageState2()throws Exception {
 //		CardlistVO cardlist = new CardlistVO();
-//		cardlist.setId(5);
-//		cardlist.setPs_id(CardlistDAO.CARDLIST_STATE_HIDING);
-//		cldao.updateState(cardlist);
+//		cardlist.setId(12);
+//		cardlist.setPs_id(CARDLIST_STATE_HIDING);
+//		dao.updateCardlist(cardlist);
 //	}
 }
