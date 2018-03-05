@@ -4,5 +4,5 @@ Servers/
 RemoteSystemsTempFiles/
 .recommenders/
 .metadata/
-.properties
-target/m2e-wtp/web-resources/META-INF/MANIFEST.MF
+pom.properties
+MANIFEST.MF
