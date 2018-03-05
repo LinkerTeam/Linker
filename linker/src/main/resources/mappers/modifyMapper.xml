@@ -7,9 +7,11 @@
  
  <update id="update">
  UPDATE user
- SET password= #{password},
- nickname =#{nickname},
- profile=#{profile}
+        <set>
+			<if test="nickname!=null">nickname=#{nickname},</if>
+			<if test="password!=null">password=#{password},</if>
+			<if test="profile!=null">profile=#{profile}</if>
+		</set>
  WHERE email = #{email}
  </update>
  

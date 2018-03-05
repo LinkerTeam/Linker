@@ -12,6 +12,8 @@ public class UserVO {
 	private String profile;
 	private Date udate;
 	private String google;
+	private Date ddate;
+	private int status;
 
 	public int getId() {
 		return id;
@@ -70,8 +72,6 @@ public class UserVO {
 		this.status = status;
 	}
 
-	private Date ddate;
-	private int status;
 
 	public String getEmail() {
 		return email;

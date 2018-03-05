@@ -6,21 +6,23 @@
  <mapper namespace="com.linker.mapper.ModifyMapper">
  
  <update id="update">
- update user
- set password= #{password},nickname =#{nickname},profile=#{profile}
- where email = #{email}
+ UPDATE user
+        <set>
+			<if test="nickname!=null">nickname=#{nickname},</if>
+			<if test="password!=null">password=#{password},</if>
+			<if test="profile!=null">profile=#{profile}</if>
+		</set>
+ WHERE email = #{email}
  </update>
  
  <select id="listAll" resultType="UserVO">
  <![CDATA[
   SELECT 
-  email,password,nickname,profile
+  email, password, nickname, profile
   FROM user
-  WHERE id>0
-  order by email asc;
- 
+  WHERE id > 0
+  ORDER BY email asc;
  ]]>
- 
  </select>
  </mapper>
  

@@ -23,10 +23,10 @@ public class ModifyTest {
 	public void testUpdate() throws Exception {
 		System.out.println("DAO:"+dao);
 		UserVO vo = new UserVO();
-		    vo.setNickname("asd");
+		    vo.setNickname("viwer");
 			vo.setEmail("a@naver");
-		    vo.setPassword("555");
-		  
+			vo.setPassword("viwer");
+  
 			dao.update(vo);
 	}
 
