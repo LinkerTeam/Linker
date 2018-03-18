@@ -687,7 +687,7 @@
                                 <!-- .active | 탭 메뉴 활성화 상태 -->
                                 <!-- Tab1 | 이력목록 -->
                                 <li>
-                                    <div class="nav-tab-btn"><a href="#">menu1</a></div>
+                                    <div class="nav-tab-btn"><a href="#">이력</a></div>
                                     <div class="nav-tab-content">
                                         <div class="tab-content-box">
                                             <ul class="pic-list">
@@ -712,13 +712,13 @@
 
                                 <!-- Tab2 | 달성목록 -->
                                 <li>
-                                    <div class="nav-tab-btn"><a href="#">menu2</a></div>
+                                    <div class="nav-tab-btn"><a href="#">달성</a></div>
                                     <div class="nav-tab-content"><div class="tab-content-box">menu2</div></div>
                                 </li><!-- /Tab2 | 달성목록 -->
                                 
                                 <!-- Tab3 | 가리기목록 -->
                                 <li>
-                                    <div class="nav-tab-btn"><a href="#">menu3</a></div>
+                                    <div class="nav-tab-btn"><a href="#">가리기</a></div>
                                     <div class="nav-tab-content"><div class="tab-content-box">menu2</div></div>
                                 </li><!-- /Tab3 | 가리기목록 -->
                                 

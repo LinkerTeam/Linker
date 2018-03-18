@@ -311,19 +311,6 @@
                     </div>
                     <footer class="createCardBox">Add a card...</footer>
                 </div>
-                <div class="cardlist">
-        			<header class="cardlistTitle">카드리스트4 이름</header>
-                    <div class="cards">
-	                   <div>ggg</div>
-	                   <div>ggg</div>
-	                   <div>ggg</div>
-	                   <div>ggg</div>
-	                   <div>ggg</div>
-	                   <div>ggg</div>
-	                   <div>ggg</div>
-                    </div>
-                    <footer class="createCardBox">Add a card...</footer>
-                </div>
                 
                 <div class="cardlist">
 	                <div class="addList">Add a list...</div>
@@ -380,8 +367,8 @@
 				var str="";
 				
 				//Ajax로 호출된 목록에 대해 루프를 돌면서 <div>태그를 생성하도록 함.
-					//<div>태그 안에 <a href>태그와 <button>태그가 들어가는 형태.
-					//<div><a href></a><button></button></div>
+					//<div>태그 안에 <div>태그와 <button>태그가 들어가는 형태.
+					//<div><div></div><button></button></div>
 				$(data).each(function(){
 					str += "<div data-id='" + this.id + "' class='cardtitleLi'>"
 					+ "<div id='cardLink' onclick='loadCardData(this)'>" + this.title + "</div>"
@@ -489,33 +476,30 @@
 		
 		/* 카드 title 수정 처리 - 수정 버튼 클릭할 경우 */
 		$(".cards").on("click", ".cardtitleLi button", function(e){
-			// 클릭한 수정버튼의 부모 찾아가서(cardtitleLi) 그 부모의 좌표값을 구하기.
-			/* var cardtitleLiX = $(this).parent("div").offset().left; //그 수정버튼의 부모 태그 li의 x좌표
-	        var cardtitleLiY = $(this).parent("div").offset().top; //그 수정버튼의 부모 태그 li의 y좌표 */
 			// 모달창을 클릭한 카드의 위치에서 뜨도록 함.
-	        /* if(cardtitleLiY < 491){ //부모의 y좌표 값이 491보다 작으면 그 좌표에서 창을 띄움.
-				$(".modifyModal-content").css({
+	        	// 1. 클릭한 수정버튼의 부모 찾아가서(cardtitleLi) 그 부모의 좌표값을 구하기
+	        var cardtitleLiX = $(this).parent("div").offset().left; //그 수정버튼의 부모 태그의 x좌표
+	        var cardtitleLiY = $(this).parent("div").offset().top; //그 수정버튼의 부모 태그의 y좌표
+	        
+	        	// 2. 카드리스트의 전체높이 구하기
+	        var listHeight=parseInt($(".cards").css("height")); //카드리스트 중 카드부분 높이
+	        var headerHeight=parseInt($(".cardlistTitle").css("height")); //카드리스트 헤더 높이
+	        var footerHeight=parseInt($(".createCardBox").css("height")); //카드리스트 푸터 높이
+	        var modifyHeight=parseInt($(".modifyModal-content").css("height")); //수정창 높이
+	        
+	        var x = headerHeight + listHeight + footerHeight; //카드리스트 전체높이
+	        
+	        if(cardtitleLiY > x){ // 3. 클릭한 카드의 y좌표가 전체높이보다 크면 수정창 위치 조정하여 띄움
+	        	$(".modifyModal-content").css({
+		            "left": cardtitleLiX,
+		            "top": x + 15
+		        });
+	        }else{ // 4. 클릭한 카드의 y좌표가 전체높이보다 작으면 그 위치에서 수정창 띄움
+	        	$(".modifyModal-content").css({
 		            "left": cardtitleLiX,
 		            "top": cardtitleLiY
 		        });
-	        } else { //부모의 y좌표 값이 491보다 크면 무조건 y좌표가 491이 되도록(그래야 save버튼 안 잘림)
-	        	$(".modifyModal-content").css({
-		            "left": cardtitleLiX,
-		            "top": 491
-		        });
-	        }; */
-	        
-	        // 부모의 y좌표 값이 (전체길이 - 수정창 높이) 보다 크면 (전체길이 - 수정창 높이)에서 띄움
-	        // 부모의 y좌표 값이 (전체길이 - 수정창 높이)보다 작으면 그 위치에서 띄움
-	        // 부모의 y좌표 값 :
-	        var cardtitleLiX = $(this).parent("div").offset().left; //그 수정버튼의 부모 태그의 x좌표
-	        var cardtitleLiY = $(this).parent("div").offset().top; //그 수정버튼의 부모 태그의 y좌표
-	        // 전체길이 :
-	        	var a=$(".cards").css("height");
-	        console.log(a);
-	        // 수정창 높이 : 80px
-	        
-	        
+	        }
 	        
 			// 모달창을 띄운다.
 			modifyModal.style.display = "block";
@@ -538,7 +522,6 @@
 			$(".modifyModal-title").html(id); //div태그에 카드의 id값 주입(CSS를 hidden으로 줘서 화면 출력은 안되도록 함)
 			$("#modifyTextarea").val(title); //카드의 원래 내용을 수정textarea에 담기
 		});
-		
 		
 		
 		/* 카드 title 수정 처리 - 수정 내용 입력 후 save버튼 클릭할 경우 */
