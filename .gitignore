@@ -4,7 +4,7 @@ Servers/
 RemoteSystemsTempFiles/
 .recommenders/
 .metadata/
+target/
 
 *.class
 *.MF
-*.class
