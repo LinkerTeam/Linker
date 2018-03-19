@@ -40,13 +40,13 @@ public class CardlistSourceTest {
 //	}
 	
 	// 진행 상태의 카드리스트 조회
-	@Test
+/*	@Test
 	public void testSelectLists()throws Exception {
 		int projectID = 2;
 		List<CardlistVO> cardlists = dao.selectListInProgress(projectID);
 		for(int i=0; i<cardlists.size(); i++)
 			logger.info(i+"     "+cardlists.get(i).toString());
-	}
+	}*/
 
 	// 카드리스트 제목 수정
 //	@Test
@@ -75,4 +75,15 @@ public class CardlistSourceTest {
 //		cardlist.setPs_id(CARDLIST_STATE_HIDING);
 //		dao.updateCardlist(cardlist);
 //	}
+	
+	@Test
+	public void testGetPK()throws Exception {
+		CardlistVO cardlist = new CardlistVO();
+		cardlist.setP_id(1);
+		cardlist.setU_id(1);
+		cardlist.setTitle("advd");
+		
+		dao.createCardlist(cardlist);
+		System.out.println(cardlist.getId());
+	}
 }

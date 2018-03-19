@@ -34,5 +34,4 @@ public class CardlistDAOImpl implements CardlistDAO{
 	public List<CardlistVO> selectListInProgress(int projectID) throws Exception {
 		return session.selectList(namespace+".selectListInProgress", projectID);
 	}
-	
 }
