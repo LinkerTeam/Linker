@@ -1,7 +1,5 @@
 package com.linker.controller;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -41,23 +39,23 @@ public class MemberSourceTest {
 		vo.setU_id(14);
 		vo.setT_id(4);
 		vo.setAuth(1);
-		dao.modifyMember(vo);
+		dao.modifyMemberAuth(vo);
 	}
 	
 	//멤버삭제
 	@Test
 	public void testDeleteMember() throws Exception{
-		MemberVO vo = new MemberVO();
-		vo.setT_id(2);
-		vo.setU_id(12);
-		dao.deleteMember(vo);
+//		MemberVO vo = new MemberVO();
+//		vo.setT_id(2);
+//		vo.setU_id(12);
+		dao.deleteMember(2, 12);
 	}
 	
 	//멤버출력(한 회원이 가진 팀들의 멤버들)
 	@Test
 	public void testListMember() throws Exception{
 		int userId = 1;
-		List<MemberVO> list = dao.listMember(userId);
+		List<MemberVO> list = dao.TeamHasUsers(userId);
 		for(int i=0; i<list.size(); i++) {
 			logger.info(i + " " + list.get(i).toString());
 		}

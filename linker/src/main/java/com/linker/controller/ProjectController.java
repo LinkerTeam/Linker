@@ -33,7 +33,7 @@ public class ProjectController {
 
 	@ResponseBody
 	@RequestMapping(value ="t/{teamID}/p", method = RequestMethod.POST)
-	public ProjectVO createProject(@RequestBody ProjectVO vo) throws Exception {
+	public int createProject(@RequestBody ProjectVO vo) throws Exception {
 		// RequestParameter
 		logger.info(vo.toString());
 		return service.createProject(vo);
@@ -50,7 +50,7 @@ public class ProjectController {
 		dto.setT_id(teamID);
 		//FIXME:  사용자의 아이디값을 세션에서 가지고오도록해야함.
 		dto.setU_id(1);
-		return service.listProject(dto);
+		return service.listProject(teamID);
 	}
 
 //	/*

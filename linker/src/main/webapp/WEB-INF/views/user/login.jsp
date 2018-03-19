@@ -90,7 +90,7 @@
                             <a href="#0" value="중복확인" id="checkbtn" class="check" >중복확인</a><div id="checkMsg"></div>
                        
 
-                        </p class="fieldset">
+                        </p>
 
                         <p class="fieldset">
                             <i class="far fa-envelope"></i>

@@ -20,8 +20,6 @@ import com.linker.domain.UserVO;
 import com.linker.persistence.MemberDAO;
 import com.linker.persistence.TeamDAO;
 import com.linker.util.MailHandler;
-import com.linker.util.TempKey;
-
 
 @Service
 public class MemberServiceImpl implements MemberService{
