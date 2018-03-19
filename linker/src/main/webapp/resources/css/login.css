@@ -1,0 +1,383 @@
+﻿@charset "UTF-8";
+
+/* box 사이즈를 넘어가는걸 방지 */
+*,
+*:after,
+*:before {
+    /* -webkit-,-moz-등의 접두사는 특정브라우저를 따로 안정성을위해서 적어둔다.  */
+    box-sizing: border-box;
+}
+
+/* 폼태그에 패딩준것 */
+.form {
+    padding: 1.4em;
+}
+
+/* 여기서부터 메인 단추버튼 main nav는 모든걸넣음  */
+.main-nav li {
+    list-style: none;
+    float: left;
+}
+
+/* 버튼의 크기와 넓이 그리고 중간에글자 넣기  속성 */
+.user-modal-container li {
+    width: 50%;
+    float: left;
+    text-align: center;
+    list-style: none;
+}
+/* 백그라운드 배경화면 속성 */
+body {
+    background: #ffffff;
+}
+
+.main-nav a {
+    display: block;
+    height: 50px;
+    margin: 10px;
+    padding: 2px 25px;
+    text-decoration: none;
+    border-radius: 30px;
+    line-height: 45px;
+    color: #FFF;
+}
+
+.main-nav {
+    /*width: 90%;*/
+    max-width: 240px;
+    margin: 0 auto;
+    height: 100%;
+    cursor: pointer;
+    z-index: 2;
+}
+
+
+    .main-nav ul {
+        position: absolute;
+        top: 40%;
+        margin: 0;
+        padding: 0;
+        margin: 0 auto;
+    }
+
+    .main-nav li {
+        list-style: none;
+        float: left;
+        width: 200px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        /* 메인버튼 로그인 */
+        .main-nav li:nth-child(1) a {
+            background: #d83d3d;
+            border: 2px solid #fff;
+        }
+
+            .main-nav li:nth-child(1) a:hover {
+                background: #fff;
+                color: #d83d3d;
+            }
+
+        /* 메인버튼 회원가입 */
+        .main-nav li:nth-child(2) a {
+            background: #7e0909;
+            border: 2px solid #fff;
+        }
+
+            .main-nav li:nth-child(2) a:hover {
+                background: #fff;
+                color: #7e0909;
+            }
+
+/* 이부분까지 메인창  */
+
+
+/* 메인박스의 인풋박스(로그인창이나그런것들) 설정 값 */
+.form input {
+    margin: 0 0 0 15px;
+    padding: 0;
+    border-radius: 4px;
+    height: 50px;
+    border: none;
+}
+
+*/
+/* 감추는 css 로그인폼과 회원가입폼을 감춰 둔다*/
+#login,
+#signup,
+#reset-password {
+    display: none;
+}
+
+
+/* 박스를 만드는 것 로그인박스와 회원가입 박스를 만들기  */
+.form .fieldset {
+    position: relative;
+    margin: 1.4em 0;
+}
+
+/* 첫번째 자손에게 마진 탑0줌  */
+form .fieldset:first-child {
+    margin-top: 0;
+}
+
+/* 마지막 자손에게 마진0줌  */
+.form .fieldset:last-child {
+    margin-bottom: 0;
+}
+
+
+
+/* 로그인 박스 만든것 */
+.user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*width: 100%;
+    height: 100%;*/
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.9);
+    /* Black w/ opacity */
+    z-index: 3;
+    /*overflow-y: auto;*/
+    cursor: pointer;
+    display: none;
+    transition: opacity 0.3s 0, visibility 0 0.3s;
+}
+
+
+
+
+/* 메인박스 로그인창과 회원가입창 비밀번호 찾기 창 */
+.user-modal-container, #reset-password {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: #FFF;
+    margin: 3em auto 4em;
+    cursor: auto;
+    border-radius: 0.25em;
+}
+
+    /*          
+        위에 로그인 과 회원가입을 테이블로해서 깔끔하게 함. */
+    .user-modal-container .switcher:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* 로그인과 회원가입 css 글자 가운데 해주고 float지정해줌 */
+    .user-modal-container .switcher li {
+        width: 50%;
+        float: left;
+        text-align: center;
+        list-style: none;
+    }
+
+
+    /* 메인박스에 로그인 버튼과 회원가입버튼의 색깔 설정과 라인설정한곳  */
+    .user-modal-container .switcher a {
+        display: block;
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        background: rightgray;
+        color: #809191;
+        text-decoration: none;
+    }
+
+
+/* input text와 password 값 css준거 색깔 컬러 넓이를 지정함 */
+.form input[type="text"],
+input[type="password"], #reset-email {
+    width: 95%;
+    color: white;
+    margin-right: 100px;
+    background-color: black;
+    /* 그림을 넣기위해서 왼쪽에 패딩을 넣어줌 */
+    padding-left: 45px;
+}
+
+/* 로그인하기 버튼과 회원가입 버튼을 설정함 */
+form button, .full-width.has-padding.input {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: red;
+    color: #fff;
+    font-size: 18px;
+    margin-left: 15px;
+    cursor: pointer;
+    width: 95%;
+}
+
+.switcher {
+    padding: 0;
+}
+
+/* 메인박스의 마진값으로 위치 선정함 */
+.user-modal-container {
+    margin-top: 100px;
+    /*margin-left: 700px;*/
+}
+
+label {
+    display: none;
+}
+
+.close-form {
+    /* form X button on top right  */
+    display: block;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 0;
+    top: -40px;
+    text-indent: 100%;
+}
+
+
+/* 안쪽 로그인 회원가입 css */
+.switcher li {
+    list-style: none;
+    float: left;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* 로그인버튼 색깔 */
+.login_btn1 {
+    background-color: red;
+}
+
+/* 잃어버린 비밀번호 찾기 위치 선정 */
+#login .form-bottom-message > a {
+    position: absolute;
+    top: 390px;
+    left: 220px;
+    text-decoration: none;
+    color: white;
+}
+
+    #login .form-bottom-message > a:hover {
+        color: gray;
+    }
+/* 비밀번호찾기에서 뒤로가기 위치선정 */
+#back {
+    position: absolute;
+    top: 220px;
+    left: 220px;
+    text-decoration: none;
+    color: white;
+}
+
+    #back:hover {
+        color: gray;
+    }
+
+
+
+
+
+.error-message {
+    display: none;
+}
+
+.hide-password {
+    /* display: none; */
+}
+
+/* 아이콘들 위치 선정과 아이콘 배경및 색깔 변경  */
+.fa-unlock-alt {
+    background-color: black;
+    color: white;
+}
+
+.fa-envelope {
+    background-color: black;
+    color: white;
+}
+
+.fa-user {
+    background-color: black;
+    color: white;
+}
+
+#mail {
+    position: absolute;
+    top: 16px;
+    left: 28px;
+}
+
+#login .svg-inline--fa {
+    position: absolute;
+    top: 35px;
+    left: 30px;
+    height: 20px;
+}
+
+#signup .svg-inline--fa {
+    position: absolute;
+    top: 15px;
+    left: 30px;
+    height: 20px;
+}
+
+
+
+/* 마지막인풋박스에 마진준것 */
+#lastinput {
+    margin-bottom: 40px;
+}
+
+
+
+/* 체크박스들 위치선정 */
+.fieldset.agree {
+    padding-left: 20px;
+}
+
+    /* 리멤버 체크박스랑 동의 박스 위치선정 */
+    .fieldset.agree input {
+        margin: 0;
+        height: auto;
+        vertical-align: middle;
+    }
+
+.form-message {
+    text-align: center;
+}
+
+/* 비밀번호 암호 보이기와 감추기 로그인창 */
+#password1 {
+    display: inline-block;
+    position: absolute;
+    text-decoration: none;
+    right: 0;
+    top: 0;
+    padding: 6px 25px;
+    border-left: 1px solid #d2d8d8;
+    top: 43%;
+    bottom: auto;
+    color: white;
+}
+/* 비밀번호 암호 보이기와 감추기 회원가입창 */
+
+#password2, .check {
+    display: inline-block;
+    position: absolute;
+    text-decoration: none;
+    right: 0;
+    top: 0;
+    padding: 6px 25px;
+    border-left: 1px solid #d2d8d8;
+    top: 20%;
+    bottom: auto;
+    color: #ffffff;
+}

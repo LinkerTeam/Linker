@@ -8,6 +8,14 @@ public class LoginDTO {
 	private String profile;
 	private boolean useCookie;
 
+	public boolean isUseCookie() {
+		return useCookie;
+	}
+
+	public void setUseCookie(boolean useCookie) {
+		this.useCookie = useCookie;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -40,13 +48,6 @@ public class LoginDTO {
 		this.password = password;
 	}
 
-	public boolean isUseCookie() {
-		return useCookie;
-	}
-
-	public void setUseCookie(boolean useCookie) {
-		this.useCookie = useCookie;
-	}
 
 	@Override
 	public String toString() {
