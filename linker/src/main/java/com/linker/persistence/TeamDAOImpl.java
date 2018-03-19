@@ -23,10 +23,16 @@ public class TeamDAOImpl implements TeamDAO {
 		return session.insert(namespace + ".createTeam", vo);
 	}
 
-	// 팀출력
+	// 팀 목록 리스트 출력
 	@Override
-	public List<TeamVO> listTeam(int userId) throws Exception {
-		return session.selectList(namespace + ".listTeam", userId);
+	public List<TeamVO> listTeam(int u_id) throws Exception {
+		return session.selectList(namespace + ".listTeam", u_id);
+	}
+	
+	// 팀  id 출력
+	@Override
+	public int selectTeam(String name) throws Exception {
+		return session.selectOne(namespace + ".selectTeam", name);
 	}
 
 	// 팀이름수정
@@ -37,8 +43,8 @@ public class TeamDAOImpl implements TeamDAO {
 
 	// 팀삭제
 	@Override
-	public int deleteTeam(TeamVO vo) throws Exception {
-		return session.delete(namespace + ".deleteTeam", vo);
+	public int deleteTeam(int t_id) throws Exception {
+		return session.delete(namespace + ".deleteTeam", t_id);
 
 	}
 
