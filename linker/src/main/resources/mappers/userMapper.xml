@@ -5,12 +5,58 @@
 
 <mapper namespace="com.linker.mapper.UserMapper">
 	<select id="login" resultType="UserVO">
-		SELECT 
-		email, password 
-		FROM user 
-		WHERE email = #{email} 
+		SELECT
+		email, password,profile,nickname,cdate,udate
+		FROM user
+		WHERE email = #{email}
 		AND password = #{password};
 	</select>
 
+	<select id="viewUser" resultType="UserVO">
+		SELECT
+		email,
+		nickname,
+		profile,
+		cdate,
+	    udate
+		FROM user
+		WHERE email = #{email}
+	</select>
+
+	
+	<update id="updateUser">
+		UPDATE user
+		<set>
+			<if test="nickname!=null and nickname!=''">nickname=#{nickname},</if>
+			<if test="password!=null and password!=''" >password=#{password},</if>
+			<if test="profile!=null and profile!=''">profile=#{profile}</if> 
+		</set>
+		WHERE email = #{email}
+	</update>
+
+
+
+	<update id="keepLogin">
+		UPDATE user
+		SET
+		sessionKey=#{sessionId},sessionLimit=#{next},profile=#{profile}
+		WHERE email=#{email}
+	</update>
+
+	<select id="checkUserWithSessionkey" resultType="UserVO">
+		SELECT * FROM
+		user WHERE sessionKey = #{value}
+		AND sessionLimit > now()
+	</select>
+	
+	
+
+    
+    <!-- 닉네임 중복확인 1이면 중복이고 0이면 중복이아님 -->
+    <select id="checkSignup" resultType="int" parameterType="String">
+    SELECT count(nickname) FROM user where nickname=#{nickname};
+    
+    </select>
+   
 
 </mapper>

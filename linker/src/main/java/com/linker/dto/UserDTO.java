@@ -1,29 +1,20 @@
 package com.linker.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
+// 회원 수정시 값을 받아올 저장소(컨테이너)
 public class UserDTO {
-	private int id;
+
 	private String email;
 	private String password;
 	private String nickname;
+	private MultipartFile profileName;
 	private String profile;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getProfile() {
-		return profile;
-	}
-	public void setProfile(String profile) {
-		this.profile = profile;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	@Override
+	public String toString() {
+		return "UserDTO [email=" + email + ", password=" + password + ", nickname=" + nickname + ", profileName="
+				+ profileName + ", profile=" + profile + "]";
 	}
 	public String getEmail() {
 		return email;
@@ -37,10 +28,24 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	@Override
-	public String toString() {
-		return "UserDTO [id=" + id + ", email=" + email + ", password=" + password + ", nickname=" + nickname
-				+ ", profile=" + profile + "]";
+	public String getNickname() {
+		return nickname;
 	}
-
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public MultipartFile getProfileName() {
+		return profileName;
+	}
+	public void setProfileName(MultipartFile profileName) {
+		this.profileName = profileName;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 }
+
+

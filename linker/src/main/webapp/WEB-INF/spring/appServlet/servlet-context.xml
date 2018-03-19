@@ -15,7 +15,12 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-
+	<!-- css파일 읽어오기  -->
+	<resources mapping="/css/**" location="/resources/css/" />
+	<!-- <resources mapping="/images/**" location="/resources/images/" />
+	<resources mapping="/js/**" location="/resources/js/" />
+	<resources mapping="/resources/**" location="/resources/" />
+ -->
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	<beans:bean
@@ -27,27 +32,35 @@
 	<context:component-scan base-package="com.linker.controller" />
 
 	<beans:bean id="loginInterceptor" class="com.linker.interceptor.LoginInterceptor"></beans:bean>
-	<beans:bean id="sampleInterceptor" class="com.linker.interceptor.SampleInterceptor"></beans:bean>
 	<beans:bean id="authInterceptor" class="com.linker.interceptor.AuthInterceptor"></beans:bean>
 
 	<interceptors>
 
 		<interceptor>
+		<!-- URL 을 user/loginPost를 실행하기전에 loginInterceptor를 먼저 실행한다음 들어가시오  컨트롤러 실행후에도 인터셉터로 다시 들어간다  전후처리-->
 			<mapping path="/user/loginPost" />
-			<beans:ref bean="loginInterceptor" />
+			<beans:ref bean="loginInterceptor" />  <!--  위 URI에을 실행하면 loginInterceptor를 사용한다는 뜻 -->
 		</interceptor>
 
-		<interceptor>
-			<mapping path="/doA" />
-			<mapping path="/doB" />
-			<beans:ref bean="sampleInterceptor" />
-		</interceptor>
 
+          <!--  mapping된곳에서 URL들을 들어갈때 authInterceptor에서 세션을 검사함 세션의 유무에 따라 없을경우 로그인 페이지로 있을경우 페이지로 이동  -->
 		<interceptor>
-			<mapping path="/" />
-			<beans:ref bean="loginInterceptor" />
+			<mapping path="/user/userModify" />
+			<mapping path="/user/connect" />
+			<beans:ref bean="authInterceptor" />
 		</interceptor>
 
 	</interceptors>
+   
+     <!-- 파일업로드시 필요한 객체  -->
+     <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="10485760"></beans:property>
+     </beans:bean>
+     
+     <!-- 파일경로를 지정해줌 객체 -->
+     <beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\\zzz\\upload">
+		</beans:constructor-arg>
+	</beans:bean>
 
 </beans:beans>
