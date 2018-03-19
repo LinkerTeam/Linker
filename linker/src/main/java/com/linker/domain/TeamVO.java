@@ -8,7 +8,7 @@ public class TeamVO {
 	private int u_id; //회원아이디
 	private Date date; //날짜(수정날짜, 삭제날짜)
 	private int auth; //그 팀에 대한 회원의 권한
-	private String cdate; //생성 날짜
+	private Date cdate; //생성 날짜
 	
 	public int getT_id() {
 		return t_id;
@@ -40,10 +40,10 @@ public class TeamVO {
 	public void setAuth(int auth) {
 		this.auth = auth;
 	}
-	public String getCdate() {
+	public Date getCdate() {
 		return cdate;
 	}
-	public void setCdate(String cdate) {
+	public void setCdate(Date cdate) {
 		this.cdate = cdate;
 	}
 	@Override

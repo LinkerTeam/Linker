@@ -35,6 +35,24 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
+	<!-- sy가 수정함. member추가할 때, 초대메일 보내기 위해서 메일 관련 객체 생성함. -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="intosy227"></property>
+		<property name="password" value="q1w2e3a4s5d6.."></property>
+		
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transprot.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	
 	<tx:annotation-driven/>
 
 	<context:component-scan base-package="com.linker.service"></context:component-scan>
