@@ -51,9 +51,10 @@ public class TeamSourceTest {
 	@Test
 	public void testDeleteTeam() throws Exception{
 		TeamVO vo = new TeamVO();
-		vo.setAuth(0);
+		vo.setAuth(0); //삭제 성공
+//		vo.setAuth(2); //삭제 실패
 		vo.setT_id(13);
-		dao.deleteTeam(vo);
+		dao.deleteTeam(11);
 //		System.out.println("VO : " + vo.toString());
 		
 	}
