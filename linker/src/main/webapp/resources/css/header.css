@@ -1,0 +1,139 @@
+@charset "UTF-8";
+
+/* 레이아웃 */
+/*#wrap {
+    height: 100%;
+}*/
+
+html {
+    height: 100%;
+}
+
+body {
+    height: calc(100% - 50px);
+    font-family: 'Nanum Barun Gothic', sans-serif;
+    font-weight: 200; /* 글씨 얇게 */
+    font-size: 15pt;
+    /* background-color: #ECF0F5; */
+    position: relative;
+    overflow-y: hidden;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+#header {
+    position: relative;
+    background-color: #FA5883;
+    height: 50px;
+    color: white;
+}
+
+/* 로고 영역~~~~~ */
+.logo-background {
+    display: block;
+    background-color: #fa4575;
+    width: 230px;
+    height: 100%;
+    float: left;
+    text-align: center;
+}
+/* 메뉴 확장시 로고 */
+.logo-full {
+    position: absolute;
+    color: white;
+    width: 230px;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.2s; /*열었다 닫았다*/
+    z-index: 1;
+}
+/* 메뉴 축소시 로고 */
+.logo-mini {
+    color: #fa4575;
+    float: left;
+    width: 0px;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.2s; /*열었다 닫았다*/
+    z-index: 1;
+}
+
+    .logo-full img, .logo-mini img { /*로고영역 내 로고img 위치 조정*/
+        margin-top: 14px;
+    }
+/* ~~~~~로고 영역 */
+
+
+/* 왼쪽메뉴 단추 */
+.ltMenu-button {
+    float: left;
+    margin: 15px 0 0 15px;
+}
+/* 오른쪽메뉴 설정단추 */
+.rtMenu-button {
+    float: right;
+    margin: 12px;
+}
+
+
+/* 헤더 검색창~~~~~ */
+.header-search form {
+    position: relative;
+    width: 230px;
+    float: right;
+    margin-right: 20px;
+}
+.header-search input, .header-search button {
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    margin-top: 7px;
+}
+.header-search input {
+    width: 100%;
+    height: 34px;
+    background: #ff708e;
+    padding-left: 15px;
+    font-size: 12pt;
+    color: white;
+}
+input[type=text]:focus { /*검색창 활성화할 때 효과*/
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease;
+}
+.header-search button {
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    top: 5px;
+    right: -8px;
+    background: #FA5883;
+    cursor: pointer;
+}
+.header-search button span {
+    color: #F9F0DA;
+    font-size: 15px;
+    font-weight: bold;
+}
+.header-search button:hover {
+    transition: 0.2s;
+    background-color: #ff3168;
+}
+/* placeholder 글씨색 바꾸기 - 크롬 4–56*/
+#search::-webkit-input-placeholder {
+    color: #ffa2b6;
+}
+/* placeholder 글씨색 바꾸기 - IE 10+*/
+#search:-ms-input-placeholder {
+    color: #ffa2b6;
+}
+/* ~~~~~헤더 검색창 */
