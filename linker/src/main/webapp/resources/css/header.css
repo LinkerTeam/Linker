@@ -1,9 +1,5 @@
 @charset "UTF-8";
 
-/* 레이아웃 */
-/*#wrap {
-    height: 100%;
-}*/
 
 html {
     height: 100%;
@@ -14,7 +10,6 @@ body {
     font-family: 'Nanum Barun Gothic', sans-serif;
     font-weight: 200; /* 글씨 얇게 */
     font-size: 15pt;
-    /* background-color: #ECF0F5; */
     position: relative;
     overflow-y: hidden;
 }
