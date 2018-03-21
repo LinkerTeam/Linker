@@ -1,7 +1,5 @@
 @charset "UTF-8";
 
-<style>
-
 /* 전체 div */
 .container {
     height: 100%;
@@ -21,6 +19,13 @@
     right: 0;
     bottom: 0;
     background: #dddddd;
+}
+/* 본문 */
+.content {
+    height: 100%;
+    margin-left: 230px;
+    position: relative;
+    background-color: rgba(156, 156, 156, 0.80);
 }
 	
 /* 확장 메뉴(글자)~~~~~ */
@@ -333,50 +338,3 @@
 
 /* ~~~~~오른쪽 메뉴 */
 
-
-/* 축소 메뉴 드롭다운(-) */
-/*.riMenu-dropdown {
-    float: right;
-    position: absolute;
-    top: 0;
-    right: 0px;
-}
-
-    .riMenu-dropdown .rtMenu-profile {
-        cursor: pointer;
-        border: none;
-        outline: none;
-        color: white;
-        padding: 14px 16px;
-        background-color: inherit;
-        margin: 0;
-    }
-
-.riMenu-dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-    .riMenu-dropdown-menu a {
-        float: none;
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-        text-align: left;
-        font-size: 12pt;
-    }
-
-        .riMenu-dropdown-menu a:hover {
-            background-color: #ffc0d2;
-        }
-
-.show {
-    display: block;
-}*/
