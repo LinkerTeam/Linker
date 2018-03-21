@@ -132,3 +132,12 @@ input[type=text]:focus { /*검색창 활성화할 때 효과*/
     color: #ffa2b6;
 }
 /* ~~~~~헤더 검색창 */
+
+
+/* 본문 */
+.content {
+    height: 100%;
+    margin-left: 230px;
+    position: relative;
+    background-color: rgba(156, 156, 156, 0.80);
+}
