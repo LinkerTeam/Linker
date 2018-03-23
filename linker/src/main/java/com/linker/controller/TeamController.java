@@ -24,7 +24,7 @@ import com.linker.service.MemberService;
 import com.linker.service.TeamService;
 
 /*
- * TeamController와 연결된 view: 팀 추가(teamAdd).jsp, 팀 목록 출력(teamList).jsp 출력
+ * TeamController와 연결된 view: 팀 추가(teamAdd.jsp), 팀 목록 출력(teamList.jsp) 출력
  * TeamController와 연결된 DB: team, team_has_user, user
  * 
  * [teamAdd.jsp]
@@ -92,7 +92,7 @@ public class TeamController {
 		
 	}
 
-	//팀 추가(teamAdd).jsp에서 '입력'버튼을 눌렀을 때, 데이터가 전송되면서 화면 전환. [해설 : teamAdd.jsp 2.]
+	//팀 추가(teamAdd.jsp)에서 '입력'버튼을 눌렀을 때, 데이터가 전송되면서 화면 전환. [해설 : teamAdd.jsp 2.]
 	@RequestMapping(value="/teamAdd", method=RequestMethod.POST)
 	public String teamAddPOST(TeamVO tvo, MemberVO mvo, RedirectAttributes rttr) throws Exception{
 		mvo.setU_id(u_id);
@@ -114,7 +114,7 @@ public class TeamController {
 		return "redirect:/team/teamList";
 	}
 
-	//팀 목록(teamList).jsp 가져오기
+	//팀 목록(teamList.jsp) 가져오기
 	@RequestMapping(value="/teamList", method=RequestMethod.GET)
 	public void teamLsitGET(TeamVO tvo, Model model) throws Exception{
 //		logger.info("listTeam 함수실행 : " + teamService.listTeam(u_id));
@@ -126,7 +126,7 @@ public class TeamController {
 		
 	}
 
-	//팀 목록(teamList).jsp에서 팀 이름 수정.
+	//팀 목록(teamList.jsp)에서 팀 이름 수정.
 	@RequestMapping(value="/teamList", method=RequestMethod.PUT)
 	public ResponseEntity<List<TeamVO>> teamListModifyUPDATE(@RequestBody TeamVO tvo) throws Exception{
 //		logger.info("teamListUPDATE");
@@ -156,7 +156,7 @@ public class TeamController {
 		return entity;
 	}
 
-	//팀 목록(teamList).jsp에서 팀 삭제.
+	//팀 목록(teamList.jsp)에서 팀 삭제.
 	@RequestMapping(value="/teamList", method=RequestMethod.DELETE)
 	public ResponseEntity<List<TeamVO>> teamListRemoveDELETE(@RequestBody TeamVO tvo) throws Exception{
 //		logger.info("teamListDELETE");
@@ -189,20 +189,20 @@ public class TeamController {
 	//멤버 수정
 		@RequestMapping(value="/teamList/{t_id}", method=RequestMethod.PUT)
 		public @ResponseBody ResponseEntity<List<MemberVO>> memberListModifyUPDATE(@PathVariable int t_id, @RequestBody MemberVO mvo) throws Exception{
-			logger.info("memberListUPDATE");
+//			logger.info("memberListUPDATE");
 			
 			ResponseEntity<List<MemberVO>> entity = null;
-			logger.info("memberListUPDATE : " + mvo);
+//			logger.info("memberListUPDATE : " + mvo);
 			try {
-				logger.info("memberListUPDATE2");
+//				logger.info("memberListUPDATE2");
 				memberService.modifyAuth(mvo);
-				logger.info("memberListUPDATE3");
+//				logger.info("memberListUPDATE3");
 				List<MemberVO> memberList= memberService.TeamHasUsers(u_id);
-				logger.info("memberListUPDATE3-1 ListTeam : " + memberList);
-				logger.info("memberList size : " + memberList.size());
+//				logger.info("memberListUPDATE3-1 ListTeam : " + memberList);
+//				logger.info("memberList size : " + memberList.size());
 				entity=new ResponseEntity<List<MemberVO>>(memberList, HttpStatus.OK);
-				logger.info("memberListUPDATE4");
-				logger.info("memberListUPDATE3-2 ListTeam : " + memberList);
+//				logger.info("memberListUPDATE4");
+//				logger.info("memberListUPDATE3-2 ListTeam : " + memberList);
 				
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -215,20 +215,20 @@ public class TeamController {
 		//멤버 삭제
 			@RequestMapping(value="/teamList/{t_id}", method=RequestMethod.DELETE)
 			public @ResponseBody ResponseEntity<List<MemberVO>> memberListRemoveDELETE(@PathVariable int t_id, @RequestBody MemberVO mvo) throws Exception{
-				logger.info("memberListDELETE");
-				logger.info("t_id, u_id : " + t_id + "," + mvo.getU_id()); //ajax에 보내진 데이터들은 @requestBody mvo에 자동 저장된다.
+//				logger.info("memberListDELETE");
+//				logger.info("t_id, u_id : " + t_id + "," + mvo.getU_id()); //ajax에 보내진 데이터들은 @requestBody mvo에 자동 저장된다.
 				ResponseEntity<List<MemberVO>> entity = null;
-				logger.info("memberListDELETE : " + mvo);
+//				logger.info("memberListDELETE : " + mvo);
 				try {
-					logger.info("memberListDELETE2");
-					logger.info("memberListDELETE : " + t_id);/*mvo.getT_id()*/
+//					logger.info("memberListDELETE2");
+//					logger.info("memberListDELETE : " + t_id);/*mvo.getT_id()*/
 					memberService.deleteMember(mvo.getU_id(),t_id);/*mvo.getU_id()*/
-					logger.info("memberListDELETE3");
+//					logger.info("memberListDELETE3");
 					List<MemberVO> memberList= memberService.TeamHasUsers(u_id);
-					logger.info("memberListDELETE3-1 ListTeam : " + memberList);
-					logger.info("memberList size : " + memberList.size());
+//					logger.info("memberListDELETE3-1 ListTeam : " + memberList);
+//					logger.info("memberList size : " + memberList.size());
 					entity=new ResponseEntity<List<MemberVO>>(memberList, HttpStatus.OK);
-					logger.info("memberListDELETE4");
+//					logger.info("memberListDELETE4");
 
 				}catch(Exception e) {
 					e.printStackTrace();

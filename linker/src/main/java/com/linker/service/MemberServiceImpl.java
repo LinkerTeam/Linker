@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService{
 		System.out.println("sendMail start2....");
 		sendMail.setText(
 				new StringBuffer().append("<h1>메일인증</h1>")
-				.append("<a href='http://localhost:8080/controller/emailConfirm?email=")
+				.append("<a href='http://localhost:8080/emailConfirm?email=")
 				.append(vo.getEmail())
 				.append("&team=")
 				.append(vo.getT_id())
@@ -59,7 +59,7 @@ public class MemberServiceImpl implements MemberService{
 				.toString()	
 				);
 		System.out.println("sendMail start3....");
-		sendMail.setForm("intosy227@gmail.com", "Linker");
+		sendMail.setForm("전체이메일", "Linker");
 		System.out.println("sendMail start4....");
 		sendMail.setTo(vo.getEmail());
 		System.out.println("sendMail start5....");

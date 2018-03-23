@@ -8,12 +8,51 @@
 </head>
 <body>
 
- <form method="POST">
+ <form id="teamAddform" method="POST">
 	<div>
-		팀이름: 
-		<input type="text" name="name"/>
+		<label for="name">팀이름: </label>
+		<input type="text" name="name" placeholder="write team name here."/>
 	</div>
 	<input type="submit" value="확인" />
 </form> 
 </body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+$(document).ready(function() {
+	$.validator.setDefaults({
+		onkeyup : false,
+		onclick : false,
+		onfocusout : false,
+		showErrors : function(errorMap, errorList){
+			if(this.numberOfInvalids()){
+				alert(errorList[0].message);
+			}
+		}
+	});
+	
+ 	$('#teamAddform').validate({
+		debug : true,  
+		rules:{
+			name : {
+				required : true,
+				maxlength : 20,
+			}
+		},
+		messages:{
+			name : {
+				required : "초대할 회원의 이메일을 입력해주세요.",
+				maxlength : "20자 이하로 입력해주세요."
+			}
+		},
+		submitHandler : function(form){
+			form.submit();
+		}
+	});
+	  
+	});
+</script>
+
 </html>

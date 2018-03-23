@@ -60,7 +60,7 @@
 								<td class="nickname" style="border: 1px solid black">${memberList.nickname}</td>
 								<td class="auth" style="border: 1px solid black">${memberList.auth}</td>
 								<c:choose>
-									<c:when test="${teamList.auth==0 || memberList.auth==1 }">
+									<c:when test="${teamList.auth==0 || teamList.auth==1 }">
 										<td><input type="button" class="modifyAuthBtn" name="modifyAuthBtn" value="권한수정" /></td>
 										<td><input type="button" class="deleteMemberBtn" name="deleteMemberBtn" value="삭제" /></td>
 									</c:when>
@@ -76,7 +76,7 @@
 	<div id="teamModalModifyDiv" style="display: none">
 		<div>
 			수정할 팀 이름을 입력하세요. <input type="text" id="modalTextTxt"
-				name="modalTextTxt" />
+				name="modalTextTxt" maxlength="20" />
 		</div>
 		<div>
 			<button type="button" id="teamModalModifyBtn">수정</button>
