@@ -1,64 +1,68 @@
 package com.linker.controller;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
+import com.linker.domain.ReadCardlistVO;
 import com.linker.service.CardlistService;
 
-@Controller
-@RequestMapping("krystal/teams/{projectID}")
-public class CardlistController {
+@RestController
+@RequestMapping("/cards")
+public class CardlistController{
 	
-	private static final Logger logger = LoggerFactory.getLogger(CardlistController.class);
-
+	public static final Logger logger = LoggerFactory.getLogger(CardlistController.class);
+	
 	@Inject
-	private CardlistService cl_service;
-
-	/**
-	 * 진행 상태의 카드리스트 조회
-	 * @param projectID	프로젝트 아이디
-	 * @param model		조회 결과 데이터를 담는 객체
-	 * @return			이동될 화면 페이지명
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public String listInProgress(@PathVariable("projectID") int projectID, Model model) throws Exception {
-
-		// 데이터베이스에 요청한 조회 결과를 model객체에 담기
-		model.addAttribute("cardlist", cl_service.selectListInProgress(projectID));
-		return "cardlist";
+	private CardlistService service;
+	
+	
+	//카드리스트 조회 (특정 프로젝트에 대한 모든 카드리스트 목록
+	//URI에 특정 프로젝트id(p_id)를 넣으면 그 프로젝트에 대한 모든 카드리스트 보이도록 함.
+	@RequestMapping(value="/{p_id}", method=RequestMethod.GET)
+	public ResponseEntity<List<ReadCardlistVO>> readCardlist(@PathVariable("p_id") int p_id){
+		ResponseEntity<List<ReadCardlistVO>> entity = null;
+		
+		try { 
+			entity=new ResponseEntity<>(service.readCardlist(p_id), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
 	}
-
+	
+	
 	/**
 	 * 카드리스트 생성
+	 * 
 	 * @param vo		비동기 통신으로 전달된 JSON 객체
 	 * @return			등록된 카드리스트 아이디
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Integer> registCardlist(@RequestBody CardlistVO vo) throws Exception {
+	@RequestMapping(value = "/{p_id}", method = RequestMethod.POST)
+	public ResponseEntity<Integer> registCardlist(@RequestBody CardlistVO vo) throws Exception {
 	
 		// 등록 요청 결과를 view에 반환해주는 객체
 		ResponseEntity<Integer> entity = null;
-		
-		vo.setU_id(1); // 회원 ID를 어떻게 받아와야 할까
 	
 		try {
 			logger.info("============= registCardlist ==========" + vo.toString());
 			// 데이터베이스에 새로운 카드리스트 등록 요청
-			cl_service.registCardlist(vo);
+			service.registCardlist(vo);
 			// 등록된 카드리스트 아이디를 반환
 			entity = new ResponseEntity<>(vo.getId(), HttpStatus.OK);
 		} catch (Exception e) {
@@ -67,23 +71,26 @@ public class CardlistController {
 		}
 		return entity;
 	}
-
+	
+	
 	/**
 	 * 카드리스트 수정
 	 * @param vo		비동기 통신으로 전달된 JSON 객체
 	 * @return			수정 요청 결과 문자열
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/{cardlistID}", method = RequestMethod.PUT)
-	public @ResponseBody ResponseEntity<String> changeCardlist(@RequestBody CardlistVO vo) throws Exception {
+	@RequestMapping(value = "/{p_id}/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
+	public ResponseEntity<String> modifyCardlist(@PathVariable("id") Integer id, @RequestBody CardlistVO vo) throws Exception {
 
 		// 수정 요청 결과를 view에 반환해주는 객체
 		ResponseEntity<String> entity = null;
 		
+		vo.setId(id);
+		
 		try {
 			logger.info("============= changeCardlist ==========" + vo.toString());
 			// 데이터베이스에 카드리스트 수정 요청
-			cl_service.modifyCardlist(vo);
+			service.modifyCardlist(vo);
 			// 요청이 성공적으로 반영됐음을 알리는 문자열를 반환
 			entity = new ResponseEntity<>("SUCCESS", HttpStatus.OK);
 		} catch(Exception e) {
