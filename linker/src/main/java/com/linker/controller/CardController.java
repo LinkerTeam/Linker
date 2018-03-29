@@ -22,46 +22,34 @@ import com.linker.dto.CardDTO;
 import com.linker.service.CardService;
 
 @RestController
-@RequestMapping("/teams")
+@RequestMapping("/cards")
 public class CardController{
 	
 	@Inject
 	private CardService service;
+
 	
 	//카드 등록 처리
-	@RequestMapping(value = "/{p_id}/cards", method=RequestMethod.POST)
-	public ResponseEntity<String> createCard(@RequestBody CardVO vo){
+	@RequestMapping(value = "/{p_id}/card", method = RequestMethod.POST)
+	public ResponseEntity<Integer> createCard(@RequestBody CardVO vo){
 		
 		//새로운 카드 등록하는 데에 실패하면 예외 원인 메시지 전송,
 		//사용자에게 BAD_REQUEST(400) 전송하도록.
-		ResponseEntity<String> entity = null;
+		ResponseEntity<Integer> entity = null;
 		try {
 			service.createCard(vo);
-			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+			entity=new ResponseEntity<Integer>(vo.getId(), HttpStatus.OK); //성공하면 id값을 던져준다.
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			entity=new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
 	
-	
-	//카드리스트 조회 (특정 프로젝트에 대한 모든 카드리스트 목록)
-	//URI에 특정 프로젝트id(p_id)를 넣으면 그 프로젝트에 대한 모든 카드리스트 보이도록 함.
-	@RequestMapping(value="/{p_id}/cards", method=RequestMethod.GET)
-	public ResponseEntity<List<CardVO>> listCard(@PathVariable("p_id") int p_id){
-		ResponseEntity<List<CardVO>> entity = null;
-		try { 
-			entity=new ResponseEntity<>(service.listCard(p_id), HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	}
 	
 	//카드 목록에서 카드 제목 수정 처리
-	@RequestMapping(value="/{p_id}/cards/{id}", method= { RequestMethod.PUT, RequestMethod.PATCH })
+	@RequestMapping(value="/{p_id}/card/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> updateCard(@PathVariable("id") Integer id, @RequestBody CardVO vo){
 		ResponseEntity<String> entity = null;
 		try {
@@ -76,11 +64,12 @@ public class CardController{
 		return entity;
 	}
 	
+	
 	//팝업 카드 조회 - 카드를 클릭하면 뜨는 팝업창에서 카드의 정보를 띄움.
-	@RequestMapping(value="/{p_id}/cards/{id}", method=RequestMethod.GET)
+	@RequestMapping(value = "/{p_id}/card/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CardVO> readPopcard(@PathVariable("p_id") int p_id, @PathVariable("id") int id){
 		ResponseEntity<CardVO> entity = null;
-		CardDTO dto=new CardDTO();
+		CardDTO dto = new CardDTO();
 		dto.setId(id);
 		dto.setP_id(p_id);
 		

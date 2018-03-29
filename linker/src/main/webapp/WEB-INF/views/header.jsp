@@ -7,7 +7,7 @@
 <title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-<link href="/resources/css/header.css" type="text/css" rel="stylesheet" />
+<link href="/resources/css/header.css?ver=1" type="text/css" rel="stylesheet" />
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- fontawesome -->

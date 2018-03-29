@@ -1,6 +1,8 @@
 package com.linker.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -8,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.linker.domain.CardlistVO;
+import com.linker.domain.ReadCardlistVO;
 
 @Repository
 public class CardlistDAOImpl implements CardlistDAO{
@@ -29,9 +32,9 @@ public class CardlistDAOImpl implements CardlistDAO{
 		session.update(namespace+".updateCardlist", vo);
 	}
 
-	// 진행 상태의 카드리스트 조회
+	// 진행 상태의 카드리스트 & 카드 조회
 	@Override
-	public List<CardlistVO> selectListInProgress(int projectID) throws Exception {
-		return session.selectList(namespace+".selectListInProgress", projectID);
+	public List<ReadCardlistVO> readCardlist(int p_id) throws Exception {
+		return session.selectList(namespace + ".readCardlist", p_id);
 	}
 }

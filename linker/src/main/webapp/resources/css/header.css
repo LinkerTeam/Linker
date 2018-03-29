@@ -93,8 +93,12 @@ a {
     margin-top: 7px;
 }
 .header-search input {
-    width: 100%;
+	position: fixed;
+    width: 200px;
     height: 34px;
+    top: 0px;
+    right: 50px;
+    z-index: 1;
     background: #ff708e;
     padding-left: 15px;
     font-size: 12pt;
@@ -108,11 +112,12 @@ input[type=text]:focus { /*검색창 활성화할 때 효과*/
 .header-search button {
     height: 26px;
     width: 26px;
-    position: absolute;
+    position: fixed;
     top: 5px;
-    right: -8px;
+    right: 56px;
     background: #FA5883;
     cursor: pointer;
+    z-index: 2;
 }
 .header-search button span {
     color: #F9F0DA;
@@ -140,4 +145,5 @@ input[type=text]:focus { /*검색창 활성화할 때 효과*/
     margin-left: 230px;
     position: relative;
     background-color: rgba(156, 156, 156, 0.80);
+    transition: 0.2s;
 }
