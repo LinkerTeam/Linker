@@ -14,9 +14,8 @@
 	<!--확장 메뉴(글자)-->
 	<nav class="mainNav"> <!--확장메뉴 | 상단 프로필영역-->
 	<div class="profile-area">
-		<a href="#" class="profile-img-area"> <img
-			src="https://s18.postimg.org/8blvbj9tl/profile.png"
-			class="profile-img" />
+		<a href="#" class="profile-img-area"> 
+			<img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
 		</a>
 		<div class="profile-nickname-area">
 			<div class="profile-nickname">Holiday</div>

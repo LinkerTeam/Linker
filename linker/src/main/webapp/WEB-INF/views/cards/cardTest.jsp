@@ -10,7 +10,7 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardTest.css?ver=2" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardTest.css?ver=22" type="text/css" rel="stylesheet" />
 </head>
 
 
@@ -56,6 +56,25 @@
         
 	</div>
 	
+	<!-- 카드리스트 팝업 -->
+	<!-- 열기 | .is-visible -->
+	<div class="popupMenuWrap">
+	    <!-- 제목 -->
+	    <div class="popupMenuHeader">
+	        <div class="title">List Actions</div>
+	        <button class="popupMenuCloseBtn">
+	            <i class="far fa-times-circle"></i>
+	        </button>
+	    </div>
+	    <!-- 메뉴목록 -->
+	    <div class="popupMenuContent">
+	        <ul class="popupMenuList">
+	            <li class="to-achieve"><a href="#">달성</a></li>
+	            <li class="to-hide"><a href="#">가리기</a></li>
+	        </ul>
+	    </div>
+	</div>
+	
 	<!-- 카드팝업 jsp -->
 	<%@include file="cardModal.jsp"%>
 
@@ -89,7 +108,7 @@
 		function newCardlistAdd(cardlistId, cardlistTitle){
 			var listStr = "<div data-id='" + cardlistId + "' class='cardlist'>" + 
 						  "	   <div class='cardlistTitleBox'>" +
-						  "	   	   <button type='button' class='cardlistPopBtn'><i class='fas fa-ellipsis-h'></i><span class='replacement'>상태변경</span></button>" +
+						  "	   	   <button type='button' class='cardlistPopBtn'><img src='/resources/image/more.png' class='cardlistMore'/></button>" +
 						  "	       <textarea class='cardlistTitle' onKeyUp='limitMemo(this, 20)'>" + cardlistTitle + "</textarea>" +
 						  "	   </div>" +
 						  "	   <div class='cards'>" +
@@ -195,14 +214,21 @@
 		/* 카드 등록 | Add a card... 눌렀을 때 카드추가창 보이기 */
 		$(".cardlists").on("click", ".createCardBox", function(){
 			var index = $("footer.createCardBox").index(this);//카드리스트의 전체 footer 중 클릭한 footer의 인덱스값 얻기
+			var cardlistHeader = $(this).parent().children(":first").height(); //카드리스트 제목영역 높이		
 			
 			$(".hidden").removeClass("hidden"); //다른 요소들의 클래스이름 hidden을 제거함으로써 나타내기
 			$(this).addClass("hidden"); //Add a card...에 클래스이름 hidden을 부여함으로써 숨기기
 			
 			$(".show").removeClass("show"); //다른 요소들의 클래스이름 show를 제거함으로써 숨기기
+			$(".showLong").removeClass("showLong"); //다른 요소들의 클래스이름 showLong을 제거함으로써 카드리스트 높이 초기화
 			$(this).prev().children(".addCard").addClass("show"); //카드추가창에 클래스이름 show를 부여함으로써 나타내기
-			$(".show").parent().addClass("show"); //.cards에 클래스이름 show부여(heigth 조절, 끝부분 radius주기 위해)
 			
+			//카드리스트 높이 조절
+			if(cardlistHeader < 40)
+				$(".show").parent().addClass("showLong");  //.cards에 클래스이름 show부여(heigth 조절, 끝부분 radius주기 위해) : 헤더가 한 줄일 경우
+			else 
+				$(".show").parent().addClass("show"); //.cards에 클래스이름 show부여(heigth 조절, 끝부분 radius주기 위해) : 헤더가 두 줄일 경우
+		
 			$(".addCard.show").children().first().focus(); //커서 포커스 줌. 
 			
 			cards[index].scrollTop = cards[index].scrollHeight; //추가창 보이도록 스크롤 아래로 이동
@@ -220,6 +246,7 @@
 			if((className !== "addCard show" && className !== "createCardBox hidden" && id !== "createCardTextarea") || id === "cancleBtn"){ 
 				$(".hidden").removeClass("hidden"); //클래스이름 hidden을 제거함으로써 나타내기
 				$(".show").removeClass("show"); //클래스이름 show를 제거함으로써 숨기기
+				$(".showLong").removeClass("showLong"); //클래스이름 showLong를 제거함으로써 숨기기
 			};
 		});
 		
@@ -360,6 +387,17 @@
 		 *카드리스트 관련
 		 */
 		 
+		 
+		/* 카드리스트 모달창 닫기 */
+		function closeCardlistPop(){
+			var popup = $('.popupMenuWrap');
+			if (popup.hasClass('is-visible'))
+				popup.removeClass('is-visible');
+		};
+		 
+		
+		 
+		 
 		/* 카드리스트 등록 | 카드리스트 추가버튼 눌렀을 때 추가창 나타내기 */
 		$(".cardlists").on("click", ".addList", function(){
 			$(".cardlistTitle.create").css("display", "block");
@@ -473,7 +511,7 @@
 		
 		
 		
-		/* 카드리스트 제목 수정과 관련된 이벤트 */
+		/* 카드리스트 제목 수정 | 관련 이벤트 */
 		$('.cardlists').on({			
 			click: function(){
 				// 카드리스트 제목 클릭하면 전체선택
@@ -515,6 +553,93 @@
 		
 		
 		
+		/* 카드리스트 모달 컨트롤 | 카드리스트 상태변경 팝업창 띄우기 */
+		$('.cardlists').on('click', '.cardlistPopBtn', function() {
+			var btnPosition = $(this).offset();	// 버튼좌표
+			var popup = $('.popupMenuWrap');	// 팝업
+			
+			// 선택한 카드리스트 아이디 정보를 팝업에 저장
+			var selectedCardlist = $(this).parents('.cardlist');
+			popup.data('data-cl-id', selectedCardlist.data('id'));
+						
+			// 팝업이 화면에 없다면 띄우기
+			if (!popup.hasClass('is-visible'))
+				popup.addClass('is-visible');
+			
+			// 팝업 좌표설정
+			popup.css('top', btnPosition.top + $(this).height());
+			if((btnPosition.left + popup.width()) > $(window).width()){
+				var MARGIN_RIGHT = 10;
+				var overWidth = (btnPosition.left + popup.width()) - $(window).width() + MARGIN_RIGHT;
+				popup.css('left', btnPosition.left - overWidth);
+			} else {
+				popup.css('left', btnPosition.left);
+			}
+		});
+		
+		
+		/* 카드리스트 수정 | 상태변경 */
+		$('.popupMenuList li').on('click', function() {
+			var CARDLIST_STATE_ACHIEVEMENT = 2; // 카드리스트 상태 값 (달성)
+			var CARDLIST_STATE_HIDING = 3;		// 카드리스트 상태 값 (가리기)
+			var state = null;					// 선택한 상태 값을 저장
+			
+			var popup = $('.popupMenuWrap');
+			var cardlistID = popup.data('data-cl-id');	// 상태 변경된 카드리스트 아이디
+			
+			if($(this).hasClass('to-achieve'))
+				state = CARDLIST_STATE_ACHIEVEMENT;	// 달성 버튼
+			else
+				state = CARDLIST_STATE_HIDING;		// 가리기 버튼
+		
+			// 팝업 닫기
+			closeCardlistPop();
+		
+			$.ajax({
+				type : 'put',
+				url : "/cards/" + p_id + "/" + cardlistID,
+				headers : {
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'PUT'
+				},
+				data : JSON.stringify({ps_id : state}),
+				dataType : 'text',
+				success : function(result) {
+					console.log('result: ' + result);
+					// 카드리스트 상태 변경이 성공적으로 데이터베이스에 반영되면
+					if (result == 'SUCCESS') {
+						console.log('카드리스트 아이디 : ' + cardlistID + ', 상태 ' + state + '(으)로 수정 되었습니다.');
+						// 상태 변경된 카드리스트의 임시 데이터를 삭제
+						popup.removeData('data-cl-id');
+						// 상태 변경된 카드리스트 요소를 삭제
+						$('.cardlist[data-id="' + cardlistID + '"').remove();
+					}
+				},
+				error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+			});
+		
+		});
+		
+		/* 카드리스트 팝업 닫기 버튼 */
+		$('.popupMenuCloseBtn').on('click', function() {
+			closeCardlistPop();
+		});
+		
+		
+		
+		/* 카드리스트 모달 이외의 영역을 클릭하면 모달창 닫힘 */
+		$(document).click(function(e){
+			//클릭한 객체의 id와 class이름을 가져옴.
+			var className = $(e.target).attr("class");
+			
+			if(className !== "cardlistPopBtn" && className !== "title" && className !== "popupMenuHeader" 
+					&& className !== "popupMenuContent" && className !== "cardlistMore"){ 
+				closeCardlistPop();
+			};
+		});
+
 	</script>
 </body>
 </html>

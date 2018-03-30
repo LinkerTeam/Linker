@@ -89,6 +89,7 @@
                     <li><div class=aside-Members><i class="fas fa-users"></i><p>Members</p></div></li>
                     <li><div class=aside-Archive><i class="fas fa-archive"></i><p>Archive</p></div></li>
                     <li><div class=aside-Hide><i class="far fa-eye-slash"></i><p>Hide</p></div></li>
+                    <li><div class=aside-sendToBoard><i class="fas fa-undo-alt"></i><p>Send to board</p></div></li>
                 </ul>
             </aside>
 
@@ -116,6 +117,7 @@
 	    	17. jQuery, javascript 짬뽕 정리(-)
 	    	18. 카드리스트와 통합하여 기능확인, 정리하기(-)
 	    	19. 리스트에서 화면 마우스로 클릭하고 움직이면 스크롤 따라오게 (-)
+	    	20. 카드리스트 달성/숨기기 모달창 띄우고 스크롤할 때 모달창만 둥둥 뜨는 문제(-)
 	    **************************************************************************************************************
 	    	<해결한 것>
 	    	1. 카드모달 닫을 때 새로고침 되지 않게 (+)
@@ -168,13 +170,50 @@
 	    	    contentTextarea.style.height = (contentTextarea.scrollHeight) + "px";
 	    	    
 	    	    //달성카드인지 판단
-	    	    if(data.ps_id === 2){  	
-	    			$(".archive-banner").addClass("archive"); //카드모달창 상단 This card is archived 표시
-	    			$(".popupCard").addClass("archive"); //카드모달창 padding 조절
+	    	    /* if(data.ps_id === 2){
+	    	    	$(".archive-banner").children("p").html("This card is archived."); //카드모달창 상단
+	    	    	$(".aside-Archive").css("display", "none"); //달성버튼 가리기
+	    	    	$(".aside-sendToBoard").css("display", "block"); //send to board버튼 보이기
+	    			$(".archive-banner").addClass("archiveShow"); //class이름 archive 부여함으로써 화면에 출력
+	    			$(".popupCard").addClass("archiveShow"); //카드모달창 padding 조절
 	    	    } else {
-	    			$(".archive-banner").removeClass("archive"); 
-	    			$(".popupCard").removeClass("archive");
-	    	    }
+	    			$(".archive-banner").removeClass("archiveShow"); 
+	    			$(".popupCard").removeClass("archiveShow");
+	    	    };
+	    	    
+	    	    //숨김카드인지 판단
+	    	    if(data.ps_id === 3){  	
+	    			$(".archive-banner").children("p").html("This card is hidden."); //카드모달창 상단
+	    	    	$(".aside-Hide").css("display", "none"); //숨김버튼 가리기
+	    	    	$(".aside-sendToBoard").css("display", "block"); //send to board버튼 보이기
+	    			$(".archive-banner").addClass("hiddenShow"); //class이름 archive 부여함으로써 화면에 출력
+	    			$(".popupCard").addClass("hiddenShow"); //카드모달창 padding 조절
+	    	    } else {
+	    			$(".archive-banner").removeClass("hiddenShow"); 
+	    			$(".popupCard").removeClass("hiddenShow");
+	    	    } */
+	    	    switch (data.ps_id) {
+	            case 1:
+	                $(".archive-banner").removeClass("archiveShow");
+	                $(".popupCard").removeClass("archiveShow");
+	                $(".archive-banner").removeClass("hiddenShow");
+	                $(".popupCard").removeClass("hiddenShow");
+	                break;
+	            case 2:
+	                $(".archive-banner").children("p").html("This card is archived."); //카드모달창 상단
+	                $(".aside-Archive").css("display", "none"); //달성버튼 가리기
+	                $(".aside-sendToBoard").addClass("archiveShow"); //send to board버튼 보이기
+	                $(".archive-banner").addClass("archiveShow"); //class이름 archive 부여함으로써 화면에 출력
+	                $(".popupCard").addClass("archiveShow"); //카드모달창 padding 조절
+	                break;
+	            case 3:
+	                $(".archive-banner").children("p").html("This card is hidden."); //카드모달창 상단
+	                $(".aside-Hide").css("display", "none"); //숨김버튼 가리기
+	                $(".aside-sendToBoard").addClass("hiddenShow"); //send to board버튼 보이기
+	                $(".archive-banner").addClass("hiddenShow"); //class이름 archive 부여함으로써 화면에 출력
+	                $(".popupCard").addClass("hiddenShow"); //카드모달창 padding 조절
+	                break;
+	        }
 	    	});//JSON
 	    	cardModal.style.display = "block"; //모달창 띄우기
 	    };
@@ -204,7 +243,7 @@
 	    
 	    
 	    /* 제목 | 폼 활성화시 text 전체선택 */
-	    popCardTitle.addEventListener('click', function ( e ) {
+	    popCardTitle.addEventListener('click', function (e) {
 	    	popCardTitle.select();
 	    });
 	    
@@ -336,8 +375,12 @@
 	    
 	    
 	    /* 달성 | 카드모달창에서 달성 메뉴 클릭할 경우 */
-	    $(".aside-Archive").click(function(){
-	    	var ps_id = 2;
+	    //$(".aside-Archive").click(function(){
+	    $("aside ul li").click(function(){
+	    	alert("ㄴ");
+	    	var CARD_STATUS_ARCHIVE = 2;
+	    	var CARD_STATUS_HIDDEN = 3;
+	    	var ps_id;
 	    	$.ajax({
 	    		type : 'put',
 	    		url : "/cards/"+p_id+"/card/" + popCardId,
@@ -349,16 +392,18 @@
 	    		dataType : 'text', 
 	    		success : function(result) {
 	    			if(result === "SUCCESS"){
-		    			$(".archive-banner").addClass("archive"); //카드모달창 상단 This card is archived 표시
-		    			$(".popupCard").addClass("archive"); //카드모달창 padding 조절
+		    			$(".archive-banner").addClass("archiveShow"); //카드모달창 상단 상태 표시
+		    			$(".popupCard").addClass("archiveShow"); //카드모달창 padding 조절
 		    				    			
 		    			//카드리스트에서 숨기기, 달성탭에서 보이기
 		    			cardtitleLi = $(modifyCardTitle).parent(); //달성탭으로 태그 보내기 위해 변수에 담아둠
 		    			$(modifyCardTitle).parent().detach(); //리스트에서 카드 삭제(detach() : 하위태그 모두 삭제)
 		    			$(cardtitleLi).addClass("archive"); //달성탭에서 보이는 카드의 CSS 속성 변경을 위해 클래스이름 archive추가
 		    			$(".nav-tab-content-Box-card").prepend(cardtitleLi); //card태그 삽입
-		    			$(cardtitleLi).children("button").detach(); //수정 버튼 삭제
-		    			$(cardtitleLi).children("#cardLink").append("<div><i class='fas fa-archive'></i> archive</div>"); //archive아이콘, 글자삽입
+		    			$(cardtitleLi).children("button").css("display", "none"); //수정 버튼 가리기
+		    			$(".aside-Archive").css("display", "none"); //달성버튼 가리기
+		    			$(".aside-sendToBoard").css("display", "block"); //send to board버튼 보이기
+		    			$(cardtitleLi).children("#cardLink").append("<div><i class='fas fa-archive'></i> archive</div>"); //달성탭에서 보이는 카드에 아이콘 삽입
 		    			var str = "<p class='quiet'>" + 
 		    					  "    <button class='archive-reopen archiveBtn'>Send to Cardlist</button>" +
 		    					  " - " +

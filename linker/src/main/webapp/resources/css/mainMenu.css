@@ -149,6 +149,7 @@
     overflow-x: hidden;
     transition: 0.2s; /*열었다 닫았다 할 때*/
     color: #fff;
+    z-index: 999;
 }
 .nav-tabs-wrap {
     position: absolute;

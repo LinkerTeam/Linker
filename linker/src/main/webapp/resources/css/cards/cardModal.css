@@ -16,7 +16,6 @@ article {
 #popupBox {
 display: none;
 position: fixed;
-z-index: 3;
 left: 0;
 top: 0;
 width: 100%;
@@ -24,6 +23,7 @@ height: 100%;
 background-color: rgb(0,0,0); /* Fallback color */
 background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 overflow: auto;
+z-index: 9999;
 }
 /* 팝업화면 | 카드 전체 */
 .popupCard {
@@ -38,9 +38,6 @@ overflow: auto;
     background: #fff;
     background-color: rgb(237, 239, 240);
 }
-.popupCard.archive{
-	padding: 70px 20px 20px 20px;
-}
 .popupCard:after {
     display: block;
     content: "";
@@ -53,10 +50,7 @@ overflow: auto;
     top: 0;
     left: 0;
     font-size: 15px;
-    z-index: 1;
-}
-.archive-banner.archive{
-    display: block;
+    z-index: 7777;
 }
 .archive-banner:after {
     content: "";
@@ -74,6 +68,15 @@ overflow: auto;
     color: #2e2e2e;
     line-height: 30px;
 }	
+.aside-sendToBoard{
+	display: none;
+}
+.popupCard.archiveShow{
+	padding: 70px 20px 20px 20px;
+}
+.archiveShow, .hiddenShow{
+    display: block;
+}
 	
 	
 /* 헤더부분 ~~~~~ */
@@ -113,7 +116,7 @@ overflow: auto;
     color: gray;
     text-decoration: none;
     cursor: pointer;
-    z-index: 2;
+    z-index: 8888;
 }
 	
 /* 왼쪽 | 카드 실제 내용 부분 */
