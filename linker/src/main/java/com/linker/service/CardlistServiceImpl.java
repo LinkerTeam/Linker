@@ -24,9 +24,11 @@ public class CardlistServiceImpl implements CardlistService {
 	// 카드리스트 수정
 	@Override
 	public void modifyCardlist(CardlistVO cardlist) throws Exception {
+		System.out.println(cardlist);
 		cardlist_dao.updateCardlist(cardlist);
 	}
 
+	//카드리스트, 카드 전체 조회
 	@Override
 	public List<ReadCardlistVO> readCardlist(int p_id) throws Exception {
 		return cardlist_dao.readCardlist(p_id);

@@ -11,6 +11,6 @@ public interface CardlistService {
 	public void registCardlist(CardlistVO cardlist)throws Exception;
 	// 카드리스트 수정
 	public void modifyCardlist(CardlistVO cardlist)throws Exception;
-	
+	// 카드리스트, 카드 전체 조회
 	public List<ReadCardlistVO> readCardlist(int p_id) throws Exception;
 }
