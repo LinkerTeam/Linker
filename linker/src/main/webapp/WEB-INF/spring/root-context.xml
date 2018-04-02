@@ -47,7 +47,7 @@
 		<property name="password" value="${mail.password}"></property>
 		
 		<property name="javaMailProperties">
-			<props>
+			<props> 
 				<prop key="mail.transprot.protocol">smtp</prop>
 				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
