@@ -14,6 +14,15 @@ public class UserVO {
 	private String google;
 	private Date ddate;
 	private int status;
+	private String authCode;
+
+	public String getAuthCode() {
+		return authCode;
+	}
+
+	public void setAuthCode(String authCode) {
+		this.authCode = authCode;
+	}
 
 	public int getId() {
 		return id;
@@ -26,7 +35,6 @@ public class UserVO {
 	public Date getCdate() {
 		return cdate;
 	}
-
 
 	public void setCdate(Date cdate) {
 		this.cdate = cdate;
@@ -71,7 +79,6 @@ public class UserVO {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-
 
 	public String getEmail() {
 		return email;

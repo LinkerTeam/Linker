@@ -10,6 +10,7 @@ import org.springframework.mail.MailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
+//이메일을 보내기 위한 유틸 클래스 
 public class MailHandler {
 
 	private JavaMailSender mailSender;
