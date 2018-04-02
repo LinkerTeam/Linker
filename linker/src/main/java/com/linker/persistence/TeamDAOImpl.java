@@ -28,12 +28,6 @@ public class TeamDAOImpl implements TeamDAO {
 	public List<TeamVO> listTeam(int u_id) throws Exception {
 		return session.selectList(namespace + ".listTeam", u_id);
 	}
-	
-	// 팀  id 출력
-	@Override
-	public int selectTeam(String name) throws Exception {
-		return session.selectOne(namespace + ".selectTeam", name);
-	}
 
 	// 팀이름수정
 	@Override

@@ -1,5 +1,6 @@
 package com.linker.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -49,7 +50,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberVO userHasTeamUid(int u_id, int t_id) throws Exception{
 		logger.info("memberDAO implement start.....");
 		MemberVO vo = new MemberVO();
-		vo.setU_id(u_id);
+		vo.setU_id(u_id);	
 		vo.setT_id(t_id);
 		return session.selectOne(namespace + ".userHasTeamUid", vo);
 	}

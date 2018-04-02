@@ -29,6 +29,18 @@
 		JOIN team AS t ON t.id=thu.t_id
 		WHERE email= #{email} and t_id = #{t_id}
         ;
+     </select> 
+     
+       <!-- 회원 아이디과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 멤버 초대 창 열 때 필요
+     	  버튼을 누르면 Query 실행-->
+ 	 <select id="userHasTeamUid" resultType="MemberVO">
+         SELECT thu.u_id, nickname,
+		t.name, auth, thu.t_id, email
+		FROM user AS u
+		JOIN team_has_user AS thu ON u.id=thu.u_id
+		JOIN team AS t ON t.id=thu.t_id
+		WHERE u_id= #{u_id} and t_id = #{t_id}
+        ;
      </select>  
      
      <!-- email을 이용해서 userID정보를 가져옴-->

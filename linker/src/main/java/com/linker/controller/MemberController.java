@@ -52,16 +52,19 @@ public class MemberController {
 
 	//로그인과 연결하기 전, 임시로 u_id, t_id를 지정함.
 	int u_id=11;//userID
-	int t_id=105;//teamID
+	int t_id=59;//teamID
 	
 	//멤버 추가(memberAdd).jsp 가져오기 [해설 : memberAdd.jsp 1.]
 	@RequestMapping(value="/member/memberAdd", method=RequestMethod.GET)
 	public void memberAddGET(MemberVO vo, Model model) throws Exception{
-		vo.setU_id(11);
-//		logger.info("memberAddGET start.");
+		logger.info("memberAddGET start.");
 		//해당 user가 속한 특정 팀의 정보를 가져온다.
-		vo=service.userHasTeamUid(11,t_id); //service의 결과를 vo변수에 넣음
-//		logger.info("memberAdd page is open......" + vo.toString());
+		logger.info("control u_id =" + u_id);
+		logger.info("control t_id =" + t_id);
+		logger.info("service 실행 : " + service.userHasTeamUid(u_id, t_id));
+//		logger.info("vo : " + service.userHasTeamUid(u_id, t_id));
+//		vo=service.userHasTeamUid(u_id,t_id); //service의 결과를 vo변수에 넣음
+//		logger.info("memberAdd page is open......" + vo);
 		model.addAttribute(vo);
 		
 	}
@@ -77,15 +80,17 @@ public class MemberController {
 //		logger.info("초대유저 정보 : " + vo2.toString());
 		//해당 팀에 이미 초대하려는 user가 있으면 logger를 출력. 없으면 create함수 실행함.
 		if(service.userHasTeamEmail(vo2.getEmail(), t_id) == null) {
-//			logger.info("해당 유저는 team에 없음.");
+			logger.info("해당 유저는 team에 없음.");
 			//초대하려는 user에게 인증 메일을 전송. DB team_has_user에 status값이 0인 데이터를 생성 
-			service.create(vo2);
+//			service.create(vo2);
 			rttr.addFlashAttribute(model);
+			return "redirect:/team/teamList";
 		}else{
 			logger.info("해당 team에 멤버임.");
+			return "member/memberAdd";
 		}
 
-		return "redirect:/team/teamList";
+		
 	}
 
 	//초대받은 user가 메일에서 하이퍼링크를 누르면 뜨는 창(emailConfirm).jsp [해설 : emailConfirm.jsp 1.]
