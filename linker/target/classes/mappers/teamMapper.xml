@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.linker.mapper.teamMapper">
-
+	
 	<!-- 새로운 team 생성 -->
-	<insert id="createTeam">
-		INSERT INTO team(name) VALUES( #{name});
+	<insert id="createTeam" parameterType="TeamVO" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
+		INSERT INTO team(name) VALUES(#{name})
 	</insert>
 
 	<!-- team수정(이름) /그 팀에서 권한이 0인 user만 가능-->
@@ -25,18 +25,10 @@
 		WHERE u_id=#{u_id}
 	</select>
 	
-	<!-- team id 출력 -->
-	<select id="selectTeam" resultType="int">
-		SELECT id
-		FROM team
-		WHERE name=#{name}
-	</select>
-	
 	<!-- team 삭제 /그 팀에서 권한이 0인 user만 가능-->
 	<delete id="deleteTeam">
 		DELETE FROM team
 		WHERE id = #{t_id}
 	</delete>
-	
 	
 </mapper>

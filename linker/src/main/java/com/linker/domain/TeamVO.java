@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TeamVO {
 	private int t_id; //팀아이디
+	private int id;//팀 테이블의 id
 	private String name; //팀이름
 	private int u_id; //회원아이디
 	private Date date; //날짜(수정날짜, 삭제날짜)
@@ -46,12 +47,19 @@ public class TeamVO {
 	public void setCdate(Date cdate) {
 		this.cdate = cdate;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
 	@Override
 	public String toString() {
 		return "TeamVO [t_id=" + t_id + ", name=" + name + ", u_id=" + u_id + ", date=" + date + ", auth=" + auth
-				+ ", cdate=" + cdate + "]";
+				+ ", cdate=" + cdate + ", id=" + id + "]";
 	}
-	
-	
-	
+
 }
