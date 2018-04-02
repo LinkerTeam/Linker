@@ -7,29 +7,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 카드리스트 생성 -->
 	<insert id="createCardlist">
-	INSERT INTO cardlist (p_id, u_id, title)
-	VALUES (#{p_id}, #{u_id}, #{title})
+		INSERT INTO linker.cardlist (p_id, u_id, title)
+		VALUES (#{p_id}, #{u_id}, #{title})
+		<selectKey keyProperty="id" resultType="Integer" order ="AFTER">
+			SELECT last_insert_id() AS id
+		</selectKey>
 	</insert>
 	
 	<!-- 카드리스트  수정 -->
 	<update id="updateCardlist">
-	UPDATE cardlist
-	SET title = #{title}, ps_id = #{ps_id}
-	WHERE id = #{id}
+		UPDATE linker.cardlist
+		<set>
+			<if test="title != null">title = #{title}</if>
+			<if test="ps_id != 0 and ps_id != null">ps_id = #{ps_id}</if>
+		</set>
+		WHERE id = #{id}
 	</update>
 		
 	<!-- 진행 상태의 카드리스트 조회 -->
-	<select id="selectListInProgress" resultType="com.linker.domain.CardlistVO">
-	<![CDATA[
-	SELECT c.id, c.p_id, c.u_id, c.title, c.cdate, c.udate, c.ps_id
-	FROM cardlist c
-	JOIN project p
-	ON c.p_id = p.id
-	JOIN pcl_status ps
-	ON c.ps_id = ps.id
-	WHERE c.p_id = #{projectID} AND c.ps_id = 1
-	ORDER BY c.id DESC
-	]]>
+	<select id="readCardlist" resultType="ReadCardlistVO">
+		SELECT
+			cl.p_id, 
+            cl.id AS cl_id,
+			cl.u_id AS cl_u_id, 
+			cl.title AS cl_title,
+			cl.cdate AS cl_cdate, 
+			cl.udate AS cl_udate, 
+			cl.ps_id AS cl_ps_id, 
+			c.id AS c_id, 
+			c.u_id AS c_u_id, 
+			c.title AS c_title, 
+			c.content, 
+			c.cdate AS c_cdate, 
+			c.udate AS c_udate,
+			c.ps_id AS c_ps_id            
+		FROM linker.card c
+		RIGHT JOIN linker.cardlist cl ON cl.id = c.cl_id
+        WHERE p_id = #{p_id}
+        AND cl.ps_id = 1
+        AND c.ps_id = 1  OR c.ps_id IS NULL
 	</select>
 	
 </mapper>

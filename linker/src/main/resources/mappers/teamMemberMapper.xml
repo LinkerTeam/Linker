@@ -8,8 +8,8 @@
 	<!-- team 이름이 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
 	<select id="checkMember" resultType="int">
 		SELECT count(email)
-		FROM user AS u
-		JOIN team_has_user AS thu ON u.id=thu.u_id
+		FROM linker.user AS u
+		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
 		WHERE email= #{email} and t_id = #{t_id} and thu.status = 1;
 	</select>
 	
@@ -17,8 +17,8 @@
      <select id="TeamHasUsers" resultType="TeamMemberVO">
         SELECT thu.t_id, thu.u_id, u.nickname,
 		thu.auth, u.email, thu.status
-        FROM team_has_user AS thu
-        JOIN user AS u ON thu.u_id = u.id
+        FROM linker.team_has_user AS thu
+        JOIN linker.user AS u ON thu.u_id = u.id
         WHERE thu.status=1 AND
         thu.t_id IN (
         SELECT t_id
@@ -30,9 +30,9 @@
    <!-- email과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 이메일 인증 하이퍼링크를 누르면 실행/ emailConfirm-->
  	 <select id="userHasTeamEmail" resultType="TeamMemberVO">
         SELECT thu.u_id, nickname, auth, thu.t_id, email
-		FROM user AS u
-		JOIN team_has_user AS thu ON u.id=thu.u_id
-		JOIN team AS t ON t.id=thu.t_id
+		FROM linker.user AS u
+		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
+		JOIN linker.team AS t ON t.id=thu.t_id
 		WHERE email= #{email} AND t_id = #{t_id}
      </select> 
       
@@ -40,41 +40,41 @@
  	 <select id="userHasTeamUid" resultType="TeamMemberVO">
          SELECT thu.u_id, nickname,
 		t.name, auth, thu.t_id, email
-		FROM user AS u
-		JOIN team_has_user AS thu ON u.id=thu.u_id
-		JOIN team AS t ON t.id=thu.t_id
+		FROM linker.user AS u
+		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
+		JOIN linker.team AS t ON t.id=thu.t_id
 		WHERE u_id= #{u_id} AND t_id = #{t_id}
      </select>  
      
 	<!--email을 이용해서 userID정보를 가져옴/emailConfirm-->
  	 <select id="userEmail" resultType="TeamMemberVO">
         SELECT id as u_id, nickname, email
-		FROM user
+		FROM linker.user
 		WHERE email= #{email}
      </select> 
       
 	<!-- member 초대해서 생성/ auth defualt 값: 2, status default 값: 0 -->
 	<insert id="createMember">
-		INSERT INTO team_has_user(t_id, u_id)
+		INSERT INTO linker.team_has_user(t_id, u_id)
 		VALUES (#{t_id},#{u_id})
 	</insert>
 
 	<!-- 팀을 직접 만들어서 member 생성 -->
 	<insert id="connectTeamMember">
-		INSERT INTO team_has_user(t_id, u_id, auth, status)
+		INSERT INTO linker.team_has_user(t_id, u_id, auth, status)
 		VALUES (#{t_id},#{u_id},0, 1)
 	</insert>
 	
 	<!-- member 추방/그 팀에서 권한이 0 또는 1인 user만 가능 -->
 	<delete id="deleteMember">
-		DELETE FROM team_has_user
+		DELETE FROM linker.team_has_user
 		WHERE u_id=#{u_id}
 		AND t_id=#{t_id}
 	</delete>
 
 	<!-- member 수정(권한수정)/그 팀에서 권한이 0 또는 1인 user만 가능-->
 	<update id="modifyMemberAuth">
-		UPDATE team_has_user
+		UPDATE linker.team_has_user
 		SET auth = #{auth}
 		WHERE u_id=#{u_id}
 		AND t_id=#{t_id}
@@ -82,7 +82,7 @@
 	
 	<!-- member 인증 상태코드 변경. default값은 0. 인증완료는 1. -->
 	<update id="modifyMemberStatus">
-		UPDATE team_has_user
+		UPDATE linker.team_has_user
 		SET status = 1
 		WHERE u_id=#{u_id}
 		AND t_id=#{t_id}

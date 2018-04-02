@@ -531,21 +531,8 @@ public class UserController {
 		vo.setEmail(email);
 		vo.setNickname(nickname);
 
-		UserVO vo2 = service.viewUser(vo.getEmail());
-		if (vo2.getStatus() == 2) {
-
-			// 페이지를 따로넘기지않고 alert창을 뛰움
-			response.setContentType("text/html; charset=UTF-8");
-
-			PrintWriter out = response.getWriter();
-
-			out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1);</script>");
-
-			out.flush();
-
-			return "user/login";
-
-		}
+		   System.out.println("vo 뭐다냥"+vo.toString());
+	
 
 		System.out.println(singupService.serchGoogle(vo));
 
@@ -564,6 +551,23 @@ public class UserController {
 			singupService.insertGoogle(vo);
 		}
 
+		//만약 처음 접속시 값을 못가져오기때문에 순서가 중요하다.
+		UserVO vo2 = service.viewUser(vo.getEmail());
+		  System.out.println(vo2.toString());
+		if (vo2.getStatus() == 2) {
+
+			// 페이지를 따로넘기지않고 alert창을 뛰움
+			response.setContentType("text/html; charset=UTF-8");
+
+			PrintWriter out = response.getWriter();
+
+			out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1);</script>");
+
+			out.flush();
+
+			return "user/login";
+
+		}
 		// DB로부터 정보 받아와서 세션을에 저장하고싶어서 보냄
 		vo = singupService.serchGoogle(vo);
 
@@ -765,8 +769,10 @@ public class UserController {
 
 	@RequestMapping(value = "/googleSescession", method = RequestMethod.GET)
 	public String googleSescession(HttpSession session) throws Exception {
-
-		 UserVO vo = (UserVO) session.getAttribute("login");
+       
+		System.out.println("/googleSescession");
+	
+		UserVO vo = (UserVO) session.getAttribute("login");
 
 		 System.out.println("너는 뭐입니까??"+vo.getGoogle()+"+"+vo.getGoogle().equals("0"));
 		 

@@ -7,12 +7,12 @@
 	
 	<!-- 새로운 team 생성 -->
 	<insert id="createTeam" parameterType="TeamVO" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
-		INSERT INTO team(name) VALUES(#{name})
+		INSERT INTO linker.team(name) VALUES(#{name})
 	</insert>
 
 	<!-- team수정(이름) /그 팀에서 권한이 0인 user만 가능-->
 	<update id="modifyTeam">
-		UPDATE team t
+		UPDATE linker.team t
 		SET t.name = #{name}
 		WHERE id = #{t_id}
 	</update>
@@ -20,14 +20,14 @@
 	<!-- team 목록 출력 -->
 	<select id="listTeam" resultType="TeamVO">
 		SELECT u_id, t_id, team.name, team.cdate, auth
-		FROM team_has_user 
-		JOIN team ON team.id=t_id
+		FROM linker.team_has_user 
+		JOIN linker.team ON team.id=t_id
 		WHERE u_id=#{u_id}
 	</select>
 	
 	<!-- team 삭제 /그 팀에서 권한이 0인 user만 가능-->
 	<delete id="deleteTeam">
-		DELETE FROM team
+		DELETE FROM linker.team
 		WHERE id = #{t_id}
 	</delete>
 	

@@ -7,7 +7,7 @@
 
 	<insert id="insertMember">
 		INSERT INTO
-		user(email,password,nickname)
+		linker.user(email,password,nickname)
 		VALUES(#{email},#{password},#{nickname})
 	</insert>
 
@@ -16,12 +16,12 @@
 	</select>
 	
 	<update id="createAuthKey">
-		UPDATE user SET authCode = #{authCode}
+		UPDATE linker.user SET authCode = #{authCode}
 		 WHERE email =#{email}
 	</update>
    
     <update id="status">
-     UPDATE user SET status = 1
+     UPDATE linker.user SET status = 1
      WHERE email=#{email}
      
     </update>
@@ -29,14 +29,14 @@
    <!-- 구글 회원가입 -->
    <insert id="insertGoogle">
      INSERT INTO  
-     user(email,nickname,google)
+     linker.user(email,nickname,google)
      VALUES (#{email},#{nickname},1)
    </insert>
    
    <!-- 구글 로그인 처음인지 확인 -->
    <select id="serchGoogle" resultType="UserVO">
    SELECT *
-   FROM user
+   FROM linker.user
    WHERE email=#{email}
    </select>
  
