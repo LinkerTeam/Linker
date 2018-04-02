@@ -139,8 +139,8 @@
 </head>
 <body>
 
-	<%@include file="header.jsp"%>
-	<%@include file="mainMenu.jsp"%>
+	<%@include file="../header.jsp"%>
+	<%@include file="../mainMenu.jsp"%>
 
 	<div class="content">
 
