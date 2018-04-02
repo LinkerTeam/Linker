@@ -3,6 +3,7 @@ package com.linker.dto;
 public class CardDTO {
 	private int id;
 	private int p_id;
+	private int cl_id;
 	
 	
 	public int getId() {
@@ -17,10 +18,16 @@ public class CardDTO {
 	public void setP_id(int p_id) {
 		this.p_id = p_id;
 	}
+	public int getCl_id() {
+		return cl_id;
+	}
+	public void setCl_id(int cl_id) {
+		this.cl_id = cl_id;
+	}
 	
 	
 	@Override
 	public String toString() {
-		return "CardDTO [id=" + id + ", p_id=" + p_id + "]";
+		return "CardDTO [id=" + id + ", p_id=" + p_id + ", cl_id=" + cl_id + "]";
 	}
 }

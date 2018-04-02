@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -14,9 +14,8 @@
 	<!--확장 메뉴(글자)-->
 	<nav class="mainNav"> <!--확장메뉴 | 상단 프로필영역-->
 	<div class="profile-area">
-		<a href="#" class="profile-img-area"> <img
-			src="https://s18.postimg.org/8blvbj9tl/profile.png"
-			class="profile-img" />
+		<a href="#" class="profile-img-area"> 
+			<img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
 		</a>
 		<div class="profile-nickname-area">
 			<div class="profile-nickname">Holiday</div>
@@ -90,7 +89,13 @@
 						<a href="#">달성</a>
 					</div>
 					<div class="nav-tab-content">
-						<div class="tab-content-box">menu2</div>
+						<div class="tab-content-box">
+							<div class="tab-content-box-controls">
+								<input type="search" placeholder="Search archive...">
+								<button class="switchCardlist archiveBtn">Switch to lists</button>
+							</div>
+							<div class="nav-tab-content-Box-card"></div>
+						</div>
 					</div>
 				</li>
 				<!-- /Tab2 | 달성목록 -->
@@ -189,7 +194,7 @@
 		function openAside() {
 			var mainAside = document.getElementById('mainAside'); //오른쪽 메뉴 전체
 		    var content = document.getElementsByClassName('content'); //본문
-		    var activeTabNum = null;
+		    var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
 		    
 		    j++ //오른쪽 메뉴버튼 클릭할 때마다 j의 값 1씩 증가하도록
 	
@@ -198,9 +203,9 @@
 		        mainAside.style.width = "330px";
 		        content[0].style.marginRight = "330px";
 		        //활성화된 메뉴가 없다면 첫번째 탭 메뉴를 활성화
-		        if (activeTabNum === null) {
-		            activeTabNum = 1;
-		            document.getElementsByClassName("nav-tabs")[0].children[0].classList.add('active');
+		        if (tabMenu[0].dataset.activenumber === undefined) {
+		        	tabMenu[0].dataset.activenumber = 0;
+		        	tabMenu[0].children[0].classList.add('active');
 		        };
 		    } else { //클릭수가 짝수이면 숨기기
 		        mainAside.classList.remove('mainAside-open'); //클래스 이름 'mainAside-open' 제거
@@ -208,22 +213,35 @@
 		        content[0].style.marginRight = "0";
 		    };
 		};
+
+		//오른쪽 메뉴 탭버튼 제어
+		var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
+		for(var i=0; i<tabMenu[0].childElementCount; i++){
+			tabMenu[0].children[i].addEventListener("click", function(){
+				
+				var clickedTabIndex = getElementIndex(this); //클릭한 탭 번호
+				var currentTabIndex = this.parentElement.dataset.activenumber; //현재 탭 변호
+				
+				//클릭한 탭이 현재 활성화 된 탭이 아닌 경우에만 탭의 내용 보여주기
+				if(currentTabIndex != clickedTabIndex){
+					//현재 탭 비활성화
+			        tabMenu[0].children[currentTabIndex].classList.remove('active'); 
+				    //클릭한 탭 활성화
+				    this.classList.add('active');
+				  	//클릭한 탭의 번호를 저장
+				    this.parentElement.dataset.activenumber = clickedTabIndex;
+				}
+			});
+		}
 	
-	
-	
-		$(document).ready(function () {
-		    //오른쪽 메뉴 탭버튼 제어
-		    $(".mainAside .nav-tabs > li").on("click", function () {
-		        //모든 탭버튼 비활성화
-		        $(".mainAside .nav-tabs > li").removeClass("active");
-		        //클릭한 탭버튼 활성화
-		        $(this).addClass("active");
-		        //현재 활성화된 탭의 번호를 저장
-		        var idx = $(".mainAside .nav-tabs>li").index(this);
-		        activeTabNum = idx;
-		    });
-		});
-	
+		//해당 노드의 인덱스 반환
+		function getElementIndex(node) {
+		    var index = 0;
+		    while ((node = node.previousElementSibling)) {
+		        index++;
+		    }
+		    return index;
+		}
 	</script>
 </body>
 </html>

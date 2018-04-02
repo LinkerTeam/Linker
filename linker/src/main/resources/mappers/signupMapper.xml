@@ -14,5 +14,30 @@
 	<select id="getTime" resultType="string">
 		SELECT NOW()
 	</select>
-
+	
+	<update id="createAuthKey">
+		UPDATE user SET authCode = #{authCode}
+		 WHERE email =#{email}
+	</update>
+   
+    <update id="status">
+     UPDATE user SET status = 1
+     WHERE email=#{email}
+     
+    </update>
+   
+   <!-- 구글 회원가입 -->
+   <insert id="insertGoogle">
+     INSERT INTO  
+     user(email,nickname,google)
+     VALUES (#{email},#{nickname},1)
+   </insert>
+   
+   <!-- 구글 로그인 처음인지 확인 -->
+   <select id="serchGoogle" resultType="UserVO">
+   SELECT *
+   FROM user
+   WHERE email=#{email}
+   </select>
+ 
 </mapper>

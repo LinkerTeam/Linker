@@ -3,6 +3,7 @@ package com.linker.service;
 import java.util.List;
 
 import com.linker.domain.CardlistVO;
+import com.linker.domain.ReadCardlistVO;
 
 public interface CardlistService {
 
@@ -10,6 +11,6 @@ public interface CardlistService {
 	public void registCardlist(CardlistVO cardlist)throws Exception;
 	// 카드리스트 수정
 	public void modifyCardlist(CardlistVO cardlist)throws Exception;
-	// 진행 상태의 카드리스트 조회
-	public List<CardlistVO> selectListInProgress(int projectID)throws Exception;
+	// 카드리스트, 카드 전체 조회
+	public List<ReadCardlistVO> readCardlist(int p_id) throws Exception;
 }

@@ -1,0 +1,260 @@
+@charset "UTF-8";
+
+	
+ul{
+    list-style: none;
+}
+section {
+    float: left;
+    width: 600px;
+}
+article {
+    /*border: solid 1px black;*/
+    margin-top: 10px;
+}
+/* 팝업화면 | 화면 전체 */
+#popupBox {
+display: none;
+position: fixed;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%; 
+background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+overflow: auto;
+z-index: 9999;
+}
+/* 팝업화면 | 카드 전체 */
+.popupCard {
+    position: relative;
+    width: 740px;
+    left: 50%;
+    margin-left: -370px;
+    margin-top: 50px; /* 헤더 높이만큼..(-)*/
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 4px;
+    background: #fff;
+    background-color: rgb(237, 239, 240);
+}
+.popupCard:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+/* This card is archived. */
+.archive-banner{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 15px;
+    z-index: 7777;
+}
+.archive-banner:after {
+    content: "";
+    position: absolute;
+    width: 780px;
+    height: 50px;
+    background-image: url("http://www.designbolts.com/wp-content/uploads/2012/11/Pinstriped-Suit-diagonal-Seamless-photoshop-Pattern.jpg");
+    opacity: 0.4;
+    z-index: -1;
+}
+.archive-banner > p {
+    padding: 9px 9px 9px 15px;
+    position: absolute;
+    width: 750px;
+    color: #2e2e2e;
+    line-height: 30px;
+}	
+.aside-sendToBoard{
+	display: none;
+}
+.popupCard.archiveShow{
+	padding: 70px 20px 20px 20px;
+}
+.archiveShow, .hiddenShow{
+    display: block;
+}
+	
+	
+/* 헤더부분 ~~~~~ */
+.cardTitle {
+    font-size: 17px;
+}
+.fa-credit-card {
+	padding-bottom: 5px;
+}
+.title-cardTitle {
+    display: inline-block;
+    margin-left: 5px;
+}
+.title-cardTitle input{
+	float: left;
+	border: none;
+	width: 400px;
+	background: #fff;
+    background-color: rgb(237, 239, 240);
+    font-size: 18px;
+    font-weight: bold;
+}
+.title-cardTitle input:focus{
+	outline: none;
+	background-color: rgb(237, 239, 240);
+}
+.title-cardTitle p{
+	display: none;
+}
+/* ~~~~~ 헤더부분 */
+	
+/* 카드창 닫기버튼 */
+.popupCardClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: gray;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 8888;
+}
+	
+/* 왼쪽 | 카드 실제 내용 부분 */
+	
+/* 각 항목의 Title */
+.title strong {
+    display: inline-block;
+    margin-left: 10px;
+}
+/* 추후 지울 것 */
+.v {
+    border: solid 1px red;
+    width: 560px;
+    height: 50px;
+    margin: 5px 10px 5px 10px;
+    padding: 5px;
+}
+	
+/* 카드 내용~~~~~ */
+.cardContent {
+    display: inline-block;
+    /*margin: 20px 0 0 20px;*/
+}
+.content-content {
+    display: inline-block;
+    padding: 2px;
+}
+.content-textarea {
+    width: 560px;
+    margin: 5px 10px 0 10px;
+    padding: 10px;
+    background: #fff;
+    background-color: rgb(237, 239, 240);
+    border: none;
+    resize: none;
+    cursor: pointer;
+    /* overflow: hidden; */
+    overflow: visible;
+    overflow-y: hidden;
+}
+.content-textarea:focus {
+    outline: none;
+    border-radius: 3px;
+    cursor: text;
+    background: #e7e7e7;
+    box-shadow: inset 0px 0px 9px -2px #808080;
+    -webkit-box-shadow: inset 0px 0px 9px -2px #808080;
+    -moz-box-shadow: inset 0px 0px 9px -2px #808080;
+    -o-box-shadow: inset 0px 0px 9px -2px #808080;
+}
+.warning {
+    display: none;
+    width: 560px;
+}
+.warning li {
+    float: left;
+    margin: 0 0 10px 5px;
+    padding: 3px;
+	font-size: 11px;
+    color: gray;
+	background: #fff;
+    background-color: rgb(237, 239, 240);
+}
+.warning li:not(:nth-child(1)){
+    text-decoration: underline;
+    cursor: pointer;
+}
+.content-Btn {
+    margin: 0 0 5px 10px;
+    display: none;
+}
+.saveBtn {
+    background-color: #5aac44;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    padding: 7px 10px 7px 10px;
+    text-align: center;
+    font-size: 14px;
+    margin: 4px 2px;
+    transition: 0.3s;
+}
+	
+    .saveBtn:hover {
+        background-color: #519839;
+    }
+	
+.cancelBtn {
+    background: #fff;
+    background-color: rgb(237, 239, 240);
+    border: none;
+    color: dimgray;
+    padding: 3px;
+    text-align: center;
+    font-size: 18px;
+    opacity: 0.6;
+}
+/* ~~~~~카드 내용 */
+	
+/* 오른쪽 | 사이드메뉴 */
+.popupCard aside {
+    /*border: solid 1px skyblue;*/
+    float: right;
+    width: 136px;
+    margin-top: 14px;
+}
+	
+.popupCard aside ul, .popupCard aside ul li {
+    margin-top: 12px;
+}
+	
+.popupCard aside ul li div {
+    text-align: left;
+    background-color: rgb(226, 228, 230);
+    padding: 6px;
+    border-radius: 1px;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px 0px #B5B5B5;
+    -webkit-box-shadow: 1px 1px 3px 0px #B5B5B5;
+    -moz-box-shadow: 1px 1px 3px 0px #B5B5B5;
+    -o-box-shadow: 1px 1px 3px 0px #B5B5B5;
+}
+	
+.popupCard aside ul li div:hover, .file:hover, .popup-profile:hover, .comment-attachment:hover {
+    background-color: rgb(204, 205, 206);
+    box-shadow: 1px 1px 3px 0px #919191;
+    -webkit-box-shadow: 1px 1px 3px 0px #919191;
+    -moz-box-shadow: 1px 1px 3px 0px #919191;
+    -o-box-shadow: 1px 1px 3px 0px #919191;
+}
+	
+.popupCard aside ul li div:active {
+    background-color: rgb(159, 161, 161);
+    color: white;
+}
+	
+.popupCard aside ul li p{
+    display: inline-block;
+    padding-left: 10px;
+    font-size: 14px;
+}

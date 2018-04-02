@@ -24,36 +24,13 @@ public class CardDAOImpl implements CardDAO{
 	}
 
 	@Override
-	public CardVO readCard(int id) throws Exception {
-		return session.selectOne(namespace + ".readCard", id);
-	}
-
-	@Override
 	public void updateCard(CardVO vo) throws Exception {
 		session.update(namespace + ".updateCard", vo);
-	}
-
-	@Override
-	public List<CardVO> listCard(int p_id) throws Exception {
-		return session.selectList(namespace + ".listCard", p_id);
 	}
 
 	@Override
 	public CardVO readPopcard(CardDTO dto) throws Exception {
 		return session.selectOne(namespace + ".readPopcard", dto);
 	}
-
-	
-	
-	/*@Override
-	public void readPopCard(Integer cardID) throws Exception {
-		return session.selectOne(namespace) + 
-	}
-
-	@Override
-	public void updatePopCard(CardVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}*/
 	
 }

@@ -20,13 +20,6 @@
     bottom: 0;
     background: #dddddd;
 }
-/* 본문 */
-.content {
-    height: 100%;
-    margin-left: 230px;
-    position: relative;
-    background-color: rgba(156, 156, 156, 0.80);
-}
 	
 /* 확장 메뉴(글자)~~~~~ */
 .mainNav {
@@ -156,6 +149,7 @@
     overflow-x: hidden;
     transition: 0.2s; /*열었다 닫았다 할 때*/
     color: #fff;
+    z-index: 999;
 }
 .nav-tabs-wrap {
     position: absolute;
@@ -226,10 +220,10 @@
     line-height: 1.5;
     color: #ddd;
 }
+	/* 이력목록 > 프로필사진 */
 .pic-list > li:nth-child(1) {
     border-top: none;
 }
-	/* 이력목록 > 프로필사진 */
 .pic-list-writer {
     position: absolute;
     left: -38px;
@@ -270,6 +264,50 @@
 .show-more:hover {
     color: #fff;
 }
+
+
+/************ 달성탭 ************/
+.cardtitleLi.archive{
+	width: 280px;
+	margin: 0 0 0 7px;
+}
+.cardtitleLi.archive > #cardLink{
+	line-height: 30px;
+	padding: 5px 10px;
+}
+.cardtitleLi.archive > #cardLink > div{
+	float: right;
+	margin-right: 10px;
+	color: #bfbfbf;
+}
+.tab-content-box-controls{
+	margin-bottom: 22px;
+}
+.tab-content-box-controls > input{
+	width: 191px;
+	height: 30px;
+	border: solid 1px #3f3f3f;
+	border-radius: 3px;
+	background-color: #3f3f3f;
+	padding: 7px;
+}
+.tab-content-box-controls > input:focus{
+	outline: none;
+	background-color: #afafaf;
+}
+.archiveBtn, .quiet{
+	border: none;
+	background-color: #232323;
+	color: #818181;
+	text-decoration-line: underline;
+	cursor: pointer;
+}
+.quiet{
+	margin: 0 0 15px 10px;
+	text-decoration-line: none;
+}
+    
+
 /************ 설정탭 ************/
 	/* 설정탭 | 팀 멤버 프로필 사진 */
 .all-members {
