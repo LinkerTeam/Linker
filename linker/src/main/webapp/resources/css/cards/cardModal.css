@@ -1,14 +1,14 @@
 @charset "UTF-8";
 
 	
-ul{
+.popupCard ul{
     list-style: none;
 }
-section {
+.popupCard section {
     float: left;
     width: 600px;
 }
-article {
+.popupCard article {
     /*border: solid 1px black;*/
     margin-top: 10px;
 }
@@ -43,16 +43,16 @@ z-index: 9999;
     content: "";
     clear: both;
 }
-/* This card is archived. */
-.archive-banner{
-    display: none;
+/* 카드모달창 상단 상태 bar */
+.popCard-banner{
+	display: none;
     position: absolute;
     top: 0;
     left: 0;
     font-size: 15px;
     z-index: 7777;
 }
-.archive-banner:after {
+.popCard-banner:after {
     content: "";
     position: absolute;
     width: 780px;
@@ -61,21 +61,32 @@ z-index: 9999;
     opacity: 0.4;
     z-index: -1;
 }
-.archive-banner > p {
+/* 카드모달창 상단 상태 bar | 문구 */
+.popCard-banner > p {
     padding: 9px 9px 9px 15px;
     position: absolute;
     width: 750px;
     color: #2e2e2e;
     line-height: 30px;
-}	
-.aside-sendToBoard{
+}
+.popupCard-aside-sendToCardlist{
 	display: none;
 }
-.popupCard.archiveShow{
-	padding: 70px 20px 20px 20px;
-}
-.archiveShow, .hiddenShow{
+
+
+/* changeStatus - 카드 상태값에 따라 속성값 
+	제어하기 위해 script에서 부여하는 class이름임 */
+.changeStatus{
     display: block;
+}
+/* 카드모달창 상단 상태bar 출력 시 전체 카드모달창 padding 조절 */
+.popupCard.changeStatus{
+    padding: 70px 20px 20px 20px;
+}
+/* 카드 상태값에 따라 aside 제어 */
+.popupCard-aside-archive.changeStatus,
+.popupCard-aside-hide.changeStatus{ 
+	display: none;
 }
 	
 	
@@ -138,7 +149,6 @@ z-index: 9999;
 /* 카드 내용~~~~~ */
 .cardContent {
     display: inline-block;
-    /*margin: 20px 0 0 20px;*/
 }
 .content-content {
     display: inline-block;
@@ -153,7 +163,6 @@ z-index: 9999;
     border: none;
     resize: none;
     cursor: pointer;
-    /* overflow: hidden; */
     overflow: visible;
     overflow-y: hidden;
 }
@@ -166,6 +175,9 @@ z-index: 9999;
     -webkit-box-shadow: inset 0px 0px 9px -2px #808080;
     -moz-box-shadow: inset 0px 0px 9px -2px #808080;
     -o-box-shadow: inset 0px 0px 9px -2px #808080;
+}
+.content-textarea:disabled{
+	cursor: default;
 }
 .warning {
     display: none;
@@ -218,7 +230,6 @@ z-index: 9999;
 	
 /* 오른쪽 | 사이드메뉴 */
 .popupCard aside {
-    /*border: solid 1px skyblue;*/
     float: right;
     width: 136px;
     margin-top: 14px;

@@ -29,9 +29,9 @@
     bottom: 0;
     width: 230px;
     height: 100%;
-    z-index: 2;
     background-color: #232323;
     overflow: hidden;
+    z-index: 1000;
     transition: 0.2s;
 }
 /* 상단 프로필영역 */
@@ -97,7 +97,7 @@
     background-color: #232323;
     position: absolute;
     height: 100%;
-    z-index: 1; /* 본문보다 위로 올라오게 */
+    z-index: 999;
 }
 .iconBar a { /* 아이콘 */
     display: inline-block;
@@ -267,44 +267,74 @@
 
 
 /************ 달성탭 ************/
-.cardtitleLi.archive{
+.cardtitleLi.tab-cards{
 	width: 280px;
-	margin: 0 0 0 7px;
+	margin: 10px 0 0 7px;
+	box-shadow: 3px 3px 2px 0px rgba(105, 104, 104, 0.73);
 }
-.cardtitleLi.archive > #cardLink{
+.cardtitleLi.tab-cards:hover{
+	background-color: #dedede;
+}
+.cardtitleLi.tab-cards > #cardLink{
 	line-height: 30px;
 	padding: 5px 10px;
 }
-.cardtitleLi.archive > #cardLink > div{
-	float: right;
-	margin-right: 10px;
+.tab-cardlist{
+	width: 290px;
+	flex-direction: column; /* 세로로 나열 */
+	margin-left: 4px!important;
+}
+.cardlistTitleBox.tab-cardlist{
+	width: 259px!important;
+	padding: 13px 10px;
+	margin-bottom: 10px;
+	border-radius: 3px;
+	font-size: 15px;
+	color: #5e5e5e;
+	box-shadow: 3px 3px 2px 0px rgba(105, 104, 104, 0.73);
+	background-color: #e2e4e6;
+	cursor: default;
+}
+.cardStatus{
+	margin-left: 15px;
+	padding: 0 5px 5px 5px;
+	font-size: 12px;
 	color: #bfbfbf;
 }
 .tab-content-box-controls{
-	margin-bottom: 22px;
+	margin-bottom: 20px;
 }
 .tab-content-box-controls > input{
-	width: 191px;
+	width: 175px;
 	height: 30px;
+	padding: 7px;
 	border: solid 1px #3f3f3f;
 	border-radius: 3px;
 	background-color: #3f3f3f;
-	padding: 7px;
+	transition: 0.2s;
 }
 .tab-content-box-controls > input:focus{
 	outline: none;
 	background-color: #afafaf;
 }
-.archiveBtn, .quiet{
+.switchBtn-archive, .switchBtn-hidden, .quiet{
 	border: none;
 	background-color: #232323;
 	color: #818181;
 	text-decoration-line: underline;
+}
+.switchBtn-archive, .switchBtn-hidden{
+	outline: none;
 	cursor: pointer;
 }
 .quiet{
 	margin: 0 0 15px 10px;
 	text-decoration-line: none;
+	cursor: default; /* 버튼 사이 -에 커서 text로 잡혀서 추가 */
+}
+	/* 달성/가리기 탭 | switch to lists버튼 */
+.swhitchCardlist{
+	display: none;
 }
     
 
@@ -375,4 +405,8 @@
 /* ~~~~~설정탭 | 메뉴 */
 
 /* ~~~~~오른쪽 메뉴 */
+
+
+
+
 

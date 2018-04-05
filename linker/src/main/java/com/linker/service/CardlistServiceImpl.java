@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
 import com.linker.domain.ReadCardlistVO;
 import com.linker.persistence.CardlistDAO;
@@ -23,14 +24,19 @@ public class CardlistServiceImpl implements CardlistService {
 
 	// 카드리스트 수정
 	@Override
-	public void modifyCardlist(CardlistVO cardlist) throws Exception {
-		System.out.println(cardlist);
-		cardlist_dao.updateCardlist(cardlist);
+	public void updateCardlist(ReadCardlistVO vo) throws Exception {
+		cardlist_dao.updateCardlist(vo);
 	}
 
 	//카드리스트, 카드 전체 조회
 	@Override
-	public List<ReadCardlistVO> readCardlist(int p_id) throws Exception {
-		return cardlist_dao.readCardlist(p_id);
+	public List<ReadCardlistVO> readCardlistAll(int p_id) throws Exception {
+		return cardlist_dao.readCardlistAll(p_id);
+	}
+	
+	//상태값에 따른 카드리스트 조회
+	@Override
+	public List<CardlistVO> listCardlist(CardlistVO vo) throws Exception {
+		return cardlist_dao.listCardlist(vo);
 	}
 }

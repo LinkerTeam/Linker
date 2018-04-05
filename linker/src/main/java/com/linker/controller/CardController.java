@@ -3,22 +3,17 @@ package com.linker.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.linker.domain.CardVO;
-import com.linker.dto.CardDTO;
 import com.linker.service.CardService;
 
 @RestController
@@ -39,16 +34,16 @@ public class CardController{
 		try {
 			service.createCard(vo);
 			
-			entity=new ResponseEntity<Integer>(vo.getId(), HttpStatus.OK); //성공하면 id값을 던져준다.
+			entity = new ResponseEntity<Integer>(vo.getId(), HttpStatus.OK); //성공하면 id값을 던져준다.
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity=new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
 	
 	
-	//카드 목록에서 카드 제목 수정 처리
+	//카드 수정 처리 (제목, 내용)
 	@RequestMapping(value="/{p_id}/card/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> updateCard(@PathVariable("id") Integer id, @RequestBody CardVO vo){
 		ResponseEntity<String> entity = null;
@@ -56,10 +51,51 @@ public class CardController{
 			vo.setId(id);
 			service.updateCard(vo);
 			
-			entity=new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity=new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
+	//카드 수정 처리 (상태)
+	@RequestMapping(value="/{p_id}/cardStatus/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
+	public ResponseEntity<CardVO> updateCardStatus(@PathVariable("p_id") Integer p_id, @PathVariable("id") Integer id, @RequestBody CardVO vo){
+		ResponseEntity<CardVO> entity = null;
+		try {
+			service.readPopcard(vo);
+			System.out.println("read : " + vo);
+			vo.setP_id(p_id);
+			vo.setId(id);
+			service.updateCardStatus(vo);
+			
+			System.out.println("updata : " + vo);
+			
+			entity = new ResponseEntity<CardVO>(vo, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
+	//상태값에 따른 카드 조회 (달성, 가리기 탭에서 조회하는 카드 목록)
+	@RequestMapping(value="/{p_id}/cards/{ps_id}", method=RequestMethod.GET)
+	public ResponseEntity<List<CardVO>> listCard(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id){
+		ResponseEntity<List<CardVO>> entity = null;
+		
+		CardVO vo = new CardVO();
+		vo.setP_id(p_id);
+		vo.setPs_id(ps_id);
+		
+		try { 
+			entity = new ResponseEntity<>(service.listCard(vo), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
@@ -69,16 +105,18 @@ public class CardController{
 	@RequestMapping(value = "/{p_id}/card/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CardVO> readPopcard(@PathVariable("p_id") int p_id, @PathVariable("id") int id){
 		ResponseEntity<CardVO> entity = null;
-		CardDTO dto = new CardDTO();
-		dto.setId(id);
-		dto.setP_id(p_id);
+		
+		CardVO vo = new CardVO();
+		vo.setP_id(p_id);
+		vo.setId(id);
 		
 		try { 
-			entity=new ResponseEntity<>(service.readPopcard(dto), HttpStatus.OK);
+			entity = new ResponseEntity<>(service.readPopcard(vo), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
+	
 }
