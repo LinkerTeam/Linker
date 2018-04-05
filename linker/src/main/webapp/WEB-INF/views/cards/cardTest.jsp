@@ -10,7 +10,7 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardTest.css?ver=22" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardTest.css?ver=12" type="text/css" rel="stylesheet" />
 </head>
 
 
@@ -34,7 +34,7 @@
                 <!-- 카드리스트 제일 끝의 Add a list...버튼 -->
            		<div class="cardlist addCardlist">
 	                <div class="addList">Add a list...</div>
-	                <div class="cardlistTitle create">
+	                <div class="cardlistCreateBox">
 	                    <textarea name="title" id="createListTextarea" placeholder="Add a List..." onKeyUp='limitMemo(this, 20)'></textarea><br />
 	                    <button type="button" id="listAddBtn">add</button>
 	                    <button type="button" id="listCancleBtn">&times;</button>
@@ -109,7 +109,7 @@
 			var listStr = "<div data-id='" + cardlistId + "' class='cardlist'>" + 
 						  "	   <div class='cardlistTitleBox'>" +
 						  "	   	   <button type='button' class='cardlistPopBtn'><img src='/resources/image/more.png' class='cardlistMore'/></button>" +
-						  "	       <textarea class='cardlistTitle' onKeyUp='limitMemo(this, 20)'>" + cardlistTitle + "</textarea>" +
+						  "	       <textarea class='cardlistTitle' rows='1' onKeyUp='limitMemo(this, 20)'>" + cardlistTitle + "</textarea>" +
 						  "	   </div>" +
 						  "	   <div class='cards'>" +
 						  "		   <div class='addCard'>" + 
@@ -155,7 +155,6 @@
 				$(".cards").eq(index).css("max-height", "calc(100% - 26px - 45px - 20px)");
 			};
 		};
-		
 		
 		
 		
@@ -209,7 +208,7 @@
 		   	}
 		});//ajax
 			
-		
+
 		
 		/* 카드 등록 | Add a card... 눌렀을 때 카드추가창 보이기 */
 		$(".cardlists").on("click", ".createCardBox", function(){
@@ -400,7 +399,7 @@
 		 
 		/* 카드리스트 등록 | 카드리스트 추가버튼 눌렀을 때 추가창 나타내기 */
 		$(".cardlists").on("click", ".addList", function(){
-			$(".cardlistTitle.create").css("display", "block");
+			$(".cardlistCreateBox").css("display", "block");
 			$("#createListTextarea").focus(); //포커스 주기
 			$(".addList").css("display", "none"); //Add a List...버튼은 숨긴다
 		});
@@ -414,8 +413,8 @@
 			var className = $(e.target).attr("class");
 			
 			//2. 클릭한 객체가 카드리스트 추가버튼이 아니면 and 카드리스트 추가창이 아니면 or X버튼이면
-			if((className !== "addList" && className !== "cardlistTitle create" && id !== "createListTextarea") || id === "listCancleBtn"){ 
-				$(".cardlistTitle.create").css("display", "none");
+			if((className !== "addList" && className !== "cardlistCreateBox" && id !== "createListTextarea") || id === "listCancleBtn"){ 
+				$(".cardlistCreateBox").css("display", "none");
 				$(".addList").css("display", "block");
 			}
 		});
@@ -489,12 +488,12 @@
 			
 			$.ajax({
 				type : 'put',
-				url : "/cards/" + p_id + "/" + cardlistID,
+				url : "/cards/" + p_id + "/cardlist/" + cardlistID,
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'PUT'
 				},
-				data : JSON.stringify({title : titleTxt}),
+				data : JSON.stringify({cl_title : titleTxt}),
 				dataType : 'text',
 				success : function(result) {
 					console.log('result: ' + result);
@@ -574,7 +573,7 @@
 				popup.css('left', btnPosition.left - overWidth);
 			} else {
 				popup.css('left', btnPosition.left);
-			}
+			};
 		});
 		
 		
@@ -585,7 +584,7 @@
 			var state = null;					// 선택한 상태 값을 저장
 			
 			var popup = $('.popupMenuWrap');
-			var cardlistID = popup.data('data-cl-id');	// 상태 변경된 카드리스트 아이디
+			var cl_id = popup.data('data-cl-id');	// 상태 변경된 카드리스트 아이디
 			
 			if($(this).hasClass('to-achieve'))
 				state = CARDLIST_STATE_ACHIEVEMENT;	// 달성 버튼
@@ -597,22 +596,22 @@
 		
 			$.ajax({
 				type : 'put',
-				url : "/cards/" + p_id + "/" + cardlistID,
+				url : "/cards/" + p_id + "/cardlist/" + cl_id,
 				headers : {
 					'Content-Type' : 'application/json',
 					'X-HTTP-Method-Override' : 'PUT'
 				},
-				data : JSON.stringify({ps_id : state}),
+				data : JSON.stringify({cl_ps_id : state}),
 				dataType : 'text',
 				success : function(result) {
 					console.log('result: ' + result);
 					// 카드리스트 상태 변경이 성공적으로 데이터베이스에 반영되면
 					if (result == 'SUCCESS') {
-						console.log('카드리스트 아이디 : ' + cardlistID + ', 상태 ' + state + '(으)로 수정 되었습니다.');
+						console.log('카드리스트 아이디 : ' + cl_id + ', 상태 ' + state + '(으)로 수정 되었습니다.');
 						// 상태 변경된 카드리스트의 임시 데이터를 삭제
 						popup.removeData('data-cl-id');
 						// 상태 변경된 카드리스트 요소를 삭제
-						$('.cardlist[data-id="' + cardlistID + '"').remove();
+						$('.cardlist[data-id="' + cl_id + '"').remove();
 					}
 				},
 				error : function() {

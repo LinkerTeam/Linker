@@ -4,18 +4,18 @@ import java.sql.Date;
 
 public class CardVO {
 	
-	private int id;
-	private int u_id;
-	private String title;
-	private String content;
-	private Date cdate;
-	private Date udate;
-	private Date ddate;
-	private int cl_id;
-	private int ps_id;
+	private int id; 		//카드 아이디
+	private int u_id;		//회원 아이디
+	private String title;	//카드 제목
+	private String content;	//카드 내용
+	private Date cdate;		//카드 생성날짜
+	private Date udate;		//카드 업데이트날짜
+	private int ps_id;		//카드 상태값
 	
-	private int p_id;
-	
+	private int cl_id;		//카드가 속한 카드리스트의 아이디
+	private int cl_ps_id;   //카드가 속한 카드리스트의 상태값
+
+	private int p_id;		//카드가 속한 프로젝트의 아이디
 	
 	
 	
@@ -61,12 +61,6 @@ public class CardVO {
 	public void setUdate(Date udate) {
 		this.udate = udate;
 	}
-	public Date getDdate() {
-		return ddate;
-	}
-	public void setDdate(Date ddate) {
-		this.ddate = ddate;
-	}
 	public int getCl_id() {
 		return cl_id;
 	}
@@ -79,11 +73,18 @@ public class CardVO {
 	public void setPs_id(int ps_id) {
 		this.ps_id = ps_id;
 	}
+	public int getCl_ps_id() {
+		return cl_ps_id;
+	}
+	public void setCl_ps_id(int cl_ps_id) {
+		this.cl_ps_id = cl_ps_id;
+	}
 	
 	@Override
 	public String toString() {
 		return "CardVO [id=" + id + ", u_id=" + u_id + ", title=" + title + ", content=" + content + ", cdate=" + cdate
-				+ ", udate=" + udate + ", ddate=" + ddate + ", cl_id=" + cl_id + ", ps_id=" + ps_id + ", p_id=" + p_id + "]";
+				+ ", udate=" + udate + ", ps_id=" + ps_id + ", cl_id=" + cl_id + ", cl_ps_id=" + cl_ps_id + ", p_id="
+				+ p_id + "]";
 	}
 	
 }

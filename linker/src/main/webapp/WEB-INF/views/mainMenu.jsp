@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=1111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -56,7 +56,7 @@
 				<!-- Tab1 | 이력목록 -->
 				<li>
 					<div class="nav-tab-btn">
-						<a href="#">이력</a>
+						<a href="#" class="activity-tab">Activity</a>
 					</div>
 					<div class="nav-tab-content">
 						<div class="tab-content-box">
@@ -86,15 +86,17 @@
 				<!-- Tab2 | 달성목록 -->
 				<li>
 					<div class="nav-tab-btn">
-						<a href="#">달성</a>
+						<a href="#" class="archived-tab">Archived</a>
 					</div>
 					<div class="nav-tab-content">
 						<div class="tab-content-box">
 							<div class="tab-content-box-controls">
-								<input type="search" placeholder="Search archive...">
-								<button class="switchCardlist archiveBtn">Switch to lists</button>
+								<input type="search" placeholder="Search...">
+								<button class="switchBtn-archive swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+								<button class="switchBtn-archive swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
 							</div>
-							<div class="nav-tab-content-Box-card"></div>
+							<div class="nav-tab-content-Box-archive archiveCard"></div> <!-- 동적 카드 태그가 삽입되는 곳 -->
+							<div class="nav-tab-content-Box-archive archiveCardlist"></div> <!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 						</div>
 					</div>
 				</li>
@@ -103,10 +105,18 @@
 				<!-- Tab3 | 가리기목록 -->
 				<li>
 					<div class="nav-tab-btn">
-						<a href="#">가리기</a>
+						<a href="#"  class="trashbox-tab">Trashbox</a>
 					</div>
 					<div class="nav-tab-content">
-						<div class="tab-content-box">menu2</div>
+						<div class="tab-content-box">
+							<div class="tab-content-box-controls">
+								<input type="search" placeholder="Search...">
+								<button class="switchBtn-hidden swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+								<button class="switchBtn-hidden swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+							</div>
+							<div class="nav-tab-content-Box-hidden hiddenCard"></div><!-- 동적 카드 태그가 삽입되는 곳 -->
+							<div class="nav-tab-content-Box-hidden hiddenCardlist"></div><!-- 동적 카드리스트 태그가 삽입되는 곳 -->
+						</div>
 					</div>
 				</li>
 				<!-- /Tab3 | 가리기목록 -->
@@ -114,7 +124,7 @@
 				<!-- Tab4 | 설정 -->
 				<li>
 					<div class="nav-tab-btn">
-						<a href="#">settings</a>
+						<a href="#" class="settings-tab">settings</a>
 					</div>
 					<div class="nav-tab-content">
 						<div class="tab-content-box">
@@ -232,7 +242,7 @@
 				    this.parentElement.dataset.activenumber = clickedTabIndex;
 				}
 			});
-		}
+		};
 	
 		//해당 노드의 인덱스 반환
 		function getElementIndex(node) {
@@ -241,7 +251,11 @@
 		        index++;
 		    }
 		    return index;
-		}
+		};
+		
+		
+		
+		
 	</script>
 </body>
 </html>

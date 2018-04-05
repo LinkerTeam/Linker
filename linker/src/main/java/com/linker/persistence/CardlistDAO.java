@@ -10,7 +10,9 @@ public interface CardlistDAO {
 	// 카드리스트 생성
 	public void createCardlist(CardlistVO vo)throws Exception;
 	// 카드리스트 수정
-	public void updateCardlist(CardlistVO vo)throws Exception;
+	public void updateCardlist(ReadCardlistVO vo)throws Exception;
 	// 진행 상태의 카드리스트 조회
-	public List<ReadCardlistVO> readCardlist(int p_id) throws Exception;
+	public List<ReadCardlistVO> readCardlistAll(int p_id) throws Exception;
+	// 상태값에 따른 카드리스트 조회
+	public List<CardlistVO> listCardlist(CardlistVO vo) throws Exception;
 }
