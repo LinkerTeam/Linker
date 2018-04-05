@@ -7,7 +7,7 @@
  
 
  <update id="update">
- UPDATE user
+ UPDATE linker.user
         <set>
 			<if test="nickname!=null">nickname=#{nickname},</if>
 			<if test="password!=null">password=#{password},</if>
@@ -20,7 +20,7 @@
  <![CDATA[
   SELECT 
   email, password, nickname, profile
-  FROM user
+  FROM linker.user
   WHERE id > 0
   ORDER BY email asc;
  ]]>

@@ -16,6 +16,7 @@ import com.linker.service.UserService;
 
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(AuthInterceptor.class);
+	
 	@Inject
 	private UserService service;
 
@@ -24,22 +25,35 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		String uri=request.getRequestURI();
+		   System.out.println(uri);
+			String query=request.getQueryString();
+			System.out.println(query);
 		HttpSession session = request.getSession();
-
+         
+		 //세션이없으면서 cookie에 세션id가 저장된경우
 		if (session.getAttribute("login") == null) {
 			logger.info("current user is not logined");
-
+			
 			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
 
 			if (loginCookie != null) {
-				UserVO userVO = service.checkLoginBefore(loginCookie.getValue());
-
+				
+				System.out.println("모모모모모모모모모모");
+				System.out.println("미미미미미미친거같애 띄띄띄"+loginCookie.getValue());
+				String value =loginCookie.getValue();
+				/*System.out.println(service.checkLoginBefore(loginCookie.getValue()).toString());*/
+				UserVO userVO = service.checkLoginBefore(value);
+            
+                 System.out.println(userVO);
 				if (userVO != null) {
+				  System.out.println("ddddddddddddddddddddddd");
 					session.setAttribute("login", userVO);
 
 					return true;
 				}
 			}
+			
 			response.sendRedirect("/user/login");
 			return false;
 		}

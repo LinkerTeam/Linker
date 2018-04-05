@@ -11,21 +11,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.linker.domain.MemberVO;
-import com.linker.persistence.MemberDAO;
+import com.linker.domain.TeamMemberVO;
+import com.linker.persistence.TeamMemberDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations ={"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
-public class MemberSourceTest {
-	private Logger logger = LoggerFactory.getLogger(MemberSourceTest.class);
+public class TeamMemberSourceTest {
+	private Logger logger = LoggerFactory.getLogger(TeamMemberSourceTest.class);
 	
 	@Inject
-	private MemberDAO dao;
+	private TeamMemberDAO dao;
 	
 	//멤버생성
 	@Test
 	public void testCreateMember() throws Exception{
-		MemberVO vo = new MemberVO();
+		TeamMemberVO vo = new TeamMemberVO();
 		vo.setT_id(1);
 		vo.setU_id(9);
 		vo.setAuth(2);
@@ -35,7 +35,7 @@ public class MemberSourceTest {
 	//멤버권한수정
 	@Test
 	public void testUpdateMember() throws Exception{
-		MemberVO vo = new MemberVO();
+		TeamMemberVO vo = new TeamMemberVO();
 		vo.setU_id(14);
 		vo.setT_id(4);
 		vo.setAuth(1);
@@ -55,7 +55,7 @@ public class MemberSourceTest {
 	@Test
 	public void testListMember() throws Exception{
 		int userId = 1;
-		List<MemberVO> list = dao.TeamHasUsers(userId);
+		List<TeamMemberVO> list = dao.TeamHasUsers(userId);
 		for(int i=0; i<list.size(); i++) {
 			logger.info(i + " " + list.get(i).toString());
 		}

@@ -1,15 +1,14 @@
 package com.linker.domain;
 
-public class MemberVO {
+public class TeamMemberVO {
 
 	private int u_id; //회원아이디
 	private int t_id; //팀아이디	
 	private int auth; //그 팀에 대한 회원의 권한
 	private String nickname; //회원 닉네임
 	private String name; //팀이름
-	private String email;
-	private int status;
-	
+	private String email;//회원이메일
+	private int status;//메일 인증이 되었는지 확인하는 상태. 0 : 인증 안함. 1 : 인증함.
 	
 	public int getT_id() {
 		return t_id;
@@ -56,7 +55,7 @@ public class MemberVO {
 	
 	@Override
 	public String toString() {
-		return "MemberVO [u_id=" + u_id + ", t_id=" + t_id + ", auth=" + auth + ", nickname=" + nickname + ", name="
+		return "TeamMemberVO [u_id=" + u_id + ", t_id=" + t_id + ", auth=" + auth + ", nickname=" + nickname + ", name="
 				+ name + ", email=" + email + ", status=" + status + "]";
 	}
 	

@@ -1,0 +1,145 @@
+@charset "UTF-8";
+/*사이드 컨텐트 + 팀목록 컨텐트 */
+.wrapContent{
+	width:100%;
+	height: 100%;
+	margin:0;
+	padding:0;
+	z-index:999;
+	background: #fcfcfc;
+}
+/*사이드 컨텐트, 팀목록 컨텐트 */
+div.smallContent{
+	height: 100%; 
+	vertical-align: top;
+}
+/* 사이드 컨텐트*/
+#sideContent {
+	float:left;
+	width: 260px;
+}
+/* 팀 목록 컨텐트*/
+#listContent{
+	padding-left : 260px;
+} 
+/*팀 목록 작은 컨텐츠 */
+.listBoxBody{
+	position: absolute;
+	overflow-y: auto; 
+	border: none;
+	font-size: 14px;
+	border-radius : 16px;
+	margin : 10px;
+	padding:50px;
+}
+/*팀 목록 row */
+.team{
+	margin-top : 5px;
+	border-bottom: 1px solid black;
+}
+/*팀 목록 row에 있는 요소들 하나하나 : 텍스트 + 버튼*/
+.team>div{
+	display:inline-block;
+}
+/*팀원 목록 row에 있는 요소들 하나하나 : 텍스트 + 버튼*/
+.memberList>div{
+	display: inline-block;
+	margin : 10px auto;
+}
+/*멤버 목록 작은 컨텐츠*/
+.memberListTableBody{
+	display:none;
+	text-align: center;
+}
+
+/* ------------팀 목록 요소들 설정 시작*/
+.name, .cdate{
+	width : 200px;
+}
+.auth{
+	width : 100px;
+}
+/* ------------팀 목록 요소들 설정 끝*/
+
+/* ------------멤버목록 요소들 설정 시작*/
+.email{
+	width:200px;
+	text-align: left;
+}
+.auth, .nickname{
+ 	width:100px;
+ 	text-align: left;
+ }
+/* ------------멤버 목록 요소들 설정 끝*/
+
+/*검색 작은 컨탠츠, 팀 추가 작은 컨탠츠*/
+div.sidemenu{
+	 text-align: center;
+}
+div.sidemenu div{
+	display : inline-block;
+}
+/*각 컨텐츠마다 제목(검색, 팀추가, 팀목록, 멤버목록, 멤버추가)*/
+.title{
+	margin : 0 40px;
+	font-size : 14px;
+	border-bottom: 1px solid #d3d3d3;
+	padding:50px;
+}
+/*검색 텍스트 요소*/
+#memberSearch{
+    border: none;
+    background-color: #d3d3d3;
+    height: 30px;
+    width: 200px;
+    margin : 10px 0;
+}
+/*모든 버튼 설정*/
+input[type=button], input[type=submit]{
+	display:block;
+	background-color: #FA5883;
+    margin : 10px auto; 
+    border: none;
+    border-radius: 5px;
+
+}
+/*멤버추가, 팀 추가 버튼 구체적 설정*/
+input[type=button].addMemberBtn, .addMembersBtn, .addTeam{
+    font-size: 12px;
+	padding : 15px 15px;
+	width: 150px;
+}
+/*모달 창 배경 설정*/
+ .modal{
+    display: none;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.596);
+    z-index: 1; 
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    border-radius: 5px;
+    position: fixed;
+} 
+/*모달 컨텐츠 설정*/
+.modalContent{
+    position: relative;
+    background-color: #fefefe;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    top:30%;
+    width: 500px;
+    height: 300px;   
+}
+/*모달 버튼 구체적 설정*/
+.modalContent button{
+	display:inline-block;
+	 margin : 10px;
+}
+/*모달 div 구체적 설정*/
+.modalContent div,input[type="text"]{
+    padding: 5px;
+    margin : 10px;
+}

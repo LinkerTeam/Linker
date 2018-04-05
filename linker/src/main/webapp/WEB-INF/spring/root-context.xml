@@ -11,11 +11,12 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	
+
 	<!-- 설정과 관련된부분은 properties파일로 따로 관리하기위하여 사용. -->
 	<context:property-placeholder location="classpath:/properties/*.properties" />
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driver}"></property>
 		<property name="url" value="${jdbc.url}"></property>
 		<property name="username" value="${jdbc.username}"></property>
@@ -28,23 +29,25 @@
 		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml"></property>
 	</bean>
 
-	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
+
 	<!-- sy가 수정함. member추가할 때, 초대메일 보내기 위해서 메일 관련 객체 생성함. -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com"></property>
 		<property name="port" value="587"></property>
-		<property name="username" value="intosy227"></property>
-		<property name="password" value="q1w2e3a4s5d6.."></property>
+		<property name="username" value="${mail.email}"></property>
+		<property name="password" value="${mail.password}"></property>
 		
 		<property name="javaMailProperties">
-			<props>
+			<props> 
 				<prop key="mail.transprot.protocol">smtp</prop>
 				<prop key="mail.smtp.auth">true</prop>
 				<prop key="mail.smtp.starttls.enable">true</prop>
@@ -52,11 +55,39 @@
 			</props>
 		</property>
 	</bean>
+
+
+	<!-- google Class Bean설정 추가 -->
+	<!-- 클라이언트ID와 보안비밀 세팅 -->
+<!-- 	<bean id="googleConnectionFactory"
+		class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg value="434412171169-cd02baoouihjfd0k9a2d5erdapmu1obu.apps.googleusercontent.com" />
+		<constructor-arg value="g8HKKWylA4HhQNr-C47DFhzS" />
+	</bean>
+	승인된 자바스크립트 원본과 승인된 리디렉션 URI
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope" value="https://www.googleapis.com/auth/plus.login" />
+		<property name="redirectUri" value="http://localhost:9090/user/userModify" />
+	</bean>
+ -->
+
+
+<!-- 클라이언트ID와 보안비밀 세팅 -->
+ 	<bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+	  <constructor-arg value="${oauth.id}" />
+	  <constructor-arg value="${oauth.password}" />
+	</bean>
 	
-	<tx:annotation-driven/>
+	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+	  <property name="scope" value="https://www.googleapis.com/auth/userinfo.email" />
+	  <property name="redirectUri" value="http://localhost:9090/user/googlecallback" />
+	</bean>
+
+	<tx:annotation-driven />
 
 	<context:component-scan base-package="com.linker.service"></context:component-scan>
 	<context:component-scan base-package="com.linker.persistence"></context:component-scan>
-	
-		
+
+
 </beans>

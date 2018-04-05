@@ -17,6 +17,15 @@ public interface UserService {
  public UserVO viewUser(String email);
  public void updateUser(UserDTO dto);
  public void keepLogin(String email,String sessionId,Date next,String profile)throws Exception;
- public UserVO checkLoginBefore(String value);
+ public UserVO checkLoginBefore(String value)throws Exception;
  public int checkSignup(String nickname) throws Exception;
+ public void userAuth(String email) throws Exception;
+ public int emailCheck(String email) throws Exception;
+ public void forgetpassword(UserVO vo)throws Exception;
+ public int serchEmail(String email) throws Exception;
+ public boolean checkPw(String email, String password) throws Exception;
+ public void updatePassword(UserDTO dto) throws Exception;
+ public String getPassword(LoginDTO dto) throws Exception;
+ public void deleteUser(String email) throws Exception;
+
 }

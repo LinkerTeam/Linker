@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,9 +11,9 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <!-- css초기화 시트 -->
-    
     <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-    <link href="/resources/css/login.css" type="text/css" rel="stylesheet" />
+    <link href="/resources/css/login.css?ver=2" type="text/css" rel="stylesheet" />
+
 
 </head>
 
@@ -63,8 +64,8 @@
                         </p>
 
                         <p class="fieldset agree">
-                           <input type="checkbox" class="checkbox" checked name="useCookie">
-                            <a>Remember me</a>
+                           <input type="checkbox" class="checkbox"  name="useCookie">
+                            <a>자동로그인</a>
 
                         </p>
 
@@ -73,6 +74,15 @@
                             <button type="submit" value="Login">Login</button>
                         </p>
                     </form>
+                    
+                  <!-- 소셜 로그인 -->
+				  <div class="social-login">
+  				  <a href="${google_url}" class="go-google" title="Connect with Google">
+     	 		  <span>Google로 로그인</span>
+                  </a>
+				  </div>
+				 
+                  
                     <p class="form-bottom-message">
                         <a href="#0">Forgot your password?</a>
                     </p>
@@ -83,20 +93,20 @@
 
                     <form class="form" name="form2" action="/user/signup" method="post" onsubmit="return signup_check();">
 
+
+                        <p class="fieldset">
+                            <i class="far fa-envelope"></i>
+                            <label for="email"> Email </label>
+                            <input type="text" class="email" placeholder="Email" name="email" id="email2">
+                          <a href="#0" value="중복확인" id="emailcheck" class="check" >중복확인</a><div id="EmailcheckMsg"></div>
+
+                        </p>
                         <p class="fieldset">
                             <i class="far fa-user"></i>
                             <label for="nickname"> Nickname </label>
                             <input type="text" class="nickname" placeholder="Nickname" name="nickname" id="nickname">
                             <a href="#0" value="중복확인" id="checkbtn" class="check" >중복확인</a><div id="checkMsg"></div>
                        
-
-                        </p>
-
-                        <p class="fieldset">
-                            <i class="far fa-envelope"></i>
-                            <label for="email"> Email </label>
-                            <input type="text" class="email" placeholder="Email" name="email" id="email2">
-                        
 
                         </p>
 
@@ -124,16 +134,16 @@
             <div id="reset-password">
                     <p class="form-message">비밀번호를 잃어 버렸습니까? 이메일 주소를 넣어주세요.</br> 새로운 비밀번호를 지정해 주세요.</p>
     
-                    <form class="form" name="">
+                    <form class="form" name="form3" method="post" action="/user/forget" onsubmit="return forgetcheck();" >
                         <p class="fieldset">
                             <i class="far fa-envelope" id="mail"></i>
                             <label class="image-replace email" for="reset-email">E-mail</label>
-                            <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-                            <span class="error-message">An account with this email does not exist!</span>
+                            <input class="full-width has-padding has-border" id="reset-email" type="email" name="email" placeholder="E-mail">
+                            
                         </p>
     
                         <p class="fieldset">
-                            <input class="full-width has-padding input" type="submit" value="Reset password">
+                            <input type="submit" class="full-width has-padding input"  value="Reset password">
                         </p>
                     </form>
     
@@ -148,7 +158,7 @@
     </div>
 
     <script>
-      
+    
        window.onload = function () {
 
             var button = document.getElementsByClassName('login_btn');
@@ -232,7 +242,7 @@
 
             }
             
-            // 모달 close 이벤트 if문에 자기자신 클릭시에만 이벤트를 발생하게 한다.
+            // 모달 close 이벤트 if문에 자기자신 클릭시에만 이벤트를 발생하게 한다. 모달창 닫기
             $('.user-modal').on('click', function(e){
                 if ($(e.target).hasClass("user-modal")) { 
                     modal[0].style.display = "none";        
@@ -281,8 +291,8 @@
        
        	 
 
-	            //이메일 철자검사를위한 a@naver.com 형식을 나타낸것. 
-	            var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	      //이메일 형식검사를위한 a@naver.com 형식을 나타낸것. 
+	      var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 	  
 	        //로그인 유효성 검사
 	        function login_check() {
@@ -317,12 +327,18 @@
 			return false;
 
 	    	 }   
+                 
+			
+                 
+                 
+                 
 	            
 	      	return true;
 	          
 	            
 	       }
-        
+            
+	 
 	     
                //회원가입 유효성검사
 	     function signup_check() {
@@ -331,7 +347,7 @@
 	         var email2 = document.getElementById('email2').value;
 	         var password = document.getElementById('pw').value;
 	         var check = document.getElementById('agree');
-             
+             var nickch =document.getElementById('checkMsg');
 	         
 	         if(nickname == null  || nickname == "" ) {
 	            
@@ -382,14 +398,63 @@
 	            	return false;
 	            }
 	             
+	         
+	         
+	           //체크박스 체크했으면 true 안했으면 false값을 반환함
                   if(check.checked==false){
                 	alert("가입에 동의해주세요");
-                	
+                	document.getElementById('checkMsg').focus();
                 	return false;
-                }	         
-	        	
-	             return true;
-	        }
+                }
+                  //닉네임 중복환인 안눌렀을떄
+                  if(document.getElementById("checkMsg").innerHTML==""){
+                	  alert("닉네임을 중복확인 해주세요");
+                	  return false;
+                  }
+	         
+                  //닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
+                  if(document.getElementById("nickcheck").style.color=='red'){
+	        	 alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
+	        	 return false;
+	         }
+                  
+                  //이메일 중복확인 안눌렀을떄
+                  if(document.getElementById("EmailcheckMsg").innerHTML==""){
+                	  alert("이메일 중복확인 해주세요");
+                	  return false;
+                  }
+	         
+                  //이메일이 중복이 중복돼었을때 빨간색이면 중복이라고 나옴 
+                  if(document.getElementById("echeck").style.color=='red'){
+	        	 alert("이메일이 중복되었습니다 다른 이메일을 적어주세요");
+	        	 return false;
+	         }
+        return true;
+       }
+               
+               
+           //비밀번호 찾기 이메일 검사 
+          function forgetcheck(){
+        	 var email3 = document.getElementById('reset-email').value;
+        	  
+        	 if(email3 == null || email3 ==''){
+        	    alert("EMAIL을 입력해주세요");
+        	    document.getElementById('reset-email').focus();
+        		return false;
+        	 }
+        	 
+        	 if(exptext.test(email3)==false){
+        		 alert("EMAIL 형식을 제대로 지켜주세요.");
+        		 document.getElementById('reset-email').focus();
+        		 return false;
+        		 
+        	 }
+        	  
+        	 return true;
+        	  
+          }     
+               
+               
                
                
                
@@ -409,16 +474,45 @@
                  success: function(data){  //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
               	   // 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
                      if($.trim(data) == 0){
-                         $('#checkMsg').html('<p style="color:blue">사용가능한 닉네임입니다.</p>');
+                         $('#checkMsg').html('<p style="color:blue" id="nickcheck">사용가능한 닉네임입니다.</p>');
+                     }else{
+                         $('#checkMsg').html('<p style="color:red" id="nickcheck">사용불가능한 닉네임입니다.</p>');
                      }
-                     else{
-                         $('#checkMsg').html('<p style="color:red">사용불가능한 닉네임입니다.</p>');
-                     }
+                 },error:function(){
+                	 alert("error");
                  }
              });    //end ajax    
          });    //end on
          
                
+      
+         // 이메일 중복검사
+       
+    
+         $('#emailcheck').on('click', function(){
+    	   //POST 방식으로 FROM 보내기 작성 $.ajax형식으로 보내기
+    	  
+    	   $.ajax({
+    		   type: 'POST',
+    		   url : '/user/emailcheck',
+    		   data : {"email" : $('#email2').val()},
+    		   success:function(data){
+    			   //$.trim()은  데이터의 문자의 앞뒤의 공백을 제거해주는 것 중간의 공백은 제거하지않는다.
+    			   if($.trim(data)==0){
+    				  
+    				  $('#EmailcheckMsg').html('<p style="color:blue" id="echeck">사용가능한 이메일 입니다. </p>');
+    			  }else{
+    				 
+    				  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이미 가입한 이메일입니다 다시 확인해주세요. </p>');
+    			  }
+    		   },error:function(){
+              	 alert("error");
+               }	   
+    		   
+    	   }); //end ajax
+       }); // end 이벤트
+        
+
 
     </script>
 </body>
