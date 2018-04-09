@@ -77,7 +77,7 @@
 	<!--확장메뉴 | 하단 메뉴영역-->
 	<ul class="mainNav-menu">
 		<li class="mainNav-menu-header">Main navigation</li>
-		<li><a href="#">Project</a></li>
+		<li><a href="http://localhost:9090/main">Project</a></li>
 		<li><a href="#">ERD</a></li>
 		<li><a href="#">CodeLauncher</a></li>
 		<li><a href="#">Chat</a></li>

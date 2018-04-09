@@ -3,9 +3,11 @@ package com.linker.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRange;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linker.domain.TeamMemberVO;
 import com.linker.domain.TeamVO;
+import com.linker.domain.UserVO;
 import com.linker.dto.TeamMemberDTO;
 import com.linker.service.TeamMemberService;
 import com.linker.service.TeamService;
@@ -82,26 +85,29 @@ public class TeamController {
 	private TeamMemberService memberService;
 
 	//로그인과 연결하기 전, 임시로 u_id를 지정함.
-	int u_id=10;//userID
+	//
  
 	//팀 목록(teamList.jsp)가져오기1
 	@RequestMapping(value="/team", method=RequestMethod.GET)
-	public String teamListGET(Model model) throws Exception{
+	public String teamListGET(Model model,HttpSession session) throws Exception{
 //		logger.info("teamAdd page is open..................." + u_id);	
-		
+		UserVO vo = (UserVO) session.getAttribute("login");
 		//user가 속한 팀 목록을 조회하는 함수를 'teamList'이름으로 정하고 teamList.jsp로 넘김.
-		model.addAttribute("teamList",teamService.listTeam(u_id));
+		model.addAttribute("teamList",teamService.listTeam(vo.getId()));
 				
 		//user가 속한 모든 팀의 멤버들을 조회하는 함수를 'memberList'이름으로 정하고 teamList.jsp로 넘김
-		model.addAttribute("memberList", memberService.TeamHasUsers(u_id));
-		model.addAttribute(u_id);
+		model.addAttribute("memberList", memberService.TeamHasUsers(vo.getId()));
+		model.addAttribute(vo.getId());
 		return "team/teamList";
 	}
 	
 	//팀 목록(teamList.jsp) 가져오기2
 	@ResponseBody
 	@RequestMapping(value="/team", method=RequestMethod.POST)
-	public ResponseEntity<String> teamLsitPOST(@RequestBody TeamVO tvo) throws Exception{
+	public ResponseEntity<String> teamLsitPOST(@RequestBody TeamVO tvo,HttpSession session) throws Exception{
+		
+		UserVO vo = (UserVO) session.getAttribute("login");
+		
 		//logger.info("createTeam tvo : " + tvo.toString());
 		ResponseEntity<String> entity = null;
 		try {
@@ -111,7 +117,7 @@ public class TeamController {
 			int t_id=tvo.getId();
 //			logger.info("tvo : " + tvo.getT_id());
 //			logger.info("t_id는 : " + t_id);
-			memberService.connectTeamMember(u_id, t_id);
+			memberService.connectTeamMember(vo.getId(), t_id);
 			entity = new ResponseEntity<String>("true", HttpStatus.OK);
 		}catch(Exception e) {
 			entity = new ResponseEntity<String>("false",HttpStatus.BAD_REQUEST);
@@ -206,7 +212,10 @@ public class TeamController {
 	
 	//멤버 수정
 	@RequestMapping(value="/team/{t_id}", method=RequestMethod.PUT)
-	public @ResponseBody ResponseEntity<List<TeamMemberVO>> memberListModifyUPDATE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo) throws Exception{
+	public @ResponseBody ResponseEntity<List<TeamMemberVO>> memberListModifyUPDATE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
+		
+		UserVO vo = (UserVO) session.getAttribute("login");
+		
 		//logger.info("memberListUPDATE");			
 		ResponseEntity<List<TeamMemberVO>> entity = null;
 		//logger.info("memberListUPDATE : " + mvo);
@@ -215,7 +224,7 @@ public class TeamController {
 				memberService.modifyAuth(mvo);
 				//logger.info("memberListUPDATE3");
 				
-				List<TeamMemberVO> memberList= memberService.TeamHasUsers(u_id);
+				List<TeamMemberVO> memberList= memberService.TeamHasUsers(vo.getId());
 				//logger.info("memberListUPDATE3-1 ListTeam : " + memberList);
 				//logger.info("memberList size : " + memberList.size());
 				entity=new ResponseEntity<List<TeamMemberVO>>(memberList, HttpStatus.OK);
@@ -231,8 +240,11 @@ public class TeamController {
 		
 	//멤버 삭제
 	@RequestMapping(value="/team/{t_id}", method=RequestMethod.DELETE)
-	public @ResponseBody ResponseEntity<List<TeamMemberVO>> memberListRemoveDELETE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo) throws Exception{
+	public @ResponseBody ResponseEntity<List<TeamMemberVO>> memberListRemoveDELETE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
 		//logger.info("memberListDELETE");
+		
+		UserVO vo = (UserVO) session.getAttribute("login");
+		
 		//logger.info("t_id, u_id : " + t_id + "," + mvo.getU_id()); //ajax에 보내진 데이터들은 @requestBody mvo에 자동 저장된다.
 		ResponseEntity<List<TeamMemberVO>> entity = null;
 		//logger.info("memberListDELETE : " + mvo);
@@ -241,7 +253,7 @@ public class TeamController {
 			//logger.info("memberListDELETE : " + t_id);
 			memberService.deleteMember(mvo.getU_id(),t_id);
 			//logger.info("memberListDELETE3");
-			List<TeamMemberVO> memberList= memberService.TeamHasUsers(u_id);
+			List<TeamMemberVO> memberList= memberService.TeamHasUsers(vo.getId());
 			//logger.info("memberListDELETE3-1 ListTeam : " + memberList);
 			//logger.info("memberList size : " + memberList.size());
 			entity=new ResponseEntity<List<TeamMemberVO>>(memberList, HttpStatus.OK);
