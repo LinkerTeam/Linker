@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linker.domain.CardVO;
@@ -82,8 +81,8 @@ public class CardController{
 	}
 	
 	
-	//상태값에 따른 카드 조회 (달성, 가리기 탭에서 조회하는 카드 목록)
-	@RequestMapping(value="/{p_id}/cards/{ps_id}", method=RequestMethod.GET)
+	//상태값에 따른 카드 조회 (보관, 가리기 탭에서 조회하는 카드 목록)
+	@RequestMapping(value="/{p_id}/cards/{ps_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<CardVO>> listCard(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id){
 		ResponseEntity<List<CardVO>> entity = null;
 		

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,56 +7,6 @@
 <title></title>
 <!-- CSS -->
 <link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
-<style>
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1001; /* 테스트 후 값 조정 */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-  /*  // background-color: rgba(0,0,0,0.7); */
-}
-.modal.is-visible {
-    display: block;
-}
-.modal-content{
-    position: relative;
-    box-sizing: border-box;
-    width: 300px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 40px 45px 45px 40px;
-    margin: 450px 0px 0px 1400px;
-    color : black;
-    font-size: 15px;
-
-}
-.closetitle{
-   margin-left:70px;
-   padding-bottom: 50px;
-   text-align: center;
-}
-/* 버튼 css   */
-.hiddenbtn{
-    border: none;
-    outline: none;
-    height: 40px;
-    background: #FA5883;
-    color: #fff;
-    font-size: 18px;
-    margin-left: 15px;
-    margin-top: 15px;
-    cursor: pointer;
-    width: 95%;
-    border-radius: 5px;
-    
-}
-
-</style>
-
 </head>
 
 <body>
@@ -88,7 +37,7 @@
 
 	<!--축소 메뉴(아이콘)-->
              <nav class="iconBar">
-                 <a href="#"><img src="http://localhost:9090/user/displayFile?fileName=${login.profile}"  class="profile-img" /></a>
+                 <a href="#"><img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" class="profile-img" /></a>
                  <!--마우스 오버시 아이콘 색변경 되도록-->
                  <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/u765gerlj/icon_project_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/wbqihhlif/icon_project.png'"><img src="https://s5.postimg.org/wbqihhlif/icon_project.png" width="30" border="0" /><span class="icon-menuName">Project</span></a>
                  <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/beuacuicn/icon_erd_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/6sy64hp3r/icon_erd.png'"><img src="https://s5.postimg.org/6sy64hp3r/icon_erd.png" width="30" border="0" /><span class="icon-menuName">ERD</span></a>
@@ -101,129 +50,140 @@
 	<!-- 오른쪽 메뉴 -->
 	<!-- .mainAside-open | 열림 상태 -->
 	<aside id="mainAside" class="mainAside">
-		<div class="nav-tabs-wrap">
-			<ul class="nav-tabs">
-				<!-- .active | 탭 메뉴 활성화 상태 -->
-				<!-- Tab1 | 이력목록 -->
-				<li>
-					<div class="nav-tab-btn">
-						<a href="#">이력</a>
+		<ul class="nav-tabs">
+			<!-- .active | 탭 메뉴 활성화 상태 -->
+			<!-- Tab1 | 이력목록 -->
+			<li>
+				<div class="nav-tab-btn">
+					<a href="#" class="activity-tab">Activity</a>
+				</div>
+				<div class="nav-tab-content">
+					<div class="tab-content-box">
+						<ul class="pic-list">
+							<li>
+								<!-- 작성자 -->
+								<div class="pic-list-writer">
+									<div class="profile">
+										<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
+											alt="프로필 사진" />
+									</div>
+								</div> <!-- 이력내용 -->
+								<div class="pic-list-desc">
+									<span class="name">백다방</span> added Checklist to git 수정된 문서
+									확인
+								</div> <!-- 시간/날짜 -->
+								<p class="pic-list-datetime">2 hours ago</p>
+							</li>
+						</ul>
+						<!-- 이력 더 보기 -->
+						<a class="show-more" href="#">View all activity…</a>
 					</div>
-					<div class="nav-tab-content">
-						<div class="tab-content-box">
-							<ul class="pic-list">
-								<li>
-									<!-- 작성자 -->
-									<div class="pic-list-writer">
-										<div class="profile">
-											<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
-												alt="프로필 사진" />
-										</div>
-									</div> <!-- 이력내용 -->
-									<div class="pic-list-desc">
-										<span class="name">백다방</span> added Checklist to git 수정된 문서
-										확인
-									</div> <!-- 시간/날짜 -->
-									<p class="pic-list-datetime">2 hours ago</p>
-								</li>
-							</ul>
-							<!-- 이력 더 보기 -->
-							<a class="show-more" href="#">View all activity…</a>
+				</div>
+			</li>
+			<!-- /이력목록 -->
+		
+			<!-- Tab2 | 보관목록 -->
+			<li>
+				<div class="nav-tab-btn">
+					<a href="#" class="archived-tab">Archived</a>
+				</div>
+				<div class="nav-tab-content">
+					<div class="tab-content-box">
+						<div class="tab-content-box-controls">
+							<input type="search" placeholder="Search...">
+							<button class="switchBtn-archive swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+							<button class="switchBtn-archive swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
 						</div>
+						<div class="nav-tab-content-Box-archive archiveCard"></div> <!-- 동적 카드 태그가 삽입되는 곳 -->
+						<div class="nav-tab-content-Box-archive archiveCardlist"></div> <!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 					</div>
-				</li>
-				<!-- /이력목록 -->
-	
-				<!-- Tab2 | 달성목록 -->
-				<li>
-					<div class="nav-tab-btn">
-						<a href="#">달성</a>
-					</div>
-					<div class="nav-tab-content">
-						<div class="tab-content-box">
-							<div class="tab-content-box-controls">
-								<input type="search" placeholder="Search archive...">
-								<button class="switchCardlist archiveBtn">Switch to lists</button>
-							</div>
-							<div class="nav-tab-content-Box-card"></div>
+				</div>
+			</li>
+			<!-- /Tab2 | 보관목록 -->
+		
+			<!-- Tab3 | 가리기목록 -->
+			<li>
+				<div class="nav-tab-btn">
+					<a href="#"  class="trashbox-tab">Trashbox</a>
+				</div>
+				<div class="nav-tab-content">
+					<div class="tab-content-box">
+						<div class="tab-content-box-controls">
+							<input type="search" placeholder="Search...">
+							<button class="switchBtn-hidden swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+							<button class="switchBtn-hidden swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
 						</div>
+						<div class="nav-tab-content-Box-hidden hiddenCard"></div><!-- 동적 카드 태그가 삽입되는 곳 -->
+						<div class="nav-tab-content-Box-hidden hiddenCardlist"></div><!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 					</div>
-				</li>
-				<!-- /Tab2 | 달성목록 -->
-	
-				<!-- Tab3 | 가리기목록 -->
-				<li>
-					<div class="nav-tab-btn">
-						<a href="#">가리기</a>
-					</div>
-					<div class="nav-tab-content">
-						<div class="tab-content-box">menu2</div>
-					</div>
-				</li>
-				<!-- /Tab3 | 가리기목록 -->
-	
-				<!-- Tab4 | 설정 -->
-				<li>
-					<div class="nav-tab-btn">
-						<a href="#">settings</a>
-					</div>
-					<div class="nav-tab-content">
-						<div class="tab-content-box">
-							<!--팀 멤버 프로필 사진-->
-	                                 <div class="all-members">
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                     <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-	                                 </div>
-							<!--초대 버튼-->
-							<div class="invite">
-								<a href="#" class="invite-button"> <span
-									class="invite-icon"><i class="fas fa-user-plus"></i></span> <span>invite</span>
-								</a>
-							</div>
-							<!--메뉴-->
-							<div class="mainAside-tab4-menu">
-								<div class="user-modify">
-									<a href="http://localhost:9090/user/userModify">회원정보수정</a>
-								</div>
-								<div class="user-modify">
-									<a href="http://localhost:9090/main/team">팀 정보 수정</a>
-								</div>
-								<div class="user-modify">
-									<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
-								</div>
-								<div class="user-modify">
-									<a href="#" class="closeboard">close-board</a>
-								</div>
-								<div class='modal'>
-								 <div class="modal-content">
-								  <div class='modal-title'>
-								  <span class="closetitle">Close Board?</span>
-								  </div>
-								  <div>
-								   <div class='modal-text'>
-								     <p>You can re-open the board by clicking the “Boards” menu from the header
-								      , selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
-								      <button class="hiddenbtn" value="OK">확인</button>
-								     </div>
-								    </div>
-								   </div>
-								
-								</div>
-							</div>
+				</div>
+			</li>
+			<!-- /Tab3 | 가리기목록 -->
+		
+			<!-- Tab4 | 설정 -->
+			<li>
+				<div class="nav-tab-btn">
+					<a href="#" class="settings-tab">settings</a>
+				</div>
+				<div class="nav-tab-content">
+					<div class="tab-content-box">
+						<!--팀 멤버 프로필 사진-->
+		                    <div class="all-members">
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+		                    </div>
+						<!--초대 버튼-->
+						<div class="invite">
+							<a href="#" class="invite-button"> <span
+								class="invite-icon"><i class="fas fa-user-plus"></i></span> <span>invite</span>
+							</a>
 						</div>
+						<!--메뉴-->
+						<div class="mainAside-tab4-menu">
+							<div class="user-modify">
+								<a href="http://localhost:9090/user/userModify">회원정보수정</a>
+							</div>
+							<div class="user-modify">
+								<a href="http://localhost:9090/main/team">팀 정보 수정</a>
+							</div>
+							<div class="user-modify">
+								<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
+							</div>
+							<div class="user-modify">
+								<a href="#" class="closeboard">close-board</a>
+							</div>
+							<div class="user-modify">
+								<a href="#" class="closeboard">Logout</a>
+							</div>
+							
+							<!-- <div class='modal'>
+								<div class="modal-content">
+							  		<div class='modal-title'>
+							  		<span class="closetitle">Close Board?</span>
+							  	</div>
+							  	<div>
+							   		<div class='modal-text'>
+							     		<p>You can re-open the board by clicking the “Boards” menu from the header
+							      		, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
+							      		<button class="hiddenbtn" value="OK">확인</button>
+							     	</div>
+							    </div>
+							</div> -->
+						</div>
+						<!-- /메뉴 -->
 					</div>
-				</li>
-				<!-- /Tab4 | 설정 -->
-			</ul>
-		</div>
+				</div>
+			</li>
+			<!-- /Tab4 | 설정 -->
+		</ul>
 	</aside>
-	 
+	
 	<script>
 		
 		var i = 0;
@@ -301,7 +261,7 @@
 				    this.parentElement.dataset.activenumber = clickedTabIndex;
 				}
 			});
-		}
+		};
 	
 		//해당 노드의 인덱스 반환
 		function getElementIndex(node) {
@@ -310,66 +270,129 @@
 		        index++;
 		    }
 		    return index;
-		}
-		
-	var modal = document.getElementsByClassName('modal');
-	var closebtn = document.getElementsByClassName('closeboard');
-	var modal2 = document.getElementsByClassName('modal-content');
-	
-	closebtn[0].onclick = function(){
+		};
 		
 		
-		modal[0].classList.add('is-visible');
 		
 		
-	}
-  
-	//모달창 닫기 자바스크립트 버전
-   // 모달 close 이벤트 if문에 자기자신 클릭시에만 이벤트를 발생하게 한다. 모달창 닫기
-            $('.modal').on('click', function(e){
-            	//클릭했을때 user-modal클래스가 아니면 모달을 닫고 user-modal을 클릭했을때는 if문이 안돈다
-            	//event.target은 마우스 클릭시 일어나는 위치찾기
-                if ($(e.target).hasClass("modal")) { 
-                	modal[0].classList.remove('is-visible');     
-                }
-            });
-	
-      //모달 close esc를 누르면 나오게된다. keycode에서 27은 esc이다.
-          $(document).keyup(function(event){
-                        if(event.which=='27'){
-                        	modal[0].classList.remove('is-visible');       
-                        }
-                      });
-             
-      var p_id = 4;
-      
-      $('.hiddenbtn').on('click', function(e){
-    	  
-    	  
-    	   alert("나다");
-    	   
-    	   $.ajax({
-    		 type : 'POST',
-    		 url : '/main/'+p_id,
-    		 headers : {'X-HTTP-Method-Override' : 'POST'
-				},
-    		 data: { "p_id":   p_id },
-    		 success : function(data){
-    			 
-    		 },
-    		 error : function(){
-    			 alert('error');
-    		 }
-    	   
-    	   
-    	   
-    	   
-    	   
-    	   });
-    	   
-       })
-       
-
+		/*
+		* 보관/가리기 탭 관련
+		*/
+		
+		
+		/* 카드 보관/가리기 조회 | 오른쪽 탭(보관, 가리기)에서 카드 목록 조회 */
+	    function readCardStatus(ps_id){
+	    	$.ajax({
+	    		type : "GET",
+				url : "/board/" + p_id + "/cards/" + ps_id,
+				success : function(data){
+					var str = "";
+					
+			  		if(ps_id === 2){ //보관카드 조회
+			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드 태그 생성
+							str += createArchivedCard(data[i].id, data[i].title);
+						};
+						$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
+			  		} else if(ps_id === 3) { //가리기카드 조회
+			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
+							str += createTrashboxCard(data[i].id, data[i].title);
+						};
+						$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //가리기탭에 동적 태그 삽입
+			  		};
+				}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+	    	}); //ajax
+	    };
+	    
+	    /* 카드리스트 보관/가리기 조회 | 오른쪽 탭(보관, 가리기)에서 카드리스트 조회 */
+		function readCardlistStatus(ps_id){
+			$.ajax({
+	    		type : "GET",
+				url : "/board/" + p_id + "/cardlist/" + ps_id,
+				success : function(data){
+					var str = "";
+					
+			  		if(ps_id === 2){ //보관 카드리스트 조회
+			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드리스트 태그 생성
+							str += createArchivedCardlist(data[i].id, data[i].title);
+						};
+						$(".nav-tab-content-Box-archive.archiveCardlist").html(str); //보관탭에 동적 태그 삽입
+			  		} else if(ps_id === 3) { //가리기 카드리스트 조회
+			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드리스트 태그 생성
+							str += createTrashboxCardlist(data[i].id, data[i].title);
+						};
+						$(".nav-tab-content-Box-hidden.hiddenCardlist").html(str); //가리기탭에 동적 태그 삽입
+			  		};
+				}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+	    	}); //ajax
+		};
+	    
+	    
+	    /* 카드 보관 조회 | 보관탭을 누를 경우 */
+	    $(".archived-tab").click(function(){
+	    	readCardStatus(2); //상태값이 2인 카드 목록 조회
+	    });
+	    /* 카드 가리기 조회 | 가리기탭을 누를 경우 */
+	    $(".trashbox-tab").click(function(){
+	    	readCardStatus(3); //상태값이 3인 카드 목록 조회
+	    });
+	    
+	    
+	    
+	    /* 카드리스트 보관 조회 | switch버튼 누를 경우 */
+		$(".tab-content-box-controls > .switchBtn-archive").click(function(){
+			$(".tab-content-box-controls > .switchBtn-archive").toggle();
+			$(".nav-tab-content-Box-archive.archiveCard").toggle();
+			
+			readCardlistStatus(2); //상태값이 2인 카드리스트 조회
+		});
+		/* 카드리스트 가리기 조회 | switch버튼 누를 경우 */
+		$(".tab-content-box-controls > .switchBtn-hidden").click(function(){
+			$(".tab-content-box-controls > .switchBtn-hidden").toggle();
+			$(".nav-tab-content-Box-hidden.hiddenCard").toggle();
+			
+			readCardlistStatus(3); //상태값이 3인 카드리스트 조회
+		});
+		
+		
+		
+		/* 카드리스트/카드 보관/가리기 수정 | 탭에서 send to...버튼 or Trashbox버튼 누를 경우 */
+		$(".tab-content-box").on("click", ".return", function(){
+			var ps_id;
+			var STATUS_ING = 1; //진행
+	    	var STATUS_HIDDEN = 3; //가리기
+	    	var className = $(this).attr("class"); //클릭한 요소의 class이름
+	    	var id = $(this).parent().prev().attr("data-id");
+	    	var title = $(this).parent().prev().children(":first").text();
+	    	
+	    	switch (className) {
+	            case "archive-reopen switchBtn-archive return returnCard": //카드의 send to 
+	            	ps_id = STATUS_ING; //ps_id = 1
+	            	cardStatusChange(id, ps_id, title);
+	                break;
+	            case "archive-hidden switchBtn-archive return returnCard": //카드의 Trashbox
+	            	if(confirm("Trashbox로 보내진 카드는 되돌릴 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
+		    			ps_id = STATUS_HIDDEN; //ps_id = 3
+	            	cardStatusChange(id, ps_id, title);
+	            	break;
+	            case "archive-reopen switchBtn-archive return returnCardlist": //카드리스트의 send to 
+	            	ps_id = STATUS_ING; //ps_id = 1
+		            cardlistStatusChange(id, ps_id, title);
+	                break;
+	            case "archive-hidden switchBtn-archive return returnCardlist": //카드리스트의 Trashbox
+		            if(confirm("Trashbox로 보내진 카드리스트는 되돌릴 수 없습니다. \n소속된 카드도 함께 이동되며 더이상 조회할 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
+		            	ps_id = STATUS_HIDDEN; //ps_id = 3
+		            cardlistStatusChange(id, ps_id, title);
+	            	break;
+    		};
+	    	cardStatusChange(id, ps_id, title); //상태변경에 대한 ajax처리 함수 호출
+		});
+		
 		
 		
 	</script>

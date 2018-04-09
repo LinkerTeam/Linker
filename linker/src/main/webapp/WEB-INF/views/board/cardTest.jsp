@@ -24,7 +24,7 @@
 
 			<!-- 카드리스트 전체 -->
             <div class="cardlists">
-            	<!-- 각각의 카드리스트가 삽입될 곳 -->
+            	<!-- 각각의 카드리스트가 삽입될 곳(아래와 같은 형태) -->
            <!-- <div class="cardlist">
         			<header class="cardlistTitle">카드리스트 title</header>
                     <div class="cards">해당 카드리스트에 대한 카드목록이 추가되는 곳</div>
@@ -69,8 +69,8 @@
 	    <!-- 메뉴목록 -->
 	    <div class="popupMenuContent">
 	        <ul class="popupMenuList">
-	            <li class="to-achieve"><a href="#">달성</a></li>
-	            <li class="to-hide"><a href="#">가리기</a></li>
+	            <li class="to-archive"><a href="#">Archive</a></li>
+	            <li class="to-hide"><a href="#">Trashbox</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -97,10 +97,15 @@
 		var cardlistIndex; //스크롤 조절에 쓸 카드리스트의 인덱스
 		var modifyCardTitle; //수정할 카드의 title을 출력하는 div를 담을 변수
 		
-		//유저 id는 임의의 값을 사용
-		var u_id = ${u_id};
-		//프로젝트 id는 임의의 값을 사용
-		var p_id = ${p_ID};
+		var cardlistId = ""; //카드리스트 ...(팝업메뉴) 클릭 시 카드리스트의 id를 담을 변수
+		var cardlistTitle = ""; //카드리스트 ...(팝업메뉴) 클릭 시 카드리스트의 제목을 담을 변수
+		
+		var STATUS_ING = 1; //진행 (상태변경에 사용)
+    	var STATUS_ARCHIVE = 2; //보관 (상태변경에 사용)
+    	var STATUS_HIDDEN = 3; //가리기 (상태변경에 사용)
+		
+		var u_id = ${u_id}; //유저 id
+		var p_id = ${p_ID}; //프로젝트 id
 		
 		
 		
@@ -260,7 +265,7 @@
 			var cl_id = $(".createCardTextarea").eq(cardlistIndex).parents(".cardlist").attr("data-id"); //해당 카드리스트의 id값
 			
 			//아무 값도 입력하지 않을 경우
-			if(title == ''){ return; }
+			if(title === ''){ return; }
 	
 			$.ajax({
 				type : 'post',
@@ -300,11 +305,11 @@
 			var cardtitleLiY = $(this).parent("div").offset().top; //그 수정버튼의 부모 태그의 y좌표
 	
 			// 2. 카드리스트의 전체높이 구하기
-			var headerHeight = parseInt($(".cardlistTitle").css("height")); //카드리스트 헤더 높이
-			var listHeight = parseInt($(".cards").css("height")); //카드리스트 중 카드부분 높이
+			var headerHeight = parseInt($(this).parent().parent().prev().css("height")); //카드리스트 헤더 높이
+			var listHeight = parseInt($(this).parent().parent().css("height")); //카드리스트 중 카드부분 높이
 			var footerHeight = parseInt($(".createCardBox").css("height")); //카드리스트 푸터 높이
 			var x = headerHeight + listHeight + footerHeight; //카드리스트 전체높이
-			
+						
 			var listScrollHeight = $(this).parent().parent().prop("scrollHeight"); //클릭한 수정버튼의 조상 .cards의 scrollHeight
 			
 			var cardId = $(this).parent().attr("data-id"); //카드의 id값을 담는다.
@@ -558,6 +563,9 @@
 			var btnPosition = $(this).offset();	// 버튼좌표
 			var popup = $('.popupMenuWrap');	// 팝업
 			
+			cardlistId = $(this).parent().parent().attr("data-id"); //해당 카드리스트의 id를 전역변수에 담아둠
+			cardlistTitle = $(this).next().val(); //해당 카드리스트의 제목을 전역변수에 담아둠
+			
 			// 선택한 카드리스트 아이디 정보를 팝업에 저장
 			var selectedCardlist = $(this).parents('.cardlist');
 			popup.data('data-cl-id', selectedCardlist.data('id'));
@@ -578,49 +586,6 @@
 		});
 		
 		
-		/* 카드리스트 수정 | 상태변경 */
-		$('.popupMenuList li').on('click', function() {
-			var CARDLIST_STATE_ACHIEVEMENT = 2; // 카드리스트 상태 값 (달성)
-			var CARDLIST_STATE_HIDING = 3;		// 카드리스트 상태 값 (가리기)
-			var state = null;					// 선택한 상태 값을 저장
-			
-			var popup = $('.popupMenuWrap');
-			var cl_id = popup.data('data-cl-id');	// 상태 변경된 카드리스트 아이디
-			
-			if($(this).hasClass('to-achieve'))
-				state = CARDLIST_STATE_ACHIEVEMENT;	// 달성 버튼
-			else
-				state = CARDLIST_STATE_HIDING;		// 가리기 버튼
-		
-			// 팝업 닫기
-			closeCardlistPop();
-		
-			$.ajax({
-				type : 'put',
-				url : "/board/" + p_id + "/cardlist/" + cl_id,
-				headers : {
-					'Content-Type' : 'application/json',
-					'X-HTTP-Method-Override' : 'PUT'
-				},
-				data : JSON.stringify({cl_ps_id : state}),
-				dataType : 'text',
-				success : function(result) {
-					console.log('result: ' + result);
-					// 카드리스트 상태 변경이 성공적으로 데이터베이스에 반영되면
-					if (result == 'SUCCESS') {
-						console.log('카드리스트 아이디 : ' + cl_id + ', 상태 ' + state + '(으)로 수정 되었습니다.');
-						// 상태 변경된 카드리스트의 임시 데이터를 삭제
-						popup.removeData('data-cl-id');
-						// 상태 변경된 카드리스트 요소를 삭제
-						$('.cardlist[data-id="' + cl_id + '"').remove();
-					}
-				},
-				error : function() {
-	    			alert("에러가 발생했습니다.");
-	    		}
-			});
-		
-		});
 		
 		/* 카드리스트 팝업 닫기 버튼 */
 		$('.popupMenuCloseBtn').on('click', function() {
@@ -639,6 +604,68 @@
 				closeCardlistPop();
 			};
 		});
+		
+		
+		
+		/* 카드리스트 보관/가리기 수정 | ajax처리 */
+		function cardlistStatusChange(id, ps_id, title){
+			$.ajax({
+				type : 'put',
+				url : "/board/" + p_id + "/cardlist/" + id,
+				headers : {
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'PUT'
+				},
+				data : JSON.stringify({cl_ps_id : ps_id}),
+				dataType : 'text',
+				success : function(result) {
+					console.log('result: ' + result);
+					// 카드리스트 상태 변경이 성공적으로 데이터베이스에 반영되면
+					if (result == 'SUCCESS') {
+						console.log('카드리스트 아이디 : ' + id + ', 상태 ' + ps_id + '(으)로 수정 되었습니다.');
+						
+						$(".cardlist[data-id=" + id + "]").parent(".nav-tab-content-Box-archive.archive-cards").remove(); //send to board, Trashbox 버튼까지 함께 삭제
+						$('.cardlist[data-id="' + id + '"').remove(); // 상태 변경된 카드리스트 요소를 삭제
+						
+						switch (ps_id) {
+				            case 1: //보드에 카드리스트 태그 삽입
+				            	//여기는 드래그앤드롭 들어가서(-)
+				                break;
+				            case 2: //보관탭에 동적 카드리스트 태그 삽입
+				            	$(".nav-tab-content-Box-archive.archiveCardlist").prepend( createArchivedCardlist(id, title) );
+				            	break;
+				            case 3: //가리기탭에 동적 카드리스트 태그 삽입
+				            	$(".nav-tab-content-Box-hidden.hiddenCardlist").prepend( createTrashboxCardlist(id, title) );
+				                break;
+		    			};
+					}//if
+				},
+				error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+			});//ajax
+		};
+		
+		
+		
+		/* 카드리스트 보관/가리기 수정 | 팝업창에서 보관 or 가리기 버튼 누를 경우 */
+		$('.popupMenuList li').on('click', function() {
+			var state = null;					// 선택한 상태 값을 저장
+			
+			if($(this).hasClass('to-archive')) { // 보관 버튼
+				state = STATUS_ARCHIVE;	
+			} else { // 가리기 버튼
+				if(confirm("Trashbox로 보내진 카드리스트는 되돌릴 수 없습니다. \n소속된 카드도 함께 이동되며 더이상 조회할 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
+					state = STATUS_HIDDEN; 	
+		    	else return; //취소를 누르면 더이상 작업 수행하지 않고 return
+			};
+			
+			closeCardlistPop(); // 팝업 닫기
+		
+			cardlistStatusChange(cardlistId, state, cardlistTitle); //상태변경 ajax 처리 함수 호출
+		});
+		
+	
 
 	</script>
 </body>
