@@ -14,7 +14,7 @@
 <body>
 	<div id="popupBox" class="overlay">
         <div class="popupCard">
-        	<!-- 카드의 상태값이 달성/가리기일 때 상단bar-->
+        	<!-- 카드의 상태값이 보관/가리기일 때 상단bar-->
         	<div class="popCard-banner archive"><p><i class="fas fa-archive"></i> This card is archived. You can't edit this card anymore.</p></div>
         	<div class="popCard-banner hide"><p><i class="fas fa-archive"></i> This card is hidden. You can't edit this card anymore.</p></div>
             <!-- 헤더 | 카드 제목 -->
@@ -110,7 +110,7 @@
 	    			다시 카드를 띄우면 수정사항이 출력되고 저장하지 않았다는 경고메시지 출력
 	    			(지금은 껐다 키면 DB내용이 들어가있고 수정사항은 사라짐.) (-)
 	    			+) close버튼에도 적용할 것. (-)
-	    	5. 달성, 가리기 (-)
+	    	5. 보관, 가리기 (-)
 	    	7. 코드정리 (-)
 	    	9. 주석달기 (-)
 	    	10. 변수이름 정리 (-)
@@ -119,9 +119,10 @@
 	    	17. jQuery, javascript 짬뽕 정리(-)
 	    	18. 카드리스트와 통합하여 기능확인, 정리하기(-)
 	    	19. 리스트에서 화면 마우스로 클릭하고 움직이면 스크롤 따라오게 (-)
-	    	20. 카드리스트 달성/숨기기 모달창 띄우고 스크롤할 때 모달창만 둥둥 뜨는 문제(-)
-	    	21. 가리기 경고창(-)
-	    	22.
+	    	20. 카드리스트 보관/숨기기 모달창 띄우고 스크롤할 때 모달창만 둥둥 뜨는 문제(-)
+	    	22. 카드리스트 추가시 가끔 스크롤이 끝으로 이동 안 하고 맨앞으로 튕김(-)
+	    	23. 보관카드 - 내용 없으면 placeholder 뜬 채로 수정 불가인데 placeholder없애? (-)
+	    	24. 
 	    **************************************************************************************************************
 	    	<해결한 것>
 	    	1. 카드모달 닫을 때 새로고침 되지 않게 (+)
@@ -136,6 +137,7 @@
 	    	15. ajax error처리(+)
 	    	16. 연산자 띄어쓰기 정리(+)
 	    	20. 카드리스트 height조절(+)
+	    	21. 가리기 경고창(+)
 	    **************************************************************************************************************/	    
 	
 	    //임의의 프로젝트 id값을 준다.(프로젝트4에 대한 화면 출력)
@@ -148,7 +150,7 @@
 	    var viewEdits = document.getElementsByClassName("viewEdits")[0]; //내용 저장하지 않았을 때 뜨는 view Edits
 	    var discard = document.getElementsByClassName("discard")[0]; //내용 저장하지 않았을 때 뜨는 discard
 		var popCardId; //카드 상세내용 조회할 때 클릭한 카드id값을 담을 변수
-		var popCardPsId; //카드 상세내용 조회할 때 클릭한 카드의 ps_id값을 담을 변수 (달성/가리기 카드 수정 못하게 할 때 사용)
+		var popCardPsId; //카드 상세내용 조회할 때 클릭한 카드의 ps_id값을 담을 변수
 		var popCardContent; //카드 상세내용 조회할 때 클릭한 카드 내용을 담을 변수
 	    
 	
@@ -159,17 +161,17 @@
 			1(진행) : 
 				1. 카드 상단에 상태바 가리기
 				2. 카드모달창 padding 초기화
-				3. 달성버튼, 가리기버튼 출력
+				3. 보관버튼, 가리기버튼 출력
 				4. send to cardlist메뉴 가리기
-			2(달성) :  
+			2(보관) :  
 				1. 카드 상단에 상태바 archive 출력
 				2. 카드모달창 padding 조절
-				3. 달성버튼 숨기기, 가리기버튼 출력
+				3. 보관버튼 숨기기, 가리기버튼 출력
 				4. send to cardlist 출력
 			3(가리기) :
 				1. 카드 상단에 상태바 hidding 출력
 				2. 카드모달창 padding 조절
-				3. 달성버튼, 가리기버튼 숨기기
+				3. 보관버튼, 가리기버튼 숨기기
 				4. send to cardlist 숨기기
 			
 			script :
@@ -190,11 +192,11 @@
             	$(".title-modify").prop("disabled", false); //제목 수정 할 수 있게
             	$(".content-textarea").prop("disabled", false); //내용 수정 할 수 있게
                 break;
-            case 2: //달성일 때
+            case 2: //보관일 때
             	$(".changeStatus").removeClass("changeStatus"); //관련된 모든 클래스 이름에서 changeStatus 제거하여 CSS 속성 초기화
             	$(".popCard-banner.archive").addClass("changeStatus"); //1. 카드 상단에 상태바 archive 출력
             	$(".popupCard").addClass("changeStatus");//2. 카드모달창 padding 조절
-            	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 달성버튼 숨기기
+            	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 보관버튼 숨기기
             	$(".popupCard-aside-hide").removeClass("changeStatus"); //3. 가리기버튼 출력
             	$(".popupCard-aside-sendToCardlist").addClass("changeStatus"); //4. send to cardlist메뉴 출력.
             	
@@ -205,7 +207,7 @@
             	$(".changeStatus").removeClass("changeStatus"); //관련된 모든 클래스 이름에서 changeStatus 제거하여 CSS 속성 초기화
             	$(".popCard-banner.hide").addClass("changeStatus"); //1. 카드 상단에 상태바 hide 출력
             	$(".popupCard").addClass("changeStatus");//2. 카드모달창 padding 조절
-            	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 달성버튼 숨기기
+            	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 보관버튼 숨기기
             	$(".popupCard-aside-hide").addClass("changeStatus"); //3. 가리기버튼 숨기기
             	$(".popupCard-aside-sendToCardlist").removeClass("changeStatus"); //4. send to cardlist메뉴 숨기기
             	
@@ -222,7 +224,7 @@
 	       	popCardId = obj.parentNode.getAttribute("data-id"); //클릭한 카드의 id값을 가져와서 var id에 담음.
 	       	modifyCardTitle = $(obj); //클릭한 카드의 title표시하는 div를 전역변수에 담아둠(제목 수정 처리에 이용할 예정)
 	    	
-	    	$.getJSON("/cards/" + p_id + "/card/" + popCardId, function(data){
+	    	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data){
 	    		popCardPsId = data.ps_id; //클릭한 카드의 ps_id값 전역변수에 담아두기 		
 	    		
 	    		//DB에서 카드 id, 내용 가져오기(id는 화면에 표시하지 않는다.)
@@ -236,7 +238,7 @@
 	    	    contentTextarea.style.height = "1px";
 	    	    contentTextarea.style.height = (contentTextarea.scrollHeight) + "px";
 	    	    
-		    	cardStatus(data.ps_id); //카드 상태값에 따라 진행, 달성, 가리기 구별하여 각각 다른 형태의 카드모달창 출력
+		    	cardStatus(data.ps_id); //카드 상태값에 따라 진행, 보관, 가리기 구별하여 각각 다른 형태의 카드모달창 출력
 	    	});//JSON
 	    	cardModal.style.display = "block"; //모달창 띄우기
 	    };
@@ -277,28 +279,28 @@
 	    function popCardTitleModify(){
 			var titleModify = $(".title-modify").val(); //수정input태그의 value값 담기
 				    	
-				//아무 값도 입력하지 않을 경우
-				if(titleModify == ''){ return; }
-				
-				if(titleModify !== popCardTitle){
-					$.ajax({
-						type : 'put',
-						url : "/cards/" + p_id + "/card/" + popCardId,
-						headers : {
-							"Content-Type" : "application/json",
-							"X-HTTP-Method-Override" : "PUT"
-						},
-						data : JSON.stringify({title : titleModify}),
-						dataType : 'text', 
-						success : function(result) {
-							if(result === "SUCCESS")
-								$(modifyCardTitle).text(titleModify); //수정사항 카드리스트에 적용
-						},
-						error : function() {
-							alert("에러가 발생했습니다.");
-						}
-					});//ajax
-				};
+			//아무 값도 입력하지 않을 경우
+			if(titleModify == ''){ return; }
+			
+			if(titleModify !== popCardTitle){
+				$.ajax({
+					type : 'put',
+					url : "/board/" + p_id + "/card/" + popCardId,
+					headers : {
+						"Content-Type" : "application/json",
+						"X-HTTP-Method-Override" : "PUT"
+					},
+					data : JSON.stringify({title : titleModify}),
+					dataType : 'text', 
+					success : function(result) {
+						if(result === "SUCCESS")
+							$(modifyCardTitle).text(titleModify); //수정사항 카드리스트에 적용
+					},
+					error : function() {
+						alert("에러가 발생했습니다.");
+					}
+				});//ajax
+			};//if
 	    };
 	    
 	    /* 제목 수정 | 카드 모달창(전체)을 클릭할 경우 */
@@ -349,7 +351,7 @@
 	    	
 	    	$.ajax({
 	    		type : 'put',
-	    		url : "/cards/"+p_id+"/card/" + popCardId,
+	    		url : "/board/"+p_id+"/card/" + popCardId,
 	    		headers : {
 	    			"Content-Type" : "application/json",
 	    			"X-HTTP-Method-Override" : "PUT"
@@ -387,7 +389,7 @@
 	
 	    /* 내용, 제목 수정 취소 | X버튼, discard버튼 클릭할 경우 */
 	    function modifyCancel() {
-	    	$.getJSON("/cards/" + p_id + "/card/" + popCardId, function(data){
+	    	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data){
 	    		//DB에서 내용(content) 가져오기
 	    		contentTextarea.value = data.content;
 	    		//content의 text길이만큼 textarea의 height값 주기
@@ -402,11 +404,11 @@
 	    
 	    
 	    /*
-	     * 달성/가리기 관련
+	     * 카드 보관/가리기 관련
 	     */
 	    
 	    
-	    /* 카드 달성/가리기 | 달성탭에 삽입될 카드 태그 생성 */
+	    /* 카드 보관/가리기 | 보관탭에 삽입될 카드 태그 생성 */
 	    function createArchivedCard(id, title){
 	    	var str = "<div class='nav-tab-content-Box-archive archive-cards'>" +
 					  "    <div data-id='"+ id +"' class='cardtitleLi tab-cards'>" +
@@ -414,15 +416,15 @@
 					  "        <div class='cardStatus'><i class='fas fa-archive'></i> archived</div>" +
 					  "    </div>" +
 					  "    <p class='quiet'>" +
-					  "        <button class='archive-reopen switchBtn-archive'>Send to Cardlist</button>" +
+					  "        <button class='archive-reopen switchBtn-archive return returnCard'>Send to Cardlist</button>" +
 					  "     - " +
-					  "        <button class='archive-hidden switchBtn-archive'>Trashbox</button>" +
+					  "        <button class='archive-hidden switchBtn-archive return returnCard'>Trashbox</button>" +
 					  "    </p>" +
 					  "</div>";
 			return str;
 	    };
 	    
-	    /* 카드 달성/가리기 | 가리기탭에 삽입될 카드 태그 생성 */
+	    /* 카드 보관/가리기 | 가리기탭에 삽입될 카드 태그 생성 */
 	    function createTrashboxCard(id, title){
 	    	var str = "<div data-id='"+ id +"' class='cardtitleLi tab-cards'>" +
 					  "    <div id='cardLink' onclick='loadCardData(this)'>"+ title +"</div>" +
@@ -432,20 +434,24 @@
 	    };
 	    
 	    
-	    /* 카드리스트 달성/가리기 | 달성탭에 삽입될 카드리스트 태그 생성 */
+	    /* 카드리스트 보관/가리기 | 보관탭에 삽입될 카드리스트 태그 생성 */
 	    function createArchivedCardlist(id, title){
-	    	var str = "<div data-id='"+ id +"' class='cardlists tab-cardlist'>" +
-					  "    <div class='cardlistTitleBox tab-cardlist'>"+ title +"</div>" +
+	    	var str = "<div class='nav-tab-content-Box-archive archive-cards'>" +
+	    			  "    <div data-id='"+ id +"' class='cardlist tab-cardlist'>" +
+					  "        <div class='cardlistTitleBox tab-cardlist'>"+ title +"</div>" +
+					  "    </div>" +
 					  "    <p class='quiet'>" +
-					  "        <button class='archive-reopen switchBtn-archive'>Send to Project</button>" +
+					  "        <button class='archive-reopen switchBtn-archive return returnCardlist'>Send to board</button>" +
+					  "		- " +
+					  "        <button class='archive-hidden switchBtn-archive return returnCardlist'>Trashbox</button>" +
 					  "    </p>" +
 					  "</div>";
 			return str;
 	    };
 	    
-	    /* 카드리스트 달성/가리기 | 가리기탭에 삽입될 카드리스트 태그 생성 */
+	    /* 카드리스트 보관/가리기 | 가리기탭에 삽입될 카드리스트 태그 생성 */
 	    function createTrashboxCardlist(id, title){
-	    	var str = "<div data-id='"+ id +"' class='cardlists tab-cardlist'>" +
+	    	var str = "<div data-id='"+ id +"' class='cardlist tab-cardlist'>" +
 					  "    <div class='cardlistTitleBox tab-cardlist'>"+ title +"</div>" +
 					  "</div>";
 			return str;
@@ -453,158 +459,61 @@
 	    
 	    
 	    
-	    /* 카드 달성/가리기 수정 | 카드모달창에서 달성버튼 or 가리기버튼 클릭할 경우 */
-	    $(".popupCard-aside ul li div").click(function(){
-	    	var CARD_STATUS_ING = 1; //진행
-	    	var CARD_STATUS_ARCHIVE = 2; //달성
-	    	var CARD_STATUS_HIDDEN = 3; //가리기
-	    	var className = $(this).attr("class"); //클릭한 요소의 class이름
-	    	var title = $(".title-cardTitle input").val(); //클릭한 카드의 title
-	    	
-	    	if(className === "popupCard-aside-sendToCardlist changeStatus"){ //send to project 버튼이면
-	    		popCardPsId = CARD_STATUS_ING; 	//ps_id = 1
-	    	} else if(className === "popupCard-aside-archive"){ //달성 버튼이면
-	    		popCardPsId = CARD_STATUS_ARCHIVE; 	//ps_id = 2
-	    	} else if(className === "popupCard-aside-hide"){ //가리기 버튼이면
-	    		if(confirm("Trashbox로 보내진 카드는 되돌릴 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
-		    		popCardPsId = CARD_STATUS_HIDDEN; 	//ps_id = 3
-		    	else return; //취소를 누르면 더이상 작업 수행하지 않고 return
-	    	};
-	    	
-	    	console.log(popCardPsId);
-	    	
+	    /* 카드 보관/가리기 수정 | ajax처리 */
+	    function cardStatusChange(id, ps_id, title){
 	    	$.ajax({
 	    		type : 'put',
-	    		url : "/cards/" + p_id + "/cardStatus/" + popCardId,
+	    		url : "/board/" + p_id + "/cardStatus/" + id,
 	    		headers : {
 	    			"Content-Type" : "application/json",
 	    			"X-HTTP-Method-Override" : "PUT"
-	    		},
-	    		data : JSON.stringify({ps_id : popCardPsId}),
+	    		},	
+	    		data : JSON.stringify({ps_id : ps_id}),
 	    		dataType : 'text', 
 	    		success : function(data) {	
-			    	$(modifyCardTitle).parent().parent(".nav-tab-content-Box-archive.archive-cards").detach(); //가리기탭에 카드가 있을 경우 카드 삭제
-			    	$(modifyCardTitle).parent().detach(); //카드리스트에서 카드 삭제(detach() : 하위태그 모두 삭제)
+			    	$(".cardtitleLi[data-id=" + id + "]").parent(".nav-tab-content-Box-archive.archive-cards").remove(); //가리기탭에서 카드 밑의 send to cardlist, Trashbox 버튼까지 함께 삭제
+			    	$(".cardtitleLi[data-id=" + id + "]").remove(); //카드리스트에서 카드 삭제
 			    	
-			    	if(popCardPsId === 1) { //달성탭에 카드 태그 삽입
-			    		//이 처리를 어떻게 해야할지 고민... drag&drop 들어가야 할듯...(-)
-			    	} else if(popCardPsId === 2) { //달성탭에 카드 태그 삽입
-			    		$(".nav-tab-content-Box-archive.archiveCard").prepend( createArchivedCard(popCardId, title) ); //달성탭에 동적 태그 삽입
-			    	} else if(popCardPsId === 3){ //가리기탭에 카드 태그 삽입
-			    		$(".nav-tab-content-Box-hidden.hiddenCard").prepend( createTrashboxCard(popCardId, title) ); //가리기탭에 동적 태그 삽입
-			    	};
-			    	cardStatus(popCardPsId); //상태값에 맞게 카드모달창 형태 변경
+			    	switch (ps_id) {
+			            case 1: //카드리스트에 카드 태그 삽입
+			            	
+			                break;
+			            case 2: //보관탭에 카드 태그 삽입
+			            	$(".nav-tab-content-Box-archive.archiveCard").prepend( createArchivedCard(id, title) ); //보관탭에 동적 카드태그 삽입
+			            	break;
+			            case 3: //가리기탭에 카드 태그 삽입
+			            	$(".nav-tab-content-Box-hidden.hiddenCard").prepend( createTrashboxCard(id, title) ); //가리기탭에 동적 카드태그 삽입
+			                break;
+		    		};
+			    	
+			    	cardStatus(ps_id); //상태값에 맞게 카드모달창 형태 변경 
 	    		},
 	    		error : function() {
 	    			alert("에러가 발생했습니다.");
 	    		}
 	    	});//ajax
-	    });
-	    
-	    
-	    
-	    /* 카드 달성/가리기 조회 | 오른쪽 탭(달성, 가리기)에서 카드 목록 조회 */
-	    function readCardStatus(ps_id){
-	    	$.ajax({
-	    		type : "GET",
-				url : "/cards/" + p_id + "/cards/" + ps_id,
-				success : function(data){
-					var str = "";
-					
-			  		if(ps_id === 2){ //달성카드 조회
-			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드 태그 생성
-							str += createArchivedCard(data[i].id, data[i].title);
-						};
-						$(".nav-tab-content-Box-archive.archiveCard").html(str); //달성탭에 동적 태그 삽입
-			  		} else if(ps_id === 3) { //가리기카드 조회
-			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
-							str += createTrashboxCard(data[i].id, data[i].title);
-						};
-						$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //가리기탭에 동적 태그 삽입
-			  		};
-				}, //success
-				error : function() {
-			   		alert("에러가 발생했습니다.");
-			   	}
-	    	}); //ajax
-	    };
-	    
-	    /* 카드리스트 달성/가리기 조회 | 오른쪽 탭(달성, 가리기)에서 카드리스트 조회 */
-		function readCardlistStatus(ps_id){
-			$.ajax({
-	    		type : "GET",
-				url : "/cards/" + p_id + "/cardlist/" + ps_id,
-				success : function(data){
-					var str = "";
-					
-			  		if(ps_id === 2){ //달성 카드리스트 조회
-			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드리스트 태그 생성
-							str += createArchivedCardlist(data[i].id, data[i].title);
-						};
-						$(".nav-tab-content-Box-archive.archiveCardlist").html(str); //달성탭에 동적 태그 삽입
-			  		} else if(ps_id === 3) { //가리기 카드리스트 조회
-			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드리스트 태그 생성
-							str += createTrashboxCardlist(data[i].id, data[i].title);
-						};
-						$(".nav-tab-content-Box-hidden.hiddenCardlist").html(str); //가리기탭에 동적 태그 삽입
-			  		};
-				}, //success
-				error : function() {
-			   		alert("에러가 발생했습니다.");
-			   	}
-	    	}); //ajax
-		};
-	    
-	    
-	    /* 카드 달성 조회 | 달성탭을 누를 경우 */
-	    $(".archived-tab").click(function(){
-	    	readCardStatus(2); //상태값이 2인 카드 목록 조회
-	    });
-	    /* 카드 가리기 조회 | 가리기탭을 누를 경우 */
-	    $(".trashbox-tab").click(function(){
-	    	readCardStatus(3); //상태값이 3인 카드 목록 조회
-	    });
-	    
-	    
-	    
-	    /* 카드리스트 달성 조회 | switch버튼 누를 경우 */
-		$(".tab-content-box-controls > .switchBtn-archive").click(function(){
-			$(".tab-content-box-controls > .switchBtn-archive").toggle();
-			$(".nav-tab-content-Box-archive.archiveCard").toggle();
-			
-			readCardlistStatus(2); //상태값이 2인 카드리스트 조회
-		});
-		/* 카드리스트 가리기 조회 | switch버튼 누를 경우 */
-		$(".tab-content-box-controls > .switchBtn-hidden").click(function(){
-			$(".tab-content-box-controls > .switchBtn-hidden").toggle();
-			$(".nav-tab-content-Box-hidden.hiddenCard").toggle();
-			
-			readCardlistStatus(3); //상태값이 3인 카드리스트 조회
-		});
-	    
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/* 달성 | send to cardlist버튼을 누를 경우 */
-	    function sendToCardlist(){
-	    	
 	    };
 	    
 	    
 	    
-	    /* 달성 | 달성카드목록에서 send to cardlist버튼을 누를 경우 */
-	    $(".tab-content-box").on("click", ".archiveBtn", function(){
+	    /* 카드 보관/가리기 수정 | 카드모달창에서 보관버튼 or 가리기버튼 클릭할 경우 */
+	    $(".popupCard-aside ul li div").click(function(){
+	    	var className = $(this).attr("class"); //클릭한 요소의 class이름
+	    	var title = $(".title-cardTitle input").val(); //클릭한 카드의 title
 	    	
-	    });
-	    /* 달성 | 카드모달창에서 send to cardlist버튼을 누를 경우 */
-	    $(".popupCard-aside-sendToCardlist.changeStatus").click(function(){
+	    	if(className === "popupCard-aside-sendToCardlist changeStatus"){ //send to cardlist 버튼이면
+	    		popCardPsId = STATUS_ING; //ps_id = 1
+	    	} else if(className === "popupCard-aside-archive"){ //보관 버튼이면
+	    		popCardPsId = STATUS_ARCHIVE; //ps_id = 2
+	    	} else if(className === "popupCard-aside-hide"){ //가리기 버튼이면
+	    		if(confirm("Trashbox로 보내진 카드는 되돌릴 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
+		    		popCardPsId = STATUS_HIDDEN; //ps_id = 3
+		    	else return; //취소를 누르면 더이상 작업 수행하지 않고 return
+	    	} else { 
+	    		return; 
+	    	};
 	    	
+	    	cardStatusChange(popCardId, popCardPsId, title); //상태변경에 대한 ajax처리 함수 호출
 	    });
 	    
 	    

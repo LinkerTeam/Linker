@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+  
 <mapper namespace="com.linker.mapper.cardMapper">
 
 	<!-- 카드 생성 -->
@@ -46,7 +46,7 @@
 			, c.ps_id
 			, cl.p_id
 		FROM linker.card c
-		INNER JOIN cardlist cl ON c.cl_id=cl.id
+		INNER JOIN linker.cardlist cl ON c.cl_id=cl.id
 		WHERE p_id = #{p_id}
 		AND c.ps_id = #{ps_id}
 		ORDER BY udate DESC
@@ -67,7 +67,7 @@
 			, cl.p_id
 			, cl.ps_id AS cl_ps_id
 		FROM linker.card c
-		INNER JOIN cardlist cl ON c.cl_id = cl.id
+		INNER JOIN linker.cardlist cl ON c.cl_id = cl.id
 		WHERE c.id = #{id}	
 	</select>
 	

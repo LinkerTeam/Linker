@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
 import com.linker.domain.ReadCardlistVO;
 import com.linker.service.CardlistService;
@@ -31,7 +30,7 @@ public class CardlistController{
 	
 	//카드리스트 조회 (특정 프로젝트에 대한 모든 카드리스트 목록
 	//URI에 특정 프로젝트id(p_id)를 넣으면 그 프로젝트에 대한 모든 카드리스트 보이도록 함.
-	@RequestMapping(value="/{p_id}", method=RequestMethod.GET)
+	@RequestMapping(value="/{p_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<ReadCardlistVO>> readCardlistAll(@PathVariable("p_id") int p_id){
 		ResponseEntity<List<ReadCardlistVO>> entity = null;
 		
@@ -45,8 +44,8 @@ public class CardlistController{
 	}
 	
 	
-	//상태값에 따른 카드 조회 (달성, 가리기 탭에서 조회하는 카드 목록)
-	@RequestMapping(value="/{p_id}/cardlist/{ps_id}", method=RequestMethod.GET)
+	//상태값에 따른 카드 조회 (보관, 가리기 탭에서 조회하는 카드 목록)
+	@RequestMapping(value="/{p_id}/cardlist/{ps_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<CardlistVO>> listCardlist(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id){
 		ResponseEntity<List<CardlistVO>> entity = null;
 		

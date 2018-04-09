@@ -28,26 +28,23 @@ public class CardTestController {
 	private ProjectService proService;
 	
 	
-	@RequestMapping(value="/board/{teamID}/{p_ID}", method=RequestMethod.GET)
-	public String ajaxTest(@PathVariable int teamID,@PathVariable int p_ID, Model model,HttpSession session) throws Exception {
-	/*	System.out.println(teamID);
-		System.out.println(p_ID);*/
+	@RequestMapping(value = "/board/{teamID}/{p_ID}", method = RequestMethod.GET)
+	public String ajaxTest(@PathVariable int teamID, @PathVariable int p_ID, Model model, HttpSession session) throws Exception {
 		
-		UserVO vo =(UserVO)session.getAttribute("login");
+		UserVO vo = (UserVO)session.getAttribute("login");
 
-		ProjectVO vo2=proService.titleName(p_ID);
+		ProjectVO vo2 = proService.titleName(p_ID);
 		
 		
 		model.addAttribute("u_id", vo.getId());
-        model.addAttribute("title",vo2.getTitle());
+        model.addAttribute("title", vo2.getTitle());
 		    
-		model.addAttribute("teamID",teamID);
-		model.addAttribute("p_ID",p_ID);
+		model.addAttribute("teamID", teamID);
+		model.addAttribute("p_ID", p_ID);
 		
 		
 		return "/board/cardTest";
 
 	};
-
 	
 }
