@@ -62,7 +62,7 @@ public class TeamMemberServiceImpl implements TeamMemberService{
 				.append("</strong>에 초대되셨습니다.<br>" + 
 						"	초대에 응하시려면 버튼을 클릭하여 Linker에 다시 들어가서 로그인 해주시기 바랍니다.<br>" + 
 						"	<button>")
-				.append("<a href='http://localhost:8080/user/login'")
+				.append("<a href='http://localhost:9090/user/login'")
 				.append(" target='_blenk'>초대받기</a></button>")
 				.toString()	
 				);
