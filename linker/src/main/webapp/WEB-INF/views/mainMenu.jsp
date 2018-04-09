@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -50,138 +50,140 @@
 	<!-- 오른쪽 메뉴 -->
 	<!-- .mainAside-open | 열림 상태 -->
 	<aside id="mainAside" class="mainAside">
-		<ul class="nav-tabs">
-			<!-- .active | 탭 메뉴 활성화 상태 -->
-			<!-- Tab1 | 이력목록 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#" class="activity-tab">Activity</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<ul class="pic-list">
-							<li>
-								<!-- 작성자 -->
-								<div class="pic-list-writer">
-									<div class="profile">
-										<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
-											alt="프로필 사진" />
-									</div>
-								</div> <!-- 이력내용 -->
-								<div class="pic-list-desc">
-									<span class="name">백다방</span> added Checklist to git 수정된 문서
-									확인
-								</div> <!-- 시간/날짜 -->
-								<p class="pic-list-datetime">2 hours ago</p>
-							</li>
-						</ul>
-						<!-- 이력 더 보기 -->
-						<a class="show-more" href="#">View all activity…</a>
+		<div class="nav-tabs-wrap">
+			<ul class="nav-tabs">
+				<!-- .active | 탭 메뉴 활성화 상태 -->
+				<!-- Tab1 | 이력목록 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#" class="activity-tab">Activity</a>
 					</div>
-				</div>
-			</li>
-			<!-- /이력목록 -->
-		
-			<!-- Tab2 | 보관목록 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#" class="archived-tab">Archived</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<div class="tab-content-box-controls">
-							<input type="search" placeholder="Search...">
-							<button class="switchBtn-archive swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
-							<button class="switchBtn-archive swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<ul class="pic-list">
+								<li>
+									<!-- 작성자 -->
+									<div class="pic-list-writer">
+										<div class="profile">
+											<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
+												alt="프로필 사진" />
+										</div>
+									</div> <!-- 이력내용 -->
+									<div class="pic-list-desc">
+										<span class="name">백다방</span> added Checklist to git 수정된 문서
+										확인
+									</div> <!-- 시간/날짜 -->
+									<p class="pic-list-datetime">2 hours ago</p>
+								</li>
+							</ul>
+							<!-- 이력 더 보기 -->
+							<a class="show-more" href="#">View all activity…</a>
 						</div>
-						<div class="nav-tab-content-Box-archive archiveCard"></div> <!-- 동적 카드 태그가 삽입되는 곳 -->
-						<div class="nav-tab-content-Box-archive archiveCardlist"></div> <!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 					</div>
-				</div>
-			</li>
-			<!-- /Tab2 | 보관목록 -->
-		
-			<!-- Tab3 | 가리기목록 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#"  class="trashbox-tab">Trashbox</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<div class="tab-content-box-controls">
-							<input type="search" placeholder="Search...">
-							<button class="switchBtn-hidden swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
-							<button class="switchBtn-hidden swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
-						</div>
-						<div class="nav-tab-content-Box-hidden hiddenCard"></div><!-- 동적 카드 태그가 삽입되는 곳 -->
-						<div class="nav-tab-content-Box-hidden hiddenCardlist"></div><!-- 동적 카드리스트 태그가 삽입되는 곳 -->
+				</li>
+				<!-- /이력목록 -->
+			
+				<!-- Tab2 | 보관목록 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#" class="archived-tab">Archived</a>
 					</div>
-				</div>
-			</li>
-			<!-- /Tab3 | 가리기목록 -->
-		
-			<!-- Tab4 | 설정 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#" class="settings-tab">settings</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<!--팀 멤버 프로필 사진-->
-		                    <div class="all-members">
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                    </div>
-						<!--초대 버튼-->
-						<div class="invite">
-							<a href="#" class="invite-button"> <span
-								class="invite-icon"><i class="fas fa-user-plus"></i></span> <span>invite</span>
-							</a>
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<div class="tab-content-box-controls">
+								<input type="search" placeholder="Search...">
+								<button class="switchBtn-archive swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+								<button class="switchBtn-archive swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+							</div>
+							<div class="nav-tab-content-Box-archive archiveCard"></div> <!-- 동적 카드 태그가 삽입되는 곳 -->
+							<div class="nav-tab-content-Box-archive archiveCardlist"></div> <!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 						</div>
-						<!--메뉴-->
-						<div class="mainAside-tab4-menu">
-							<div class="user-modify">
-								<a href="http://localhost:9090/user/userModify">회원정보수정</a>
-							</div>
-							<div class="user-modify">
-								<a href="http://localhost:9090/main/team">팀 정보 수정</a>
-							</div>
-							<div class="user-modify">
-								<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
-							</div>
-							<div class="user-modify">
-								<a href="#" class="closeboard">close-board</a>
-							</div>
-							<div class="user-modify">
-								<a href="#" class="closeboard">Logout</a>
-							</div>
-							
-							<!-- <div class='modal'>
-								<div class="modal-content">
-							  		<div class='modal-title'>
-							  		<span class="closetitle">Close Board?</span>
-							  	</div>
-							  	<div>
-							   		<div class='modal-text'>
-							     		<p>You can re-open the board by clicking the “Boards” menu from the header
-							      		, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
-							      		<button class="hiddenbtn" value="OK">확인</button>
-							     	</div>
-							    </div>
-							</div> -->
-						</div>
-						<!-- /메뉴 -->
 					</div>
-				</div>
-			</li>
-			<!-- /Tab4 | 설정 -->
-		</ul>
+				</li>
+				<!-- /Tab2 | 보관목록 -->
+			
+				<!-- Tab3 | 가리기목록 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#"  class="trashbox-tab">Trashbox</a>
+					</div>
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<div class="tab-content-box-controls">
+								<input type="search" placeholder="Search...">
+								<button class="switchBtn-hidden swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+								<button class="switchBtn-hidden swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+							</div>
+							<div class="nav-tab-content-Box-hidden hiddenCard"></div><!-- 동적 카드 태그가 삽입되는 곳 -->
+							<div class="nav-tab-content-Box-hidden hiddenCardlist"></div><!-- 동적 카드리스트 태그가 삽입되는 곳 -->
+						</div>
+					</div>
+				</li>
+				<!-- /Tab3 | 가리기목록 -->
+			
+				<!-- Tab4 | 설정 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#" class="settings-tab">settings</a>
+					</div>
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<!--팀 멤버 프로필 사진-->
+			                    <div class="all-members">
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                    </div>
+							<!--초대 버튼-->
+							<div class="invite">
+								<a href="#" class="invite-button"> <span
+									class="invite-icon"><i class="fas fa-user-plus"></i></span> <span>invite</span>
+								</a>
+							</div>
+							<!--메뉴-->
+							<div class="mainAside-tab4-menu">
+								<div class="user-modify">
+									<a href="http://localhost:9090/user/userModify">회원정보수정</a>
+								</div>
+								<div class="user-modify">
+									<a href="http://localhost:9090/main/team">팀 정보 수정</a>
+								</div>
+								<div class="user-modify">
+									<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
+								</div>
+								<div class="user-modify">
+									<a href="#" class="closeboard">close-board</a>
+								</div>
+								<div class="user-modify">
+									<a href="#" class="closeboard">Logout</a>
+								</div>
+								
+								<!-- <div class='modal'>
+									<div class="modal-content">
+								  		<div class='modal-title'>
+								  		<span class="closetitle">Close Board?</span>
+								  	</div>
+								  	<div>
+								   		<div class='modal-text'>
+								     		<p>You can re-open the board by clicking the “Boards” menu from the header
+								      		, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
+								      		<button class="hiddenbtn" value="OK">확인</button>
+								     	</div>
+								    </div>
+								</div> -->
+							</div>
+							<!-- /메뉴 -->
+						</div>
+					</div>
+				</li>
+				<!-- /Tab4 | 설정 -->
+			</ul>
+		</div>
 	</aside>
 	
 	<script>
