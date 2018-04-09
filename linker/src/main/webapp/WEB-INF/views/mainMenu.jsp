@@ -159,7 +159,7 @@
 								<a href="#" class="closeboard">close-board</a>
 							</div>
 							<div class="user-modify">
-								<a href="#" class="closeboard">Logout</a>
+								<a href="http://localhost:9090/user/logout" class="closeboard">Logout</a>
 							</div>
 							
 							<!-- <div class='modal'>

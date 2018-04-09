@@ -11,6 +11,83 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
+<style>
+.create-modal{
+    display: none;
+    position: fixed;
+    z-index: 1001; /* 테스트 후 값 조정 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+ }
+ .create-modal.is-visible{
+    display: block;
+ }
+ 
+ .modal-content{
+    position: relative;
+    height: 180px;
+    box-sizing: border-box;
+    width: 360px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px 45px 20px 20px;
+    margin: 350px auto 0 auto;
+   
+ }
+ .team-title{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+ 
+ }
+ 
+ .teambtn {
+    width: 50%;
+    font-weight: bold;
+    color: #fff;
+    background-color:#FA5883;
+    border: 1px solid #fc4d7c;
+    padding: 10px 0;
+    margin-top: 15px;
+}
+.teambtn.disabled {
+    color: #b6bbbf;
+    background-color: #e4e4e4;
+    border: 1px solid #b6bbbf;
+}
+
+.headtitle{
+  height: 45px;
+  align-content: center;
+  text-align: center;
+
+}
+.tclosebtn{
+   position:absolute;
+   top: 20px;
+   right: 20px;
+
+}
+ .teaminsert-a{
+  display: inline-block;
+  color:white;
+  margin-left: 25px;
+  margin-top: 30px;
+  padding:15px 15px 15px 15px;
+
+ }
+ .teaminsert-a:hover {
+	background: gray;
+}
+ 
+
+</style>
 </head>
 
 <body>
@@ -66,7 +143,30 @@
        
           </div>
          </c:forEach> 
+     
+       <div class="teaminsert">
+        <a class="teaminsert-a" href="#">
+         <span>Create a new team…</span> </a>
+        </div>
+       
+        <!--  팀생성 모달창   -->
+        <div class="create-modal">
+          <div class="modal-content">
+           <div class="headtitle">
+           <span class="pop-over-header-title">Create Team</span>
+           <a href="#" class="connectmodal"></a></div>
+           <div class="content-text">
+            <form>
+             <input type="input" class="team-title" value="" placeholder="team name title">
+             <button class="teambtn disabled" disabled="disabled">Create</button>
+            </form>
+           <span class="tclosebtn"><i class="fas fa-times"></i></span>
+          </div>
+        </div>
+     </div>
+        
       </div>
+
     
     </div>
      
@@ -176,7 +276,7 @@
        	   if(result != 0){
        		   var name =result;
        		   
-       		   alert("프로젝트 생성 완료쿠");
+       		 
        		   location.reload();
        		   return true;
        	   }
@@ -197,6 +297,98 @@
         var moveToLeftPos = parseInt($(this).width()/2) - TOOLTIP_POINTER_WIDTH;
         $(this).css('marginLeft', -moveToLeftPos);
     });
+    
+    //팀프로젝트 모달창 띄우기
+    $('.teaminsert-a').on("click",function(){
+    	
+    	$('.create-modal').addClass('is-visible');
+    	
+    })
+    
+    
+    
+    //팀프로젝트  모달창 닫기 외부클릭시
+    $('.create-modal').on("click",function(event){
+    	if($(event.target).hasClass("create-modal")){
+    		
+    		$('.create-modal').removeClass('is-visible');
+    		
+    	}
+    
+    	
+    })
+    
+        //팀프로젝트  모달창 닫기 x자 클릭시
+    $('.tclosebtn').on("click",function(){
+    	
+    	$('.create-modal').removeClass('is-visible');
+    	
+    })
+    
+    //입력시 버튼활성화및 비활성화
+    $('.team-title').on("input",function(){
+    	 
+    	var teamtitle= $('.team-title').val();
+    	 
+    	if(teamtitle.length==0){
+    		$('.teambtn').addClass('disabled');
+    		$('.teambtn').attr("disabled","disabled");
+    		
+    	}else{
+    		$('.teambtn').removeClass('disabled');
+    		$('.teambtn').removeAttr("disabled");
+    		
+    	} 
+    	 	
+    }) 
+    
+    $('.teambtn').on("click",function(){
+   
+      var titleName= $('.team-title').val();
+      
+        if(titleName=='' || titleName==null){
+        	
+        	alert('이름을 다시 입력해주세요');
+        	return;
+        }
+        
+        $.ajax({
+           type : 'POST',
+           url : '/main/team',
+           contentType : 'text/javascript',
+           headers : {
+      	     "X-HTTP-Method-Override" : "POST",
+      	     "content-type" : "application/json"
+        },
+         dataType : 'json',
+         data:JSON.stringify({
+        	 name : titleName            	
+        }),
+        success : function(result) {  
+        	console.log(typeof(result));
+        	
+			if(result == true){
+				alert("팀이 추가되었습니다.");
+				self.location = '/main/team';
+				return true;
+			}
+        	
+        },error : function(){
+        	alert('error');
+        }
+			  
+        	
+        	
+        	
+        	
+        });
+        
+       
+    	
+    	
+    })
+    	    
+    
      
 </script>
 </body>
