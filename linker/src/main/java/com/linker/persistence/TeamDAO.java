@@ -9,6 +9,8 @@ public interface TeamDAO {
 
 	//팀생성
 	public int createTeam(TeamVO vo) throws Exception;
+	//팀 정보 출력
+	public TeamVO infoTeam(int t_id) throws Exception;
 	//팀 리스트 출력
 	public List<TeamVO> listTeam(int u_id) throws Exception;
 	//팀수정(이름)

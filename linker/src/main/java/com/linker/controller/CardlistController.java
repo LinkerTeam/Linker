@@ -20,7 +20,7 @@ import com.linker.domain.ReadCardlistVO;
 import com.linker.service.CardlistService;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("/board")
 public class CardlistController{
 	
 	public static final Logger logger = LoggerFactory.getLogger(CardlistController.class);

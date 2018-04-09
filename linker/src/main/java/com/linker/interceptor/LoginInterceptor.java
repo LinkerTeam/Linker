@@ -19,7 +19,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final String LOGIN = "login";
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
-	
+ 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
@@ -41,7 +41,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		  UserVO userVO2 = (UserVO)userVO;
 		  //이메일 인증을 했는지 안햇는지 판단 0이면 아직 이메일은 인증 안함 1이면 이메일인증함
 		  if(userVO2.getStatus()==1) {
-			
+			System.out.println("로그인할때 세션값이 뭐니"+userVO.toString());
 			logger.info("new login success");
 			//session에 LOGIN키값으로 userVO객체를 저장 그럼 세션에는 email password ninkname 등등 다들어있음 
 			session.setAttribute(LOGIN, userVO);
@@ -59,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				response.addCookie(loginCookie);
 			}	
 			// userVO가 null아니면 홈페이지로 넘어간다.	
-	        response.sendRedirect("/user/userModify");
+	        response.sendRedirect("/main");
 	           
 	        //탈퇴된 회원을 체크한다.
 		  }else if (userVO2.getStatus()==2) {

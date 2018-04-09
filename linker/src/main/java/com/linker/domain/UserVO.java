@@ -15,11 +15,12 @@ public class UserVO {
 	private Date ddate;
 	private int status;
 	private String authCode;
+	private int t_id;
 
 	public String getAuthCode() {
 		return authCode;
 	}
-
+ 
 	public void setAuthCode(String authCode) {
 		this.authCode = authCode;
 	}
@@ -104,10 +105,23 @@ public class UserVO {
 		this.nickname = nickname;
 	}
 
+	
+	
+	
+	public int getT_id() {
+		return t_id;
+	}
+
+	public void setT_id(int t_id) {
+		this.t_id = t_id;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVO [id=" + id + ", email=" + email + ", password=" + password + ", nickname=" + nickname
 				+ ", cdate=" + cdate + ", profile=" + profile + ", udate=" + udate + ", google=" + google + ", ddate="
-				+ ddate + ", status=" + status + "]";
+				+ ddate + ", status=" + status + ", authCode=" + authCode + ", t_id=" + t_id + "]";
 	}
+
+	
 }

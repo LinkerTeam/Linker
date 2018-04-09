@@ -12,7 +12,7 @@ public class ProjectVO {
 	private Date cdate;
 	private String writerEmail;
 	private String writerNickName;
-	
+	 
 	public String getWriterEmail() {
 		return writerEmail;
 	}

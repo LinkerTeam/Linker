@@ -23,7 +23,7 @@ h3 {
 </style>
 <script type="text/javascript">
 
-	self.location = '/user/userModify';
+	self.location = '/main';
 </script>
 
 </head>
@@ -35,6 +35,6 @@ h3 {
 	<br>
 	<h2 style="text-align: center" id="name"></h2>
 	<h4 style="text-align: center" id="email"></h4>
-
+ 
 </body>
 </html>

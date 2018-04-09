@@ -2,11 +2,19 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+ 
 <mapper namespace="com.linker.mapper.UserMapper">
 	<select id="login" resultType="UserVO">
 		SELECT
-		email, password,profile,nickname,cdate,udate,status
+		id
+		,email
+		,password
+		,profile
+		,nickname
+		,cdate
+		,udate
+		,status
+		,google
 		FROM linker.user
 		WHERE email = #{email}
 		
@@ -14,12 +22,14 @@
 
 	<select id="viewUser" resultType="UserVO">
 		SELECT
-		email,
-		nickname,
-		profile,
-		cdate,
-	    udate,
-	    status
+		id
+		,email
+		,nickname
+		,profile
+		,cdate
+		,udate
+	    ,status
+	    ,google
 		FROM linker.user
 		WHERE email = #{email}
 	</select>

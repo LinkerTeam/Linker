@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.linker.domain.ProjectVO;
+import com.linker.domain.UserVO;
 
 @Repository
 public class ProjectDAOImpl implements ProjectDAO {
@@ -16,7 +17,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Inject
 	SqlSession session;
-
+ 
 	// 프로젝트 생성
 	@Override
 	public int createProject(ProjectVO vo) throws Exception {
@@ -25,8 +26,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	// 프로젝트 리스트
 	@Override
-	public List<ProjectVO> listProject(int teamID) throws Exception {
-		return session.selectList(namespace + ".listProject", teamID);
+	public List<ProjectVO> listProject(int userID) throws Exception {
+		return session.selectList(namespace + ".listProject", userID);
 	}
 
 	// 프로젝트 달성&프로젝트 가리기(숨기기)&프로젝트 이름변경
@@ -35,4 +36,24 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return session.update(namespace + ".modifyProject", vo);
 	}
 
+	@Override
+	public ProjectVO titleName(int p_id) throws Exception {
+	
+		return session.selectOne(namespace+".titleName",p_id);
+	}
+
+	@Override
+	public List<UserVO> teamProfile(int t_id) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".teamProfile",t_id);
+	}
+
+	@Override
+	public void hiddenProject(int p_id) throws Exception {
+		
+		session.update(namespace+".hiddenProject",p_id);
+		
+	}
+
+	
 }

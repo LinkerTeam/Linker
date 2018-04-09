@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
-
+ 
 	<!-- 설정과 관련된부분은 properties파일로 따로 관리하기위하여 사용. -->
 	<context:property-placeholder location="classpath:/properties/*.properties" />
 

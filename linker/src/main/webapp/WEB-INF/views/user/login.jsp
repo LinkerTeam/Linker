@@ -31,6 +31,8 @@
                 </li>
             </ul>
         </nav>
+        
+        <!-- 모달창 -->
         <div class="user-modal">
             <div class="user-modal-container">
                <div id="box">
@@ -150,11 +152,10 @@
                     <p class="form-bottom-message" ><a href="#0" id="back">Back to log-in</a></p>
                 </div>
 
-          
+           
+          </div>
         </div>
-         
-        </div>
-        </div>
+      </div><!-- 모달창 END -->
     </div>
 
     <script>
@@ -244,6 +245,8 @@
             
             // 모달 close 이벤트 if문에 자기자신 클릭시에만 이벤트를 발생하게 한다. 모달창 닫기
             $('.user-modal').on('click', function(e){
+            	//클릭했을때 user-modal클래스가 아니면 모달을 닫고 user-modal을 클릭했을때는 if문이 안돈다
+            	//event.target은 마우스 클릭시 일어나는 위치찾기
                 if ($(e.target).hasClass("user-modal")) { 
                     modal[0].style.display = "none";        
                 }
@@ -403,7 +406,7 @@
 	           //체크박스 체크했으면 true 안했으면 false값을 반환함
                   if(check.checked==false){
                 	alert("가입에 동의해주세요");
-                	document.getElementById('checkMsg').focus();
+                	document.getElementById('agree').focus();
                 	return false;
                 }
                   //닉네임 중복환인 안눌렀을떄

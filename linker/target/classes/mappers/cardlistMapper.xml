@@ -2,50 +2,66 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+   
 <mapper namespace="com.linker.mapper.CardlistMapper">
 	
 	<!-- 카드리스트 생성 -->
-	<insert id="createCardlist">
+	<!-- useGeneratedKeys = true(기본값 false), keyProperty를 이용하면 
+			auto_increment - 자동생성되는 값을 넘겨줄 수 있음-->
+	<insert id="createCardlist" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO linker.cardlist (p_id, u_id, title)
 		VALUES (#{p_id}, #{u_id}, #{title})
-		<selectKey keyProperty="id" resultType="Integer" order ="AFTER">
-			SELECT last_insert_id() AS id
-		</selectKey>
 	</insert>
 	
-	<!-- 카드리스트  수정 -->
+	<!-- 카드리스트 수정 -->
+	<!-- 카드리스트 id(cl_id)가 넘어오면 그 카드리스트의 상태값(ps_id)을 넘어온 상태값으로 변경하고(2 or 3),
+			그 카드리스트에 속한 카드들 중에서 상태값이 1인 카드들만 상태값을 4로 변경 
+			(만일 그 카드리스트에 속한 카드 중에 상태값이 2나 3인 카드들은 4로 바꾸지 않고 자기의 값을 유지한다)-->
 	<update id="updateCardlist">
-		UPDATE linker.cardlist
+		UPDATE linker.cardlist cl
+		LEFT JOIN linker.card c ON cl.id = c.cl_id
 		<set>
-			<if test="title != null">title = #{title}</if>
-			<if test="ps_id != 0 and ps_id != null">ps_id = #{ps_id}</if>
+			<if test="cl_title != null">cl.title = #{cl_title}</if>
+			<if test="cl_ps_id != 0 and cl_ps_id != null">cl.ps_id = #{cl_ps_id}, c.ps_id = 4</if>
 		</set>
-		WHERE id = #{id}
+		WHERE cl.id = #{cl_id}
+		AND (c.ps_id = 1 OR c.ps_id IS NULL)
 	</update>
 		
-	<!-- 진행 상태의 카드리스트 조회 -->
-	<select id="readCardlist" resultType="ReadCardlistVO">
+	<!-- 진행 상태(ps_id = 1)인 모든 카드리스트와 카드 조회 -->
+	<select id="readCardlistAll" resultType="ReadCardlistVO">
 		SELECT
-			cl.p_id, 
-            cl.id AS cl_id,
-			cl.u_id AS cl_u_id, 
-			cl.title AS cl_title,
-			cl.cdate AS cl_cdate, 
-			cl.udate AS cl_udate, 
-			cl.ps_id AS cl_ps_id, 
-			c.id AS c_id, 
-			c.u_id AS c_u_id, 
-			c.title AS c_title, 
-			c.content, 
-			c.cdate AS c_cdate, 
-			c.udate AS c_udate,
-			c.ps_id AS c_ps_id            
-		FROM linker.card c
-		RIGHT JOIN linker.cardlist cl ON cl.id = c.cl_id
-        WHERE p_id = #{p_id}
-        AND cl.ps_id = 1
-        AND c.ps_id = 1  OR c.ps_id IS NULL
+			cl.p_id
+			, cl.id AS cl_id
+			, cl.u_id AS cl_u_id
+			, cl.title AS cl_title
+			, cl.cdate AS cl_cdate
+			, cl.udate AS cl_udate
+			, cl.ps_id AS cl_ps_id
+			, c.id AS c_id
+			, c.u_id AS c_u_id
+			, c.title AS c_title
+			, c.content
+			, c.cdate AS c_cdate
+			, c.udate AS c_udate
+			, c.ps_id AS c_ps_id            
+		FROM linker.cardlist cl
+		LEFT JOIN linker.card c ON cl.id = c.cl_id
+    WHERE p_id = #{p_id}
+    AND cl.ps_id = 1
+    AND (c.ps_id = 1 OR c.ps_id IS NULL)
+    <!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
 	</select>
 	
+	<!-- 상태값에 따른 카드리스트 조회 -->
+	<select id="listCardlist" resultType="cardlistVO">
+		SELECT
+			id
+			, p_id
+			, u_id
+			, title
+			, ps_id
+		FROM linker.cardlist
+		WHERE ps_id = #{ps_id}
+	</select>
 </mapper>
