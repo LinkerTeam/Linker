@@ -151,14 +151,17 @@
     color: #fff;
     z-index: 999;
 }
-	/* 오른쪽 메뉴 탭 */
-.nav-tab {
+.nav-tabs-wrap {
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
     overflow: hidden;
+}
+	/* 오른쪽 메뉴 탭 */
+.nav-tab {
+    position: relative;
 }
 .nav-tabs > li .nav-tab-btn {
     float: left;
@@ -402,8 +405,4 @@
 /* ~~~~~설정탭 | 메뉴 */
 
 /* ~~~~~오른쪽 메뉴 */
-
-
-
-
 
