@@ -13,7 +13,7 @@ public interface TeamMemberService {
 	//멤버 중복 체크
 	public int checkMember(String email, int t_id) throws Exception;
 	//멤버 추가 + 멤버이메일인증
-	public TeamMemberVO create(String email, int t_id) throws Exception, MessagingException, UnsupportedEncodingException;	
+	public void create(String email, int t_id) throws Exception, MessagingException, UnsupportedEncodingException;	
 	//멤버추가
 	public int connectTeamMember(int u_id, int t_id) throws Exception;
 	//팀에 속한 멤버 리스트 출력(t_id)
