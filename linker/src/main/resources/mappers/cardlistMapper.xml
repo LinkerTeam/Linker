@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+   
 <mapper namespace="com.linker.mapper.CardlistMapper">
 	
 	<!-- 카드리스트 생성 -->
 	<!-- useGeneratedKeys = true(기본값 false), keyProperty를 이용하면 
 			auto_increment - 자동생성되는 값을 넘겨줄 수 있음-->
 	<insert id="createCardlist" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO cardlist (p_id, u_id, title)
+		INSERT INTO linker.cardlist (p_id, u_id, title)
 		VALUES (#{p_id}, #{u_id}, #{title})
 	</insert>
 	
@@ -18,8 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			그 카드리스트에 속한 카드들 중에서 상태값이 1인 카드들만 상태값을 4로 변경 
 			(만일 그 카드리스트에 속한 카드 중에 상태값이 2나 3인 카드들은 4로 바꾸지 않고 자기의 값을 유지한다)-->
 	<update id="updateCardlist">
-		UPDATE cardlist cl
-		LEFT JOIN card c ON cl.id = c.cl_id
+		UPDATE linker.cardlist cl
+		LEFT JOIN linker.card c ON cl.id = c.cl_id
 		<set>
 			<if test="cl_title != null">cl.title = #{cl_title}</if>
 			<if test="cl_ps_id != 0 and cl_ps_id != null">cl.ps_id = #{cl_ps_id}, c.ps_id = 4</if>
@@ -45,8 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, c.cdate AS c_cdate
 			, c.udate AS c_udate
 			, c.ps_id AS c_ps_id            
-		FROM cardlist cl
-		LEFT JOIN card c ON cl.id = c.cl_id
+		FROM linker.cardlist cl
+		LEFT JOIN linker.card c ON cl.id = c.cl_id
     WHERE p_id = #{p_id}
     AND cl.ps_id = 1
     AND (c.ps_id = 1 OR c.ps_id IS NULL)
@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, u_id
 			, title
 			, ps_id
-		FROM cardlist
+		FROM linker.cardlist
 		WHERE ps_id = #{ps_id}
 	</select>
 </mapper>

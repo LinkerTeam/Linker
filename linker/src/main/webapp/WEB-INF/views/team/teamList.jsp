@@ -7,8 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-<link href="/resources/css/team/team.css?ver=22" type="text/css" rel="stylesheet" />
+<link href="/resources/css/team/team.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 <body>
 	<%@include file="../header.jsp"%>
@@ -37,7 +36,12 @@
 				<h3 class="title">Team List</h3>
 				<!-- 팀 목록 작은 컨텐트 -->
 				<div class="listBoxBody">
-					<div>
+					<div class="team">
+						<div class="t_id" style="display : none;">t_id</div>
+						<div class="name">name</div>
+						<div  class="cdate">cdate</div>
+						<div  class="auth">auth</div>
+					</div>
 						<!-- 팀 목록 row -->
 						<div id="teamListTableBody">
 							<c:forEach items="${teamList}" var="teamList">
@@ -47,16 +51,24 @@
 									<div class="cdate">
 										<fmt:formatDate pattern="yyyy-MM-dd" value="${teamList.cdate}"></fmt:formatDate>
 									</div>
-									<div class="auth">${teamList.auth}</div>
+									<c:if test="${teamList.auth==0}">
+										<div class="auth">Owner</div>
+									</c:if>
+									<c:if test="${teamList.auth==1}">
+										<div class="auth">Admin</div>
+									</c:if>
+									<c:if test="${teamList.auth==2}">
+										<div class="auth">Team Member</div>
+									</c:if>
 									<c:choose>
 										<c:when test="${teamList.auth==0}">
 											<div>
 												<input type="button" class="modifyTeamBtn"
-													name="modifyTeamBtn" value="수정" />
+													name="modifyTeamBtn" value="팀 이름 수정" />
 											</div>
 											<div>
 												<input type="button" class="deleteTeamBtn"
-													name="deleteTeamBtn" value="삭제" />
+													name="deleteTeamBtn" value="팀 삭제" />
 											</div>
 											<div>
 												<input type="button" class="selectMemberBtn"
@@ -75,6 +87,12 @@
 								<div class="memberListTableBody" id="membersContent">
 									<h3 class="title">Member List</h3>
 									<div class="ListBoxBody">
+										<div class="memberList">
+											<div class="t_id" style="display : none;">u_id</div>
+											<div class="email">email</div>
+											<div  class="nickname">nickname</div>
+											<div  class="name">auth</div>
+										</div>
 										<c:forEach items="${memberList}" var="memberList"
 											varStatus="status">
 											<c:if test="${ memberList.t_id == teamList.t_id}">
@@ -82,7 +100,15 @@
 												<div class="u_id" style="display:none;">${memberList.u_id}</div>
 													<div class="email">${memberList.email}</div>
 													<div class="nickname">${memberList.nickname}</div>
-													<div class="auth">${memberList.auth}</div>
+													<c:if test="${memberList.auth==0}">
+														<div class="auth">Owner</div>
+													</c:if>
+													<c:if test="${memberList.auth==1}">
+														<div class="auth">Admin</div>
+													</c:if>
+													<c:if test="${memberList.auth==2}">
+														<div class="auth">Team Member</div>
+													</c:if>
 													<c:choose>
 														<c:when test="${teamList.auth== 0 && memberList.auth == 0}">
 															<div>
@@ -142,7 +168,7 @@
 							name="name" placeholder="write team name here." />
 					</div>
 					<div>
-						<input type="button"  id="teamModalAddBtn" value="확인" />
+						<input type="button" id="teamModalAddBtn" value="확인" />
 						<input type="button" class="modalCancleBtn" name="cancle" value="취소" />
 					</div>
 				</div>
@@ -220,7 +246,7 @@
 			<div class="modal"  id="addMembersModal" >
 				<div class="modalContent">
 					<textarea name="membersTxt" id="membersTxt" cols="30" rows="10"
-						placeholder="e.g. taco@gmail.com; choriize@gmail.com pede@gmail.com; @relly; @sunny">
+						placeholder="e.g. taco@gmail.com; choriize@gmail.com;pede@gmail.com;">
 					</textarea>
 					<input type="submit" id="membersModalAddBtn" value="Add To Team.." />
 					<input type="button" class="modalCancleBtn" value="취소" />
@@ -230,7 +256,6 @@
 		<!-- wrapContent 끝 -->	
 		</div>
 	<!-- content 끝 -->
-	</div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -246,7 +271,7 @@
 	var sU_id = null; //U_id의 선택자 변수
 	var Cdate = null; //cdate 변수
 	var selectedMemberName = null; //선택된 팀원 이름. option에서 소유자 권한 양도받을 팀원 이름. 
-
+ 
 	/* 함수 정리 */
 	//모달창을 모두 닫는 함수
 	function hideModalDiv() {
@@ -292,7 +317,7 @@
 			contentType : 'text/javascript',
 			dataType : 'json',
 			data:JSON.stringify({
-				 name : name,
+				 name : name
 			}),
 			success : function(result) {
 				//console.log(result);
@@ -314,47 +339,50 @@
 		//console.log($('#memberTxt').val().length);
 		var email = $('#memberTxt').val();
 		//console.log(email);
-		var reg_email = /^([0-9a-zA-Z_\.-]+)@gmail.com$/;
-				  
+		var reg_email = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 		if(email.length == 0){								 
 			 alert("이메일을 입력해주세요.");
 			 return;
 		}else if(email.length > 0 && email.length < 11){
-			 alert("글자 수가 적습니다 .구글 이메일을 정확히 입력해주세요.");
+			 alert("글자 수가 적습니다 .이메일을 정확히 입력해주세요.");
 			 return;
 		} 
 		
 		if(!reg_email.test(email) && email.length > 0){
-			 alert('구글이메일로 정확히 입력해주세요.');
+			 alert('이메일로 정확히 입력해주세요.');
 			 return;
 		} 
-				 
+		 		 
 		$.ajax({
-		 	url : '/team/teamList/'+ T_id,
+		 	url : '/team/'+ T_id,
 			type : 'post',
 			headers : {
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "POST"
 			},
-			contentType : 'text/javascript',
-			dataType : 'json',
 			data : JSON.stringify({
 				email : email,
 				T_id : T_id
 			}),
 			success : function(result) {
 				console.log(result);
-				if(result == true){
+			 	if(result == "1"){
 					location.reload();
 					alert("해당 회원에 메일을 보냈습니다. 해당 회원이 수락하는 동시에 팀에 해당회원이 등록됩니다.");
 					return true;
-				}else if(result == false){
+				}else if(result == "0"){
 					$('#memberTxt').val('');
 					alert(email+"은 이미 팀에 등록되어있습니다.");
-				}
+				}else{
+					$('#memberTxt').val('');
+					alert(email+"은 회원이 아닙니다.");
+				} 
 			},
-			error : function() {
-			console.log("error");
+			error : function(xhr,status,error){
+				console.log("xhr" + xhr);
+				console.log("status" + status);
+				console.log("error" + error);
+				console.log("error");
 			}
 		}); 
 	 });
@@ -566,7 +594,7 @@
 	//멤버 삭제 delete modal창에서 삭제버튼(#modalDeleteBtn)을 눌렀을 때
 	$(document).on('click','#memberModalDeleteBtn',function() {
 		$.ajax({
-			url : 'teamList/'+ T_id,
+			url : 'team/'+ T_id,
 			type : 'delete',
 			headers : {
 				"Content-Type" : "application/json",
@@ -594,7 +622,7 @@
 	$(document).on('click','#memberAuthModify2Btn',function() {
 		//console.log(U_id);
 		$.ajax({
-			url : 'teamList/'+ T_id,
+			url : 'team/'+ T_id,
 			type : 'put',
 			headers : {
 				"Content-Type" : "application/json",
@@ -621,7 +649,7 @@
 	$(document).on('click','#memberAuthModify1Btn',function() {
 		//console.log(u_id);
 		$.ajax({
-			url : 'teamList/'+ T_id,
+			url : 'team/'+ T_id,
 			type : 'put',
 			headers : {
 				"Content-Type" : "application/json",
@@ -674,7 +702,7 @@
 		transferU_id = s_searchNickname.parent().children('.u_id').text();
 		//console.log("transferU_id : " + transferU_id);
 		$.ajax({
-			url : 'teamList/'+ T_id + "/"+ U_id,
+			url : 'team/'+ T_id + "/"+ U_id,
 			type : 'put',
 			headers : {
 				"Content-Type" : "application/json",

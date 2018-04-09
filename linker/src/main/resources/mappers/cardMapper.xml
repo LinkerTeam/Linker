@@ -2,20 +2,20 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+   
 <mapper namespace="com.linker.mapper.cardMapper">
 
 	<!-- 카드 생성 -->
 		<!-- 생성은 카드 제목(title)만 입력하는 것. 내용(content)에 대한 것은 '수정'으로 처리한다. -->
 		<!-- 자동생성된 id값을 가져오기 위해 useGeneratedKeys를 true로 설정. -->
 	<insert id="createCard" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO card (title, u_id, cl_id)
+		INSERT INTO linker.card (title, u_id, cl_id)
 		VALUES(#{title}, #{u_id}, #{cl_id})
 	</insert>
 	
 	<!-- 카드 수정(제목, 내용 수정 -->
 	<update id="updateCard">
-		UPDATE card
+		UPDATE linker.card
 		<set>
 			<if test="title != null">title = #{title}</if>
 			<if test="content != null">content = #{content}</if>
@@ -25,8 +25,8 @@
 	
 	<!-- 카드 수정(상태 변경) -->
 	<update id="updateCardStatus">
-		UPDATE card c
-		INNER JOIN cardlist cl ON cl.id = c.cl_id
+		UPDATE linker.card c
+		INNER JOIN linker.cardlist cl ON cl.id = c.cl_id
 		<set>
 			<if test="ps_id != 0">c.ps_id = #{ps_id}</if>
 		</set>
@@ -45,7 +45,7 @@
 			, c.cl_id
 			, c.ps_id
 			, cl.p_id
-		FROM card c
+		FROM linker.card c
 		INNER JOIN cardlist cl ON c.cl_id=cl.id
 		WHERE p_id = #{p_id}
 		AND c.ps_id = #{ps_id}
@@ -66,7 +66,7 @@
 			, c.ps_id
 			, cl.p_id
 			, cl.ps_id AS cl_ps_id
-		FROM card c
+		FROM linker.card c
 		INNER JOIN cardlist cl ON c.cl_id = cl.id
 		WHERE c.id = #{id}	
 	</select>

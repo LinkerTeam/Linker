@@ -7,6 +7,8 @@ public interface TeamService {
 
 	//팀생성 
 	public TeamVO createTeam(TeamVO vo) throws Exception;
+	//팀 정보 출력(id, name, cdate)
+	public TeamVO infoTeam(int t_id) throws Exception;
 	//팀 목록 리스트 출력
 	public List<TeamVO> listTeam(int u_id) throws Exception;
 	//팀수정(이름)

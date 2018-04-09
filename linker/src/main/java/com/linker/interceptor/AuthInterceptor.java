@@ -26,9 +26,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		
 		String uri=request.getRequestURI();
-		   System.out.println(uri);
+		   
 			String query=request.getQueryString();
-			System.out.println(query);
+		
 		HttpSession session = request.getSession();
          
 		 //세션이없으면서 cookie에 세션id가 저장된경우
@@ -53,7 +53,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 					return true;
 				}
 			}
-			
+ 		
 			response.sendRedirect("/user/login");
 			return false;
 		}

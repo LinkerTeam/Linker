@@ -68,7 +68,7 @@ import com.linker.service.TeamService;
  * */
 
 @Controller
-@RequestMapping("/team")
+@RequestMapping("/main")
 public class TeamController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TeamController.class);
@@ -82,13 +82,12 @@ public class TeamController {
 	private TeamMemberService memberService;
 
 	//로그인과 연결하기 전, 임시로 u_id를 지정함.
-	int u_id=4;//userID
-
+	int u_id=10;//userID
+ 
 	//팀 목록(teamList.jsp)가져오기1
-	@RequestMapping(value="/teamList", method=RequestMethod.GET)
-	public void teamListGET(Model model) throws Exception{
-		//logger.info("teamAdd page is open..................." + u_id);	
-		//logger.info("teamListGET : " + memberService.TeamHasUsers(u_id));
+	@RequestMapping(value="/team", method=RequestMethod.GET)
+	public String teamListGET(Model model) throws Exception{
+//		logger.info("teamAdd page is open..................." + u_id);	
 		
 		//user가 속한 팀 목록을 조회하는 함수를 'teamList'이름으로 정하고 teamList.jsp로 넘김.
 		model.addAttribute("teamList",teamService.listTeam(u_id));
@@ -96,31 +95,23 @@ public class TeamController {
 		//user가 속한 모든 팀의 멤버들을 조회하는 함수를 'memberList'이름으로 정하고 teamList.jsp로 넘김
 		model.addAttribute("memberList", memberService.TeamHasUsers(u_id));
 		model.addAttribute(u_id);
+		return "team/teamList";
 	}
 	
 	//팀 목록(teamList.jsp) 가져오기2
 	@ResponseBody
-	@RequestMapping(value="/teamList", method=RequestMethod.POST)
-	public ResponseEntity<String> teamLsitPOST(@RequestBody TeamVO tvo, Model model) throws Exception{
+	@RequestMapping(value="/team", method=RequestMethod.POST)
+	public ResponseEntity<String> teamLsitPOST(@RequestBody TeamVO tvo) throws Exception{
 		//logger.info("createTeam tvo : " + tvo.toString());
 		ResponseEntity<String> entity = null;
 		try {
-			//logger.info("받은 name : " + tvo.getName());
+//			logger.info("받은 name : " + tvo.getName());
 			teamService.createTeam(tvo);		
-			//logger.info("이게 vo : " + tvo.toString());
+//			logger.info("이게 vo : " + tvo.toString());
 			int t_id=tvo.getId();
-			//logger.info("tvo : " + tvo.getT_id());
-			//logger.info("t_id는 : " + T_id);
-			//logger.info("connectTeamMember : " + memberService.connectTeamMember(u_id, t_id));		
+//			logger.info("tvo : " + tvo.getT_id());
+//			logger.info("t_id는 : " + t_id);
 			memberService.connectTeamMember(u_id, t_id);
-			
-			//user가 속한 팀 목록을 조회하는 함수를 'teamList'이름으로 정하고 teamList.jsp로 넘김.
-			model.addAttribute("teamList",teamService.listTeam(u_id));
-			//logger.info("step1");
-			
-			//user가 속한 모든 팀의 멤버들을 조회하는 함수를 'memberList'이름으로 정하고 teamList.jsp로 넘김
-			model.addAttribute("memberList", memberService.TeamHasUsers(u_id));
-			//logger.info("step2");
 			entity = new ResponseEntity<String>("true", HttpStatus.OK);
 		}catch(Exception e) {
 			entity = new ResponseEntity<String>("false",HttpStatus.BAD_REQUEST);
@@ -129,7 +120,7 @@ public class TeamController {
 	}
 
 	//팀 목록(teamList.jsp)에서 팀 이름 수정.
-	@RequestMapping(value="/teamList", method=RequestMethod.PUT)
+	@RequestMapping(value="/team", method=RequestMethod.PUT)
 	public ResponseEntity<List<TeamVO>> teamListModifyUPDATE(@RequestBody TeamVO tvo) throws Exception{
 		//logger.info("teamListUPDATE");
 		
@@ -160,12 +151,12 @@ public class TeamController {
 	}
 
 	//팀 목록(teamList.jsp)에서 팀 삭제.
-	@RequestMapping(value="/teamList", method=RequestMethod.DELETE)
+	@RequestMapping(value="/team", method=RequestMethod.DELETE)
 	public ResponseEntity<List<TeamVO>> teamListRemoveDELETE(@RequestBody TeamVO tvo) throws Exception{
 		//logger.info("teamListDELETE");
 		
 		ResponseEntity<List<TeamVO>> entity = null;
-		logger.info("teamListDELETE : " + tvo);
+		//logger.info("teamListDELETE : " + tvo);
 		try {
 			//logger.info("teamListDELETE2");
 			//logger.info("teamListDELETE : " + tvo.getT_id());
@@ -192,7 +183,7 @@ public class TeamController {
 	
 	//소유자 수정
 	@ResponseBody
-	@RequestMapping(value="/teamList/{t_id}/{u_id}", method=RequestMethod.PUT)
+	@RequestMapping(value="/team/{t_id}/{u_id}", method=RequestMethod.PUT)
 	public ResponseEntity<List<TeamMemberVO>> memberListTransferUPDATE(@PathVariable int t_id, @PathVariable int u_id, @RequestBody TeamMemberDTO dto) throws Exception{
 		//logger.info("memberListUPDATE");
 		ResponseEntity<List<TeamMemberVO>> entity = null;
@@ -214,7 +205,7 @@ public class TeamController {
 	}
 	
 	//멤버 수정
-	@RequestMapping(value="/teamList/{t_id}", method=RequestMethod.PUT)
+	@RequestMapping(value="/team/{t_id}", method=RequestMethod.PUT)
 	public @ResponseBody ResponseEntity<List<TeamMemberVO>> memberListModifyUPDATE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo) throws Exception{
 		//logger.info("memberListUPDATE");			
 		ResponseEntity<List<TeamMemberVO>> entity = null;
@@ -239,7 +230,7 @@ public class TeamController {
 	}
 		
 	//멤버 삭제
-	@RequestMapping(value="/teamList/{t_id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/team/{t_id}", method=RequestMethod.DELETE)
 	public @ResponseBody ResponseEntity<List<TeamMemberVO>> memberListRemoveDELETE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo) throws Exception{
 		//logger.info("memberListDELETE");
 		//logger.info("t_id, u_id : " + t_id + "," + mvo.getU_id()); //ajax에 보내진 데이터들은 @requestBody mvo에 자동 저장된다.
@@ -247,8 +238,8 @@ public class TeamController {
 		//logger.info("memberListDELETE : " + mvo);
 		try {
 			//logger.info("memberListDELETE2");
-			//logger.info("memberListDELETE : " + t_id);/*mvo.getT_id()*/
-			memberService.deleteMember(mvo.getU_id(),t_id);/*mvo.getU_id()*/
+			//logger.info("memberListDELETE : " + t_id);
+			memberService.deleteMember(mvo.getU_id(),t_id);
 			//logger.info("memberListDELETE3");
 			List<TeamMemberVO> memberList= memberService.TeamHasUsers(u_id);
 			//logger.info("memberListDELETE3-1 ListTeam : " + memberList);

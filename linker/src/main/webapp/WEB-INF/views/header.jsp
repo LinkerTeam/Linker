@@ -13,12 +13,12 @@
 <!-- fontawesome -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
-
+ 
 <body>
 	<!--header-->
 	<header id="header">
 	    <!--로고부분-->
-	    <a href="#" class="logo-background">
+	    <a href="http://localhost:9090/main" class="logo-background">
 	        <span class="logo-full"><img src="/resources/image/logo.png" width="100" /></span>
 	        <span class="logo-mini"><img src="/resources/image/logo_mini.png" width="15" /></span>
 	    </a>

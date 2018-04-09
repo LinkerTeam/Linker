@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
+ 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing 
 		infrastructure -->
 
@@ -51,6 +51,9 @@
 			<mapping path="/user/passwordchange"/>
 			<mapping path="/user/secessionUser"/>
 			<mapping path="/user/googleSescession"/>
+			<mapping path="/main/**"/>
+			<mapping path="/board/**"/>
+			<mapping path="/main"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 

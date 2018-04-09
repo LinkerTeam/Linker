@@ -17,7 +17,7 @@ import com.linker.domain.CardVO;
 import com.linker.service.CardService;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("/board")
 public class CardController{
 	
 	@Inject

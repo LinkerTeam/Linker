@@ -23,6 +23,12 @@ public class TeamDAOImpl implements TeamDAO {
 		return session.insert(namespace + ".createTeam", vo);
 	}
 
+	//팀 정보 출력
+	@Override
+	public TeamVO infoTeam(int t_id) throws Exception{
+		return session.selectOne(namespace + ".infoTeam", t_id);
+	}
+	
 	// 팀 목록 리스트 출력
 	@Override
 	public List<TeamVO> listTeam(int u_id) throws Exception {

@@ -2,27 +2,50 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+ 
 <mapper namespace="com.linker.mapper.projectMapper">
 	<!-- project생성 -->
 	<insert id="createProject">
-		INSERT INTO linker.project(title, u_id, t_id, ps_id) VALUES(#{title}, #{u_id}, #{t_id}, #{ps_id});
+		INSERT INTO linker.project(title, u_id, t_id) VALUES(#{title}, #{u_id}, #{t_id});
 	</insert>
 
 	<!-- 프로젝트리스트 표시(숨기기제외/가리기) -->
 	<select id="listProject" resultType="projectVO">
-		SELECT 
-		project.id, title, 
-		u_id, project.cdate, 
-		t_id, ps_id,
-		email AS writerEmail,
-		nickname AS writerNickname
+	<!-- 	SELECT 
+		project.id
+		, title
+		, u_id
+		, project.cdate
+		, t_id
+		, ps_id
+		,email AS writerEmail
+		,nickname AS writerNickname
 		FROM linker.project
 		JOIN linker.user ON user.id = project.u_id
-		WHERE project.t_id = #{teamID}
+		WHERE project.u_id = #{userID}
 		AND project.ps_id IN (1, 2)
-		ORDER BY project.cdate DESC
-		LIMIT 0, 10;
+		ORDER BY project.cdate DESC;
+ -->
+ 
+ 
+   SELECT 
+          project.id
+		, project.title
+		, project.u_id
+		, project.cdate
+		, project.t_id
+		, project.ps_id
+        , project.u_id
+		,email AS writerEmail
+		,nickname AS writerNickname
+   FROM linker.user
+   LEFT JOIN linker.team_has_user 
+   ON user.id = team_has_user.u_id
+   JOIN linker.project
+   ON project.t_id = team_has_user.t_id
+   WHERE user.id= #{userID} 
+   AND project.ps_id IN (1,2)
+   ORDER BY project.cdate DESC;
 	</select>
 
 	<sql id="updateProject">
@@ -35,7 +58,28 @@
 		WHERE id = #{id}
 		AND u_id = #{u_id}
 	</update>
+	
+	<!-- 카드리스트에서 프로젝트 이름나오기 -->
+	<select id="titleName" resultType="projectVO">
+	SELECT title
+	FROM linker.project
+	WHERE id=#{p_id}
+	</select>
+	
+	
+	<!-- 해당 유저의 같은팀의 유저들을 가져오기 -->
+	<select id="teamProfile" resultType="userVO">
+	SELECT *
+	FROM linker.user
+    JOIN linker.team_has_user ON user.id=team_has_user.u_id
+	WHERE team_has_user.t_id = #{t_id};
+	</select>
+	
+	<update id="hiddenProject">
+	UPDATE linker.project
+	SET ps_id = 2
+	WHERE id = #{id};
 
-
+	</update>
 
 </mapper>

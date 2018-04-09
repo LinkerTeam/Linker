@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+ 
 <mapper namespace="com.linker.mapper.teamMapper">
 	
 	<!-- 새로운 team 생성 -->
@@ -16,6 +16,13 @@
 		SET t.name = #{name}
 		WHERE id = #{t_id}
 	</update>
+	
+	<!-- team 정보 출력/ t_id를 통해서 team 정보 출력/ emailConfirm을 가져올 때 사용 -->
+	<select id="infoTeam" resultType="TeamVO">
+		SELECT id, name, cdate
+		FROM linker.team
+		WHERE id=#{t_id}
+	</select>
 	
 	<!-- team 목록 출력 -->
 	<select id="listTeam" resultType="TeamVO">

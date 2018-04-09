@@ -2,10 +2,24 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+ 
 <mapper namespace="com.linker.mapper.teamMemberMapper">
+	<!-- 회원인지 아닌지 확인 / 결과=0 회원x, 결과=1 회원o -->
+	<select id="checkUser" resultType="int">
+		 SELECT count(email)
+		FROM linker.user AS u
+		WHERE email= #{email};
+	</select>
 
-	<!-- team 이름이 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
+	<!-- 회원 메일 인증 상태가 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
+	<select id="checkMemberStatus" resultType="int">
+		SELECT count(email)
+		FROM linker.user AS u
+		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
+		WHERE email= #{email} and t_id = #{t_id} and thu.status = 0;
+	</select>
+	
+	<!-- 회원이 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
 	<select id="checkMember" resultType="int">
 		SELECT count(email)
 		FROM linker.user AS u
@@ -22,7 +36,7 @@
         WHERE thu.status=1 AND
         thu.t_id IN (
         SELECT t_id
-        FROM user
+        FROM linker.user
         WHERE id=#{u_id}
         )    
      </select>
@@ -53,13 +67,13 @@
 		WHERE email= #{email}
      </select> 
       
-	<!-- member 초대해서 생성/ auth defualt 값: 2, status default 값: 0 -->
+	<!-- member 생성/ auth defualt 값: 2, status default 값: 0 / 멤버추가하고 메일 인증하면 실행됨-->
 	<insert id="createMember">
-		INSERT INTO linker.team_has_user(t_id, u_id)
-		VALUES (#{t_id},#{u_id})
+		INSERT INTO linker.team_has_user(u_id, t_id)
+		VALUES (#{u_id},#{t_id})
 	</insert>
 
-	<!-- 팀을 직접 만들어서 member 생성 -->
+	<!-- member 생성/ 팀 추가할 때 실행됨 -->
 	<insert id="connectTeamMember">
 		INSERT INTO linker.team_has_user(t_id, u_id, auth, status)
 		VALUES (#{t_id},#{u_id},0, 1)
