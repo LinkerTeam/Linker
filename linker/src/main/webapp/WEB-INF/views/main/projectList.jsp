@@ -11,7 +11,9 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
+
 <style>
+/* 모달창  */
 .create-modal{
     display: none;
     position: fixed;
@@ -26,8 +28,8 @@
  .create-modal.is-visible{
     display: block;
  }
- 
- .modal-content{
+ /* 모달 컨텐츠창  */
+ .modal-contents{
     position: relative;
     height: 180px;
     box-sizing: border-box;
@@ -38,6 +40,7 @@
     margin: 350px auto 0 auto;
    
  }
+ /* 모달 타이틀  */
  .team-title{
     box-sizing: border-box;
     width: 100%;
@@ -46,7 +49,7 @@
     border-radius: 3px;
  
  }
- 
+ /* 확인버튼 */
  .teambtn {
     width: 50%;
     font-weight: bold;
@@ -62,18 +65,22 @@
     border: 1px solid #b6bbbf;
 }
 
+
 .headtitle{
   height: 45px;
   align-content: center;
   text-align: center;
 
 }
+ /* 모달창 닫기 버튼  */
 .tclosebtn{
    position:absolute;
    top: 20px;
    right: 20px;
+   cursor: pointer;
 
 }
+ /* 팀추가버튼 */
  .teaminsert-a{
   display: inline-block;
   color:white;
@@ -114,12 +121,12 @@
               
               <!-- 이중 for문을 돌려서 List<List<UserVO>>를 뽑아낸다!! -->
                <c:forEach items="${profile}" var="teamMember">
-                <c:forEach items="${teamMember}" var="aaa">
-                  <c:if test="${teamList.t_id == aaa.t_id}">
+                <c:forEach items="${teamMember}" var="teamMember">
+                  <c:if test="${teamList.t_id == teamMember.t_id}">
                     <ul class="teamMembers">
                
                  
-                      <li><img src="http://localhost:9090/user/displayFile?fileName=${aaa.profile}"><span class="tooltip">${aaa.nickname}</span></li>
+                      <li><img src="http://localhost:9090/user/displayFile?fileName=${teamMember.profile}"><span class="tooltip">${teamMember.nickname}</span></li>
                     </ul> 
                    </c:if>
                  </c:forEach>
@@ -151,7 +158,7 @@
        
         <!--  팀생성 모달창   -->
         <div class="create-modal">
-          <div class="modal-content">
+          <div class="modal-contents">
            <div class="headtitle">
            <span class="pop-over-header-title">Create Team</span>
            <a href="#" class="connectmodal"></a></div>
@@ -190,9 +197,9 @@
 </body>
 <script>
 
-
- var u_id =null;
- var t_id =null;
+//사용하기전에 변수들을 일단 기본값으로 지정
+ var u_id = null;
+ var t_id = null;
 
     // 프로젝트 생성 모달창 닫기
     function closeProjectModal(){
@@ -208,8 +215,8 @@
     // 프로젝트 추가 버튼
     $('.createProjectBtn').on('click', function(){
     	/* 프로젝트 모달창이 뜰때 그 객체의  u_id와  t_id의 값을 가져와서 변수에 저장 */
-    	  u_id= $(this).parent().parent().children().eq(0).children('.uid').html();
-          t_id= $(this).parent().parent().children().eq(0).children('.tid').html();
+    	  u_id = $(this).parent().parent().children().eq(0).children('.uid').html();
+          t_id = $(this).parent().parent().children().eq(0).children('.tid').html();
           
        
         $('.project-modal').addClass('is-visible');
@@ -299,16 +306,16 @@
     });
     
     //팀프로젝트 모달창 띄우기
-    $('.teaminsert-a').on("click",function(){
+    $('.teaminsert-a').on("click", function(){
     	
     	$('.create-modal').addClass('is-visible');
     	
-    })
+    });
     
     
     
     //팀프로젝트  모달창 닫기 외부클릭시
-    $('.create-modal').on("click",function(event){
+    $('.create-modal').on("click", function(event){
     	if($(event.target).hasClass("create-modal")){
     		
     		$('.create-modal').removeClass('is-visible');
@@ -316,21 +323,21 @@
     	}
     
     	
-    })
+    });
     
         //팀프로젝트  모달창 닫기 x자 클릭시
-    $('.tclosebtn').on("click",function(){
+    $('.tclosebtn').on("click", function(){
     	
     	$('.create-modal').removeClass('is-visible');
     	
-    })
+    });
     
     //입력시 버튼활성화및 비활성화
-    $('.team-title').on("input",function(){
+    $('.team-title').on("input", function(){
     	 
-    	var teamtitle= $('.team-title').val();
+    	var teamtitle = $('.team-title').val();
     	 
-    	if(teamtitle.length==0){
+    	if(teamtitle.length == 0){
     		$('.teambtn').addClass('disabled');
     		$('.teambtn').attr("disabled","disabled");
     		
@@ -340,13 +347,13 @@
     		
     	} 
     	 	
-    }) 
+    });
     
-    $('.teambtn').on("click",function(){
+    $('.teambtn').on("click", function(){
    
       var titleName= $('.team-title').val();
       
-        if(titleName=='' || titleName==null){
+        if(titleName == '' || titleName == null){
         	
         	alert('이름을 다시 입력해주세요');
         	return;
@@ -360,11 +367,11 @@
       	     "X-HTTP-Method-Override" : "POST",
       	     "content-type" : "application/json"
         },
-         dataType : 'json',
-         data:JSON.stringify({
-        	 name : titleName            	
+      	   dataType : 'json',
+      	   data:JSON.stringify({
+           		name : titleName            	
         }),
-        success : function(result) {  
+      	  success : function(result) {  
         	console.log(typeof(result));
         	
 			if(result == true){
@@ -374,19 +381,14 @@
 			}
         	
         },error : function(){
-        	alert('error');
-        }
-			  
-        	
-        	
-        	
-        	
-        });
+        		alert('error');
+        }	
+       });
         
        
     	
     	
-    })
+    });
     	    
     
      

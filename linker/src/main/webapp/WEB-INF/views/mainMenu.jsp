@@ -8,7 +8,78 @@
 <!-- CSS -->
 <link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
+<style>
+.modal {
+    display: none;
+    position: relative;
+    z-index: 1001; /* 테스트 후 값 조정 */
+    left: 0;
+    top: 30px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  /*  // background-color: rgba(0,0,0,0.7); */
+}
+.modal.is-visible {
+    display: block;
+}
+.modal-content{
+    /* position: inherit; */
+    box-sizing: border-box;
+    width: 300px;
+    height : 250px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 40px 45px 45px 40px;
+   /*  margin: 450px 0px 0px 1600px; */
+    color : black;
+    font-size: 15px;
 
+}
+.closetitle{
+   margin-left:70px;
+   padding-bottom: 50px;
+   text-align: center;
+}
+/* 버튼 css   */
+.hiddenbtn{
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #FA5883;
+    color: #fff;
+    font-size: 18px;
+    margin-left: 15px;
+    margin-top: 15px;
+    cursor: pointer;
+    width: 95%;
+    border-radius: 5px;
+    
+}
+ .Btitle{
+  font-size:50px;
+  text-align: center;
+  padding-top: 150px;
+}
+
+.Breopen{
+  font-size: 30px;
+  text-align: center;
+  margin-top: 150px;
+  cursor: pointer;
+}
+.Bdelete{
+  font-size:30px;
+  text-align: center;
+  margin-top: 150px;
+  cursor: pointer;
+  
+} 
+.Breopen:hover,.Bdelete:hover{
+  color:gray;
+}
+
+</style>
 <body>
 	<!--왼쪽 메뉴(확장메뉴, 축소메뉴)-->
 	<!--확장 메뉴(글자)-->
@@ -155,27 +226,31 @@
 							<div class="user-modify">
 								<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
 							</div>
+							<!-- closeboard로 프로젝트 창에 들어갔을겨웅멘 실행가능 -->
 							<div class="user-modify">
 								<a href="#" class="closeboard">close-board</a>
 							</div>
+							
+						 
 							<div class="user-modify">
 								<a href="http://localhost:9090/user/logout" class="closeboard">Logout</a>
 							</div>
 							
-							<!-- <div class='modal'>
-								<div class="modal-content">
-							  		<div class='modal-title'>
-							  		<span class="closetitle">Close Board?</span>
-							  	</div>
-							  	<div>
-							   		<div class='modal-text'>
-							     		<p>You can re-open the board by clicking the “Boards” menu from the header
-							      		, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
-							      		<button class="hiddenbtn" value="OK">확인</button>
-							     	</div>
-							    </div>
-							</div> -->
-						</div>
+						<!-- close board  -->
+						  <div class='modal'>
+						  	 <div class="modal-content">
+						    	<div class='modal-title'>
+						  	      <span class="closetitle">Close Board?</span>
+						  		  </div>
+						  	      <div>
+						   			<div class='modal-text'>
+						     			<p>You can re-open the board by clicking the “Boards” menu from the header
+						      			, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
+						      			<button class="hiddenbtn" value="OK">확인</button>
+						   	 	</div>
+						  	  </div>
+							</div> 
+						 </div> <!-- /모달창  -->
 						<!-- /메뉴 -->
 					</div>
 				</div>
@@ -393,7 +468,88 @@
 	    	cardStatusChange(id, ps_id, title); //상태변경에 대한 ajax처리 함수 호출
 		});
 		
+    $(document).ready(function(){	
+    	var html = $('.content').html();
+    	
+		//모달창 열기
+		$('.closeboard').on("click",function(){
+			$('.modal').addClass('is-visible');
+		})
+		//모달창 닫기
+		$('.modal').on("click",function(e){
+			if($(e.target).hasClass('is-visible')){
+				closeModal();		
+			}
+		})
 		
+		// 숨기기버튼 ajax처리하기
+		$('.hiddenbtn').on("click",function(){
+	    
+		   $.ajax({
+		    	type: 'GET',
+		    	url: '/main/'+p_id,
+		    	success: function(data){
+		    		 if(data  == "SUCCESS"){
+		    		$('.content').empty();
+		    		var str='<div class="Btitle">${title} is closed.</div>'
+		    		       +'<div class="Breopen"><a id="reopen">Re-Open</a></div>'
+		    		       +'<div class="Bdelete"><a>Permanently Delete Board…</a></div>'
+		    			$('.content').html(str); 
+		    		    }else{
+		    			  alert('실패');
+		    			} 
+		    		closeModal();
+		    	},error:function(){
+		    		alert('error');
+		    	}   	
+		    }); 			
+		});
+	
+		
+		//reopen연결 
+		$('.content').on("click",'#reopen',function(){
+			$.ajax({
+			 type:'GET',
+			 url : '/main/reopen/'+p_id,
+			 success : function(data){
+				 if(data == "SUCCESS"){	 
+				 
+					$('.content').empty();
+				 	$(".content").html(html);
+				 } else{
+					alert('실패');
+				 }
+					
+			 },
+			 error:function(){
+				 alert('error');
+			 }						
+			 }); 
+		 });
+		//완전히 삭제 
+		$('.content').on("click",".Bdelete",function(){
+		
+			$.ajax({
+				type:'GET',
+				url : '/main/delete/'+p_id,
+				success : function(data){
+					if(data == "SUCCESS"){
+					self.location = '/main';
+					} else{
+						alert('실패');
+					}
+				},error:function(){
+					alert('error');
+				}
+			  });
+			});
+		
+		
+		//모달창닫기
+		function closeModal(){		
+			 $('.modal').removeClass('is-visible');
+			}
+		});	
 		
 	</script>
 </body>

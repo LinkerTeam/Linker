@@ -19,5 +19,11 @@ public interface ProjectDAO {
 	public ProjectVO titleName(int p_id) throws Exception;
 	public List<UserVO> teamProfile(int t_id) throws Exception;
 	public void hiddenProject(int p_id) throws Exception;
+	//프로젝트 다시 불러오기
+	public void reopenProject(int p_id) throws Exception;
+	//프로젝트 완전히 삭제
+	public void deleteProject(int p_id)throws Exception;
+	//프로젝트 상태코드 검사
+	public ProjectVO projectstatus(int p_id,int t_id)throws Exception;
 	
 }

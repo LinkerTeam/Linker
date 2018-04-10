@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,6 +19,10 @@
 	<%@include file="../mainMenu.jsp"%>
 	
 	<div class="content">
+	 <c:set var="ps_id" value="${ps_id}" />
+   
+    <c:choose>
+     <c:when test="${ps_id==1}">
 		<div class="projectTitle"><h2>프로젝트4</h2></div>
         <div class="cardlistContent">
 
@@ -53,8 +57,17 @@
 			    <button type="button" id="saveBtn" class="saveBtn">save</button>
 			</div>
         </div>
-        
+	</c:when>
+		<c:otherwise>
+        	<div class="Btitle">${title} is closed.</div>
+		 	<div class="Breopen"><a id="reopen">Re-Open</a></div>
+		 	<div class="Bdelete"><a>Permanently Delete Board…</a></div>  
+   		</c:otherwise>
+	</c:choose>
 	</div>
+	
+	
+	
 	
 	<!-- 카드리스트 팝업 -->
 	<!-- 열기 | .is-visible -->
@@ -77,7 +90,7 @@
 	
 	<!-- 카드팝업 jsp -->
 	<%@include file="cardModal.jsp"%>
-
+    
 
 	<script>
 

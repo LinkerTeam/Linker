@@ -61,7 +61,7 @@
 	
 	<!-- 카드리스트에서 프로젝트 이름나오기 -->
 	<select id="titleName" resultType="projectVO">
-	SELECT title
+	SELECT title,ps_id,id,t_id
 	FROM linker.project
 	WHERE id=#{p_id}
 	</select>
@@ -81,5 +81,27 @@
 	WHERE id = #{id};
 
 	</update>
+	
+	<update id="reopenProject">
+	UPDATE linker.project
+	SET ps_id =1
+	WHERE id = #{p_id};
+	</update>
+	
+	<update id="deleteProject">
+	UPDATE linker.project
+	SET ps_id = 3
+	WHERE id = #{p_id};
+	</update>
+	
+	<select id="projectstatus" resultType="projectVO">
+	SELECT id
+	,title
+	,u_id
+	,t_id
+	,ps_id
+    FROM linker.project
+    WHERE id=#{p_id} AND t_id =#{t_id};
+	</select>
 
 </mapper>

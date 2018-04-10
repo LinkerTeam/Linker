@@ -53,6 +53,26 @@ public class ProjectServiceImpl implements ProjectService {
 		
 	}
 
+	//프로젝트 리오픈
+	@Override
+	public void reopenProject(int p_id) throws Exception {
+		dao.reopenProject(p_id);
+		
+	}
+
+	//프로젝트 완전히 삭제
+	@Override
+	public void deleteProject(int p_id) throws Exception {
+		dao.deleteProject(p_id);
+		
+	}
+
+	@Override
+	public ProjectVO projectstatus(int p_id, int t_id) throws Exception {
+
+      return dao.projectstatus(p_id, t_id);
+		
+	}
 
 	
 }

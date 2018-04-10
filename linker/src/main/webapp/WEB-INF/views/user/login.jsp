@@ -170,8 +170,8 @@
             var signupbtn = document.getElementsByClassName('signup_btn')
             var btn = document.getElementsByClassName('login_btn1');
             var signupbtn2 = document.getElementsByClassName('signup_btn1')
-            var reset=document.getElementById('reset-password');
-            var forget=document.getElementsByClassName('form-bottom-message');
+            var reset = document.getElementById('reset-password');
+            var forget = document.getElementsByClassName('form-bottom-message');
            
            
             button[0].onclick = function () {
@@ -234,13 +234,11 @@
             }
             forget[0].onclick =function(){
                 reset.style.display="block";
-                
                 id.style.display = "none";
             }
             forget[1].onclick=function(){
                 reset.style.display="none";
                 id.style.display = "block";
-
             }
             
             // 모달 close 이벤트 if문에 자기자신 클릭시에만 이벤트를 발생하게 한다. 모달창 닫기
@@ -265,24 +263,24 @@
            
            
            // SHow 버튼을 누르면 비밀번호가 text 타입이 돼었다가 password타입으로 변함
-             passwordhide[0].addEventListener("click",function(){        
+             passwordhide[0].addEventListener("click", function(){        
                      
                      if(password[0].getAttribute('type')=="password"){
-                     password[0].setAttribute("type","text");
+                     password[0].setAttribute("type", "text");
                      $('.hide-password').text('감추기');
                     
                     } else{
-                        password[0].setAttribute("type","password");
+                        password[0].setAttribute("type", "password");
                         $('.hide-password').text('보이기');
                     }
                     });
-                    passwordhide[1].addEventListener("click",function(){        
+                    passwordhide[1].addEventListener("click", function(){        
                      
                      if(password[1].getAttribute('type')=="password"){
-                     password[1].setAttribute("type","text");
+                     password[1].setAttribute("type", "text");
                      $('.hide-password').text('감추기');
                     } else{
-                        password[1].setAttribute("type","password");
+                        password[1].setAttribute("type", "password");
                         $('.hide-password').text('보이기');
                     }
                     });

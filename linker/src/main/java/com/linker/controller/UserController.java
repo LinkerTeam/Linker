@@ -531,8 +531,7 @@ public class UserController {
 		vo.setEmail(email);
 		vo.setNickname(nickname);
 
-		   System.out.println("vo 뭐다냥"+vo.toString());
-	
+		System.out.println("vo 뭐다냥" + vo.toString());
 
 		System.out.println(singupService.serchGoogle(vo));
 
@@ -551,9 +550,9 @@ public class UserController {
 			singupService.insertGoogle(vo);
 		}
 
-		//만약 처음 접속시 값을 못가져오기때문에 순서가 중요하다.
+		// 만약 처음 접속시 값을 못가져오기때문에 순서가 중요하다.
 		UserVO vo2 = service.viewUser(vo.getEmail());
-		  System.out.println(vo2.toString());
+		System.out.println(vo2.toString());
 		if (vo2.getStatus() == 2) {
 
 			// 페이지를 따로넘기지않고 alert창을 뛰움
@@ -625,7 +624,7 @@ public class UserController {
 
 		String email = vo.getEmail();
 
-		//두개의 값을 넘겨주기위해서 DTO객체로 받아서 넘긴다.
+		// 두개의 값을 넘겨주기위해서 DTO객체로 받아서 넘긴다.
 		UserDTO dto = new UserDTO();
 
 		dto.setEmail(email);
@@ -671,15 +670,15 @@ public class UserController {
 	// 회원 탈퇴 현재 비밀번호 확인
 	@RequestMapping(value = "/secessionUser", method = RequestMethod.GET)
 	public String secessionUser(HttpSession session) throws Exception {
-		 
-		 System.out.println("11");
-		
-		 UserVO vo = (UserVO) session.getAttribute("login");
 
-		 System.out.println("너는 뭐입니까??"+vo.getGoogle()+"+"+vo.getGoogle().equals("1"));
-		 
+		System.out.println("11");
+
+		UserVO vo = (UserVO) session.getAttribute("login");
+
+		System.out.println("너는 뭐입니까??" + vo.getGoogle() + "+" + vo.getGoogle().equals("1"));
+
 		if (vo.getGoogle().equals("1")) {
-       
+
 			return "redirect:/user/googleSescession";
 		}
 
@@ -728,8 +727,8 @@ public class UserController {
 	// 회원탈퇴 창
 	@RequestMapping(value = "/secessionUserConfirm", method = RequestMethod.GET)
 	public String secessionUserConfirm(HttpSession session) throws Exception {
-		
-	  System.out.println("일개미");
+
+		System.out.println("일개미");
 		// 해당페이지에는 success 세션이 있어야만 들어올수있다. 비밀번호를 입력해야지만 들어올수있다.
 
 		if (session.getAttribute("success") == null) {
@@ -769,21 +768,18 @@ public class UserController {
 
 	@RequestMapping(value = "/googleSescession", method = RequestMethod.GET)
 	public String googleSescession(HttpSession session) throws Exception {
-       
+
 		System.out.println("/googleSescession");
-	
+
 		UserVO vo = (UserVO) session.getAttribute("login");
 
-		 System.out.println("너는 뭐입니까??"+vo.getGoogle()+"+"+vo.getGoogle().equals("0"));
-		 
+		System.out.println("너는 뭐입니까??" + vo.getGoogle() + "+" + vo.getGoogle().equals("0"));
+
 		if (vo.getGoogle().equals("0")) {
-       
+
 			return "redirect:/user/secessionUser";
 		}
-		
-		
-			
-		
+
 		return "user/googleSescession";
 	}
 
@@ -793,21 +789,21 @@ public class UserController {
 			throws Exception {
 
 		UserVO vo = (UserVO) session.getAttribute("login");
-        
-		//인증키가 들어있는 세션을 가져와서 비교함  .equals()을 하기위해선 값이 null이면 오류남 그래서 null이 아닐경우에만 .equals()를 실행하게함
+
+		// 인증키가 들어있는 세션을 가져와서 비교함 .equals()을 하기위해선 값이 null이면 오류남 그래서 null이 아닐경우에만
+		// .equals()를 실행하게함
 		String googlekey = (String) session.getAttribute("googlekey");
 
-		System.out.println(googlekey!=null);
+		System.out.println(googlekey != null);
 
 		String confirm = request.getParameter("confirm");
 
-		
-		if (googlekey!=null) {
-    
-			if(googlekey.equals(confirm)) {
-			session.setAttribute("success", "OK");
-			return "redirect:/user/secessionUserConfirm";
-			
+		if (googlekey != null) {
+
+			if (googlekey.equals(confirm)) {
+				session.setAttribute("success", "OK");
+				return "redirect:/user/secessionUserConfirm";
+
 			} else {
 				response.setContentType("text/html; charset=UTF-8");
 
@@ -819,7 +815,7 @@ public class UserController {
 
 				return "user/googleSescession";
 			}
-			
+
 		} else {
 
 			response.setContentType("text/html; charset=UTF-8");
