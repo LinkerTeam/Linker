@@ -37,7 +37,8 @@ public class CardTestController {
 		
 		
 		model.addAttribute("u_id", vo.getId());
-        model.addAttribute("title", vo2.getTitle());
+        model.addAttribute("p_title", vo2.getTitle());
+        model.addAttribute("p_ps_id", vo2.getPs_id());
 		    
 		model.addAttribute("teamID", teamID);
 		model.addAttribute("p_ID", p_ID);

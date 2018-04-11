@@ -391,14 +391,14 @@
 .mainAside-tab4-menu {
     margin-top: 20px;
 }
-.user-modify a {
+.settingMenu a {
     border-bottom: solid 0.5px #454545;
     color: #818181;
     font-size: 18px;
     padding: 15px 10px 15px 10px;
     display: block;
 }
-.user-modify a:hover {
+.settingMenu a:hover {
     background-color: #121212;
     color: #f1f1f1;
 }
@@ -406,3 +406,96 @@
 
 /* ~~~~~오른쪽 메뉴 */
 
+
+
+/* board close 관련 */
+.hiddenContent{ /* content 숨기기 */
+	display: none;
+}
+/* 모달창 */
+.closeBoardModal {
+    display: none;
+    position: absolute;
+    z-index: 1001; /* 테스트 후 값 조정 */
+}
+.closeBoardModal.is-visible {
+    display: block;
+}
+/* 모달창 | 내부요소 전체 */
+.closeBoardModal-content{
+    position: relative;
+    box-sizing: border-box;
+    width: 294px;
+    height : 160px;
+    background: #fff;
+    border-radius: 4px;
+    color : black;
+    font-size: 15px;
+}
+/* 모달창 | 상단 타이틀 p태그 + 닫기버튼 */
+.closeBoardModal-title{
+	text-align: center;
+	line-height: 34px;
+}
+/* 모달창 | 상단 타이틀 p태그 */
+.closeTitle{
+	display: block;
+	margin: 0 7px;
+	border-bottom: solid 1px #d0d0d0;
+	color: #919191;
+}
+/* 모달창 | 닫기 버튼 */
+.closeBoardModal-title > .closeModal{
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 5px;
+	line-height: 28px;
+}
+/* 모달창 | 하단 설명 부분 */
+.closeBoardModal-text > p{
+	padding: 8px 15px;
+	word-break: keep-all;/* 띄어쓰기 기준으로 줄바꿈 */
+	color: #232323;
+}
+/* 모달창 | close버튼 */
+.closeBoardBtn{
+    width: 92%;
+    height: 40px;
+    margin-left: 12px;
+    background: #FA5883;
+    color: #fff;
+    font-size: 17px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* close, delete화면 | 전체div */
+.closeBoardMessage, .deleteBoardMessage{
+	text-align: center;
+	color: #5f5f5fd4;
+}
+/* close화면 | title표시 부분 */
+.closeBoardTitle, .deleteBoardTitle{
+	padding-top: 50px;
+  	font-size: 30px;
+  	font-weight: bold;
+}
+/* close화면 | reopen, delete버튼 */
+.boardReopen, .boardDelete{
+	margin-top: 30px;
+	font-size: 17px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.boardReopen:hover, .boardDelete:hover{
+  color: #1b1b1b;
+}
+/* delete화면 */
+.deleteBoardMessage > p{
+	max-width: 600px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 18px;
+}

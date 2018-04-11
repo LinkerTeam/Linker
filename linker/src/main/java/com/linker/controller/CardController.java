@@ -60,17 +60,14 @@ public class CardController{
 	
 	
 	//카드 수정 처리 (상태)
-	@RequestMapping(value="/{p_id}/cardStatus/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
+	@RequestMapping(value="/{p_id}/cardstatus/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<CardVO> updateCardStatus(@PathVariable("p_id") Integer p_id, @PathVariable("id") Integer id, @RequestBody CardVO vo){
 		ResponseEntity<CardVO> entity = null;
 		try {
 			service.readPopcard(vo);
-			System.out.println("read : " + vo);
 			vo.setP_id(p_id);
 			vo.setId(id);
 			service.updateCardStatus(vo);
-			
-			System.out.println("updata : " + vo);
 			
 			entity = new ResponseEntity<CardVO>(vo, HttpStatus.OK);
 		} catch (Exception e) {

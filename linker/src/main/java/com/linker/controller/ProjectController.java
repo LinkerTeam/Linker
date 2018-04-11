@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.linker.domain.CardVO;
 import com.linker.domain.ProjectVO;
 import com.linker.domain.TeamVO;
 import com.linker.domain.UserVO;
@@ -31,7 +32,7 @@ import com.linker.service.ProjectService;
 import com.linker.service.TeamService;
 
 @Controller
-@RequestMapping(value ="main")
+@RequestMapping(value ="/main")
 public class ProjectController {
  
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
@@ -109,21 +110,23 @@ public class ProjectController {
   
 	}
 	
-	//프로젝트를 감추기
-	@ResponseBody
-	@RequestMapping(value="{p_id}",method=RequestMethod.POST)
-	public ResponseEntity<String> hiddenProject(@PathVariable int p_id)throws Exception{
-		System.out.println("나다 씹새끼야");
-		service.hiddenProject(p_id);
-		try {
-			return new ResponseEntity<>("SUCCESS",HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		
-		
-	}
 	
+	// 수정 | 프로젝트 상태 변경(가리기/완전숨기기) & title 변경
+	@RequestMapping(value="/{p_id}/{u_id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
+	public ResponseEntity<String> modifyProject(@PathVariable("p_id") Integer p_id, @PathVariable("u_id") Integer u_id, @RequestBody ProjectVO vo){
+		ResponseEntity<String> entity = null;
+		try {
+			vo.setId(p_id);
+			vo.setU_id(u_id);
+			service.modifyProject(vo);
+			
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
 
 
 }
