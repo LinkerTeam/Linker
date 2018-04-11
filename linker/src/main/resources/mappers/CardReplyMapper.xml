@@ -6,7 +6,7 @@
 <mapper namespace="com.linker.mapper.CardReplyMapper">
 
 	<!-- 특정 카드의 모든 댓글 조회 -->
-	<select id = "listReply" resultType = "CardReplyVO">
+	<select id="listReply" resultType="CardReplyVO">
 		SELECT 
 			r.id
 			, r.c_id
@@ -19,24 +19,24 @@
 		FROM linker.c_reply r
 		INNER JOIN linker.user u ON r.u_id = u.id
 		WHERE r.c_id = #{c_id}
-		ORDER BY id DESC
+		ORDER BY id
 	</select>
 	
 	<!-- 등록 -->
-	<insert id = "createReply">
+	<insert id="createReply" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO linker.c_reply (c_id, content, u_id)
 		VALUES (#{c_id}, #{content}, #{u_id})
 	</insert>
 	
 	<!-- 수정 -->
-	<update id = "updateReply">
+	<update id="updateReply">
 		UPDATE linker.c_reply 
 		SET content = #{content}, updatedate = now()
 		WHERE id = #{id}
 	</update>
 	
 	<!-- 삭제 -->
-	<delete id = "deleteReply">
+	<delete id="deleteReply">
 		DELETE FROM linker.c_reply
 		WHERE id = #{id}
 	</delete>

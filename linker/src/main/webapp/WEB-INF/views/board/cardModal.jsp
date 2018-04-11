@@ -247,29 +247,15 @@
 		    	cardStatus(data.ps_id); //카드 상태값에 따라 진행, 보관, 가리기 구별하여 각각 다른 형태의 카드모달창 출력
 	    	});//JSON
 	    	
-	    	//댓글 출력
+	    	//댓글 조회
 	    	$.getJSON("/board/reply/all/" + popCardId, function(data){
-	    		var str = "";
-	    		$(data).each(function(){
-	    			/* str += "<li data-id='" + this.id + "' class='replyLi'>" + 
-	    				   "<div class='replyProfile'><img src='http://localhost:9090/user/displayFile?fileName=" + this.profile + "'></div>" + this.nickname + 
-	    					this.content + this.cdate + "</li>"; */
-	    			str += "<div class='replyArea'>" +
-                           "	<img src='http://localhost:9090/user/displayFile?fileName=" + this.profile + "' />" +
-                           "    <div class='reply-commentArea'>" +
-                           "    	<div class='reply-info'>" +
-                           "        	<p class='reply-nickname'>" + this.nickname + "</p>" +
-                           "        	<p class='reply-cdate'>" + this.cdate + "</p>" +
-                           "    	</div>" +
-                           "    	<p class='reply-content'>" + this.content + "</p>" +
-                           "	</div>" +
-                           "</div>";
-	    		});
-	    		$(".activity-content").html(str);
+	    		for(var i = 0; i < data.length; i++)
+	    			allReplyStr(data[i]); //동적태그 생성하여 삽입하는 함수 호출
 	    	});
 			
 	    	cardModal.style.display = "block"; //모달창 띄우기
 	    };
+	    
 	    
 	    
 	
@@ -430,36 +416,54 @@
 	    
 	    
 	    
+	    
 	    /*
 	    * 댓글
 	    */
-	    $(".saveBtn.reply").click(function(){
+	    
+	    /* 댓글 조회 | 동적 태그 생성 */
+	    function allReplyStr(obj){
+	    	var str = "<div data-id='" + obj.id + "' class='replyArea'>" +
+			          "	<img src='http://localhost:9090/user/displayFile?fileName=" + obj.profile + "' />" +
+			          "    <div class='reply-commentArea'>" +
+			          "    	<div class='reply-info'>" +
+			          "        	<p class='reply-nickname'>" + obj.nickname + "</p>" +
+			          "        	<p class='reply-cdate'>" + obj.cdate + "</p>" +
+			          "    	</div>" +
+			          "    	<p class='reply-content'>" + obj.content + "</p>" +
+			          "	</div>" +
+			          "</div>";
+	    	$(".activity-content").prepend(str);
+	    };
+	    
+	    
+	    /* 댓글 등록 | 저장버튼 누를 경우 */
+	    $(".saveBtn.reply").click(function(){	    	
 			var content = contentTextarea[1].value; //수정textarea의 내용 담기
 			
 	    	$.ajax({
-	    		type : 'put',
+	    		type : "POST",
 	    		url : "/board/reply",
 	    		headers : {
 	    			"Content-Type" : "application/json",
-	    			"X-HTTP-Method-Override" : "PUT"
+	    			"X-HTTP-Method-Override" : "POST"
 	    		},
 	    		data : JSON.stringify({
-	    			content : content
+	    			c_id : popCardId,
+	    			content : content,
+	    			u_id : u_id
 	    		}),
 	    		dataType : 'text', 
-	    		success : function(result) {
-	    			console.log("result: " + result);
-	    			$(".warning").css("display", "none"); //경고메시지 숨기기
-	    			popCardContent = content; //전역변수에 담긴 content값 바꿔주기
+	    		success : function(data) {
+	    			console.log(data);
+	    			if(data.id !== 0)
+		    			allReplyStr(data);
 	    		},
 	    		error : function() {
 	    			alert("에러가 발생했습니다.");
 	    		}
 	    	});
 	    });
-	    
-	    
-	    
 	    
 	    
 	    

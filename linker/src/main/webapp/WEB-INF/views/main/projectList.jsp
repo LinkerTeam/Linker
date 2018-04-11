@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=11" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=111" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
@@ -19,7 +19,7 @@
 	<div class="content">
 
     <!-- 프로젝트 본문 -->
-      <div class="content project">
+      <!-- <div class="content project"> -->
 
         <!-- Projects In a Team -->
        
@@ -67,7 +67,7 @@
          </c:forEach> 
       </div>
     
-    </div>
+    <!-- </div> -->
      
     <!-- /프로젝트 본문 -->
 
@@ -88,7 +88,6 @@
 
 </body>
 <script>
-
 
  var u_id =null;
  var t_id =null;
