@@ -195,85 +195,82 @@
 		
 		var i = 0;
 		var j = 0;
-		
-		var mainNav = document.getElementsByClassName("mainNav")[0]; //확장메뉴
-	    var content = document.getElementsByClassName("content")[0]; //본문
-	    var iconBar = document.getElementsByClassName("iconBar")[0]; //축소메뉴
-	    var logoBg = document.getElementsByClassName("logo-background")[0]; //헤더 로고영역
-	    var logoFull = document.getElementsByClassName("logo-full")[0]; //확장로고
-	    var logoMini = document.getElementsByClassName("logo-mini")[0]; //축소로고
-	    
-	    var mainAside = document.getElementById('mainAside')[0]; //오른쪽 메뉴 전체
-	    var tabMenu = document.getElementsByClassName('nav-tabs')[0]; //탭 메뉴
-
-
-	    
-	    
-		/* 왼쪽 메뉴 | 확장&축소 이벤트 */
+	
+		/* 왼쪽 메인메뉴 | 확장 & 축소 이벤트 */
 		function openNav() {
+		    var mainNav = document.getElementsByClassName("mainNav"); //확장메뉴
+		    var content = document.getElementsByClassName("content"); //본문
+		    var iconBar = document.getElementsByClassName("iconBar"); //축소메뉴
+		    var logoBg = document.getElementsByClassName("logo-background"); //헤더 로고영역
+		    var logoFull = document.getElementsByClassName("logo-full"); //확장로고
+		    var logoMini = document.getElementsByClassName("logo-mini"); //축소로고
+	
 		    i++; //왼쪽 메뉴버튼 클릭할 때마다 i의 값 1씩 증가하도록
 	
 		    if (i % 2 === 1) { //클릭수가 홀수이면 축소메뉴 노출
-		        content.style.marginLeft = "60px"; 	//본문 위치 메뉴너비에 맞춰 옮기기
-		        iconBar.style.width = "60px";		//메뉴 영역 230px에서 60px로 줄이기
-		        logoBg.style.width = "60px"; 		//로고 영역 230px에서 60px로 줄이기
-		        mainNav.style.width = "0"; 			//확장메뉴 숨긴다
-		        logoFull.style.width = "0"; 		//확장로고 숨긴다
-		        logoMini.style.width = "60px"; 		//축소로고 너비 확보
+		        content[0].style.marginLeft = "60px"; //본문 위치 메뉴너비에 맞춰 옮기기
+		        iconBar[0].style.width = "60px"; //메뉴 영역 230px에서 60px로 줄이기
+		        logoBg[0].style.width = "60px"; //로고 영역 230px에서 60px로 줄이기
+		        mainNav[0].style.width = "0"; //확장메뉴 숨긴다
+		        logoFull[0].style.width = "0"; //확장로고 숨긴다
+		        logoMini[0].style.width = "60px"; //축소로고 너비 확보
 		    }
 		    else { //클릭수가 짝수이면 확장메뉴 노출
-		        mainNav.style.width = "230px"; 		//확장메뉴 너비 확보
-		        content.style.marginLeft = "230px"; //본문 위치 메뉴너비에 맞춰 옮기기
-		        logoBg.style.width = "230px"; 		//확장시 로고영역 확보
-		        logoFull.style.width = "230px"; 	//확장로고 너비 확보
-		        logoMini.style.width = "0"; 		//축소로고 숨긴다
+		        mainNav[0].style.width = "230px"; //확장메뉴 너비 확보
+		        content[0].style.marginLeft = "230px"; //본문 위치 메뉴너비에 맞춰 옮기기
+		        logoBg[0].style.width = "230px"; //확장시 로고영역 확보
+		        logoFull[0].style.width = "230px"; //확장로고 너비 확보
+		        logoMini[0].style.width = "0"; //축소로고 숨긴다
 		    };
 		};
+	
+	
 		
-		/* 오른쪽 메뉴 | 숨기기&펼치기 이벤트 */
+		/* 오른쪽 메인메뉴 | 숨기기 & 펼치기 이벤트 */
 		function openAside() {
+			var mainAside = document.getElementById('mainAside'); //오른쪽 메뉴 전체
+		    var content = document.getElementsByClassName('content'); //본문
+		    var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
+		    
 		    j++ //오른쪽 메뉴버튼 클릭할 때마다 j의 값 1씩 증가하도록
 	
 		    if (j % 2 === 1) { //클릭수가 홀수이면 펼치기
 		        mainAside.classList.add('mainAside-open'); //클래스 이름 'mainAside-open' 추가
 		        mainAside.style.width = "330px";
-		        content.style.marginRight = "330px";
+		        content[0].style.marginRight = "330px";
 		        //활성화된 메뉴가 없다면 첫번째 탭 메뉴를 활성화
-		        if (tabMenu.dataset.activenumber === undefined) {
-		        	tabMenu.dataset.activenumber = 0;
-		        	tabMenu.children.classList.add('active');
+		        if (tabMenu[0].dataset.activenumber === undefined) {
+		        	tabMenu[0].dataset.activenumber = 0;
+		        	tabMenu[0].children[0].classList.add('active');
 		        };
 		    } else { //클릭수가 짝수이면 숨기기
 		        mainAside.classList.remove('mainAside-open'); //클래스 이름 'mainAside-open' 제거
 		        mainAside.style.width = "0";
-		        content.style.marginRight = "0";
+		        content[0].style.marginRight = "0";
 		    };
 		};
 
-		//오른쪽 메뉴 탭버튼 제어
+		/* 오른쪽 메인메뉴 | 탭버튼 제어 */
 		var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
-		for(var i = 0; i < tabMenu.childElementCount; i++){
-			tabMenu.children[i].addEventListener("click", function(){
+		for(var i = 0; i < tabMenu[0].childElementCount; i++){
+			tabMenu[0].children[i].addEventListener("click", function(){
 				
 				var clickedTabIndex = getElementIndex(this); //클릭한 탭 번호
 				var currentTabIndex = this.parentElement.dataset.activenumber; //현재 탭 변호
 				
 				//클릭한 탭이 현재 활성화 된 탭이 아닌 경우에만 탭의 내용 보여주기
 				if(currentTabIndex !== clickedTabIndex){
-					//현재 탭 비활성화
-			        tabMenu.children[currentTabIndex].classList.remove('active'); 
-				    //클릭한 탭 활성화
-				    this.classList.add('active');
-				  	//클릭한 탭의 번호를 저장
-				    this.parentElement.dataset.activenumber = clickedTabIndex;
+			        tabMenu[0].children[currentTabIndex].classList.remove('active'); //현재 탭 비활성화
+				    this.classList.add('active'); //클릭한 탭 활성화
+				    this.parentElement.dataset.activenumber = clickedTabIndex; //클릭한 탭의 번호를 저장
 				}
 			});
 		};
 	
-		//해당 노드의 인덱스 반환
+		/* 해당 노드의 인덱스 반환 */
 		function getElementIndex(node) {
 		    var index = 0;
-		    while ((node === node.previousElementSibling)) {
+		    while ((node = node.previousElementSibling)) {
 		        index++;
 		    }
 		    return index;

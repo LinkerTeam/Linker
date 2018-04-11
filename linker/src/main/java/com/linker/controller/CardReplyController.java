@@ -3,6 +3,8 @@ package com.linker.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linker.domain.CardReplyVO;
+import com.linker.domain.UserVO;
 import com.linker.service.CardReplyService;
 
 @RestController
@@ -27,8 +30,6 @@ public class CardReplyController {
 	public ResponseEntity<List<CardReplyVO>> listReply(@PathVariable("c_id") Integer c_id){
 		ResponseEntity<List<CardReplyVO>> entity = null;
 		
-		System.out.println(c_id);
-		
 		try {
 			entity = new ResponseEntity<>(service.listReply(c_id), HttpStatus.OK);
 		} catch(Exception e) {
@@ -40,15 +41,24 @@ public class CardReplyController {
 	
 	//등록
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<String> addReply(@RequestBody CardReplyVO vo){
-		ResponseEntity<String> entity = null;
+	public ResponseEntity<CardReplyVO> addReply(HttpServletRequest request, @RequestBody CardReplyVO vo){
+		ResponseEntity<CardReplyVO> entity = null;
 		
 		try {
+			HttpSession session = request.getSession();
+			UserVO user = (UserVO) session.getAttribute("login");
+			
+			vo.setProfile(user.getProfile());
+			vo.setNickname(user.getNickname());
+			
 			service.addReply(vo);
-			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+			
+			System.out.println(vo);
+			
+			entity = new ResponseEntity<CardReplyVO>(vo, HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
