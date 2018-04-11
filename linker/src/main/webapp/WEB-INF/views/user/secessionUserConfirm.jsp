@@ -22,17 +22,15 @@
     max-width: 954px;
     height: 100%;
     margin: 0px auto;
-    
    
- }
+}
  
   #contain{
     position: relative;
     padding: 32px 51px 95px;
+}
   
-      }
-   #content{
-    
+   #content{    
     height : 400px;
     line-height: 14px;
     width: 450px;
@@ -41,7 +39,7 @@
     border: 1px solid #dadada;
     background: #fff;
     border-radius: 5px;
-    }
+}
 
 .btn {
 	margin-top: 20px;
@@ -65,19 +63,17 @@
     margin-top: 10px;
     margin-bottom: 20px;
     text-align: center;
- }
+}
  .h1{
     font-size: 13px;
     margin-bottom: 10px;
-   
- }
+}
  .notes{
    margin-bottom:  20px;
- }
+}
  .agreetext{
     color:red;
- 
- }
+}
 
 </style>
 
@@ -106,10 +102,8 @@
       
 
       <script>
- 
       function check(){
-    	 
-    	
+
     	 var agree = document.getElementById('agree').value;
     	    
     	       if(agree==null || agree == ""){

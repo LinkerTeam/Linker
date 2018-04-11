@@ -6,97 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- <link rel="stylesheet" href="/resources/css/project/common.css">
-    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=1">
+    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=21" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
-
-<style>
-/* 모달창  */
-.create-modal{
-    display: none;
-    position: fixed;
-    z-index: 1001; /* 테스트 후 값 조정 */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.7);
- }
- .create-modal.is-visible{
-    display: block;
- }
- /* 모달 컨텐츠창  */
- .modal-contents{
-    position: relative;
-    height: 180px;
-    box-sizing: border-box;
-    width: 360px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 20px 45px 20px 20px;
-    margin: 350px auto 0 auto;
-   
- }
- /* 모달 타이틀  */
- .team-title{
-    box-sizing: border-box;
-    width: 100%;
-    padding: 12px 20px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
- 
- }
- /* 확인버튼 */
- .teambtn {
-    width: 50%;
-    font-weight: bold;
-    color: #fff;
-    background-color:#FA5883;
-    border: 1px solid #fc4d7c;
-    padding: 10px 0;
-    margin-top: 15px;
-}
-.teambtn.disabled {
-    color: #b6bbbf;
-    background-color: #e4e4e4;
-    border: 1px solid #b6bbbf;
-}
-
-
-.headtitle{
-  height: 45px;
-  align-content: center;
-  text-align: center;
-
-}
- /* 모달창 닫기 버튼  */
-.tclosebtn{
-   position:absolute;
-   top: 20px;
-   right: 20px;
-   cursor: pointer;
-
-}
- /* 팀추가버튼 */
- .teaminsert-a{
-  display: inline-block;
-  color:white;
-  margin-left: 25px;
-  margin-top: 30px;
-  padding:15px 15px 15px 15px;
-
- }
- .teaminsert-a:hover {
-	background: gray;
-}
- 
-
-</style>
 </head>
-
 <body>
 	<%@include file="../header.jsp"%>
 	<%@include file="../mainMenu.jsp"%>
@@ -104,30 +18,24 @@
 	<div class="content">
 
     <!-- 프로젝트 본문 -->
-      <div class="content project">
+    <div class="content project">
 
-        <!-- Projects In a Team -->
-       
-            <!-- 팀 정보 -->
+    <!-- Projects In a Team -->   
+          <!-- 팀 정보 -->
           <c:forEach items="${team}" var="teamList"> 
-           <div class="projectBox">
-            <div class="teamInfo">
-             
-           
-                <i class="fas fa-users"></i>
+          <div class="projectBox">
+          	<div class="teamInfo">
+              <i class="fas fa-users"></i>
               <span class="title">${teamList.name}</span> 
-                 <a class="tid" >${teamList.t_id} </a>
-                  <a class="uid" >${teamList.u_id} </a>
-              
-              <!-- 이중 for문을 돌려서 List<List<UserVO>>를 뽑아낸다!! -->
-               <c:forEach items="${profile}" var="teamMember">
-                <c:forEach items="${teamMember}" var="teamMember">
-                  <c:if test="${teamList.t_id == teamMember.t_id}">
-                    <ul class="teamMembers">
-               
-                 
-                      <li><img src="http://localhost:9090/user/displayFile?fileName=${teamMember.profile}"><span class="tooltip">${teamMember.nickname}</span></li>
-                    </ul> 
+              	<a class="tid" >${teamList.t_id} </a>
+                	<a class="uid" >${teamList.u_id} </a>         
+             	 <!-- 이중 for문을 돌려서 List<List<UserVO>>를 뽑아낸다!! -->
+               	<c:forEach items="${profile}" var="teamMember">
+               		<c:forEach items="${teamMember}" var="teamMember">
+                 	 <c:if test="${teamList.t_id == teamMember.t_id}">
+                   	 <ul class="teamMembers">
+                     <li><img src="http://localhost:9090/user/displayFile?fileName=${teamMember.profile}"><span class="tooltip">${teamMember.nickname}</span></li>
+                     </ul> 
                    </c:if>
                  </c:forEach>
                </c:forEach>
@@ -136,49 +44,42 @@
        
           <c:forEach items="${result}" var="projectList"> 
              <c:if test="${ teamList.t_id == projectList.t_id}"> 
-              <c:if test="${projectList.ps_id ==1}">
-              <ul class="projects">
+             	<c:if test="${projectList.ps_id ==1}">
+              	<ul class="projects">
                 <li><a href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}"><span class="name">${projectList.title}</span></a></li>
-              </ul>
-              </c:if> 
+              	</ul>
+              	</c:if> 
              </c:if> 
            </c:forEach>
-        
+      
             <!-- 프로젝트 추가 버튼 -->
             <span class="addProject"><button class="createProjectBtn" type="button">Create new project…</button></span>
-        
-       
-          </div>
-         </c:forEach> 
-     
-       <div class="teaminsert">
+    	</div>
+    	</c:forEach> 
+    	 <div class="teaminsert">
         <a class="teaminsert-a" href="#">
          <span>Create a new team…</span> </a>
         </div>
        
         <!--  팀생성 모달창   -->
         <div class="create-modal">
-          <div class="modal-contents">
-           <div class="headtitle">
-           <span class="pop-over-header-title">Create Team</span>
-           <a href="#" class="connectmodal"></a></div>
-           <div class="content-text">
-            <form>
-             <input type="input" class="team-title" value="" placeholder="team name title">
-             <button class="teambtn disabled" disabled="disabled">Create</button>
-            </form>
-           <span class="tclosebtn"><i class="fas fa-times"></i></span>
-          </div>
-        </div>
-     </div>
-        
-      </div>
-
-    
-    </div>
+        	<div class="modal-contents">
+           		<div class="headtitle">
+           			<span class="pop-over-header-title">Create Team</span>
+           	 			<a href="#" class="connectmodal"></a></div>
+         	 				<div class="content-text">
+           	 					<form>
+            	 					<input type="input" class="team-title" value="" placeholder="team name title">
+            	 					<button class="teambtn disabled" disabled="disabled">Create</button>
+            					</form>
+           					<span class="tclosebtn"><i class="fas fa-times"></i></span>
+        	 			 </div>
+       		 		</div>
+    			 </div>
+				</div>
+   		 </div>
      
     <!-- /프로젝트 본문 -->
-
 
     <!-- 프로젝트 생성 모달창 -->
     <!-- 띄우기 | is-visible -->
@@ -186,7 +87,7 @@
         <div class="createProjectBox">
             <form class="createProjectForm">
                 <label for="add-prj" class="hidden-txt">Add project title</label>
-                <input id="add-prj" class="projectNameInput" placeholder="Add project title" maxlength="20" value="">
+                <input id="add-prj" class="projectNameInput" placeholder="Add project title" maxlength="20" onkeydown="enterPress(event);" value="">
                 <button class="registProjectBtn disabled" disabled type="button">Create Project</button>
             </form>
             <span class="closeBtn"><i class="fas fa-times"></i></span>
@@ -197,9 +98,10 @@
 </body>
 <script>
 
-//사용하기전에 변수들을 일단 기본값으로 지정
- var u_id = null;
- var t_id = null;
+ var u_id =null;
+ var t_id =null;
+ //생성한 프로젝트의 부모를 넣기위해서 지정해줌 ajax시 부모를 알기위해서
+ var parent =null;
 
     // 프로젝트 생성 모달창 닫기
     function closeProjectModal(){
@@ -215,10 +117,12 @@
     // 프로젝트 추가 버튼
     $('.createProjectBtn').on('click', function(){
     	/* 프로젝트 모달창이 뜰때 그 객체의  u_id와  t_id의 값을 가져와서 변수에 저장 */
-    	  u_id = $(this).parent().parent().children().eq(0).children('.uid').html();
-          t_id = $(this).parent().parent().children().eq(0).children('.tid').html();
-          
-       
+    	  u_id= $(this).parent().parent().children().eq(0).children('.uid').html();
+          t_id= $(this).parent().parent().children().eq(0).children('.tid').html();
+          //클릭한곳의 부모를 찾아서옴
+          parent = $(this).parent().parent().children('.teamInfo');
+           console.log(parent);
+
         $('.project-modal').addClass('is-visible');
     });
 
@@ -247,55 +151,12 @@
                 submitBtn.removeClass('disabled');
                 submitBtn.removeAttr('disabled');
             }
-        }
-    });
+      	  }
+   	 });
     
     // 프로젝트 등록버튼
     $('.registProjectBtn').on('click', function(){
-       
-       
-      
-        var title=$("#add-prj").val();
-
-   	 
-     
-      
-       console.log(u_id);
-       console.log(t_id);
-      console.log(title);
-      
-     
-       
-       $.ajax({
-          type : 'POST',
-          url : '/main/insertProject',
-          headers : {
-        	     "X-HTTP-Method-Override" : "POST",
-        	     "content-type" : "application/json"
-          },
-           data:JSON.stringify({
-           	"title" : title,
-           	"u_id" : u_id,
-           	"t_id" : t_id              	
-          }),
-          success : function(result) {
-			  
-       	   if(result != 0){
-       		   var name =result;
-       		   
-       		 
-       		   location.reload();
-       		   return true;
-       	   }
-		},
-       	error : function() {
-       		alert('error');
-				
-			}
-       }); 
-       
-        console.log('ajax를 날려주세요~~');
-        closeProjectModal();
+    	  registProject();   
     });
 
     // tooltip left 좌표설정
@@ -304,6 +165,52 @@
         var moveToLeftPos = parseInt($(this).width()/2) - TOOLTIP_POINTER_WIDTH;
         $(this).css('marginLeft', -moveToLeftPos);
     });
+    
+    //엔터입력시 확인창을 누르는것
+    function enterPress(key){
+    	if(key.keyCode==13){
+    		event.preventDefault(); //기본 이벤트 제거
+    		registProject();
+    	}
+    }
+   
+    //프로젝트등록 함수로 빼냄
+    function registProject(){
+    	 
+    	var title=$("#add-prj").val();
+
+         console.log(u_id);
+         console.log(t_id);
+         console.log(title);
+
+          $.ajax({
+             type : 'POST',
+             url : '/main/insertProject',
+             headers : {
+           	     "X-HTTP-Method-Override" : "POST",   //헤더에 POST방식 
+           	     "content-type" : "application/json"   // 서버로 보내는 데이터타입이 JSON객체 타입이라고 지정 
+             },
+              data:JSON.stringify({       //JSON.stringify()객체를 문자열로 변경해서 보내고 이것이 JSON객체라고 헤더에서 알려줌 문자열이지만 객체다
+              	"title" : title,
+              	"u_id" : u_id,
+              	"t_id" : t_id              	
+             }),
+             success : function(result) {
+          	   if(result != 0){
+          		  var str ="<ul class='projects'><li>"
+          		       +"<a href='http://localhost:9090/board/"+t_id+"/"+result+"'><span class='name'>"+title+"</span>"
+          		       +"</a></li>"
+          		       +"</ul>";
+          		   $(parent).after(str);
+          		   return true;
+          	   }
+   		},error : function() {
+          		alert('error');
+   				
+   			}
+          }); 
+         closeProjectModal(); //모달창 닫기	
+   	 } 
     
     //팀프로젝트 모달창 띄우기
     $('.teaminsert-a').on("click", function(){
@@ -384,14 +291,9 @@
         		alert('error');
         }	
        });
-        
-       
-    	
-    	
+
     });
     	    
-    
-     
 </script>
 </body>
 </html>

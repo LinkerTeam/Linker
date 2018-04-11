@@ -14,16 +14,11 @@ public interface ProjectDAO {
 	public int createProject(ProjectVO vo) throws Exception;
 	// 프로젝트 리스트
 	public List<ProjectVO> listProject(int userID) throws Exception;
-	// 프로젝트 달성&프로젝트 가리기(숨기기)&프로젝트 이름변경
-	public int modifyProject(ProjectVO vo) throws Exception;
+	// 프로젝트 상태 변경(가리기/완전숨기기) & title 변경
+	public void modifyProject(ProjectVO vo) throws Exception;
+	//해당 프로젝트의 아이디를 가져옴
 	public ProjectVO titleName(int p_id) throws Exception;
+	//메인페이지에 각팀마다 팀원의 프로필을 가져옴
 	public List<UserVO> teamProfile(int t_id) throws Exception;
-	public void hiddenProject(int p_id) throws Exception;
-	//프로젝트 다시 불러오기
-	public void reopenProject(int p_id) throws Exception;
-	//프로젝트 완전히 삭제
-	public void deleteProject(int p_id)throws Exception;
-	//프로젝트 상태코드 검사
-	public ProjectVO projectstatus(int p_id,int t_id)throws Exception;
 	
 }

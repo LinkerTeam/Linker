@@ -4,126 +4,114 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.linker.mapper.UserMapper">
+	
 	<select id="login" resultType="UserVO">
-		SELECT
-		id
-		,email
-		,password
-		,profile
-		,nickname
-		,cdate
-		,udate
-		,status
-		,google
-		FROM linker.user
-		WHERE email = #{email}
-		
+	SELECT
+	id
+	,email
+	,password
+	,profile
+	,nickname
+	,cdate
+	,udate
+	,status
+	,google
+	FROM linker.user
+	WHERE email = #{email}
 	</select>
 
 	<select id="viewUser" resultType="UserVO">
-		SELECT
-		id
-		,email
-		,nickname
-		,profile
-		,cdate
-		,udate
-	    ,status
-	    ,google
-		FROM linker.user
-		WHERE email = #{email}
+	SELECT
+	id
+	,email
+	,nickname
+	,profile
+	,cdate
+	,udate
+    ,status
+    ,google
+	FROM linker.user
+	WHERE email = #{email}
 	</select>
 
 	
 	<update id="updateUser">
-		UPDATE linker.user
-		<set>
-			<if test="nickname!=null and nickname!=''">nickname=#{nickname},</if>
-			<!-- <if test="password!=null and password!=''" >password=#{password},</if> -->
-			<if test="profile!=null and profile!=''">profile=#{profile}</if> 
-		</set>
-		WHERE email = #{email}
+	UPDATE linker.user
+	<set>
+	<if test="nickname!=null and nickname!=''">nickname=#{nickname},</if>
+	<!-- <if test="password!=null and password!=''" >password=#{password},</if> -->
+	<if test="profile!=null and profile!=''">profile=#{profile}</if> 
+	</set>
+	WHERE email = #{email}
 	</update>
 
 
-  <!-- 로그인시 자동로그인 체크시 cookie에 session.getId를 저장하고 기간을 저장하고 -->
+    <!-- 로그인시 자동로그인 체크시 cookie에 session.getId를 저장하고 기간을 저장하고 -->
 	<update id="keepLogin">
-		UPDATE linker.user
-		SET
-		sessionKey=#{sessionId},sessionLimit=#{next},profile=#{profile}
-		WHERE email=#{email}
+	UPDATE linker.user
+	SET sessionKey=#{sessionId},sessionLimit=#{next},profile=#{profile}
+	WHERE email=#{email}
 	</update>
 
-   <!-- 세션 체크 자동로그인 -->
+    <!-- 세션 체크 자동로그인 -->
 	<select id="checkUserWithSessionKey" resultType="UserVO">
-		SELECT *
-		FROM linker.user
-		WHERE sessionkey=#{value}
-		AND sessionlimit > now()
+	SELECT *
+	FROM linker.user
+	WHERE sessionkey=#{value}
+	AND sessionlimit > now()
 	</select>
-	
-	
-
-    
+	 
     <!-- 닉네임 중복확인 1이면 중복이고 0이면 중복이아님 -->
     <select id="checkSignup" resultType="int" parameterType="String">
-    SELECT count(nickname) FROM linker.user WHERE nickname=#{nickname};
-    
+    SELECT count(nickname) 
+    FROM linker.user 
+    WHERE nickname=#{nickname};
     </select>
    
-   <!-- 이메일 중복확인 1이면 중복 0이면 중복이아님  -->
-   <select id="emailCheck" resultType="int" parameterType="String">
-   SELECT count(email)
-   FROM linker.user
-   WHERE email = #{email}
+    <!-- 이메일 중복확인 1이면 중복 0이면 중복이아님  -->
+   	<select id="emailCheck" resultType="int" parameterType="String">
+  	SELECT count(email)
+  	FROM linker.user
+   	WHERE email = #{email}
+  	</select>
+	   
+	<update id="forgetpassword"  parameterType="UserVO">
+	UPDATE linker.user
+  	SET password = #{password}
+  	WHERE email=#{email}
+	</update>
    
-   </select>
-   
-   <update id="forgetpassword"  parameterType="UserVO">
-   UPDATE linker.user
-   SET password = #{password}
-   WHERE email=#{email}
-   
-  </update>
-   
-   <select id="serchEmail" parameterType="String" resultType="int">
-    select count(email)
-    from linker.user
-    where email=#{email}
-   
-   
-   </select>
-   
-   <select id="checkPw" resultType="int">
-    SELECT count(*)
-    FROM linker.user
-    WHERE email=#{email} AND password=#{password}
-   
-   </select>
-   
-   <!-- 비밀번호변경 -->
-   <update id="updatePassword">
-     UPDATE linker.user
-     SET password = #{password}
-     WHERE email=#{email}
-   
-   </update>
-   
-   <!-- 비밀번호를 비교를 위해 가져오기 -->
-   
-   <select id="getPassword" resultType="String">
-    SELECT password
-    FROM linker.user
-    WHERE email = #{email}
-   </select>
-   
-   <!-- 논리적인 회원탈퇴 상태코드를 2로 변경  -->
-   <update id="deleteUser">
+	<select id="serchEmail" parameterType="String" resultType="int">
+	select count(email)
+	from linker.user
+	where email=#{email}
+	</select>
   
-   UPDATE linker.user
-   SET status = 2 , ddate=now()
-   WHERE email = #{email}
-   
-   </update>
+	<select id="checkPw" resultType="int">
+	SELECT count(*)
+	FROM linker.user
+	WHERE email=#{email} AND password=#{password}
+	</select>
+	
+	<!-- 비밀번호변경 -->
+	<update id="updatePassword">
+	UPDATE linker.user
+	SET password = #{password}
+	WHERE email=#{email}
+	</update>
+	
+	<!-- 비밀번호를 비교를 위해 가져오기 -->	
+	<select id="getPassword" resultType="String">
+	SELECT password
+	FROM linker.user
+	WHERE email = #{email}
+	</select>
+	
+	<!-- 논리적인 회원탈퇴 상태코드를 2로 변경  -->
+	<update id="deleteUser">
+	UPDATE linker.user
+	SET status = 2 , ddate=now()
+	WHERE email = #{email}
+	</update>
 
 </mapper>

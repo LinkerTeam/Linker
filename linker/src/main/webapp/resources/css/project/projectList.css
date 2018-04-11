@@ -2,9 +2,9 @@
  
 /* 프로젝트 */
 .content.project {
-    min-width: 830px;
+    min-width: 100%;
     margin-left: 0px;
-    overflow: scroll;
+    overflow-y: auto;
 }
 .projectBox {
     padding: 30px 15px 0 15px;
@@ -78,7 +78,7 @@
     box-sizing: border-box;
     list-style: none;
     float: left;
-    width: 25%;
+    width: 390px;
     height: 115px;
     padding: 0 15px 15px 0;
 }
@@ -103,7 +103,7 @@
 .addProject {
     box-sizing: border-box;
     display: inline-block;
-    width: 25%;
+    width: 390px;
     height: 115px;
     padding: 0 15px 15px 0;
 }
@@ -194,7 +194,7 @@
     overflow: hidden;
 }
 
-/* 카드목록 내 y 스크롤 */
+/* 카드목록 내  X 스크롤 */
 .content::-webkit-scrollbar {
     width: 10px;
     height: 12px;
@@ -209,6 +209,83 @@
 }
 .tid,.uid{
 	display: none;
+}
+
+/* 팀생성 모달창  */
+.create-modal{
+    display: none;
+    position: fixed;
+    z-index: 1001; /* 테스트 후 값 조정 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
+ }
+ .create-modal.is-visible{
+    display: block;
+ }
+ /* 모달 컨텐츠창  */
+ .modal-contents{
+    position: relative;
+    height: 180px;
+    box-sizing: border-box;
+    width: 360px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px 45px 20px 20px;
+    margin: 350px auto 0 auto;
+   
+ }
+ /* 모달 타이틀  */
+ .team-title{
+    box-sizing: border-box;
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+ 
+ }
+ /* 확인버튼 */
+ .teambtn {
+    width: 50%;
+    font-weight: bold;
+    color: #fff;
+    background-color:#FA5883;
+    border: 1px solid #fc4d7c;
+    padding: 10px 0;
+    margin-top: 15px;
+}
+/* 팀버튼에서 인풋박스에 ''되었을때  */
+.teambtn.disabled {
+    color: #b6bbbf;
+    background-color: #e4e4e4;
+    border: 1px solid #b6bbbf;
+}
+/* 타이틀  */
+.headtitle{
+  height: 45px;
+  align-content: center;
+  text-align: center;
+}
+ /* 모달창 닫기 버튼  */
+.tclosebtn{
+   position:absolute;
+   top: 20px;
+   right: 20px;
+   cursor: pointer;
+}
+ /* 팀추가버튼 */
+ .teaminsert-a{
+  display: inline-block;
+  color:white;
+  margin-left: 25px;
+  margin-top: 30px;
+  padding:15px 15px 15px 15px;
+ }
+ .teaminsert-a:hover {
+	background: gray;
 }
 
 

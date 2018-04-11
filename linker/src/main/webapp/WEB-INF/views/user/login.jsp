@@ -18,7 +18,6 @@
 </head>
 
 
-
 <body>
     <div class="wap">
         <nav class="main-nav">
@@ -120,11 +119,9 @@
                        
                             
                             <p class="fieldset agree">
-                          
                             <input type="checkbox" id="agree" >
-                          
                             I agree to the Terms
-                                </p>
+                            </p>
                         </p>
                         <p class="fieldset">
                             <button type="submit" id="signupbtn">New account</button>
@@ -140,19 +137,15 @@
                         <p class="fieldset">
                             <i class="far fa-envelope" id="mail"></i>
                             <label class="image-replace email" for="reset-email">E-mail</label>
-                            <input class="full-width has-padding has-border" id="reset-email" type="email" name="email" placeholder="E-mail">
-                            
+                            <input class="full-width has-padding has-border" id="reset-email" type="email" name="email" placeholder="E-mail">  
                         </p>
     
                         <p class="fieldset">
                             <input type="submit" class="full-width has-padding input"  value="Reset password">
                         </p>
                     </form>
-    
-                    <p class="form-bottom-message" ><a href="#0" id="back">Back to log-in</a></p>
-                </div>
-
-           
+                   <p class="form-bottom-message" ><a href="#0" id="back">Back to log-in</a></p>
+               </div>
           </div>
         </div>
       </div><!-- 모달창 END -->
@@ -160,6 +153,7 @@
 
     <script>
     
+      //모든 HTML 페이지 로드후 에 자바스크립트 시작  jquery는 $(document).ready(function(){ 내용 }) === $(function(){ 내용 });
        window.onload = function () {
 
             var button = document.getElementsByClassName('login_btn');
@@ -173,10 +167,9 @@
             var reset = document.getElementById('reset-password');
             var forget = document.getElementsByClassName('form-bottom-message');
            
-           
-            button[0].onclick = function () {
-           
                
+            button[0].onclick = function () {
+                         
                 if (signup.style.display = "none") {
                     modal[0].style.display = "block";
                     id.style.display = "block";
@@ -186,10 +179,8 @@
                     if(signupbtn2[0].style.backgroundColor = "white"){
                     signupbtn2[0].style.backgroundColor = "lightgray";
                   }
-                   }
-               
-            };
-
+                 } 
+                };
 
             signupbtn[0].onclick = function () {
               
@@ -198,11 +189,11 @@
                     signup.style.display = "block";
                     signupbtn2[0].style.backgroundColor = "white";
                     reset.style.display="none";
-                     if(btn[0].style.backgroundColor = "white"){
+                    if(btn[0].style.backgroundColor = "white"){
                      btn[0].style.backgroundColor = "lightgray";
-                }
+                   }
+                  }
                  }
-            }
 
             btn[0].onclick = function () {
                 modal[0].style.display = "block";
@@ -217,7 +208,6 @@
                 }
             };
 
-
             signupbtn2[0].onclick = function () {
                 if (id.style.display = "none") {
                     signup.style.display = "block";
@@ -231,11 +221,13 @@
                         reset.style.display="none";
                     }
                 }
-            }
+              }
+            
             forget[0].onclick =function(){
                 reset.style.display="block";
                 id.style.display = "none";
             }
+            
             forget[1].onclick=function(){
                 reset.style.display="none";
                 id.style.display = "block";
@@ -259,9 +251,7 @@
              
              var password = document.getElementsByClassName('password');
              var passwordhide = document.getElementsByClassName('hide-password');
-         
-           
-           
+          
            // SHow 버튼을 누르면 비밀번호가 text 타입이 돼었다가 password타입으로 변함
              passwordhide[0].addEventListener("click", function(){        
                      
@@ -284,13 +274,7 @@
                         $('.hide-password').text('보이기');
                     }
                     });
-        }
-        
-        
-       
-        
-       
-       	 
+      			  }
 
 	      //이메일 형식검사를위한 a@naver.com 형식을 나타낸것. 
 	      var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -299,9 +283,8 @@
 	        function login_check() {
 	            var id = document.getElementById('email').value;
 	            var pw = document.getElementById('password').value;
-	            
-	          
-	            if(id == null  || id == "" ) {
+           
+	                if(id == null  || id == "" ) {
 	            	alert("아이디를 입력해주세요");
 	            	document.getElementById('email').focus();
 	                return false;
@@ -313,9 +296,7 @@
 	            	document.getElementById('password').value="";
 	            	return false;
 	            }
-	            
-	           
-	             
+    
                  //이메일 a@naver.com 형식  유효성 검사
 				if(exptext.test(id)==false){
 
@@ -327,23 +308,12 @@
 			document.getElementById('email').value="";
 			return false;
 
-	    	 }   
-                 
-			
-                 
-                 
-                 
-	            
-	      	return true;
-	          
-	            
+	    	 }           
+	      	return true;      
 	       }
-            
-	 
-	     
+                 
                //회원가입 유효성검사
-	     function signup_check() {
-	        
+	     function signup_check() { 
 	         var nickname= document.getElementById('nickname').value;
 	         var email2 = document.getElementById('email2').value;
 	         var password = document.getElementById('pw').value;
@@ -356,8 +326,7 @@
 	             document.getElementById('nickname').focus();
 	             return false;
 	
-	         }
-	         
+	         } 
 	         if(!(nickname.length >2 && nickname.length <16)){
 	        	 alert("닉네임을 2자 이상 입력해주세요");
 	        	 document.getElementById('nickname').focus();
@@ -369,19 +338,16 @@
 	             //아이디를 하나씩 하나씩 검사해서 숫자 소문자 대문자인지 체크해서 값을 비교함
 	             if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')&&!(ch >= 'A' && ch <= 'Z')) {
 	                  alert("아이디는 대소문자, 숫자만 입력가능합니다.")
-	                  document.getElementById('nickname').focus();
-	                
+	                  document.getElementById('nickname').focus();      
 	                 return false;
 	             }
-	         }
-	         
+	         }  
 	        
 	         if(email2 == null || email2 =="" )
 	        	 {
 	        	 alert("이메일을 입력해주세요");
 	        	 document.getElementById('email2').focus();
 	        	 return false;
-	        	 
 	        	 }
 	         
 	       
@@ -399,8 +365,7 @@
 	            	return false;
 	            }
 	             
-	         
-	         
+
 	           //체크박스 체크했으면 true 안했으면 false값을 반환함
                   if(check.checked==false){
                 	alert("가입에 동의해주세요");
@@ -432,8 +397,7 @@
 	         }
         return true;
        }
-               
-               
+                     
            //비밀번호 찾기 이메일 검사 
           function forgetcheck(){
         	 var email3 = document.getElementById('reset-email').value;
@@ -443,23 +407,16 @@
         	    document.getElementById('reset-email').focus();
         		return false;
         	 }
-        	 
         	 if(exptext.test(email3)==false){
         		 alert("EMAIL 형식을 제대로 지켜주세요.");
         		 document.getElementById('reset-email').focus();
-        		 return false;
-        		 
-        	 }
-        	  
+        		 return false;	 
+        	 }	  
         	 return true;
         	  
           }     
                
-               
-               
-               
-               
-	     //닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
+       //닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
   	   $('#checkbtn').on('click', function(){
            
   		   //POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
@@ -485,8 +442,6 @@
              });    //end ajax    
          });    //end on
          
-               
-      
          // 이메일 중복검사
        
     
@@ -508,13 +463,9 @@
     			  }
     		   },error:function(){
               	 alert("error");
-               }	   
-    		   
+               }	   	   
     	   }); //end ajax
        }); // end 이벤트
-        
-
-
     </script>
 </body>
 

@@ -11,7 +11,6 @@
 	/* -webkit-,-moz-등의 접두사는 특정브라우저를 따로 안정성을위해서 적어둔다.  */
 	box-sizing: border-box;
 }
-
 #main {
 	font-family: Dotum, sans-serif;
 	font-size: 12px;
@@ -21,12 +20,10 @@
 	height: 100%;
 	margin: 0px auto;
 }
-
 #contain {
 	position: relative;
 	padding: 32px 51px 95px;
 }
-
 #content {
 	height: 730px;
 	line-height: 14px;
@@ -37,7 +34,6 @@
 	background: #fff;
 	border-radius: 5px;
 }
-
 .btn {
 	margin-top: 20px;
 	width: 400px;
@@ -51,36 +47,29 @@
 	width: 100%;
 	border-radius: 5px;
 }
-
 .head {
 	font-size: 20px;
 	margin-bottom: 70px;
 	text-align: center;
 }
-
 .inputtext {
 	font-size: 20px;
 	margin-bottom: 30px;
 }
-
 #holder {
 	height: 200px;
 }
-
 .content input[type="submit"] {
 	margin-top: 50px;
 }
-
 #checkMsg {
 	height: 25px;
 }
-
 #table {
 	height: 400px;
 	border-top: 1px solid #444444;
 	border-collapse: collapse;
 }
-
 #table td {
 	border-bottom: 1px solid #444444;
 	text-align: left;
@@ -88,17 +77,13 @@
 	padding-left: 5px;
 	margin-right: 50px;
 }
-
 #holder {
 	margin-top: 20px;
 }
-
 #path {
 	width: 150px;
 }
-
 #checkbtn{
-
 	width: 70px;
 	border: none;
 	outline: none;
@@ -106,14 +91,12 @@
 	background: #FA5883;
 	color: #fff;
 	font-size: 13px;
-	cursor: pointer;
-	
+	cursor: pointer;	
 	border-radius: 5px;
 }
  #nickname{
     height: 30px;
  }
-
 .file_input label {
     position:relative;
     cursor:pointer;
@@ -134,7 +117,6 @@
     height:0;
     overflow:hidden;
 }
-
 </style>
 </head>
 <body>
@@ -291,19 +273,12 @@
 			}
 
 			//닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
-			$('#checkbtn')
-					.on(
-							'click',
-							function() {
-
+			$('#checkbtn').on('click',function() {
 								//POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
-								$
-										.ajax({
+								$.ajax({
 											type : 'POST', // POST 방식
 											url : '/user/checkSignup', //보내는 form action을 지정해줌
-											data : {
-												"nickname" : $('#nickname')
-														.val()
+											data : {"nickname" : $('#nickname').val()
 											// 데이터를 지정해줌 nickname의 값을 받아와서 nickname에 넣어줌 매개변수 request.getparameter("nickname")을 여기서 가져옴
 											},
 											headers : {
@@ -313,32 +288,19 @@
 											success : function(data) { //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
 												// 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
 												if ($.trim(data) == 0) {
-													$('#checkMsg')
-															.html(
-																	'<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
+													$('#checkMsg').html('<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
 												} else {
-													$('#checkMsg')
-															.html(
-																	'<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
+													$('#checkMsg').html('<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
 												}
 											}
 										}); //end ajax    
 							}); //end on
 
-			/*  var str="";
-			 
-			
-			   str = "<div><img src='displayFile?fileName="+${vo.profile}+"'/>"+${vo.profile}+"</div>";
-			        alert(str);
-			 $(holder).append(str); */
-
-			function checkImageType(fileName) {
+				function checkImageType(fileName) {
 				// i는 대.소 문자의 구분없음
 				var pattern = /jpg$|gif$|png$|jpeg$/i;
-
 				return fileName.match(pattern);
 			}
-
 		}
 	</script>
 </body>

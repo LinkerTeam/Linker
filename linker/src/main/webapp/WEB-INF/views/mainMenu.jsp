@@ -6,80 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
 </head>
-<style>
-.modal {
-    display: none;
-    position: relative;
-    z-index: 1001; /* 테스트 후 값 조정 */
-    left: 0;
-    top: 30px;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-  /*  // background-color: rgba(0,0,0,0.7); */
-}
-.modal.is-visible {
-    display: block;
-}
-.modal-content{
-    /* position: inherit; */
-    box-sizing: border-box;
-    width: 300px;
-    height : 250px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 40px 45px 45px 40px;
-   /*  margin: 450px 0px 0px 1600px; */
-    color : black;
-    font-size: 15px;
 
-}
-.closetitle{
-   margin-left:70px;
-   padding-bottom: 50px;
-   text-align: center;
-}
-/* 버튼 css   */
-.hiddenbtn{
-    border: none;
-    outline: none;
-    height: 40px;
-    background: #FA5883;
-    color: #fff;
-    font-size: 18px;
-    margin-left: 15px;
-    margin-top: 15px;
-    cursor: pointer;
-    width: 95%;
-    border-radius: 5px;
-    
-}
- .Btitle{
-  font-size:50px;
-  text-align: center;
-  padding-top: 150px;
-}
-
-.Breopen{
-  font-size: 30px;
-  text-align: center;
-  margin-top: 150px;
-  cursor: pointer;
-}
-.Bdelete{
-  font-size:30px;
-  text-align: center;
-  margin-top: 150px;
-  cursor: pointer;
-  
-} 
-.Breopen:hover,.Bdelete:hover{
-  color:gray;
-}
-
-</style>
 <body>
 	<!--왼쪽 메뉴(확장메뉴, 축소메뉴)-->
 	<!--확장 메뉴(글자)-->
@@ -121,142 +50,145 @@
 	<!-- 오른쪽 메뉴 -->
 	<!-- .mainAside-open | 열림 상태 -->
 	<aside id="mainAside" class="mainAside">
-		<ul class="nav-tabs">
-			<!-- .active | 탭 메뉴 활성화 상태 -->
-			<!-- Tab1 | 이력목록 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#" class="activity-tab">Activity</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<ul class="pic-list">
-							<li>
-								<!-- 작성자 -->
-								<div class="pic-list-writer">
-									<div class="profile">
-										<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
-											alt="프로필 사진" />
-									</div>
-								</div> <!-- 이력내용 -->
-								<div class="pic-list-desc">
-									<span class="name">백다방</span> added Checklist to git 수정된 문서
-									확인
-								</div> <!-- 시간/날짜 -->
-								<p class="pic-list-datetime">2 hours ago</p>
-							</li>
-						</ul>
-						<!-- 이력 더 보기 -->
-						<a class="show-more" href="#">View all activity…</a>
+		<div class="nav-tabs-wrap">
+			<ul class="nav-tabs">
+				<!-- .active | 탭 메뉴 활성화 상태 -->
+				<!-- Tab1 | 이력목록 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#" class="activity-tab">Activity</a>
 					</div>
-				</div>
-			</li>
-			<!-- /이력목록 -->
-		
-			<!-- Tab2 | 보관목록 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#" class="archived-tab">Archived</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<div class="tab-content-box-controls">
-							<input type="search" placeholder="Search...">
-							<button class="switchBtn-archive swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
-							<button class="switchBtn-archive swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<ul class="pic-list">
+								<li>
+									<!-- 작성자 -->
+									<div class="pic-list-writer">
+										<div class="profile">
+											<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
+												alt="프로필 사진" />
+										</div>
+									</div> <!-- 이력내용 -->
+									<div class="pic-list-desc">
+										<span class="name">백다방</span> added Checklist to git 수정된 문서
+										확인
+									</div> <!-- 시간/날짜 -->
+									<p class="pic-list-datetime">2 hours ago</p>
+								</li>
+							</ul>
+							<!-- 이력 더 보기 -->
+							<a class="show-more" href="#">View all activity…</a>
 						</div>
-						<div class="nav-tab-content-Box-archive archiveCard"></div> <!-- 동적 카드 태그가 삽입되는 곳 -->
-						<div class="nav-tab-content-Box-archive archiveCardlist"></div> <!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 					</div>
-				</div>
-			</li>
-			<!-- /Tab2 | 보관목록 -->
-		
-			<!-- Tab3 | 가리기목록 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#"  class="trashbox-tab">Trashbox</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<div class="tab-content-box-controls">
-							<input type="search" placeholder="Search...">
-							<button class="switchBtn-hidden swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
-							<button class="switchBtn-hidden swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+				</li>
+				<!-- /이력목록 -->
+			
+				<!-- Tab2 | 보관목록 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#" class="archived-tab">Archived</a>
+					</div>
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<div class="tab-content-box-controls">
+								<input type="search" placeholder="Search...">
+								<button class="switchBtn-archive swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+								<button class="switchBtn-archive swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+							</div>
+							<div class="nav-tab-content-Box-archive archiveCard"></div> <!-- 동적 카드 태그가 삽입되는 곳 -->
+							<div class="nav-tab-content-Box-archive archiveCardlist"></div> <!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 						</div>
-						<div class="nav-tab-content-Box-hidden hiddenCard"></div><!-- 동적 카드 태그가 삽입되는 곳 -->
-						<div class="nav-tab-content-Box-hidden hiddenCardlist"></div><!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 					</div>
-				</div>
-			</li>
-			<!-- /Tab3 | 가리기목록 -->
-		
-			<!-- Tab4 | 설정 -->
-			<li>
-				<div class="nav-tab-btn">
-					<a href="#" class="settings-tab">settings</a>
-				</div>
-				<div class="nav-tab-content">
-					<div class="tab-content-box">
-						<!--팀 멤버 프로필 사진-->
-		                    <div class="all-members">
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
-		                    </div>
-						<!--초대 버튼-->
-						<div class="invite">
-							<a href="#" class="invite-button"> <span
-								class="invite-icon"><i class="fas fa-user-plus"></i></span> <span>invite</span>
-							</a>
+				</li>
+				<!-- /Tab2 | 보관목록 -->
+			
+				<!-- Tab3 | 가리기목록 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#"  class="trashbox-tab">Trashbox</a>
+					</div>
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<div class="tab-content-box-controls">
+								<input type="search" placeholder="Search...">
+								<button class="switchBtn-hidden swhitchCard">Switch to lists</button><!-- 카드목록일 때 출력 -->
+								<button class="switchBtn-hidden swhitchCardlist">Switch to cards</button><!-- 카드리스트일 때 출력 -->
+							</div>
+							<div class="nav-tab-content-Box-hidden hiddenCard"></div><!-- 동적 카드 태그가 삽입되는 곳 -->
+							<div class="nav-tab-content-Box-hidden hiddenCardlist"></div><!-- 동적 카드리스트 태그가 삽입되는 곳 -->
 						</div>
-						<!--메뉴-->
-						<div class="mainAside-tab4-menu">
-							<div class="user-modify">
-								<a href="http://localhost:9090/user/userModify">회원정보수정</a>
-							</div>
-							<div class="user-modify">
-								<a href="http://localhost:9090/main/team">팀 정보 수정</a>
-							</div>
-							<div class="user-modify">
-								<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
-							</div>
-							<!-- closeboard로 프로젝트 창에 들어갔을겨웅멘 실행가능 -->
-							<div class="user-modify">
-								<a href="#" class="closeboard">close-board</a>
-							</div>
-							
-						 
-							<div class="user-modify">
-								<a href="http://localhost:9090/user/logout" class="closeboard">Logout</a>
-							</div>
-							
-						<!-- close board  -->
-						  <div class='modal'>
-						  	 <div class="modal-content">
-						    	<div class='modal-title'>
-						  	      <span class="closetitle">Close Board?</span>
-						  		  </div>
-						  	      <div>
-						   			<div class='modal-text'>
-						     			<p>You can re-open the board by clicking the “Boards” menu from the header
-						      			, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
-						      			<button class="hiddenbtn" value="OK">확인</button>
-						   	 	</div>
-						  	  </div>
-							</div> 
-						 </div> <!-- /모달창  -->
-						<!-- /메뉴 -->
 					</div>
-				</div>
-			</li>
-			<!-- /Tab4 | 설정 -->
-		</ul>
+				</li>
+				<!-- /Tab3 | 가리기목록 -->
+			
+				<!-- Tab4 | 설정 -->
+				<li>
+					<div class="nav-tab-btn">
+						<a href="#" class="settings-tab">settings</a>
+					</div>
+					<div class="nav-tab-content">
+						<div class="tab-content-box">
+							<!--팀 멤버 프로필 사진-->
+			                    <div class="all-members">
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                        <img src="https://s18.postimg.org/8blvbj9tl/profile.png" class="profile-img" />
+			                    </div>
+							<!--초대 버튼-->
+							<div class="invite">
+								<a href="#" class="invite-button"> <span
+									class="invite-icon"><i class="fas fa-user-plus"></i></span> <span>invite</span>
+								</a>
+							</div>
+							<!--메뉴-->
+							<div class="mainAside-tab4-menu">
+								<div class="settingMenu user-modify">
+									<a href="http://localhost:9090/user/userModify">회원정보수정</a>
+								</div>
+								<div class="settingMenu team-modify">
+									<a href="http://localhost:9090/main/team">팀 정보 수정</a>
+								</div>
+								<div class="settingMenu pwd-modify">
+									<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
+								</div>
+								<div class="settingMenu boardStatus-modify">
+									<a href="#" class="closeBoard">close-board</a>
+								</div>
+								<div class="settingMenu logout">
+									<a href="http://localhost:9090/user/logout" class="logoutBtn">Logout</a>
+								</div>
+								
+								<!-- close board 모달창 -->
+								<div class='closeBoardModal'>
+									<div class="closeBoardModal-content">
+										<div class='closeBoardModal-title'>
+											<span class="closeTitle">Close Board?</span>
+											<span class="closeModal">&times;</span>
+										</div>
+										<div class='closeBoardModal-text'>
+											<p class="closeBoardModal-text">
+												상단바에서 "Boards"메뉴를 클릭하고 "Closed Boards보기"를 선택한 후,
+												"Re-open"을 클릭하여 보드를 다시 열 수 있습니다.
+											</p>
+											<button class="closeBoardBtn" value="OK">close</button>
+										</div>
+									</div> 
+								</div>
+								<!-- /close board 모달창  -->
+								
+							</div>
+							<!-- /메뉴 -->
+						</div>
+					</div>
+				</li>
+				<!-- /Tab4 | 설정 -->
+			</ul>
+		</div>
 	</aside>
 	
 	<script>
@@ -468,88 +400,121 @@
 	    	cardStatusChange(id, ps_id, title); //상태변경에 대한 ajax처리 함수 호출
 		});
 		
-    $(document).ready(function(){	
-    	var html = $('.content').html();
-    	
-		//모달창 열기
-		$('.closeboard').on("click",function(){
-			$('.modal').addClass('is-visible');
-		})
-		//모달창 닫기
-		$('.modal').on("click",function(e){
-			if($(e.target).hasClass('is-visible')){
-				closeModal();		
-			}
-		})
 		
-		// 숨기기버튼 ajax처리하기
-		$('.hiddenbtn').on("click",function(){
-	    
-		   $.ajax({
-		    	type: 'GET',
-		    	url: '/main/'+p_id,
-		    	success: function(data){
-		    		 if(data  == "SUCCESS"){
-		    		$('.content').empty();
-		    		var str='<div class="Btitle">${title} is closed.</div>'
-		    		       +'<div class="Breopen"><a id="reopen">Re-Open</a></div>'
-		    		       +'<div class="Bdelete"><a>Permanently Delete Board…</a></div>'
-		    			$('.content').html(str); 
-		    		    }else{
-		    			  alert('실패');
-		    			} 
-		    		closeModal();
-		    	},error:function(){
-		    		alert('error');
-		    	}   	
-		    }); 			
-		});
-	
 		
-		//reopen연결 
-		$('.content').on("click",'#reopen',function(){
-			$.ajax({
-			 type:'GET',
-			 url : '/main/reopen/'+p_id,
-			 success : function(data){
-				 if(data == "SUCCESS"){	 
-				 
-					$('.content').empty();
-				 	$(".content").html(html);
-				 } else{
-					alert('실패');
-				 }
-					
-			 },
-			 error:function(){
-				 alert('error');
-			 }						
-			 }); 
-		 });
-		//완전히 삭제 
-		$('.content').on("click",".Bdelete",function(){
 		
-			$.ajax({
-				type:'GET',
-				url : '/main/delete/'+p_id,
-				success : function(data){
-					if(data == "SUCCESS"){
-					self.location = '/main';
-					} else{
-						alert('실패');
-					}
-				},error:function(){
-					alert('error');
-				}
-			  });
+		/*
+		* board close 관련
+		*/
+		
+		/***************************************************************************************
+			< 수정사항 > 
+			1. board를 close하면 설정탭에서 close-board 메뉴 사라져야 함(중복클릭 문제)
+				-> 오른쪽 메인메뉴 분리할 예정이므로 메뉴 정리 되면 고치기(-)
+		
+		***************************************************************************************/
+		
+		
+		/* board close | 모달창 열기 */
+		$(".closeBoard").on("click",function(){
+			//logout버튼의 왼쪽 상단에서 모달창 열기 위해 logout버튼의 좌표값 구함
+			var boardModalX = $(".logoutBtn").position().left; //Logout버튼의 x좌표
+			var boardModalY = $(".logoutBtn").position().top; //Logout버튼의 y좌표
+			
+			//모달창 위치 지정
+			$(".closeBoardModal").css({
+				"left" : boardModalX,
+				"top" : boardModalY
 			});
+			$(".closeBoardModal").addClass("is-visible"); //모달창 열기
+		});
+				
+		/* board close | 모달창 이외의 영역을 클릭하면 모달창 닫기 */
+		$(document).on("click", function(e){
+			var className = $(e.target).attr("class"); //클릭한 요소의 class이름
+			
+			//클릭한 요소가 모달창이 아니면 class이름 is-visible을 제거함으로써 모달창 숨기기
+			if(className !== "closeBoardModal is-visible" && className !== "closeBoard" 
+					&& className !== "closeTitle" && className !== "closeBoardModal-text")
+				$(".closeBoardModal").removeClass("is-visible"); 
+		});
 		
 		
-		//모달창닫기
-		function closeModal(){		
-			 $('.modal').removeClass('is-visible');
-			}
-		});	
+		
+		/* board close | 상태 2 - close화면에 대한 동적 태그 생성/삽입 */
+		function closeBoardStr(){
+			var closeBoardStr = "<div class='content'>" +
+								"	<div class='closeBoardMessage'>" +
+								"		<div class='closeBoardTitle'>${p_title} is closed.</div>" +
+	  							"		<p class='boardReopen' onclick='closeBoard(1);'>Re-Open</p>" +
+  		    					"		<p class='boardDelete' onclick='closeBoard(3);'>Permanently Delete Board…</p>" +
+  		    					"	</div>" +
+  		    					"</div>";
+  		    //카드리스트 목록이 있는 content의 클래스이름을 hiddenContent로 바꿈으로써 화면에서 숨김(hiddenContent의 display속성: none)
+  		    $(".content").removeClass("content").addClass("hiddenContent");
+  		    $(".hiddenContent").before(closeBoardStr); //동적 태그 삽입
+		};
+		
+		/* board close | 상태 3 - delete화면에 대한 동적 태그 생성/삽입 */
+		function deleteBoardStr(){
+			var deleteBoardStr = "<div class='deleteBoardMessage'>" +
+								 "    <div class='deleteBoardTitle'>Board not found.</div>" +
+								 "	  <p>This board may be private. If someone gave you this link, they may need to invite you to one of their boards or teams.</p>" +
+								 "</div>";
+			$(".content").html(deleteBoardStr); //.content를 비우고 Board not found 띄움
+			$(".hiddenContent").remove(); //카드리스트 목록이 있는 hiddenContent는 완전 삭제
+		};
+		
+		
+		
+		/* board close | ajax처리 */
+	    function closeBoard(ps_id){
+			//완전 숨기기는 복구 불가 경고창 띄움
+			if(ps_id === 3){
+				if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true)
+					return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return
+			};
+			
+	    	$.ajax({
+	    		type : "put",
+	    		url : "/main/" + p_id + "/" + u_id,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},	
+	    		data : JSON.stringify({ps_id : ps_id}),
+	    		dataType : "text", 
+	    		success : function(result) {
+	    			if(result === "SUCCESS"){	    				
+	    				switch (ps_id) {
+				            case 1: //상태값을 1(진행)로 변경했으면  카드리스트출력
+				            	$(".content").remove(); //.content(board close화면의 클래스이름)를 삭제하고
+		    					$(".hiddenContent").removeClass("hiddenContent").addClass("content"); //카드리스트가 있는 .hiddenContent의 클래스이름을 content로 바꾼 뒤
+		    					$(".cardlist.addCardlist").prevAll().remove(); //Add a list...버튼 앞의 카드리스트를 모두 삭제(삭제 하지 않으면 중복 문제 발생)
+		    					allCardlist(); //카드리스트&카드 목록 조회하는 함수 호출
+				                break;
+				            case 2: //상태값을 2(가리기)로 변경했으면 board close 화면 띄우는 함수 호출
+				            	closeBoardStr();
+				            	break;
+				            case 3: //상태값을 3(완전 숨기기)로 변경했으면 
+				            	deleteBoardStr();
+				                break;
+		    			};
+	    			};//if
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});//ajax
+	    };
+	    
+	    
+	    /* board close | 모달창에서 확인버튼을 누를 경우 */
+	    $(".closeBoardBtn").click(function(){
+	    	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 board close화면 출력
+	    });
+	    		
+		
 		
 	</script>
 </body>

@@ -99,7 +99,7 @@ public class UserController {
 	// @ModelAttribute은 해당객체를 자동으로 view 까지전달
 	public String loginGET(Model model, HttpSession session, HttpServletResponse response) throws IOException {
 
-		/* 구글code 발행 */
+		/* 구글code 발행 주소 URL*/
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 
@@ -108,10 +108,10 @@ public class UserController {
 		model.addAttribute("google_url", url);
 
 		if (session.getAttribute("login") != null) {
-			// 로그인 한 상태로 uri접속시 자바스크립트 self.location을 통해서 다른페이지로 넘겨버림
+			// 로그인 한 상태로 uri접속시 자바스크립트 self.location을 통해서 다른페이지로 넘겨버림 main페이지로 넘김
 			PrintWriter out = response.getWriter();
 
-			out.println("<script>  self.location = '/'; </script>");
+			out.println("<script>  self.location = '/main'; </script>");
 
 			out.flush();
 		}
@@ -129,7 +129,7 @@ public class UserController {
 		// 1.interceptor prehandler() 사용 컨트롤러의 매소드보다 먼저 실행
 
 		// DB에서 받아온 값을 vo에 저장함.
-		System.out.println("너 뭐니?" + (pwdEncoder.matches(dto.getPassword(), service.getPassword(dto))));
+		
 
 		// 비밀번호가 맞으면 true 틀리면 false가 나옴
 		if ((pwdEncoder.matches(dto.getPassword(), service.getPassword(dto)))) {
@@ -175,8 +175,6 @@ public class UserController {
 		/* 구글code 발행 */
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
-
-		System.out.println("구글:" + url);
 
 		model.addAttribute("google_url", url);
 
@@ -603,6 +601,7 @@ public class UserController {
 
 		// 구글 로그인으로 비밀번호창 으로 들어올땐 여길 들어올수없게 한다.
 		if (!(vo.getGoogle() == null)) {
+			if(vo.getGoogle().equals("1"))
 			return "redirect:/user/connect";
 		}
 
@@ -765,7 +764,8 @@ public class UserController {
 		session.invalidate();
 		return "redirect:/user/login";
 	}
-
+   
+	//구글 탈퇴 확인 페이지
 	@RequestMapping(value = "/googleSescession", method = RequestMethod.GET)
 	public String googleSescession(HttpSession session) throws Exception {
 
@@ -836,9 +836,9 @@ public class UserController {
 	@RequestMapping(value = "/googlekey", method = RequestMethod.POST)
 	public String googlekey(HttpSession session, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-
+        //세션가져오기
 		UserVO vo = (UserVO) session.getAttribute("login");
-
+        //인증키 생성
 		UUID uid = UUID.randomUUID();
 
 		// 임의의 랜덤의 문자열을 생성

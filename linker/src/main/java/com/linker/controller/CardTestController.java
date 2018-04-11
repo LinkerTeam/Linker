@@ -27,37 +27,21 @@ public class CardTestController {
 	@Inject
 	private ProjectService proService;
 	
-	
+	//카드리스트와 카드 페이지 
 	@RequestMapping(value = "/board/{teamID}/{p_ID}", method = RequestMethod.GET)
 	public String ajaxTest(@PathVariable int teamID, @PathVariable int p_ID, Model model, HttpSession session) throws Exception {
-		
-		ProjectVO pvo= proService.projectstatus(p_ID, teamID);
-		
-		if(pvo.getPs_id()==3) {
-			return "redirect:/main";
-		}
-		
-		
-		
+
+		UserVO vo = (UserVO)session.getAttribute("login");    
+
+		ProjectVO pvo = proService.titleName(p_ID);
+		pvo.setT_id(teamID);
+		pvo.setId(p_ID);
+		pvo.setU_id(vo.getId());
 		System.out.println(pvo.toString());
 		
-		UserVO vo = (UserVO)session.getAttribute("login");
-        
-		
-		
-		ProjectVO vo2 = proService.titleName(p_ID);
-		
-		System.out.println(vo2.toString());
-		
-		model.addAttribute("u_id", vo.getId());
-        model.addAttribute("title", vo2.getTitle());
-		model.addAttribute("ps_id",vo2.getPs_id());
-		model.addAttribute("teamID", teamID);
-		model.addAttribute("p_ID", p_ID);
-		
+		model.addAttribute("project",pvo);
 		
 		return "/board/cardTest";
-
 	};
 	
 }

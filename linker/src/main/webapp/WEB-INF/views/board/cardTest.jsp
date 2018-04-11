@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,11 +19,7 @@
 	<%@include file="../mainMenu.jsp"%>
 	
 	<div class="content">
-	 <c:set var="ps_id" value="${ps_id}" />
-   
-    <c:choose>
-     <c:when test="${ps_id==1}">
-		<div class="projectTitle"><h2>프로젝트4</h2></div>
+		<div class="projectTitle"><h2>${project.title}</h2></div>
         <div class="cardlistContent">
 
 			<!-- 카드리스트 전체 -->
@@ -57,17 +53,8 @@
 			    <button type="button" id="saveBtn" class="saveBtn">save</button>
 			</div>
         </div>
-	</c:when>
-		<c:otherwise>
-        	<div class="Btitle">${title} is closed.</div>
-		 	<div class="Breopen"><a id="reopen">Re-Open</a></div>
-		 	<div class="Bdelete"><a>Permanently Delete Board…</a></div>  
-   		</c:otherwise>
-	</c:choose>
+        
 	</div>
-	
-	
-	
 	
 	<!-- 카드리스트 팝업 -->
 	<!-- 열기 | .is-visible -->
@@ -90,7 +77,7 @@
 	
 	<!-- 카드팝업 jsp -->
 	<%@include file="cardModal.jsp"%>
-    
+
 
 	<script>
 
@@ -117,8 +104,9 @@
     	var STATUS_ARCHIVE = 2; //보관 (상태변경에 사용)
     	var STATUS_HIDDEN = 3; //가리기 (상태변경에 사용)
 		
-		var u_id = ${u_id}; //유저 id
-		var p_id = ${p_ID}; //프로젝트 id
+		var u_id = ${project.u_id}; //유저 id
+		var p_id = ${project.id}; //프로젝트 id
+		var p_ps_id = ${project.ps_id}; //프로젝트 상태값
 		
 		
 		
@@ -178,56 +166,72 @@
 		
 		
 		/* 카드 조회 | 한 프로젝트에 대한 전체 카드리스트 목록 출력 */
-		$.ajax({
-			type : "GET",
-			url : "/board/" + p_id,
-			success : function(data) {
-				var allID = new Array(); //카드리스트 id를 담을 배열
-				var allTitle = new Array(); //카드리스트 title을 담을 배열
-				//DB에서 받아온 데이터를 이용하여 루프를 돌면서 카드리스트 id, title을 배열에 추가
-				for(var i = 0; i < data.length; i++){
-					allID.push(data[i].cl_id);
-					allTitle.push(data[i].cl_title);
-				}
-				//중복되는 id값을 제거
-				var uniqID = allID.reduce(function(a, b){
-					if(a.indexOf(b) < 0) 
-						a.push(b);
-					return a;
-				}, []);
-				//중복되는 title 제거
-				var uniqTitle = allTitle.reduce(function(a, b){
-					if(a.indexOf(b) < 0) 
-						a.push(b);
-					return a;
-				}, []);
-				
-				//카드리스트 출력하기
-				var listStr = ""; //동적으로 생성할 태그를 문자열로 담을 변수
-				for(var i = 0; i < uniqID.length; i++){ //for문을 돌면서 각각의 카드리스트에 대한 태그를 문자열로 만든다.
-					newCardlistAdd(uniqID[i], uniqTitle[i]);
-				
-					cardsHeightControl(i); //카드리스트 제목영역 높이에 따라 카드리스트 전체 높이 조정
-				};
-		  		
-		  		//카드 출력하기
-		  		//for문을 돌면서 각각의 카드에 대한 태그를 문자열로 만든다.
-		  		for(var i = 0; i < uniqID.length; i++){ 
-		  			for(var j = 0; j < data.length; j++){
-			  			if(data[j].c_id !== 0 && data[j].cl_id === uniqID[i]){ //카드id가 0이 아니고 카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같을 때
-			  				var cardStr = newCardAdd(data[j].c_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출(data의 id와 title을 매개변수로 줌)
-							$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
+		function allCardlist(){
+			$.ajax({
+				type : "GET",
+				url : "/board/" + p_id,
+				success : function(data) {
+					var allID = new Array(); //카드리스트 id를 담을 배열
+					var allTitle = new Array(); //카드리스트 title을 담을 배열
+					//DB에서 받아온 데이터를 이용하여 루프를 돌면서 카드리스트 id, title을 배열에 추가
+					for(var i = 0; i < data.length; i++){
+						allID.push(data[i].cl_id);
+						allTitle.push(data[i].cl_title);
+					}
+					//중복되는 id값을 제거
+					var uniqID = allID.reduce(function(a, b){
+						if(a.indexOf(b) < 0) 
+							a.push(b);
+						return a;
+					}, []);
+					//중복되는 title 제거
+					var uniqTitle = allTitle.reduce(function(a, b){
+						if(a.indexOf(b) < 0) 
+							a.push(b);
+						return a;
+					}, []);
+					
+					//카드리스트 출력하기
+					var listStr = ""; //동적으로 생성할 태그를 문자열로 담을 변수
+					for(var i = 0; i < uniqID.length; i++){ //for문을 돌면서 각각의 카드리스트에 대한 태그를 문자열로 만든다.
+						newCardlistAdd(uniqID[i], uniqTitle[i]);
+					
+						cardsHeightControl(i); //카드리스트 제목영역 높이에 따라 카드리스트 전체 높이 조정
+					};
+			  		
+			  		//카드 출력하기
+			  		//for문을 돌면서 각각의 카드에 대한 태그를 문자열로 만든다.
+			  		for(var i = 0; i < uniqID.length; i++){ 
+			  			for(var j = 0; j < data.length; j++){
+				  			if(data[j].c_id !== 0 && data[j].cl_id === uniqID[i]){ //카드id가 0이 아니고 카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같을 때
+				  				var cardStr = newCardAdd(data[j].c_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출(data의 id와 title을 매개변수로 줌)
+								$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
+				  			};
 			  			};
-		  			};
-				};
-		  		
-			},//success
-			error : function() {
-		   		alert("에러가 발생했습니다.");
-		   	}
-		});//ajax
-			
-
+					};
+			  		
+				},//success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+			});//ajax
+		};
+		
+		
+		
+		/* 프로젝트 상태값에 따라 화면 다른화면을 출력 */
+		switch (p_ps_id) {
+	        case 1 : //프로젝트 상태값이 1(진행)이면 모든 카드리스트&카드 조회하는 함수 호출
+	        	allCardlist();
+	            break;
+	        case 2 : //프로젝트 상태값이 2(가리기)이면 board close화면 띄우는 함수 호출
+	        	closeBoardStr();
+	        	break;
+	        case 3 : //프로젝트 상태값이 3(완전 숨기기)이면 board not found 화면 띄우는 함수 호출
+	        	deleteBoardStr();
+	            break;
+		};
+		
 		
 		/* 카드 등록 | Add a card... 눌렀을 때 카드추가창 보이기 */
 		$(".cardlists").on("click", ".createCardBox", function(){
@@ -430,7 +434,7 @@
 			//클릭한 객체의 id와 class이름을 가져옴.
 			var id = $(e.target).attr("id");
 			var className = $(e.target).attr("class");
-			
+		
 			//2. 클릭한 객체가 카드리스트 추가버튼이 아니면 and 카드리스트 추가창이 아니면 or X버튼이면
 			if((className !== "addList" && className !== "cardlistCreateBox" && id !== "createListTextarea") || id === "listCancleBtn"){ 
 				$(".cardlistCreateBox").css("display", "none");
@@ -504,7 +508,6 @@
 	
 			//아무 값도 입력하지 않을 경우
 			if(title == '') return;
-			
 			$.ajax({
 				type : 'put',
 				url : "/board/" + p_id + "/cardlist/" + cardlistID,
@@ -678,8 +681,8 @@
 			cardlistStatusChange(cardlistId, state, cardlistTitle); //상태변경 ajax 처리 함수 호출
 		});
 		
-	
-
+		
+		
 	</script>
 </body>
 </html>

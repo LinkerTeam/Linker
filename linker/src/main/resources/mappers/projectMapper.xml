@@ -4,66 +4,54 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.linker.mapper.projectMapper">
+	
+	<!-- useGeneratedKeys="true" keyProperty="id" 설정은 인설트후 생선된 칼럼의 pk반환 -->
 	<!-- project생성 -->
-	<insert id="createProject">
-		INSERT INTO linker.project(title, u_id, t_id) VALUES(#{title}, #{u_id}, #{t_id});
+	<insert id="createProject" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO linker.project(title, u_id, t_id) 
+	VALUES(#{title}, #{u_id}, #{t_id});
 	</insert>
 
 	<!-- 프로젝트리스트 표시(숨기기제외/가리기) -->
 	<select id="listProject" resultType="projectVO">
-	<!-- 	SELECT 
-		project.id
-		, title
-		, u_id
-		, project.cdate
-		, t_id
-		, ps_id
-		,email AS writerEmail
-		,nickname AS writerNickname
-		FROM linker.project
-		JOIN linker.user ON user.id = project.u_id
-		WHERE project.u_id = #{userID}
-		AND project.ps_id IN (1, 2)
-		ORDER BY project.cdate DESC;
- -->
- 
- 
-   SELECT 
-          project.id
-		, project.title
-		, project.u_id
-		, project.cdate
-		, project.t_id
-		, project.ps_id
-        , project.u_id
-		,email AS writerEmail
-		,nickname AS writerNickname
-   FROM linker.user
-   LEFT JOIN linker.team_has_user 
-   ON user.id = team_has_user.u_id
-   JOIN linker.project
-   ON project.t_id = team_has_user.t_id
-   WHERE user.id= #{userID} 
-   AND project.ps_id IN (1,2)
-   ORDER BY project.cdate DESC;
+	 SELECT 
+	   project.id
+	 , project.title
+	 , project.u_id
+	 , project.cdate
+	 , project.t_id
+	 , project.ps_id
+	 , project.u_id
+	 , email AS writerEmail
+	 , nickname AS writerNickname
+	 FROM linker.user
+	 LEFT JOIN linker.team_has_user 
+	 ON user.id = team_has_user.u_id
+	 JOIN linker.project
+	 ON project.t_id = team_has_user.t_id
+	 WHERE user.id = #{userID} 
+	 AND project.ps_id IN (1, 2)
+	 ORDER BY project.cdate DESC;
 	</select>
 
-	<sql id="updateProject">
-		<if test="title != null"> SET title = #{title}	</if>
-		<if test="ps_id != 0"> SET ps_id = #{ps_id} </if>
-	</sql>
+	
 	<update id="modifyProject">
-		UPDATE linker.project 
-		<include refid="updateProject"></include>
-		WHERE id = #{id}
-		AND u_id = #{u_id}
+	UPDATE linker.project 
+	<set>
+		<if test="title != null">title = #{title}</if>
+		<if test="ps_id != 0">ps_id = #{ps_id}</if>
+	</set>
+	WHERE id = #{id}
+	AND u_id = #{u_id}
 	</update>
 	
 	<!-- 카드리스트에서 프로젝트 이름나오기 -->
 	<select id="titleName" resultType="projectVO">
-	SELECT title,ps_id,id,t_id
+	SELECT 
+	title
+	,ps_id
 	FROM linker.project
-	WHERE id=#{p_id}
+	WHERE id = #{p_id}
 	</select>
 	
 	
@@ -71,37 +59,9 @@
 	<select id="teamProfile" resultType="userVO">
 	SELECT *
 	FROM linker.user
-    JOIN linker.team_has_user ON user.id=team_has_user.u_id
+    JOIN linker.team_has_user ON user.id = team_has_user.u_id
 	WHERE team_has_user.t_id = #{t_id};
 	</select>
 	
-	<update id="hiddenProject">
-	UPDATE linker.project
-	SET ps_id = 2
-	WHERE id = #{id};
-
-	</update>
-	
-	<update id="reopenProject">
-	UPDATE linker.project
-	SET ps_id =1
-	WHERE id = #{p_id};
-	</update>
-	
-	<update id="deleteProject">
-	UPDATE linker.project
-	SET ps_id = 3
-	WHERE id = #{p_id};
-	</update>
-	
-	<select id="projectstatus" resultType="projectVO">
-	SELECT id
-	,title
-	,u_id
-	,t_id
-	,ps_id
-    FROM linker.project
-    WHERE id=#{p_id} AND t_id =#{t_id};
-	</select>
 
 </mapper>

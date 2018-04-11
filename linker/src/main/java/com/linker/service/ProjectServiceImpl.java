@@ -28,51 +28,20 @@ public class ProjectServiceImpl implements ProjectService {
 		return dao.listProject(userID);
 	}
 
-	// 프로젝트 달성&프로젝트 이름변경
+	// 프로젝트 상태 변경(가리기/완전숨기기) & title 변경
 	@Override
-	public int modifyProject(ProjectVO vo) throws Exception {
-		return dao.modifyProject(vo);
+	public void modifyProject(ProjectVO vo) throws Exception {
+		dao.modifyProject(vo);
 	}
 
 	@Override
 	public ProjectVO titleName(int p_id) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.titleName(p_id);
 	}
 
 	@Override
 	public List<UserVO> teamProfile(int t_id) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.teamProfile(t_id);
 	}
-
-	@Override
-	public void hiddenProject(int p_id) throws Exception {
-		
-		dao.hiddenProject(p_id);
-		
-	}
-
-	//프로젝트 리오픈
-	@Override
-	public void reopenProject(int p_id) throws Exception {
-		dao.reopenProject(p_id);
-		
-	}
-
-	//프로젝트 완전히 삭제
-	@Override
-	public void deleteProject(int p_id) throws Exception {
-		dao.deleteProject(p_id);
-		
-	}
-
-	@Override
-	public ProjectVO projectstatus(int p_id, int t_id) throws Exception {
-
-      return dao.projectstatus(p_id, t_id);
-		
-	}
-
 	
 }

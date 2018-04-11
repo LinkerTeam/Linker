@@ -23,15 +23,13 @@ public class SignupServiceImpl implements SignupService{
 	@Inject
 	private JavaMailSender mailSender;
 	
-	
 	//비밀번호를 암호화시켜주는 것을 엔코딩화 해주는 객체를 주입해줌
 	@Inject
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	private Logger logger;
-   
-	
-	
+
+	//회원가입 트랜젝션 처리
     @Transactional
 	@Override
 	public void insertMember(UserVO vo) throws Exception {
@@ -60,23 +58,22 @@ public class SignupServiceImpl implements SignupService{
 		   sendMail.send();
 	}
     
+    //해당 이메일 stauts체크
+    @Override
     public void status(String email) throws Exception {
 		dao.status(email);		
 	}
-
+	//구글 회원 가입
 	@Override
 	public void insertGoogle(UserVO vo) throws Exception {
 		dao.insertGoogle(vo);
 		
 	}
-
+	//구글 회원 가입유무 체크
 	@Override
 	public UserVO serchGoogle(UserVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.serchGoogle(vo);
 	}
-
-    
-    
     
 }
