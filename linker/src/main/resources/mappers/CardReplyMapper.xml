@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.linker.mapper.CardReplyMapper">
+
+	<!-- 특정 카드의 모든 댓글 조회 -->
+	<select id = "listReply" resultType = "CardReplyVO">
+		SELECT 
+			r.id
+			, r.c_id
+			, r.u_id
+			, u.profile
+			, u.nickname
+			, r.content
+			, r.cdate
+			, r.udate
+		FROM linker.c_reply r
+		INNER JOIN linker.user u ON r.u_id = u.id
+		WHERE r.c_id = #{c_id}
+		ORDER BY id DESC
+	</select>
+	
+	<!-- 등록 -->
+	<insert id = "createReply">
+		INSERT INTO linker.c_reply (c_id, content, u_id)
+		VALUES (#{c_id}, #{content}, #{u_id})
+	</insert>
+	
+	<!-- 수정 -->
+	<update id = "updateReply">
+		UPDATE linker.c_reply 
+		SET content = #{content}, updatedate = now()
+		WHERE id = #{id}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id = "deleteReply">
+		DELETE FROM linker.c_reply
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

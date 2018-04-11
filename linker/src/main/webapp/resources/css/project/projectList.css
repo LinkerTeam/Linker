@@ -2,9 +2,9 @@
  
 /* 프로젝트 */
 .content.project {
-    min-width: 830px;
+    min-width: 100%;
     margin-left: 0px;
-    overflow: scroll;
+    overflow-y: auto;
 }
 .projectBox {
     padding: 30px 15px 0 15px;

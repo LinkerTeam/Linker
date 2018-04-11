@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=1111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -147,35 +147,40 @@
 							</div>
 							<!--메뉴-->
 							<div class="mainAside-tab4-menu">
-								<div class="user-modify">
+								<div class="settingMenu user-modify">
 									<a href="http://localhost:9090/user/userModify">회원정보수정</a>
 								</div>
-								<div class="user-modify">
+								<div class="settingMenu team-modify">
 									<a href="http://localhost:9090/main/team">팀 정보 수정</a>
 								</div>
-								<div class="user-modify">
+								<div class="settingMenu pwd-modify">
 									<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
 								</div>
-								<div class="user-modify">
-									<a href="#" class="closeboard">close-board</a>
+								<div class="settingMenu boardStatus-modify">
+									<a href="#" class="closeBoard">close-board</a>
 								</div>
-								<div class="user-modify">
-									<a href="#" class="closeboard">Logout</a>
+								<div class="settingMenu logout">
+									<a href="#" class="logoutBtn">Logout</a>
 								</div>
 								
-								<!-- <div class='modal'>
-									<div class="modal-content">
-								  		<div class='modal-title'>
-								  		<span class="closetitle">Close Board?</span>
-								  	</div>
-								  	<div>
-								   		<div class='modal-text'>
-								     		<p>You can re-open the board by clicking the “Boards” menu from the header
-								      		, selecting “View Closed Boards,” finding the board and clicking “Re-open.”</p>
-								      		<button class="hiddenbtn" value="OK">확인</button>
-								     	</div>
-								    </div>
-								</div> -->
+								<!-- close board 모달창 -->
+								<div class='closeBoardModal'>
+									<div class="closeBoardModal-content">
+										<div class='closeBoardModal-title'>
+											<span class="closeTitle">Close Board?</span>
+											<span class="closeModal">&times;</span>
+										</div>
+										<div class='closeBoardModal-text'>
+											<p class="closeBoardModal-text">
+												상단바에서 "Boards"메뉴를 클릭하고 "Closed Boards보기"를 선택한 후,
+												"Re-open"을 클릭하여 보드를 다시 열 수 있습니다.
+											</p>
+											<button class="closeBoardBtn" value="OK">close</button>
+										</div>
+									</div> 
+								</div>
+								<!-- /close board 모달창  -->
+								
 							</div>
 							<!-- /메뉴 -->
 						</div>
@@ -190,73 +195,73 @@
 		
 		var i = 0;
 		var j = 0;
-	
-		//왼쪽 메뉴 확장&축소 이벤트
+		
+		var mainNav = document.getElementsByClassName("mainNav")[0]; //확장메뉴
+	    var content = document.getElementsByClassName("content")[0]; //본문
+	    var iconBar = document.getElementsByClassName("iconBar")[0]; //축소메뉴
+	    var logoBg = document.getElementsByClassName("logo-background")[0]; //헤더 로고영역
+	    var logoFull = document.getElementsByClassName("logo-full")[0]; //확장로고
+	    var logoMini = document.getElementsByClassName("logo-mini")[0]; //축소로고
+	    
+	    var mainAside = document.getElementById('mainAside')[0]; //오른쪽 메뉴 전체
+	    var tabMenu = document.getElementsByClassName('nav-tabs')[0]; //탭 메뉴
+
+
+	    
+	    
+		/* 왼쪽 메뉴 | 확장&축소 이벤트 */
 		function openNav() {
-		    var mainNav = document.getElementsByClassName("mainNav"); //확장메뉴
-		    var content = document.getElementsByClassName("content"); //본문
-		    var iconBar = document.getElementsByClassName("iconBar"); //축소메뉴
-		    var logoBg = document.getElementsByClassName("logo-background"); //헤더 로고영역
-		    var logoFull = document.getElementsByClassName("logo-full"); //확장로고
-		    var logoMini = document.getElementsByClassName("logo-mini"); //축소로고
-	
 		    i++; //왼쪽 메뉴버튼 클릭할 때마다 i의 값 1씩 증가하도록
 	
-		    if (i % 2 == 1) { //클릭수가 홀수이면 축소메뉴 노출
-		        content[0].style.marginLeft = "60px"; //본문 위치 메뉴너비에 맞춰 옮기기
-		        iconBar[0].style.width = "60px"; //메뉴 영역 230px에서 60px로 줄이기
-		        logoBg[0].style.width = "60px"; //로고 영역 230px에서 60px로 줄이기
-		        mainNav[0].style.width = "0"; //확장메뉴 숨긴다
-		        logoFull[0].style.width = "0"; //확장로고 숨긴다
-		        logoMini[0].style.width = "60px"; //축소로고 너비 확보
+		    if (i % 2 === 1) { //클릭수가 홀수이면 축소메뉴 노출
+		        content.style.marginLeft = "60px"; 	//본문 위치 메뉴너비에 맞춰 옮기기
+		        iconBar.style.width = "60px";		//메뉴 영역 230px에서 60px로 줄이기
+		        logoBg.style.width = "60px"; 		//로고 영역 230px에서 60px로 줄이기
+		        mainNav.style.width = "0"; 			//확장메뉴 숨긴다
+		        logoFull.style.width = "0"; 		//확장로고 숨긴다
+		        logoMini.style.width = "60px"; 		//축소로고 너비 확보
 		    }
 		    else { //클릭수가 짝수이면 확장메뉴 노출
-		        mainNav[0].style.width = "230px"; //확장메뉴 너비 확보
-		        content[0].style.marginLeft = "230px"; //본문 위치 메뉴너비에 맞춰 옮기기
-		        logoBg[0].style.width = "230px"; //확장시 로고영역 확보
-		        logoFull[0].style.width = "230px"; //확장로고 너비 확보
-		        logoMini[0].style.width = "0"; //축소로고 숨긴다
+		        mainNav.style.width = "230px"; 		//확장메뉴 너비 확보
+		        content.style.marginLeft = "230px"; //본문 위치 메뉴너비에 맞춰 옮기기
+		        logoBg.style.width = "230px"; 		//확장시 로고영역 확보
+		        logoFull.style.width = "230px"; 	//확장로고 너비 확보
+		        logoMini.style.width = "0"; 		//축소로고 숨긴다
 		    };
 		};
-	
-	
 		
-		//오른쪽 메뉴 숨기기&펼치기 이벤트
+		/* 오른쪽 메뉴 | 숨기기&펼치기 이벤트 */
 		function openAside() {
-			var mainAside = document.getElementById('mainAside'); //오른쪽 메뉴 전체
-		    var content = document.getElementsByClassName('content'); //본문
-		    var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
-		    
 		    j++ //오른쪽 메뉴버튼 클릭할 때마다 j의 값 1씩 증가하도록
 	
-		    if (j % 2 == 1) { //클릭수가 홀수이면 펼치기
+		    if (j % 2 === 1) { //클릭수가 홀수이면 펼치기
 		        mainAside.classList.add('mainAside-open'); //클래스 이름 'mainAside-open' 추가
 		        mainAside.style.width = "330px";
-		        content[0].style.marginRight = "330px";
+		        content.style.marginRight = "330px";
 		        //활성화된 메뉴가 없다면 첫번째 탭 메뉴를 활성화
-		        if (tabMenu[0].dataset.activenumber === undefined) {
-		        	tabMenu[0].dataset.activenumber = 0;
-		        	tabMenu[0].children[0].classList.add('active');
+		        if (tabMenu.dataset.activenumber === undefined) {
+		        	tabMenu.dataset.activenumber = 0;
+		        	tabMenu.children.classList.add('active');
 		        };
 		    } else { //클릭수가 짝수이면 숨기기
 		        mainAside.classList.remove('mainAside-open'); //클래스 이름 'mainAside-open' 제거
 		        mainAside.style.width = "0";
-		        content[0].style.marginRight = "0";
+		        content.style.marginRight = "0";
 		    };
 		};
 
 		//오른쪽 메뉴 탭버튼 제어
 		var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
-		for(var i=0; i<tabMenu[0].childElementCount; i++){
-			tabMenu[0].children[i].addEventListener("click", function(){
+		for(var i = 0; i < tabMenu.childElementCount; i++){
+			tabMenu.children[i].addEventListener("click", function(){
 				
 				var clickedTabIndex = getElementIndex(this); //클릭한 탭 번호
 				var currentTabIndex = this.parentElement.dataset.activenumber; //현재 탭 변호
 				
 				//클릭한 탭이 현재 활성화 된 탭이 아닌 경우에만 탭의 내용 보여주기
-				if(currentTabIndex != clickedTabIndex){
+				if(currentTabIndex !== clickedTabIndex){
 					//현재 탭 비활성화
-			        tabMenu[0].children[currentTabIndex].classList.remove('active'); 
+			        tabMenu.children[currentTabIndex].classList.remove('active'); 
 				    //클릭한 탭 활성화
 				    this.classList.add('active');
 				  	//클릭한 탭의 번호를 저장
@@ -268,7 +273,7 @@
 		//해당 노드의 인덱스 반환
 		function getElementIndex(node) {
 		    var index = 0;
-		    while ((node = node.previousElementSibling)) {
+		    while ((node === node.previousElementSibling)) {
 		        index++;
 		    }
 		    return index;
@@ -395,6 +400,119 @@
 	    	cardStatusChange(id, ps_id, title); //상태변경에 대한 ajax처리 함수 호출
 		});
 		
+		
+		
+		
+		/*
+		* board close 관련
+		*/
+		
+		/***************************************************************************************
+			< 수정사항 > 
+			1. board를 close하면 설정탭에서 close-board 메뉴 사라져야 함(중복클릭 문제)
+				-> 오른쪽 메인메뉴 분리할 예정이므로 메뉴 정리 되면 고치기(-)
+		
+		***************************************************************************************/
+		
+		
+		/* board close | 모달창 열기 */
+		$(".closeBoard").on("click",function(){
+			//logout버튼의 왼쪽 상단에서 모달창 열기 위해 logout버튼의 좌표값 구함
+			var boardModalX = $(".logoutBtn").position().left; //Logout버튼의 x좌표
+			var boardModalY = $(".logoutBtn").position().top; //Logout버튼의 y좌표
+			
+			//모달창 위치 지정
+			$(".closeBoardModal").css({
+				"left" : boardModalX,
+				"top" : boardModalY
+			});
+			$(".closeBoardModal").addClass("is-visible"); //모달창 열기
+		});
+				
+		/* board close | 모달창 이외의 영역을 클릭하면 모달창 닫기 */
+		$(document).on("click", function(e){
+			var className = $(e.target).attr("class"); //클릭한 요소의 class이름
+			
+			//클릭한 요소가 모달창이 아니면 class이름 is-visible을 제거함으로써 모달창 숨기기
+			if(className !== "closeBoardModal is-visible" && className !== "closeBoard" 
+					&& className !== "closeTitle" && className !== "closeBoardModal-text")
+				$(".closeBoardModal").removeClass("is-visible"); 
+		});
+		
+		
+		
+		/* board close | 상태 2 - close화면에 대한 동적 태그 생성/삽입 */
+		function closeBoardStr(){
+			var closeBoardStr = "<div class='content'>" +
+								"	<div class='closeBoardMessage'>" +
+								"		<div class='closeBoardTitle'>${p_title} is closed.</div>" +
+	  							"		<p class='boardReopen' onclick='closeBoard(1);'>Re-Open</p>" +
+  		    					"		<p class='boardDelete' onclick='closeBoard(3);'>Permanently Delete Board…</p>" +
+  		    					"	</div>" +
+  		    					"</div>";
+  		    //카드리스트 목록이 있는 content의 클래스이름을 hiddenContent로 바꿈으로써 화면에서 숨김(hiddenContent의 display속성: none)
+  		    $(".content").removeClass("content").addClass("hiddenContent");
+  		    $(".hiddenContent").before(closeBoardStr); //동적 태그 삽입
+		};
+		
+		/* board close | 상태 3 - delete화면에 대한 동적 태그 생성/삽입 */
+		function deleteBoardStr(){
+			var deleteBoardStr = "<div class='deleteBoardMessage'>" +
+								 "    <div class='deleteBoardTitle'>Board not found.</div>" +
+								 "	  <p>This board may be private. If someone gave you this link, they may need to invite you to one of their boards or teams.</p>" +
+								 "</div>";
+			$(".content").html(deleteBoardStr); //.content를 비우고 Board not found 띄움
+			$(".hiddenContent").remove(); //카드리스트 목록이 있는 hiddenContent는 완전 삭제
+		};
+		
+		
+		
+		/* board close | ajax처리 */
+	    function closeBoard(ps_id){
+			//완전 숨기기는 복구 불가 경고창 띄움
+			if(ps_id === 3){
+				if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true)
+					return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return
+			};
+	    	$.ajax({
+	    		type : "put",
+	    		url : "/main/" + p_id + "/" + u_id,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},	
+	    		data : JSON.stringify({ps_id : ps_id}),
+	    		dataType : "text", 
+	    		success : function(result) {
+	    			if(result === "SUCCESS"){	    				
+	    				switch (ps_id) {
+				            case 1: //상태값을 1(진행)로 변경했으면 
+				            	$(".content").remove(); //.content(board close화면의 클래스이름)를 삭제하고
+		    					$(".hiddenContent").removeClass("hiddenContent").addClass("content"); //카드리스트가 있는 .hiddenContent의 클래스이름을 content로 바꾼 뒤
+		    					$(".cardlist.addCardlist").prevAll().remove(); //Add a list...버튼 앞의 카드리스트를 모두 삭제(삭제 하지 않으면 중복 문제 발생)
+		    					allCardlist(); //카드리스트&카드 목록 조회하는 함수 호출
+				                break;
+				            case 2: //상태값을 2(가리기)로 변경했으면 board close 화면 띄우는 함수 호출
+				            	closeBoardStr();
+				            	break;
+				            case 3: //상태값을 3(완전 숨기기)로 변경했으면 
+				            	deleteBoardStr();
+				                break;
+		    			};
+	    			};//if
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});//ajax
+	    };
+	    
+	    
+	    /* board close | 모달창에서 확인버튼을 누를 경우 */
+	    $(".closeBoardBtn").click(function(){
+	    	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 board close화면 출력
+	    });
+	    		
 		
 		
 	</script>

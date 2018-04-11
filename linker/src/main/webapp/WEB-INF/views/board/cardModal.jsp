@@ -8,7 +8,7 @@
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardModal.css?ver=2" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardModal.css?ver=11111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <div class="popupCard">
         	<!-- 카드의 상태값이 보관/가리기일 때 상단bar-->
         	<div class="popCard-banner archive"><p><i class="fas fa-archive"></i> This card is archived. You can't edit this card anymore.</p></div>
-        	<div class="popCard-banner hide"><p><i class="fas fa-archive"></i> This card is hidden. You can't edit this card anymore.</p></div>
+        	<div class="popCard-banner hide"><p><i class="fas fa-archive"></i> This card is in the Trashbox.</p></div>
             <!-- 헤더 | 카드 제목 -->
             <header class="cardTitle">
                 <i class="far fa-credit-card"></i>                
@@ -37,7 +37,7 @@
                             <i class="fas fa-align-left"></i><strong>Description</strong>
                         </div>
                         <div class="content-content">
-                            <textarea class="content-textarea" placeholder="Add a more detailed description..."></textarea>
+                            <textarea class="content-textarea description" placeholder="Add a more detailed description..."></textarea>
                         </div>
                         <div class="content-Btn">
                             <button class="saveBtn" onclick="contentSave()">save</button>
@@ -69,7 +69,12 @@
                         <div class="title-comment title">
                             <i class="far fa-comment"></i><strong>댓글작성</strong>
                         </div>
-                        <div class="comment-content v"></div>
+                        <div class="comment-content">
+                            <textarea class="content-textarea reply" placeholder="Write a comment..."></textarea>
+	                        <div class="comment-Btn">
+	                            <button class="saveBtn reply">save</button>
+	                        </div>
+                        </div>
                     </div>
                 </article>
                 <!-- 댓글목록 & 이력 -->
@@ -78,7 +83,7 @@
                         <div class="title-activity title">
                             <i class="fas fa-list-ul"></i><strong>댓글목록&이력</strong>
                         </div>
-                        <div class="activity-content v"></div>
+                        <div class="activity-content"></div>
                     </div>
                 </article>
             </section>
@@ -122,7 +127,9 @@
 	    	20. 카드리스트 보관/숨기기 모달창 띄우고 스크롤할 때 모달창만 둥둥 뜨는 문제(-)
 	    	22. 카드리스트 추가시 가끔 스크롤이 끝으로 이동 안 하고 맨앞으로 튕김(-)
 	    	23. 보관카드 - 내용 없으면 placeholder 뜬 채로 수정 불가인데 placeholder없애? (-)
-	    	24. 
+	    	24. 프로젝트 title 읽어오기, 수정 이벤트(-)
+	    	25. 클릭한 왼쪽메인메뉴 활성화 표시(-)
+	    	26. 
 	    **************************************************************************************************************
 	    	<해결한 것>
 	    	1. 카드모달 닫을 때 새로고침 되지 않게 (+)
@@ -145,16 +152,15 @@
 	
 	    var cardModal = document.getElementById("popupBox"); //전체 모달창 객체
 	    var popCardTitle = document.getElementsByClassName("title-modify")[0]; //제목input태그
-	    var contentTextarea = document.getElementsByClassName("content-textarea")[0]; //내용입력 textarea
 	    var cancelBtn = document.getElementsByClassName("cancelBtn")[0]; //내용 수정 취소버튼
 	    var viewEdits = document.getElementsByClassName("viewEdits")[0]; //내용 저장하지 않았을 때 뜨는 view Edits
 	    var discard = document.getElementsByClassName("discard")[0]; //내용 저장하지 않았을 때 뜨는 discard
+	    var contentTextarea = document.getElementsByClassName("content-textarea"); //내용[0]/댓글[1] textarea
+	    
 		var popCardId; //카드 상세내용 조회할 때 클릭한 카드id값을 담을 변수
 		var popCardPsId; //카드 상세내용 조회할 때 클릭한 카드의 ps_id값을 담을 변수
 		var popCardContent; //카드 상세내용 조회할 때 클릭한 카드 내용을 담을 변수
 	    
-	
-		
 		
 		/* 카드 상태값에 따라 카드모달창 출력이 달라짐 */
 		/*
@@ -231,15 +237,37 @@
 	    		$(".card-id-Hidden").eq(0).html(data.id);
 	    		$(".title-cardTitle input").val(data.title);//카드제목 수정input태그에 'value'값으로 넣는다
 	    			//.html로 담았다가 7시간 삽질함.
-	    		$(contentTextarea).val(data.content);
+	    		$(contentTextarea[0]).val(data.content);
 	    		popCardContent = data.content; //전역변수에 클릭한 카드의 내용을 담아둠
 	    		
 	    		//content의 text길이만큼 textarea의 height값 주기
-	    	    contentTextarea.style.height = "1px";
-	    	    contentTextarea.style.height = (contentTextarea.scrollHeight) + "px";
+	    	    contentTextarea[0].style.height = "1px";
+	    	    contentTextarea[0].style.height = (contentTextarea[0].scrollHeight) + "px";
 	    	    
 		    	cardStatus(data.ps_id); //카드 상태값에 따라 진행, 보관, 가리기 구별하여 각각 다른 형태의 카드모달창 출력
 	    	});//JSON
+	    	
+	    	//댓글 출력
+	    	$.getJSON("/board/reply/all/" + popCardId, function(data){
+	    		var str = "";
+	    		$(data).each(function(){
+	    			/* str += "<li data-id='" + this.id + "' class='replyLi'>" + 
+	    				   "<div class='replyProfile'><img src='http://localhost:9090/user/displayFile?fileName=" + this.profile + "'></div>" + this.nickname + 
+	    					this.content + this.cdate + "</li>"; */
+	    			str += "<div class='replyArea'>" +
+                           "	<img src='http://localhost:9090/user/displayFile?fileName=" + this.profile + "' />" +
+                           "    <div class='reply-commentArea'>" +
+                           "    	<div class='reply-info'>" +
+                           "        	<p class='reply-nickname'>" + this.nickname + "</p>" +
+                           "        	<p class='reply-cdate'>" + this.cdate + "</p>" +
+                           "    	</div>" +
+                           "    	<p class='reply-content'>" + this.content + "</p>" +
+                           "	</div>" +
+                           "</div>";
+	    		});
+	    		$(".activity-content").html(str);
+	    	});
+			
 	    	cardModal.style.display = "block"; //모달창 띄우기
 	    };
 	    
@@ -323,21 +351,22 @@
 	    
 	    
 	    /* 내용 | 내용이 textarea의 height보다 길어지면 size조절 */
-	    contentTextarea.addEventListener('keydown', autosize);
 	    function autosize() {
 	    	var el = this;
 	        el.style.cssText = 'height:auto; padding:0';
 	        el.style.cssText = 'height:' + el.scrollHeight + 'px';
 	    };
+	    contentTextarea[0].addEventListener('keydown', autosize); //내용 textarea
+	    contentTextarea[1].addEventListener('keydown', autosize); //댓글 textarea
 	
 	    
 	    
 	    /* 내용 | textarea 클릭시 save, close버튼 보이기/감추기 이벤트 */
 	    $("body").click(function (e) { 
 	    	if(popCardPsId !== 1) return; //진행 상태인 카드가 아니면 그냥 return
-	        if(e.target == contentTextarea || e.target == viewEdits) { //target이 textarea이거나 view edits버튼이면
+	        if(e.target == contentTextarea[0] || e.target == viewEdits) { //target이 textarea이거나 view edits버튼이면
 	            $(".content-Btn").css("display", "block"); //버튼 보이기
-	            contentTextarea.select(); //textarea활성화 시 text 전체선택
+	            contentTextarea[0].select(); //textarea활성화 시 text 전체선택
 	        } else { //target이 textarea, view edits버튼이 아니면
 	            $(".content-Btn").css("display", "none"); //버튼 숨기기
 	        };
@@ -347,11 +376,11 @@
 	    
 	    /* 내용 | 등록/수정 함수 */
 	    function contentSave(){
-	    	var content = $(".content-textarea").val(); //수정textarea의 내용 담기
+	    	var content = $(".content-textarea.description").val(); //수정textarea의 내용 담기
 	    	
 	    	$.ajax({
 	    		type : 'put',
-	    		url : "/board/"+p_id+"/card/" + popCardId,
+	    		url : "/board/" + p_id + "/card/" + popCardId,
 	    		headers : {
 	    			"Content-Type" : "application/json",
 	    			"X-HTTP-Method-Override" : "PUT"
@@ -373,14 +402,14 @@
 	    
 	    /* 내용 수정 | 카드 모달창(전체)을 클릭했을 때 content가 DB데이터와 다를 경우 저장 여부 확인 */
 	    $(cardModal).click(function(e) { 
-	    	var content = $(".content-textarea").val(); //수정textarea의 내용 담기
+	    	var content = contentTextarea[0].value; //수정textarea의 내용 담기
 	    	//내용을 수정하고 저장하지 않은 채로 textarea를 비활성화하면 저장하지 않았다는 경고메시지 뜸.
         	//경고메시지 숨김 : textarea를 클릭했을 때, 저장취소/view Edits/discard 클릭했을 때, 
         	//		textarea 밖을 클릭했는데 DB data가 null이고 textarea의 글자수가 0일 때.
-	    	if(e.target == contentTextarea || e.target == cancelBtn || e.target == viewEdits || 
-        			e.target == discard || (e.target !== contentTextarea && (popCardContent == null && content.length == 0))){
+	    	if(e.target == contentTextarea[0] || e.target == cancelBtn || e.target == viewEdits || 
+        			e.target == discard || (e.target !== contentTextarea[0] && (popCardContent == null && content.length == 0))){
         		$(".warning").css("display", "none");
-        	} else if (e.target !== contentTextarea && content !== popCardContent){//textarea 밖을 클릭했을 때 data와 수정내용이 같지 않으면 경고메시지
+        	} else if (e.target !== contentTextarea[0] && content !== popCardContent){//textarea 밖을 클릭했을 때 data와 수정내용이 같지 않으면 경고메시지
         		$(".warning").css("display", "block");
         	};
 	    });
@@ -391,13 +420,45 @@
 	    function modifyCancel() {
 	    	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data){
 	    		//DB에서 내용(content) 가져오기
-	    		contentTextarea.value = data.content;
+	    		contentTextarea[0].value = data.content;
 	    		//content의 text길이만큼 textarea의 height값 주기
-	            contentTextarea.style.height = "1px";
-	            contentTextarea.style.height = (contentTextarea.scrollHeight) + "px";
+	            contentTextarea[0].style.height = "1px";
+	            contentTextarea[0].style.height = (contentTextarea[0].scrollHeight) + "px";
 	    	});
 	    	$(".warning").css("display", "none");
 	    };
+	    
+	    
+	    
+	    /*
+	    * 댓글
+	    */
+	    $(".saveBtn.reply").click(function(){
+			var content = contentTextarea[1].value; //수정textarea의 내용 담기
+			
+	    	$.ajax({
+	    		type : 'put',
+	    		url : "/board/reply",
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},
+	    		data : JSON.stringify({
+	    			content : content
+	    		}),
+	    		dataType : 'text', 
+	    		success : function(result) {
+	    			console.log("result: " + result);
+	    			$(".warning").css("display", "none"); //경고메시지 숨기기
+	    			popCardContent = content; //전역변수에 담긴 content값 바꿔주기
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});
+	    });
+	    
+	    
 	    
 	    
 	    
@@ -411,8 +472,8 @@
 	    /* 카드 보관/가리기 | 보관탭에 삽입될 카드 태그 생성 */
 	    function createArchivedCard(id, title){
 	    	var str = "<div class='nav-tab-content-Box-archive archive-cards'>" +
-					  "    <div data-id='"+ id +"' class='cardtitleLi tab-cards'>" +
-					  "        <div id='cardLink' onclick='loadCardData(this)'>"+ title +"</div>" +
+					  "    <div data-id='" + id + "' class='cardtitleLi tab-cards'>" +
+					  "        <div id='cardLink' onclick='loadCardData(this)'>" + title + "</div>" +
 					  "        <div class='cardStatus'><i class='fas fa-archive'></i> archived</div>" +
 					  "    </div>" +
 					  "    <p class='quiet'>" +
@@ -426,8 +487,8 @@
 	    
 	    /* 카드 보관/가리기 | 가리기탭에 삽입될 카드 태그 생성 */
 	    function createTrashboxCard(id, title){
-	    	var str = "<div data-id='"+ id +"' class='cardtitleLi tab-cards'>" +
-					  "    <div id='cardLink' onclick='loadCardData(this)'>"+ title +"</div>" +
+	    	var str = "<div data-id='" + id + "' class='cardtitleLi tab-cards'>" +
+					  "    <div id='cardLink' onclick='loadCardData(this)'>" + title + "</div>" +
 					  "    <div class='cardStatus'><i class='fas fa-archive'></i> hidden</div>" +
 					  "</div>";
 			return str;
@@ -437,7 +498,7 @@
 	    /* 카드리스트 보관/가리기 | 보관탭에 삽입될 카드리스트 태그 생성 */
 	    function createArchivedCardlist(id, title){
 	    	var str = "<div class='nav-tab-content-Box-archive archive-cards'>" +
-	    			  "    <div data-id='"+ id +"' class='cardlist tab-cardlist'>" +
+	    			  "    <div data-id='" + id + "' class='cardlist tab-cardlist'>" +
 					  "        <div class='cardlistTitleBox tab-cardlist'>"+ title +"</div>" +
 					  "    </div>" +
 					  "    <p class='quiet'>" +
@@ -451,8 +512,8 @@
 	    
 	    /* 카드리스트 보관/가리기 | 가리기탭에 삽입될 카드리스트 태그 생성 */
 	    function createTrashboxCardlist(id, title){
-	    	var str = "<div data-id='"+ id +"' class='cardlist tab-cardlist'>" +
-					  "    <div class='cardlistTitleBox tab-cardlist'>"+ title +"</div>" +
+	    	var str = "<div data-id='" + id + "' class='cardlist tab-cardlist'>" +
+					  "    <div class='cardlistTitleBox tab-cardlist'>" + title + "</div>" +
 					  "</div>";
 			return str;
 	    };
@@ -463,7 +524,7 @@
 	    function cardStatusChange(id, ps_id, title){
 	    	$.ajax({
 	    		type : 'put',
-	    		url : "/board/" + p_id + "/cardStatus/" + id,
+	    		url : "/board/" + p_id + "/cardstatus/" + id,
 	    		headers : {
 	    			"Content-Type" : "application/json",
 	    			"X-HTTP-Method-Override" : "PUT"

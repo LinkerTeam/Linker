@@ -30,30 +30,20 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return session.selectList(namespace + ".listProject", userID);
 	}
 
-	// 프로젝트 달성&프로젝트 가리기(숨기기)&프로젝트 이름변경
+	// 프로젝트 상태 변경(가리기/완전숨기기) & title 변경
 	@Override
-	public int modifyProject(ProjectVO vo) throws Exception {
-		return session.update(namespace + ".modifyProject", vo);
+	public void modifyProject(ProjectVO vo) throws Exception {
+		session.update(namespace + ".modifyProject", vo);
 	}
 
 	@Override
 	public ProjectVO titleName(int p_id) throws Exception {
-	
 		return session.selectOne(namespace+".titleName",p_id);
 	}
 
 	@Override
 	public List<UserVO> teamProfile(int t_id) throws Exception {
-		// TODO Auto-generated method stub
 		return session.selectList(namespace+".teamProfile",t_id);
 	}
-
-	@Override
-	public void hiddenProject(int p_id) throws Exception {
-		
-		session.update(namespace+".hiddenProject",p_id);
-		
-	}
-
 	
 }
