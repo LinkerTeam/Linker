@@ -22,16 +22,18 @@ public class UserDAOImpl implements UserDAO {
 	private SqlSession session;
 	// SqlSession은 데이터베이스와 연결 하고 connetion하는 기능은 가지고있어서 db와 연결시 중요하다
 	// 그래서 DAO에 꼭필요한 객체이다. 데이터 접근 객체이니.
-	private static String namespace = "com.linker.mapper.UserMapper";
-
 	// namespace는 mapper와 연결하기위해서 중요한 것 네임스페이스가 다르면 mapper와 연결이 안된다.
+	private static String namespace = "com.linker.mapper.UserMapper";
+	
+	//로그인체크
 	@Override
 	public UserVO login(LoginDTO dto) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace + ".login", dto);
 	}
 
-	//컨트롤러로 부터 세션을 받아서  Map으로 저장함 insert into문 
+	//컨트롤러로 부터 세션을 받아서  Map으로 저장함 insert into문 사용
+	//자동로그인
 	@Override
 	public void keepLogin(String email, String sessionId, Date next,String profile) {
 
@@ -98,19 +100,20 @@ public class UserDAOImpl implements UserDAO {
 		 session.update(namespace+".forgetpassword",vo);
 	}
 
+	//이메일이 가입되있는지 체크
 	@Override
 	public int serchEmail(String email) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne(namespace+".serchEmail",email);
 	}
 
-	@Override
+	/*@Override
 	public boolean checkPw(String email, String password) throws Exception {
 		    System.out.println("dao"+email);
 		    System.out.println("dao"+password);
 		   //기본값은 false로 지정 true일경우 비밀번호 일치했다는 것
 		    boolean result = false;
-		   
+		   System.out.println("비밀번호바꾸기");
 		    // session은 하나의 객체또는 값만 하나만 넣을수있어서 두개이상의 값을 넣기 위해선 Map이나 객체를 통해서만 넣을수있다.
 		    //파라미터로 들어온값을 Map으로 담아서 mapper로 전달함 
 		    Map<String, String> map = new HashMap<String, String>();
@@ -123,7 +126,7 @@ public class UserDAOImpl implements UserDAO {
 	        if(count == 1) result= true;
 		
 	       return result;
-	}
+	}*/
 
 	//비밀번호 변경
 	@Override

@@ -108,19 +108,14 @@
         
          
         
-         <p><input type="password"  class="password" name="password0" id="password0" placeholder="현재 비밀번호"></p>
-         
-        
-        
-         <p><input type="password" class="password" name="password" id="password"  placeholder="새 비밀번호"></p>
-         
-        
+         <p><input type="password"  class="password" name="password0" id="password0" placeholder="현재 비밀번호"></p>     
        
-         <p><input type="password" class="password" name="password2" id="password2" placeholder="새 비밀번호확인"></p>
-        
-     
-          <button type="button" id="btw" class="btn" value="전송">확인</button><br>
-          <button type="reset" class="btn" vlaue="취소">취소</button>
+         <p><input type="password" class="password" name="password" id="password"  placeholder="새 비밀번호"></p>
+
+         <p><input type="password" class="password" name="password2" id="password2" placeholder="새 비밀번호확인"></p>  
+          
+          	<button type="button" id="btw" class="btn" value="전송">확인</button><br>
+          	<button type="reset" class="btn" vlaue="취소">취소</button>
         
        </form>             
       </div>
@@ -154,8 +149,7 @@
                   success: function(data){  //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
                	   
                       if(data==true){
-                    	
-                    	  
+   	  
                     	  if(passwordcheck()){
                     	    alert("비밀번호가 변경되었습니다.");
                     	    formObj.submit();}
@@ -169,18 +163,11 @@
                   },error:function(){
                  	 alert("데이터오류");
                   }
-               
-                  
+                
               });    //end ajax   
-            
-          
-      });
-    
-    
-    
-        	
-   
-     
+ 
+   		   });
+ 
          function passwordcheck(){
         	 var password0 =document.getElementById('password0').value;
         	 var password1 =document.getElementById('password').value;

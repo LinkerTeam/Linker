@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=1111" type="text/css" rel="stylesheet" />
+
+<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -160,7 +162,7 @@
 									<a href="#" class="closeBoard">close-board</a>
 								</div>
 								<div class="settingMenu logout">
-									<a href="#" class="logoutBtn">Logout</a>
+									<a href="http://localhost:9090/user/logout" class="logoutBtn">Logout</a>
 								</div>
 								
 								<!-- close board 모달창 -->
@@ -471,6 +473,7 @@
 				if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true)
 					return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return
 			};
+
 	    	$.ajax({
 	    		type : "put",
 	    		url : "/main/" + p_id + "/" + u_id,
@@ -483,7 +486,7 @@
 	    		success : function(result) {
 	    			if(result === "SUCCESS"){	    				
 	    				switch (ps_id) {
-				            case 1: //상태값을 1(진행)로 변경했으면 
+				            case 1: //상태값을 1(진행)로 변경했으면  카드리스트출력
 				            	$(".content").remove(); //.content(board close화면의 클래스이름)를 삭제하고
 		    					$(".hiddenContent").removeClass("hiddenContent").addClass("content"); //카드리스트가 있는 .hiddenContent의 클래스이름을 content로 바꾼 뒤
 		    					$(".cardlist.addCardlist").prevAll().remove(); //Add a list...버튼 앞의 카드리스트를 모두 삭제(삭제 하지 않으면 중복 문제 발생)

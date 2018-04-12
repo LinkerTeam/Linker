@@ -21,6 +21,7 @@ h3 {
 	padding: 0.6em;
 }
 </style>
+
 <script type="text/javascript">
 
 	self.location = '/main';
@@ -28,8 +29,7 @@ h3 {
 
 </head>
 <body>
-	<div
-		style="background-color: #15a181; width: 100%; height: 50px; text-align: center; color: white;">
+	<div style="background-color: #15a181; width: 100%; height: 50px; text-align: center; color: white;">
 		<h3>SIST Google_Login Success</h3>
 	</div>
 	<br>

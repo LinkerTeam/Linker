@@ -33,135 +33,88 @@ public class UserServiceImpl implements UserService {
 	@Inject
 	private UserDAO dao;
 	
-
+	//스프링시큐리티 비밀번호 암호화한것 체크하거나 암호화하는 객체
 	@Inject
 	private BCryptPasswordEncoder passwordEncoder;
 	
-
+	//로그인 체크	    
 	@Override
 	public UserVO login(LoginDTO dto) throws Exception {
          
 		return dao.login(dto);
 	}
-
 	
-	
-	
-	
-	
+	//로그인한  회원정보 가져오기
 	@Override
 	public UserVO viewUser(String email) {
 		// TODO Auto-generated method stub
 		return dao.viewUser(email);
 	}
 
-
-
+	//회원정보 수정
 	@Override
 	public void updateUser(UserDTO dto) {
 		// TODO Auto-generated method stub
-		 System.out.println("너는 뭐가 들어가니!!!"+dto);
-		dao.updateUser(dto);
+		
+		 dao.updateUser(dto);
 	}
 	
-	
-	
-
-
-
-
+	//자동로그인
 	@Override
 	public void keepLogin(String email, String sessionId, Date next,String profile) throws Exception {
 		dao.keepLogin(email, sessionId, next,profile);
 	}
-
+    
+	//유저가 가진 쿠키에 저장한 세션키를 DB에 들어간 세션키와 비교하는 과정 
 	@Override
 	public UserVO checkLoginBefore(String value) throws Exception {
 
 		return dao.chechUserWithSessionKey(value);
 	}
-
-
-
-
-
-
+   
+	//닉네임 중복 확인 
 	@Override
 	public int checkSignup(String nickname) throws Exception {
  		return dao.checkSignup(nickname);
 	}
 
-
-
-
-
-  //이메일을 확인한 매서드 
+  
+	//이메일을 확인한 매서드 
 	@Override
 	public void userAuth(String email) throws Exception {
 		// TODO Auto-generated method stub
 		dao.userAuth(email);
 	}
 
-
-
-
-
-  //이메일 중복확인 
+	//이메일 중복확인 
 	@Override
 	public int emailCheck(String email) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.emailCheck(email);
 	}
 
-
-
-
-
-
+	//임의의 비밀번호로 지정한다.
 	@Override
 	public void forgetpassword(UserVO vo) throws Exception {
 		
-	
-		dao.forgetpassword(vo);
-		
-		
-		
-		
-		
+		dao.forgetpassword(vo);	
 		
 	}
-
-
-
-
-
-
+	//이메일이 가입되있는지 체크
 	@Override
 	public int serchEmail(String email) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.serchEmail(email);
 	}
 
-
-
-
-
-
-	@Override
+	/*@Override
 	public boolean checkPw(String email, String password) throws Exception {
-		
-		
-		
-		
-		
+	
 		return dao.checkPw(email, password);
 	}
+*/
 
-
-
-
-
-
+	//비밀번호 변경
 	@Override
 	public void updatePassword(UserDTO dto) throws Exception {
 		
@@ -175,32 +128,18 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
-
-
-
-
-
+	//현재비밀번호 비교하기 위해 가져오기 
 	@Override
 	public String getPassword(LoginDTO dto) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.getPassword(dto);
 	}
 
-
-
-
-
-
+	//유저가 회원 탈퇴하기!!
 	@Override
 	public void deleteUser(String email) throws Exception {
 		
 		dao.deleteUser(email);
 	}
-	
-	
-	
-	
-	
-	
 	
 }
