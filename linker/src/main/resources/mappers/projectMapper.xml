@@ -44,17 +44,7 @@
 		WHERE id = #{id}
 		AND u_id = #{u_id}
 	</update>
-	
-	<update id="modifyProject">
-		UPDATE linker.project 
-		<set>
-			<if test="title != null">title = #{title}</if>
-			<if test="ps_id != 0">ps_id = #{ps_id}</if>
-		</set>
-		WHERE id = #{id}
-		AND u_id = #{u_id}
-	</update>
-	
+
 	<!-- 카드리스트에서 프로젝트 이름나오기 -->
 	<select id="titleName" resultType="projectVO">
 	SELECT 
