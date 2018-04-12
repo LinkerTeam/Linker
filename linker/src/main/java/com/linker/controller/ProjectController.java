@@ -56,7 +56,6 @@ public class ProjectController {
 		   //현재 로그인 사용자의 정보를 세션을통해서 가져온다.
 		   UserVO vo =(UserVO) session.getAttribute("login");
 		   
-		   
 		   int userID = vo.getId();
 		
 		   System.out.println(userID);
@@ -71,9 +70,7 @@ public class ProjectController {
         	  TeamVO tvo=vo2.get(i);
         	  List<UserVO> member= (List<UserVO>) service.teamProfile(tvo.getT_id());
         	  profile.add(member);
-          }
-         
-      
+          }      
 		
 		//7번 유저의 모든 팀을 가져온다.
 		model.addAttribute("team", teamService.listTeam(userID));
@@ -83,9 +80,7 @@ public class ProjectController {
 		
 		System.out.println("나입니다.");
 		return "main/projectList";
-	}
-	
-	
+	}	
 	
 	//프로젝트 생성 
 	@ResponseBody
@@ -94,8 +89,7 @@ public class ProjectController {
 		System.out.println("여기는 프로젝트를 만드는것");
 		
 		System.out.println(vo.toString());
-		
-		
+			
 		ResponseEntity<Integer> entity = null;
 		     service.createProject(vo);
 		     // 프로젝트 생성후에 생성된 기본키(PK)를 받아옴 
@@ -110,9 +104,7 @@ public class ProjectController {
 		 
 		return entity;
 	}
-	
-	
-	
+			
 	//팀하나 클릭시 그안에 들어있는 프로젝트들이 나옴
 	@ResponseBody
 	@RequestMapping(value="t/{teamID}/p", method = RequestMethod.GET)
@@ -122,13 +114,11 @@ public class ProjectController {
 		return service.listProject(teamID);
   
 	}
-	
-	
-	// 수정 | 프로젝트 상태 변경(가리기/완전숨기기) & title 변경 , ProjectVO에  ps_id값을 받아옴
+
+	// 수정 | 프로젝트 상태 변경(가리기/완전숨기기) & title 변경, ProjectVO에  ps_id값을 받아옴
 	@RequestMapping(value="/{p_id}/{u_id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> modifyProject(@PathVariable("p_id") Integer p_id, @PathVariable("u_id") Integer u_id, @RequestBody ProjectVO vo){
 		ResponseEntity<String> entity = null;
-		
 		try {
 			vo.setId(p_id);
 			vo.setU_id(u_id);

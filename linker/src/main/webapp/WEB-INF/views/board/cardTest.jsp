@@ -107,6 +107,7 @@
 		var u_id = ${project.u_id}; //유저 id
 		var p_id = ${project.id}; //프로젝트 id
 		var p_ps_id = ${project.ps_id}; //프로젝트 상태값
+	
 		
 		
 		
@@ -219,7 +220,8 @@
 		
 		
 		
-		/* 프로젝트 상태값에 따라 화면 다른화면을 출력 */
+
+		/* 프로젝트 상태값에 따라 화면 다르게 출력 */
 		switch (p_ps_id) {
 	        case 1 : //프로젝트 상태값이 1(진행)이면 모든 카드리스트&카드 조회하는 함수 호출
 	        	allCardlist();

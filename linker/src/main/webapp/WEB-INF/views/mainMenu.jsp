@@ -196,7 +196,7 @@
 		var i = 0;
 		var j = 0;
 	
-		//왼쪽 메뉴 확장&축소 이벤트
+		/* 왼쪽 메인메뉴 | 확장 & 축소 이벤트 */
 		function openNav() {
 		    var mainNav = document.getElementsByClassName("mainNav"); //확장메뉴
 		    var content = document.getElementsByClassName("content"); //본문
@@ -207,7 +207,7 @@
 	
 		    i++; //왼쪽 메뉴버튼 클릭할 때마다 i의 값 1씩 증가하도록
 	
-		    if (i % 2 == 1) { //클릭수가 홀수이면 축소메뉴 노출
+		    if (i % 2 === 1) { //클릭수가 홀수이면 축소메뉴 노출
 		        content[0].style.marginLeft = "60px"; //본문 위치 메뉴너비에 맞춰 옮기기
 		        iconBar[0].style.width = "60px"; //메뉴 영역 230px에서 60px로 줄이기
 		        logoBg[0].style.width = "60px"; //로고 영역 230px에서 60px로 줄이기
@@ -226,7 +226,7 @@
 	
 	
 		
-		//오른쪽 메뉴 숨기기&펼치기 이벤트
+		/* 오른쪽 메인메뉴 | 숨기기 & 펼치기 이벤트 */
 		function openAside() {
 			var mainAside = document.getElementById('mainAside'); //오른쪽 메뉴 전체
 		    var content = document.getElementsByClassName('content'); //본문
@@ -234,7 +234,7 @@
 		    
 		    j++ //오른쪽 메뉴버튼 클릭할 때마다 j의 값 1씩 증가하도록
 	
-		    if (j % 2 == 1) { //클릭수가 홀수이면 펼치기
+		    if (j % 2 === 1) { //클릭수가 홀수이면 펼치기
 		        mainAside.classList.add('mainAside-open'); //클래스 이름 'mainAside-open' 추가
 		        mainAside.style.width = "330px";
 		        content[0].style.marginRight = "330px";
@@ -250,27 +250,24 @@
 		    };
 		};
 
-		//오른쪽 메뉴 탭버튼 제어
+		/* 오른쪽 메인메뉴 | 탭버튼 제어 */
 		var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
-		for(var i=0; i<tabMenu[0].childElementCount; i++){
+		for(var i = 0; i < tabMenu[0].childElementCount; i++){
 			tabMenu[0].children[i].addEventListener("click", function(){
 				
 				var clickedTabIndex = getElementIndex(this); //클릭한 탭 번호
 				var currentTabIndex = this.parentElement.dataset.activenumber; //현재 탭 변호
 				
 				//클릭한 탭이 현재 활성화 된 탭이 아닌 경우에만 탭의 내용 보여주기
-				if(currentTabIndex != clickedTabIndex){
-					//현재 탭 비활성화
-			        tabMenu[0].children[currentTabIndex].classList.remove('active'); 
-				    //클릭한 탭 활성화
-				    this.classList.add('active');
-				  	//클릭한 탭의 번호를 저장
-				    this.parentElement.dataset.activenumber = clickedTabIndex;
+				if(currentTabIndex !== clickedTabIndex){
+			        tabMenu[0].children[currentTabIndex].classList.remove('active'); //현재 탭 비활성화
+				    this.classList.add('active'); //클릭한 탭 활성화
+				    this.parentElement.dataset.activenumber = clickedTabIndex; //클릭한 탭의 번호를 저장
 				}
 			});
 		};
 	
-		//해당 노드의 인덱스 반환
+		/* 해당 노드의 인덱스 반환 */
 		function getElementIndex(node) {
 		    var index = 0;
 		    while ((node = node.previousElementSibling)) {

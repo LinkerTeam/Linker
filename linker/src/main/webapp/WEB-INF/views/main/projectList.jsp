@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=21" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=22" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
@@ -14,72 +14,80 @@
 <body>
 	<%@include file="../header.jsp"%>
 	<%@include file="../mainMenu.jsp"%>
-	
+
 	<div class="content">
 
-    <!-- 프로젝트 본문 -->
-    <div class="content project">
+		<!-- 프로젝트 본문 -->
 
-    <!-- Projects In a Team -->   
-          <!-- 팀 정보 -->
-          <c:forEach items="${team}" var="teamList"> 
-          <div class="projectBox">
-          	<div class="teamInfo">
-              <i class="fas fa-users"></i>
-              <span class="title">${teamList.name}</span> 
-              	<a class="tid" >${teamList.t_id} </a>
-                	<a class="uid" >${teamList.u_id} </a>         
-             	 <!-- 이중 for문을 돌려서 List<List<UserVO>>를 뽑아낸다!! -->
-               	<c:forEach items="${profile}" var="teamMember">
-               		<c:forEach items="${teamMember}" var="teamMember">
-                 	 <c:if test="${teamList.t_id == teamMember.t_id}">
-                   	 <ul class="teamMembers">
-                     <li><img src="http://localhost:9090/user/displayFile?fileName=${teamMember.profile}"><span class="tooltip">${teamMember.nickname}</span></li>
-                     </ul> 
-                   </c:if>
-                 </c:forEach>
-               </c:forEach>
-            </div> 
-            <!-- 진행 프로젝트 목록 -->
-       
-          <c:forEach items="${result}" var="projectList"> 
-             <c:if test="${ teamList.t_id == projectList.t_id}"> 
-             	<c:if test="${projectList.ps_id ==1}">
-              	<ul class="projects">
-                <li><a href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}"><span class="name">${projectList.title}</span></a></li>
-              	</ul>
-              	</c:if> 
-             </c:if> 
-           </c:forEach>
-      
-            <!-- 프로젝트 추가 버튼 -->
-            <span class="addProject"><button class="createProjectBtn" type="button">Create new project…</button></span>
-    	</div>
-    	</c:forEach> 
-    	 <div class="teaminsert">
-        <a class="teaminsert-a" href="#">
-         <span>Create a new team…</span> </a>
-        </div>
-       
-        <!--  팀생성 모달창   -->
-        <div class="create-modal">
-        	<div class="modal-contents">
-           		<div class="headtitle">
-           			<span class="pop-over-header-title">Create Team</span>
-           	 			<a href="#" class="connectmodal"></a></div>
-         	 				<div class="content-text">
-           	 					<form>
-            	 					<input type="input" class="team-title" value="" placeholder="team name title">
-            	 					<button class="teambtn disabled" disabled="disabled">Create</button>
-            					</form>
-           					<span class="tclosebtn"><i class="fas fa-times"></i></span>
-        	 			 </div>
-       		 		</div>
-    			 </div>
+		<!-- <div class="content project"> -->
+
+
+		<!-- Projects In a Team -->
+		<!-- 팀 정보 -->
+		<c:forEach items="${team}" var="teamList">
+			<div class="projectBox">
+				<div class="teamInfo">
+					<i class="fas fa-users"></i> <span class="title">${teamList.name}</span>
+					<a class="tid">${teamList.t_id} </a> <a class="uid">${teamList.u_id}
+					</a>
+					<!-- 이중 for문을 돌려서 List<List<UserVO>>를 뽑아낸다!! -->
+					<c:forEach items="${profile}" var="teamMember">
+						<c:forEach items="${teamMember}" var="teamMember">
+							<c:if test="${teamList.t_id == teamMember.t_id}">
+								<ul class="teamMembers">
+									<li><img
+										src="http://localhost:9090/user/displayFile?fileName=${teamMember.profile}"><span
+										class="tooltip">${teamMember.nickname}</span></li>
+								</ul>
+							</c:if>
+						</c:forEach>
+					</c:forEach>
 				</div>
-   		 </div>
-     
-    <!-- /프로젝트 본문 -->
+				<!-- 진행 프로젝트 목록 -->
+
+				<c:forEach items="${result}" var="projectList">
+					<c:if test="${ teamList.t_id == projectList.t_id}">
+						<c:if test="${projectList.ps_id ==1}">
+							<ul class="projects">
+								<li><a
+									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}"><span
+										class="name">${projectList.title}</span></a></li>
+							</ul>
+						</c:if>
+					</c:if>
+				</c:forEach>
+
+				<!-- 프로젝트 추가 버튼 -->
+				<span class="addProject"><button class="createProjectBtn"
+						type="button">Create new project…</button></span>
+			</div>
+		</c:forEach>
+		<div class="teaminsert">
+			<a class="teaminsert-a" href="#"> <span>Create a new team…</span>
+			</a>
+		</div>
+
+
+		<!--  팀생성 모달창   -->
+		<div class="create-modal">
+			<div class="modal-contents">
+				<div class="headtitle">
+					<span class="pop-over-header-title">Create Team</span> <a href="#"
+						class="connectmodal"></a>
+				</div>
+				<div class="content-text">
+					<form>
+						<input type="input" class="team-title" value=""
+							placeholder="team name title">
+						<button class="teambtn disabled" disabled="disabled">Create</button>
+					</form>
+					<span class="tclosebtn"><i class="fas fa-times"></i></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- /프로젝트 본문 -->
 
     <!-- 프로젝트 생성 모달창 -->
     <!-- 띄우기 | is-visible -->

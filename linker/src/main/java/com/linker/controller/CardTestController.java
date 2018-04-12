@@ -38,7 +38,7 @@ public class CardTestController {
 		pvo.setId(p_ID);
 		pvo.setU_id(vo.getId());
 		System.out.println(pvo.toString());
-		
+
 		model.addAttribute("project",pvo);
 		
 		return "/board/cardTest";

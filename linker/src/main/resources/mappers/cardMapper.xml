@@ -68,7 +68,7 @@
 			, cl.ps_id AS cl_ps_id
 		FROM linker.card c
 		INNER JOIN linker.cardlist cl ON c.cl_id = cl.id
-		WHERE c.id = #{id}	
+		WHERE c.id = #{id}
 	</select>
 	
 </mapper>

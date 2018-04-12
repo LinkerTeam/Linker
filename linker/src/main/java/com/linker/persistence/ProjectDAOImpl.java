@@ -34,6 +34,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	@Override
 	public void modifyProject(ProjectVO vo) throws Exception {
 		System.out.println(vo.toString());
+
 		session.update(namespace + ".modifyProject", vo);
 	}
 

@@ -7,29 +7,29 @@
 	
 	<select id="login" resultType="UserVO">
 	SELECT
-	id
-	,email
-	,password
-	,profile
-	,nickname
-	,cdate
-	,udate
-	,status
-	,google
+		id
+		,email
+		,password
+		,profile
+		,nickname
+		,cdate
+		,udate
+		,status
+		,google
 	FROM linker.user
 	WHERE email = #{email}
 	</select>
 
 	<select id="viewUser" resultType="UserVO">
 	SELECT
-	id
-	,email
-	,nickname
-	,profile
-	,cdate
-	,udate
-    ,status
-    ,google
+		id
+		,email
+		,nickname
+		,profile
+		,cdate
+		,udate
+	    ,status
+	    ,google
 	FROM linker.user
 	WHERE email = #{email}
 	</select>
@@ -82,9 +82,9 @@
 	</update>
    
 	<select id="serchEmail" parameterType="String" resultType="int">
-	select count(email)
-	from linker.user
-	where email=#{email}
+	SELECT count(email)
+	FROM linker.user
+	WHERE email=#{email}
 	</select>
   
 	<select id="checkPw" resultType="int">
