@@ -31,6 +31,7 @@ public class CardTestController {
 	@RequestMapping(value = "/board/{teamID}/{p_ID}", method = RequestMethod.GET)
 	public String ajaxTest(@PathVariable int teamID, @PathVariable int p_ID, Model model, HttpSession session) throws Exception {
 
+
 		UserVO vo = (UserVO)session.getAttribute("login");    
 
 		ProjectVO pvo = proService.titleName(p_ID);
@@ -40,6 +41,7 @@ public class CardTestController {
 		System.out.println(pvo.toString());
 
 		model.addAttribute("project",pvo);
+
 		
 		return "/board/cardTest";
 	};

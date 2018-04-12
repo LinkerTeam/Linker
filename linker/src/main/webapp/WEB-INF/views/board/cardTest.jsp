@@ -19,6 +19,7 @@
 	<%@include file="../mainMenu.jsp"%>
 	
 	<div class="content">
+
 		<div class="projectTitle"><h2>${project.title}</h2></div>
         <div class="cardlistContent">
 
@@ -107,7 +108,6 @@
 		var u_id = ${project.u_id}; //유저 id
 		var p_id = ${project.id}; //프로젝트 id
 		var p_ps_id = ${project.ps_id}; //프로젝트 상태값
-	
 		
 		
 		

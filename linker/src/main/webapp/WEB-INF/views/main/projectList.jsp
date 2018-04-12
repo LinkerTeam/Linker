@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=22" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,6 +17,7 @@
 	<%@include file="../mainMenu.jsp"%>
 
 	<div class="content">
+
 
 		<!-- 프로젝트 본문 -->
 
@@ -66,7 +68,6 @@
 			<a class="teaminsert-a" href="#"> <span>Create a new team…</span>
 			</a>
 		</div>
-
 
 		<!--  팀생성 모달창   -->
 		<div class="create-modal">

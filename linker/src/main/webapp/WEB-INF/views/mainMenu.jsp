@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
+
 <link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -471,7 +473,7 @@
 				if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true)
 					return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return
 			};
-			
+
 	    	$.ajax({
 	    		type : "put",
 	    		url : "/main/" + p_id + "/" + u_id,
