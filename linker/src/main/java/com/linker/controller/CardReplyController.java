@@ -27,8 +27,11 @@ public class CardReplyController {
 	
 	//특정 카드의 모든 댓글 조회
 	@RequestMapping(value = "/all/{c_id}", method = RequestMethod.GET)
-	public ResponseEntity<List<CardReplyVO>> listReply(@PathVariable("c_id") Integer c_id){
+	public ResponseEntity<List<CardReplyVO>> listReply(@PathVariable("c_id") Integer c_id) throws Exception{
 		ResponseEntity<List<CardReplyVO>> entity = null;
+		
+		CardReplyVO vo = new CardReplyVO();
+		vo.setC_id(c_id);
 		
 		try {
 			entity = new ResponseEntity<>(service.listReply(c_id), HttpStatus.OK);
@@ -41,24 +44,16 @@ public class CardReplyController {
 	
 	//등록
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<CardReplyVO> addReply(HttpServletRequest request, @RequestBody CardReplyVO vo){
-		ResponseEntity<CardReplyVO> entity = null;
+	public ResponseEntity<String> addReply(HttpServletRequest request, @RequestBody CardReplyVO vo){
+		ResponseEntity<String> entity = null;
 		
 		try {
-			HttpSession session = request.getSession();
-			UserVO user = (UserVO) session.getAttribute("login");
-			
-			vo.setProfile(user.getProfile());
-			vo.setNickname(user.getNickname());
-			
 			service.addReply(vo);
 			
-			System.out.println(vo);
-			
-			entity = new ResponseEntity<CardReplyVO>(vo, HttpStatus.OK);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 		} catch(Exception e) {
 			e.printStackTrace();
-			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}

@@ -2,16 +2,19 @@ package com.linker.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class CardReplyVO {
-
+public class CardReplyVO {	
+	
 	private Integer id;		//댓글 아이디
 	private Integer u_id;	//작성자
 	private Integer c_id;	//소속된 카드
 	private String content;	//댓글 내용
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.mm.dd a h:mm")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd a hh:mm", timezone="GMT+9")
 	private Date cdate;		//작성일
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd a hh:mm", timezone="GMT+9")
 	private Date udate;		//수정일
 	
 	private String profile; //작성자 프로필

@@ -173,24 +173,31 @@
 				url : "/board/" + p_id,
 				success : function(data) {
 					var allID = new Array(); //카드리스트 id를 담을 배열
-					var allTitle = new Array(); //카드리스트 title을 담을 배열
-					//DB에서 받아온 데이터를 이용하여 루프를 돌면서 카드리스트 id, title을 배열에 추가
+					var idIndex = new Array(); //data배열의 id에서 uniqID들의 index값
+					
+					var uniqID = new Array(); //중복되지 않은 id 배열
+					var uniqTitle = new Array(); //uniqID들의 title 배열
+					
+					//DB에서 받아온 데이터를 이용하여 루프를 돌면서 카드리스트 id를 배열에 추가
 					for(var i = 0; i < data.length; i++){
 						allID.push(data[i].cl_id);
-						allTitle.push(data[i].cl_title);
-					}
+					};
 					//중복되는 id값을 제거
-					var uniqID = allID.reduce(function(a, b){
-						if(a.indexOf(b) < 0) 
-							a.push(b);
-						return a;
-					}, []);
-					//중복되는 title 제거
-					var uniqTitle = allTitle.reduce(function(a, b){
-						if(a.indexOf(b) < 0) 
-							a.push(b);
-						return a;
-					}, []);
+					uniqID = allID.reduce(function(a, b){
+								 if(a.indexOf(b) < 0) 
+								 	a.push(b);
+								 return a;
+							 }, []);
+
+					//data 배열에서 id: uniqID[i]의 index를 구함
+					for (var i = 0; i < uniqID.length; i++) {
+					    var index = data.map(function (item) {
+					                    return item.cl_id;
+					                }).indexOf(uniqID[i]); 
+					    idIndex.push(index);
+
+					    uniqTitle.push(data[idIndex[i]].cl_title); //구한 index값을 이용하여 해당 title을 뽑아내 uniqTitle에 담음
+					};
 					
 					//카드리스트 출력하기
 					var listStr = ""; //동적으로 생성할 태그를 문자열로 담을 변수
