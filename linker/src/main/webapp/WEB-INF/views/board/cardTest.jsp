@@ -19,7 +19,8 @@
 	<%@include file="../mainMenu.jsp"%>
 	
 	<div class="content">
-		<div class="projectTitle"><h2>${p_title}</h2></div>
+
+		<div class="projectTitle"><h2>${project.title}</h2></div>
         <div class="cardlistContent">
 
 			<!-- 카드리스트 전체 -->
@@ -104,10 +105,9 @@
     	var STATUS_ARCHIVE = 2; //보관 (상태변경에 사용)
     	var STATUS_HIDDEN = 3; //가리기 (상태변경에 사용)
 		
-		var u_id = ${u_id}; //유저 id
-		var p_id = ${p_ID}; //프로젝트 id
-		
-		var p_ps_id = ${p_ps_id}; //프로젝트 상태값
+		var u_id = ${project.u_id}; //유저 id
+		var p_id = ${project.id}; //프로젝트 id
+		var p_ps_id = ${project.ps_id}; //프로젝트 상태값
 		
 		
 		
@@ -227,6 +227,7 @@
 		
 		
 		
+
 		/* 프로젝트 상태값에 따라 화면 다르게 출력 */
 		switch (p_ps_id) {
 	        case 1 : //프로젝트 상태값이 1(진행)이면 모든 카드리스트&카드 조회하는 함수 호출
@@ -442,7 +443,7 @@
 			//클릭한 객체의 id와 class이름을 가져옴.
 			var id = $(e.target).attr("id");
 			var className = $(e.target).attr("class");
-			
+		
 			//2. 클릭한 객체가 카드리스트 추가버튼이 아니면 and 카드리스트 추가창이 아니면 or X버튼이면
 			if((className !== "addList" && className !== "cardlistCreateBox" && id !== "createListTextarea") || id === "listCancleBtn"){ 
 				$(".cardlistCreateBox").css("display", "none");
@@ -516,7 +517,6 @@
 	
 			//아무 값도 입력하지 않을 경우
 			if(title == '') return;
-			
 			$.ajax({
 				type : 'put',
 				url : "/board/" + p_id + "/cardlist/" + cardlistID,

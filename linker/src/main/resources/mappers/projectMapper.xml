@@ -4,39 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.linker.mapper.projectMapper">
+	
+	<!-- useGeneratedKeys="true" keyProperty="id" 설정은 인설트후 생선된 칼럼의 pk반환 -->
 	<!-- project생성 -->
-	<insert id="createProject">
-		INSERT INTO linker.project(title, u_id, t_id) 
-		VALUES(#{title}, #{u_id}, #{t_id});
+	<insert id="createProject" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO linker.project(title, u_id, t_id) 
+	VALUES(#{title}, #{u_id}, #{t_id});
 	</insert>
 
 	<!-- 프로젝트리스트 표시(숨기기제외/가리기) -->
 	<select id="listProject" resultType="projectVO">
-	<!-- 	SELECT 
-		project.id
-		, title
-		, u_id
-		, project.cdate
-		, t_id
-		, ps_id
-		,email AS writerEmail
-		,nickname AS writerNickname
-		FROM linker.project
-		JOIN linker.user ON user.id = project.u_id
-		WHERE project.u_id = #{userID}
-		AND project.ps_id IN (1, 2)
-		ORDER BY project.cdate DESC;
- -->
- 
- 
+
 	   SELECT 
-	          project.id
+	    project.id
 			, project.title
 			, project.u_id
 			, project.cdate
 			, project.t_id
 			, project.ps_id
-	        , project.u_id
+	    , project.u_id
 			, email AS writerEmail
 			, nickname AS writerNickname
 	   FROM linker.user
@@ -49,17 +35,6 @@
 	   ORDER BY project.cdate DESC;
 	</select>
 
-	<!-- <set>
-		<if test="title != null"> SET title = #{title}	</if>
-		<if test="ps_id != 0"> SET ps_id = #{ps_id} </if>
-	</set>
-	<update id="modifyProject">
-		UPDATE linker.project 
-		<include refid="updateProject"></include>
-		WHERE id = #{id}
-		AND u_id = #{u_id}
-	</update> -->
-	
 	<update id="modifyProject">
 		UPDATE linker.project 
 		<set>
@@ -69,7 +44,7 @@
 		WHERE id = #{id}
 		AND u_id = #{u_id}
 	</update>
-	
+
 	<!-- 카드리스트에서 프로젝트 이름나오기 -->
 	<select id="titleName" resultType="projectVO">
 	SELECT 

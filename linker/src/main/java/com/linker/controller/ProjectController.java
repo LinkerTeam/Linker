@@ -49,13 +49,12 @@ public class ProjectController {
 	 * 프로젝트를 생성한 이후에는 생헝한 프로젝트의 정보를 가지고와야한다.
 	 * */
 	
-	@RequestMapping(value="",method=RequestMethod.GET)
+	@RequestMapping(value="", method=RequestMethod.GET)
 	public String projectListGET(Model model,HttpSession session) throws Exception{
 		      System.out.println("나이니다.");
 		  
 		   //현재 로그인 사용자의 정보를 세션을통해서 가져온다.
 		   UserVO vo =(UserVO) session.getAttribute("login");
-		   
 		   
 		   int userID = vo.getId();
 		
@@ -71,9 +70,7 @@ public class ProjectController {
         	  TeamVO tvo=vo2.get(i);
         	  List<UserVO> member= (List<UserVO>) service.teamProfile(tvo.getT_id());
         	  profile.add(member);
-          }
-         
-      
+          }      
 		
 		//7번 유저의 모든 팀을 가져온다.
 		model.addAttribute("team", teamService.listTeam(userID));
@@ -83,35 +80,42 @@ public class ProjectController {
 		
 		System.out.println("나입니다.");
 		return "main/projectList";
-	}
+	}	
 	
-	
-	
-	
+	//프로젝트 생성 
 	@ResponseBody
-	@RequestMapping(value="/insertProject",method= RequestMethod.POST)
-	public int createProject(@RequestBody ProjectVO vo) throws Exception{
+	@RequestMapping(value="/insertProject", method= RequestMethod.POST)
+	public ResponseEntity<Integer> createProject(@RequestBody ProjectVO vo) throws Exception{
 		System.out.println("여기는 프로젝트를 만드는것");
 		
 		System.out.println(vo.toString());
-		
-		return service.createProject(vo);
+			
+		ResponseEntity<Integer> entity = null;
+		     service.createProject(vo);
+		     // 프로젝트 생성후에 생성된 기본키(PK)를 받아옴 
+		     System.out.println(vo);
+		     int p_id=vo.getId();
+		     
+		try {
+			entity = new ResponseEntity<Integer>(p_id,HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+		}
+		 
+		return entity;
 	}
-	
-	
-	
+			
 	//팀하나 클릭시 그안에 들어있는 프로젝트들이 나옴
 	@ResponseBody
-	@RequestMapping(value="t/{teamID}/p",method = RequestMethod.GET)
+	@RequestMapping(value="t/{teamID}/p", method = RequestMethod.GET)
    public List<ProjectVO> listProject(@PathVariable int teamID) throws Exception{
 		System.out.println("프로젝트를 보자!");
 		
 		return service.listProject(teamID);
   
 	}
-	
-	
-	// 수정 | 프로젝트 상태 변경(가리기/완전숨기기) & title 변경
+
+	// 수정 | 프로젝트 상태 변경(가리기/완전숨기기) & title 변경, ProjectVO에  ps_id값을 받아옴
 	@RequestMapping(value="/{p_id}/{u_id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<String> modifyProject(@PathVariable("p_id") Integer p_id, @PathVariable("u_id") Integer u_id, @RequestBody ProjectVO vo){
 		ResponseEntity<String> entity = null;

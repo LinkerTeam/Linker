@@ -18,13 +18,7 @@ public class MemberDAOTest {
 	
 	@Inject
 	private SignupDAO dao;
-	
 
-	@Test
-	public void testTime()throws Exception {
-	System.out.println(dao.getTime());
-	}
-	
 	//회원가입 
 	@Test
 	public void testInsertMeber() throws Exception{

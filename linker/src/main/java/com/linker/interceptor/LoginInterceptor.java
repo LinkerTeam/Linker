@@ -34,7 +34,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		//이메일값으로 그 userVO에 값들을 담아온다. 이메일 패스워드 닉네임 프로필경로  생성시간 업데이트시간을 가져온다.
 		Object userVO = modelmap.get("userVO");
 		
-		System.out.println("모델에 뭐들었니?"+userVO);
+		
 	
 		if (userVO != null) {
 			
@@ -46,12 +46,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			//session에 LOGIN키값으로 userVO객체를 저장 그럼 세션에는 email password ninkname 등등 다들어있음 
 			session.setAttribute(LOGIN, userVO);
 	          //쿠키는 값을 값이 들어있으면 on 없으면 false로 찍힘
-			System.out.println("쿠키만들자 퀴퀴퀴"+request.getParameter("useCookie"));
-			System.out.println("세션아이디!"+session.getId());
+			System.out.println("쿠키만들자"+request.getParameter("useCookie"));
+			
 			
 			//리멤버미를 클릭시 체크온시 쿠키를 생성해서 값을 저장해서 보내준다.
 			if (request.getParameter("useCookie") != null) {
-				System.out.println("나 오케이했뜸!!");
+				
 				logger.info("remeber me.....");
 				Cookie loginCookie = new Cookie("loginCookie", session.getId());
 				loginCookie.setPath("/");
