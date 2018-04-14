@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=1111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -298,6 +298,8 @@
 						};
 						$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기카드 조회
+			  			console.log(p_id);
+						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
 							str += createTrashboxCard(data[i].id, data[i].title);
 						};
@@ -319,11 +321,15 @@
 					var str = "";
 					
 			  		if(ps_id === 2){ //보관 카드리스트 조회
+			  			console.log(p_id);
+						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드리스트 태그 생성
 							str += createArchivedCardlist(data[i].id, data[i].title);
 						};
 						$(".nav-tab-content-Box-archive.archiveCardlist").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기 카드리스트 조회
+			  			console.log(p_id);
+						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드리스트 태그 생성
 							str += createTrashboxCardlist(data[i].id, data[i].title);
 						};
@@ -352,6 +358,7 @@
 		$(".tab-content-box-controls > .switchBtn-archive").click(function(){
 			$(".tab-content-box-controls > .switchBtn-archive").toggle();
 			$(".nav-tab-content-Box-archive.archiveCard").toggle();
+			$(".nav-tab-content-Box-archive.archiveCardlist").toggle();
 			
 			readCardlistStatus(2); //상태값이 2인 카드리스트 조회
 		});
@@ -359,6 +366,7 @@
 		$(".tab-content-box-controls > .switchBtn-hidden").click(function(){
 			$(".tab-content-box-controls > .switchBtn-hidden").toggle();
 			$(".nav-tab-content-Box-hidden.hiddenCard").toggle();
+			$(".nav-tab-content-Box-hidden.hiddenCardlist").toggle();
 			
 			readCardlistStatus(3); //상태값이 3인 카드리스트 조회
 		});

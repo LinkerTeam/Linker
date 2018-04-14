@@ -8,7 +8,7 @@
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardModal.css?ver=11111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardModal.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -70,9 +70,9 @@
                             <i class="far fa-comment"></i><strong>댓글작성</strong>
                         </div>
                         <div class="comment-content">
-                            <textarea class="content-textarea reply" placeholder="Write a comment..."></textarea>
+                            <textarea class="content-textarea reply create" placeholder="Write a comment..."></textarea>
 	                        <div class="comment-Btn">
-	                            <button class="saveBtn reply">save</button>
+	                        	<button class="saveBtn reply create">Save</button>
 	                        </div>
                         </div>
                     </div>
@@ -85,6 +85,22 @@
                         </div>
                         <div class="activity-content"></div>
                     </div>
+                    <!-- 댓글 삭제 모달창 -->
+					<div class="closeBoardModal reply">
+						<div class="closeBoardModal-content reply">
+							<div class="closeBoardModal-title reply">
+								<span class="closeTitle reply">Delete comment?</span>
+								<span class="closeModal reply">&times;</span>
+							</div>
+							<div class="closeBoardModal-text reply">
+								<p class="closeBoardModal-text reply">
+									삭제한 댓글은 되돌릴 수 없습니다. 정말 삭제하시겠습니까?
+								</p>
+								<button class="closeBoardBtn reply" value="OK">Delete</button>
+							</div>
+						</div> 
+					</div>
+					<!-- /close board 모달창  -->
                 </article>
             </section>
 
@@ -129,7 +145,8 @@
 	    	23. 보관카드 - 내용 없으면 placeholder 뜬 채로 수정 불가인데 placeholder없애? (-)
 	    	24. 프로젝트 title 읽어오기, 수정 이벤트(-)
 	    	25. 클릭한 왼쪽메인메뉴 활성화 표시(-)
-	    	26. 
+	    	26. board를 close하면 설정탭에서 close-board 메뉴 사라져야 함(중복클릭 문제)
+				-> 오른쪽 메인메뉴 분리할 예정이므로 메뉴 정리 되면 고치기(-)
 	    **************************************************************************************************************
 	    	<해결한 것>
 	    	1. 카드모달 닫을 때 새로고침 되지 않게 (+)
@@ -160,6 +177,8 @@
 		var popCardId; //카드 상세내용 조회할 때 클릭한 카드id값을 담을 변수
 		var popCardPsId; //카드 상세내용 조회할 때 클릭한 카드의 ps_id값을 담을 변수
 		var popCardContent; //카드 상세내용 조회할 때 클릭한 카드 내용을 담을 변수
+		
+		var deleteReplyId; //ajax처리를 위한 댓글의 id
 	    
 		
 		/* 카드 상태값에 따라 카드모달창 출력이 달라짐 */
@@ -246,13 +265,7 @@
 	    	    
 		    	cardStatus(data.ps_id); //카드 상태값에 따라 진행, 보관, 가리기 구별하여 각각 다른 형태의 카드모달창 출력
 	    	});//JSON
-	    	
-	    	//댓글 조회
-	    	$.getJSON("/board/reply/all/" + popCardId, function(data){
-	    		for(var i = 0; i < data.length; i++)
-	    			allReplyStr(data[i]); //동적태그 생성하여 삽입하는 함수 호출
-	    	});
-			
+	    	allReply(); //모든 댓글 getJSON으로 받아오는 함수
 	    	cardModal.style.display = "block"; //모달창 띄우기
 	    };
 	    
@@ -402,7 +415,7 @@
 	
 	
 	
-	    /* 내용, 제목 수정 취소 | X버튼, discard버튼 클릭할 경우 */
+	    /* 내용 수정 취소 | X버튼, discard버튼 클릭할 경우 */
 	    function modifyCancel() {
 	    	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data){
 	    		//DB에서 내용(content) 가져오기
@@ -421,24 +434,72 @@
 	    * 댓글
 	    */
 	    
-	    /* 댓글 조회 | 동적 태그 생성 */
-	    function allReplyStr(obj){
-	    	var str = "<div data-id='" + obj.id + "' class='replyArea'>" +
-			          "	<img src='http://localhost:9090/user/displayFile?fileName=" + obj.profile + "' />" +
-			          "    <div class='reply-commentArea'>" +
-			          "    	<div class='reply-info'>" +
-			          "        	<p class='reply-nickname'>" + obj.nickname + "</p>" +
-			          "        	<p class='reply-cdate'>" + obj.cdate + "</p>" +
-			          "    	</div>" +
-			          "    	<p class='reply-content'>" + obj.content + "</p>" +
-			          "	</div>" +
-			          "</div>";
-	    	$(".activity-content").prepend(str);
+	    
+	    /* 댓글 조회 | getJSON으로 데이터 받아와서 동적 태그 생성하여 삽입 */
+	    function allReply(){
+	    	$.getJSON("/board/reply/all/" + popCardId, function(data){
+	    		var str = "";
+	    		
+	    		$(data).each(function(){
+	    			var edit = "";
+		    		var myReply = "";
+	    			if(this.cdate !== this.udate){ //수정된 댓글에만 출력됨
+		    			edit = "<p class='edited'>(edited)</p>";
+		    		};
+	    			if(this.u_id === u_id){ //본인이 쓴 댓글에만 출력됨
+	    				myReply = "<div class='replyBtn reply'>" +
+							   	  "    <button class='replyModifyBtn reply'>수정</button>" +
+							   	  "    <button class='replyDeleteBtn reply'>삭제</button>" +
+							   	  "</div>";
+					};
+					
+	    			str += "<div data-id='" + this.id + "' data-uid='" + this.u_id + "'class='replyArea'>" +
+						   "	<img src='http://localhost:9090/user/displayFile?fileName=" + this.profile + "' />" +
+						   "	<div class='reply-commentArea'>" +
+						   "		<div class='reply-info'>" +
+						   "        	<p class='reply-nickname'>" + this.nickname + "</p>" +
+						   "        	<p class='reply-cdate'>" + this.cdate + "</p>" + edit + myReply +
+						   "		</div>" +
+						   "		<pre class='reply-content'>" + this.content + "</pre>" +
+						   "	</div>" +
+						   "</div>";
+	    		});
+	    		$(".activity-content").html(str);
+	    	});
 	    };
 	    
 	    
-	    /* 댓글 등록 | 저장버튼 누를 경우 */
-	    $(".saveBtn.reply").click(function(){	    	
+	    
+	    /* 댓글 등록 | textarea에 내용이 있으면 버튼 활성화 */
+	    $(".content-textarea.reply.create").on("input", function(){ 
+	    	var value = $(".content-textarea.reply.create").val();
+	    	
+	        if(value == "" || value == null) { //textarea의 value값이 없으면
+	        	$(".saveBtn.reply.create").css("backgroundColor", "#bdbdbd61"); //하얀색
+	        	$(".saveBtn.reply.create").prop("disabled", true); //비활성화
+	        } else { //textarea에 값을 입력하면
+	        	$(".saveBtn.reply.create").css("backgroundColor", "#5aac44"); //초록색
+	        	$(".saveBtn.reply.create").prop("disabled", false); //활성화
+	        }
+	    });
+	    
+	    /* 댓글 수정 | textarea에 내용이 없으면 버튼 비활성화 */
+	    $(".activity-content").on("input", ".content-textarea.reply.modify", function(){
+			var value = $(".content-textarea.reply.modify").val();
+	    	
+	        if(value == "" || value == null) { //textarea의 value값이 없으면
+	        	$(".saveBtn.reply.modify").css("backgroundColor", "#bdbdbd61"); //하얀색
+	        	$(".saveBtn.reply.modify").prop("disabled", true); //비활성화
+	        } else { //textarea에 값을 입력하면
+	        	$(".saveBtn.reply.modify").css("backgroundColor", "#5aac44"); //초록색
+	        	$(".saveBtn.reply.modify").prop("disabled", false); //활성화
+	        }
+	    });
+	    
+	    
+	    
+	    /* 댓글 등록 | 저장 버튼을 클릭할 경우 */
+	    $(".saveBtn.reply.create").click(function(){	    	
 			var content = contentTextarea[1].value; //수정textarea의 내용 담기
 			
 	    	$.ajax({
@@ -454,10 +515,14 @@
 	    			u_id : u_id
 	    		}),
 	    		dataType : 'text', 
-	    		success : function(data) {
-	    			console.log(data);
-	    			if(data.id !== 0)
-		    			allReplyStr(data);
+	    		success : function(result) {
+	    			if(result === "SUCCESS") {
+		    			allReply(); //댓글 목록 갱신
+	    				contentTextarea[1].value = "";
+		    			$(".content-textarea.reply.modify").css("height", "50px"); //스크롤이벤트 때문에 늘어난 height 줄임
+	    				$(".saveBtn.reply.create").css("backgroundColor", "#bdbdbd61"); //Save버튼 하얀색
+	    	        	$(".saveBtn.reply.create").prop("disabled", true); //Save버튼 비활성화
+	    			};
 	    		},
 	    		error : function() {
 	    			alert("에러가 발생했습니다.");
@@ -465,6 +530,110 @@
 	    	});
 	    });
 	    
+	    
+	    
+	    /* 댓글 수정 | 수정 버튼을 클릭할 경우 수정textarea 출력 */
+	    $(".activity-content").on("click", ".replyModifyBtn", function(){
+	    	var str = "<div class='replyModify-area'>" +
+	    			  "	   <textarea class='content-textarea reply modify'></textarea>" +
+					  "    <div class='comment-Btn'>" +
+		        	  "        <button class='saveBtn reply modify'>Save</button>" +
+		        	  "        <button class='cancelBtn reply'>&times;</button>" +
+                      "    </div>" +
+                      "</div>";
+	    	$(this).parent().parent().parent().append(str); //동적 태그 생성하여 해당 댓글 div에 추가
+	    	
+	    	var modifyBeforContent = $(this).parents(".reply-info").next().html(); //원래 댓글 내용 꺼내서
+	    	var modifyTextarea = $(this).parents(".reply-info").nextAll(".replyModify-area").children(".content-textarea.reply.modify"); //수정textarea
+	    	$(modifyTextarea).html(modifyBeforContent); //수정textarea에 담기
+	    	$(modifyTextarea).focus(); //focus주기
+	    	$(".replyModify-area").prevAll().hide(); //댓글 작성자, 수정/삭제 버튼은 숨기기
+	    });
+	    
+	    
+	    
+	    /* 댓글 수정 | 댓글 수정 후 Save버튼을 클릭할 경우 - ajax처리 */
+	    $(".activity-content").on("click", ".saveBtn.reply.modify", function(){
+			var modifyReplyContent = $(this).parent().prev(".content-textarea.reply.modify").val(); //수정textarea의 내용
+			var replyId = $(this).parents(".replyArea").attr("data-id"); //해당 댓글의 data-id
+	    	var replyModifyArea = $(this).parents(".replyModify-area"); //수정textarea + Save버튼
+	    	var replyInfo = $(replyModifyArea).prevAll(".reply-info"); //댓글 작성자, 날짜표시되는 div
+	    	var replyContent = $(replyModifyArea).prevAll(".reply-content"); //댓글 내용 표시되는 div
+	    	var replyCdate = $(this).parent().parent().prev().prev().children(".reply-cdate"); //cdate 표시되는 div
+	    	
+	    	$.ajax({
+	    		type : 'put',
+	    		url : "/board/reply/" + replyId,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},
+	    		data : JSON.stringify({content : modifyReplyContent}),
+	    		dataType : 'text', 
+	    		success : function(result) {
+	    			if(result === "SUCCESS"){
+	    				$(replyInfo).css("display", "block"); //댓글 작성자 보이기
+		    			$(replyContent).css("display", "block"); //댓글 수정, 삭제 버튼 보이기
+	    				if($(replyCdate).next().attr("class") !== "edited") //날짜 옆에 edit표시가 없다면
+		    				$(replyCdate).after("<p class='edited'>(edited)</p>"); //edit 표시 띄우기
+		    			$(replyModifyArea).remove(); //수정textarea와 Save버튼 숨기기
+		    			$(replyContent).html(modifyReplyContent); //바뀐 댓글내용 동적으로 적용
+	    			};
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});//ajax
+	    });
+	    
+	    
+	    
+	    /* 댓글 삭제 | 삭제 버튼 누를 경우 모달창 띄움 */
+		$(".activity-content").on("click", ".replyDeleteBtn.reply", function(){
+			deleteReplyId = $(this).parents(".replyArea").attr("data-id"); //ajax처리를 위한 댓글의 id
+			var replyDeleteModalY = $(this).offset().top; //삭제 버튼의 y좌표
+			var scrollTop = $("#popupBox").scrollTop(); 
+			
+			//모달창 위치 지정
+			$(".closeBoardModal.reply").css({
+				//삭제버튼의 y좌표에 화면의 scrollTop만큼 더해줘서 
+				//	스크롤을 아래로 내렸을 때도 삭제모달창이 위치를 제대로 잡도록 함
+				"top" : replyDeleteModalY + scrollTop - 25
+			});
+			$(".closeBoardModal.reply").show(); //모달창 열기
+		});
+	    
+		/* 댓글 삭제 | 모달창 이외의 영역을 클릭하면 모달창 닫기 */
+		$(document).on("click", function(e){
+			var className = $(e.target).attr("class"); //클릭한 요소의 class이름
+			
+			if(className !== "closeBoardModal reply" && className !== "replyDeleteBtn reply" 
+					&& className !== "closeTitle reply" && className !== "closeBoardModal-text reply")
+				$(".closeBoardModal.reply").hide();
+		});
+	    
+		
+		
+	    /* 댓글 삭제 | ajax처리 */
+	    $(".closeBoardBtn.reply").click(function(){
+ 	    	$.ajax({
+	    		type : "delete",
+	    		url : "/board/reply/" + deleteReplyId,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "DELETE"
+	    		},
+	    		dataType : "text",
+	    		success : function(result){
+	    			if(result === "SUCCESS"){
+	    				$(".replyArea[data-id=" + deleteReplyId + "]").remove(); //해당 댓글 삭제
+	    			};
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});
+	    });
 	    
 	    
 	    
@@ -550,7 +719,6 @@
 			            	$(".nav-tab-content-Box-hidden.hiddenCard").prepend( createTrashboxCard(id, title) ); //가리기탭에 동적 카드태그 삽입
 			                break;
 		    		};
-			    	
 			    	cardStatus(ps_id); //상태값에 맞게 카드모달창 형태 변경 
 	    		},
 	    		error : function() {

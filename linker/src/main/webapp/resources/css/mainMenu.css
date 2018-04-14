@@ -336,6 +336,10 @@
 .swhitchCardlist{
 	display: none;
 }
+.nav-tab-content-Box-archive.archiveCardlist,
+.nav-tab-content-Box-hidden.hiddenCardlist{
+	display:none;
+}
     
 
 /************ 설정탭 ************/
@@ -426,11 +430,14 @@
     position: relative;
     box-sizing: border-box;
     width: 294px;
-    height : 160px;
+    height : 164px;
     background: #fff;
     border-radius: 4px;
     color : black;
     font-size: 15px;
+    line-height: 1.1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+				0 1px 2px rgba(0,0,0,0.24);
 }
 /* 모달창 | 상단 타이틀 p태그 + 닫기버튼 */
 .closeBoardModal-title{
@@ -463,7 +470,7 @@
     width: 92%;
     height: 40px;
     margin-left: 12px;
-    background: #FA5883;
+    background: #eb5a46;
     color: #fff;
     font-size: 17px;
     outline: none;

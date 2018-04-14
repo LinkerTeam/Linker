@@ -19,7 +19,7 @@
 		FROM linker.c_reply r
 		INNER JOIN linker.user u ON r.u_id = u.id
 		WHERE r.c_id = #{c_id}
-		ORDER BY id
+		ORDER BY id DESC
 	</select>
 	
 	<!-- 등록 -->
@@ -31,7 +31,7 @@
 	<!-- 수정 -->
 	<update id="updateReply">
 		UPDATE linker.c_reply 
-		SET content = #{content}, updatedate = now()
+		SET content = #{content}
 		WHERE id = #{id}
 	</update>
 	
