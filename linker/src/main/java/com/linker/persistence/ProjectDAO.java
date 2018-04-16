@@ -21,5 +21,7 @@ public interface ProjectDAO {
 	public ProjectVO titleName(int p_id) throws Exception;
 	//메인페이지에 각팀마다 팀원의 프로필을 가져옴
 	public List<UserVO> teamProfile(int t_id) throws Exception;
+	//해당 팀원이 아니면 프로젝트에 들어갈수없음
+	public int checkProject(ProjectVO vo)throws Exception;
 	
 }

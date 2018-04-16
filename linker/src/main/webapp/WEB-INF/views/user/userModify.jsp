@@ -117,6 +117,10 @@
     height:0;
     overflow:hidden;
 }
+.secessionSpan{
+	padding-top: 15px;
+	text-align: center;
+}
 </style>
 </head>
 <body>
@@ -161,18 +165,16 @@
 							<tr>
 								<td><p class="inputtext">프로필사진</p></td>
 								<td>
-								<div class="file_input">
-								<p>
-                <label>
-                                                      프로필 사진올리기
-              
-               
-            <input type="file" name="profileName" class='uploadprofile' id='file' accept=".jpg, .jpge, .png, .gif">
-									    
-                </label>
-									<p id="status"></p>
-									<div id='holder'></div> <!-- accept=".jpg,png "  특정파일만 올릴수있게 파일 업로드시 설정해줌 -->
+									<div class="file_input">
+										<p>
+											<label> 프로필 사진올리기 <input type="file"
+												name="profileName" class='uploadprofile' id='file'
+												accept=".jpg, .jpge, .png, .gif">
 
+											</label>
+										<p id="status"></p>
+										<div id='holder'></div>
+										<!-- accept=".jpg,png "  특정파일만 올릴수있게 파일 업로드시 설정해줌 -->
 								</td>
 
 								</p>
@@ -192,6 +194,9 @@
 
 
 					</form>
+					<div class="secessionSpan">Linker를 더 이상 이용하지 않는다면 
+					<a href="http://localhost:9090/user/secessionUser" class="secession">회원탈퇴 바로가기▶</a>
+				    </div>
 				</div>
 			</div>
 		</div>
@@ -273,12 +278,18 @@
 			}
 
 			//닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
-			$('#checkbtn').on('click',function() {
+			$('#checkbtn')
+					.on(
+							'click',
+							function() {
 								//POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
-								$.ajax({
+								$
+										.ajax({
 											type : 'POST', // POST 방식
 											url : '/user/checkSignup', //보내는 form action을 지정해줌
-											data : {"nickname" : $('#nickname').val()
+											data : {
+												"nickname" : $('#nickname')
+														.val()
 											// 데이터를 지정해줌 nickname의 값을 받아와서 nickname에 넣어줌 매개변수 request.getparameter("nickname")을 여기서 가져옴
 											},
 											headers : {
@@ -288,15 +299,19 @@
 											success : function(data) { //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
 												// 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
 												if ($.trim(data) == 0) {
-													$('#checkMsg').html('<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
+													$('#checkMsg')
+															.html(
+																	'<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
 												} else {
-													$('#checkMsg').html('<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
+													$('#checkMsg')
+															.html(
+																	'<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
 												}
 											}
 										}); //end ajax    
 							}); //end on
 
-				function checkImageType(fileName) {
+			function checkImageType(fileName) {
 				// i는 대.소 문자의 구분없음
 				var pattern = /jpg$|gif$|png$|jpeg$/i;
 				return fileName.match(pattern);

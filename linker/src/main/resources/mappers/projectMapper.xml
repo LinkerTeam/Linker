@@ -22,7 +22,7 @@
 			, project.cdate
 			, project.t_id
 			, project.ps_id
-	    , project.u_id
+	   		, project.u_id
 			, email AS writerEmail
 			, nickname AS writerNickname
 	   FROM linker.user
@@ -63,5 +63,13 @@
 	WHERE team_has_user.t_id = #{t_id};
 	</select>
 	
+	
+	<!-- 해당팀원이 아니면 프로젝트를 들어가는것을 막는 것 -->
+	<select id="checkProject" resultType="int">
+	SELECT count(*)
+	FROM linker.project
+	JOIN linker.team_has_user ON team_has_user.u_id = project.u_id
+	WHERE team_has_user.u_id=#{u_id} AND project.t_id=#{t_id};
+	</select>
 
 </mapper>

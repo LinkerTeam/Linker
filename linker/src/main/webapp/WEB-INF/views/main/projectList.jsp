@@ -38,7 +38,7 @@
 							<c:if test="${teamList.t_id == teamMember.t_id}">
 								<ul class="teamMembers">
 									<li><img
-										src="http://localhost:9090/user/displayFile?fileName=${teamMember.profile}"><span
+										src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${teamMember.profile}"><span
 										class="tooltip">${teamMember.nickname}</span></li>
 								</ul>
 							</c:if>

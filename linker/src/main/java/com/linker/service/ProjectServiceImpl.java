@@ -43,5 +43,12 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<UserVO> teamProfile(int t_id) throws Exception {
 		return dao.teamProfile(t_id);
 	}
+	//해당 팀원이 아니면 프로젝트에 URI로 못들어가게 막음
+	@Override
+	public int checkProject(ProjectVO vo) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.checkProject(vo);
+	}
+	
 	
 }
