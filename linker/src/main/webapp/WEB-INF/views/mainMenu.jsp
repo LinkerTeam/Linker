@@ -6,7 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
+
+<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -15,7 +17,7 @@
 	<nav class="mainNav"> <!--확장메뉴 | 상단 프로필영역-->
 	<div class="profile-area">
 		<a href="#" class="profile-img-area"> 
-			<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" class="profile-img" />
+			<img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile-img" />
 		</a>
 		<div class="profile-nickname-area">
 			<div class="profile-nickname">${login.nickname}</div>
@@ -37,7 +39,7 @@
 
 	<!--축소 메뉴(아이콘)-->
              <nav class="iconBar">
-                 <a href="#"><img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" class="profile-img" /></a>
+                 <a href="#"><img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile-img" /></a>
                  <!--마우스 오버시 아이콘 색변경 되도록-->
                  <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/u765gerlj/icon_project_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/wbqihhlif/icon_project.png'"><img src="https://s5.postimg.org/wbqihhlif/icon_project.png" width="30" border="0" /><span class="icon-menuName">Project</span></a>
                  <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/beuacuicn/icon_erd_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/6sy64hp3r/icon_erd.png'"><img src="https://s5.postimg.org/6sy64hp3r/icon_erd.png" width="30" border="0" /><span class="icon-menuName">ERD</span></a>
@@ -65,7 +67,7 @@
 									<!-- 작성자 -->
 									<div class="pic-list-writer">
 										<div class="profile">
-											<img src="http://localhost:9090/user/displayFile?fileName=${login.profile}" 
+											<img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" 
 												alt="프로필 사진" />
 										</div>
 									</div> <!-- 이력내용 -->
@@ -298,8 +300,6 @@
 						};
 						$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기카드 조회
-			  			console.log(p_id);
-						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
 							str += createTrashboxCard(data[i].id, data[i].title);
 						};
@@ -321,15 +321,11 @@
 					var str = "";
 					
 			  		if(ps_id === 2){ //보관 카드리스트 조회
-			  			console.log(p_id);
-						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드리스트 태그 생성
 							str += createArchivedCardlist(data[i].id, data[i].title);
 						};
 						$(".nav-tab-content-Box-archive.archiveCardlist").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기 카드리스트 조회
-			  			console.log(p_id);
-						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드리스트 태그 생성
 							str += createTrashboxCardlist(data[i].id, data[i].title);
 						};
@@ -358,7 +354,6 @@
 		$(".tab-content-box-controls > .switchBtn-archive").click(function(){
 			$(".tab-content-box-controls > .switchBtn-archive").toggle();
 			$(".nav-tab-content-Box-archive.archiveCard").toggle();
-			$(".nav-tab-content-Box-archive.archiveCardlist").toggle();
 			
 			readCardlistStatus(2); //상태값이 2인 카드리스트 조회
 		});
@@ -366,7 +361,6 @@
 		$(".tab-content-box-controls > .switchBtn-hidden").click(function(){
 			$(".tab-content-box-controls > .switchBtn-hidden").toggle();
 			$(".nav-tab-content-Box-hidden.hiddenCard").toggle();
-			$(".nav-tab-content-Box-hidden.hiddenCardlist").toggle();
 			
 			readCardlistStatus(3); //상태값이 3인 카드리스트 조회
 		});

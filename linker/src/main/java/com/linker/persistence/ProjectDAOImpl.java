@@ -48,5 +48,12 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public List<UserVO> teamProfile(int t_id) throws Exception {
 		return session.selectList(namespace+".teamProfile",t_id);
 	}
+
+	@Override
+	public int checkProject(ProjectVO vo) throws Exception {
+		
+		return session.selectOne(namespace+".checkProject",vo);
+	}
+	
 	
 }

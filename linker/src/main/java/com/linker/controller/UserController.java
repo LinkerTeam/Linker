@@ -1,9 +1,12 @@
 package com.linker.controller;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,17 +16,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Service.Mode;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.impl.bootstrap.HttpServer;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,15 +41,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
-import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.jce.Random;
 import com.linker.domain.UserVO;
 import com.linker.dto.LoginDTO;
 import com.linker.dto.UserDTO;
@@ -60,7 +53,7 @@ import com.linker.service.SignupService;
 import com.linker.service.UserService;
 import com.linker.util.MailHandler;
 import com.linker.util.MediaUtils;
-import com.linker.util.TempKey;
+import com.linker.util.S3Util;
 import com.linker.util.UploadFileUtils;
 
 @Controller
@@ -84,13 +77,19 @@ public class UserController {
 	@Inject
 	private OAuth2Parameters googleOAuth2Parameters;
 
-	// 스프링시큐리티 암호화
+	// 스프링시큐리티 암호화 객체
 	@Inject
 	private BCryptPasswordEncoder pwdEncoder;
 
 	// 파일 저장 주소를 넣어줌
-	@Resource(name = "uploadPath")
-	private String uploadPath;
+/*	@Resource(name = "uploadPath")
+	private String uploadPath;*/
+	
+	String uploadpath = "linker/certificate";
+	
+	S3Util s3 = new S3Util();
+	
+	String bucketName = "linkers104";
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -130,7 +129,6 @@ public class UserController {
 
 		// DB에서 받아온 값을 vo에 저장함.
 		
-
 		// 비밀번호가 맞으면 true 틀리면 false가 나옴
 		if ((pwdEncoder.matches(dto.getPassword(), service.getPassword(dto)))) {
 
@@ -140,7 +138,6 @@ public class UserController {
 
 			// 사용자에게 리멤버를 눌렀을 경우.. 세션을 DB에 저장한다.
 			if (dto.isUseCookie()) {
-
 				int amount = 60 * 60 * 24 * 7;
 
 				System.out.println(1000 * amount);
@@ -150,12 +147,10 @@ public class UserController {
 				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
 
 				service.keepLogin(vo.getEmail(), session.getId(), sessionLimit, vo.getProfile());
-
 			}
 		} else {
 			UserVO vo = null;
 			model.addAttribute("userVO", vo);
-
 		}
 		// 4.interceptor posthandler() 사용 //컨트롤러의 매서드 이후에 사용됨
 	}
@@ -272,7 +267,7 @@ public class UserController {
 		System.out.println("bb는?" + (imageType.equals("jpg")));
 		// 이미지 타입을 검사해서 이미지인 경우에만 DB에 저장 한다.
 		if (imageType.equals("jpg") || imageType.equals("png") || imageType.equals("gif") || imageType.equals("jpge")) {
-			String realPath = UploadFileUtils.uploadFile(uploadPath, uploadfile.getOriginalFilename(),
+			String realPath = UploadFileUtils.uploadFile(uploadpath, uploadfile.getOriginalFilename(),
 					uploadfile.getBytes());
 			// 들어온 파일의 주소를 db에 저장하기위해서 set으로 지정해줌 그런데 파일을 넣지않아도 파일이 저장된다.
 			dto.setProfile(realPath);
@@ -307,56 +302,66 @@ public class UserController {
 
 	// get방식으로 URI에서 ?fileName이후에 값을 매개변수로 넣어줌
 	// 저장한 이미지 파일 불러오기!!!!!!! get방식!!!
+	@SuppressWarnings("resource")
 	@ResponseBody
 	@RequestMapping("/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
+        InputStream in = null;
+        ResponseEntity<byte[]> entity = null;
+        HttpURLConnection uCon = null;
+        System.out.println("FILE NAME: " + fileName);
 
-		// 자바 인풋스트림 클래스 사용 데이터 전송시 사용함!
-		InputStream in = null;
+        try{
+            String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
 
-		// 데이터 전송과 상태 를전송하는 클래스 선언
-		ResponseEntity<byte[]> entity = null;
+            MediaType mType = MediaUtils.getMediaType(formatName);
+            HttpHeaders headers = new HttpHeaders();
 
-		try {
+            String inputDirectory = "linker";
+            URL url;
 
-			String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
 
-			MediaType mType = MediaUtils.getMediaType(formatName);
+            try {
+                url = new URL(s3.getFileURL(bucketName, inputDirectory+fileName));
+                System.out.println("https://s3.ap-northeast-2.amazonaws.com/"+inputDirectory+"/linker"+fileName);
+                //https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate/2018/04/16/2e66c20a-6e93-43ae-93e5-b812a023bc61_avatar.png
+                //https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate/2018/04/16/2e66c20a-6e93-43ae-93e5-b812a023bc61_avatar.png
+                uCon = (HttpURLConnection) url.openConnection();
+                System.out.println("���� :" + uCon);
+                in = uCon.getInputStream(); 
+                System.out.println("������ :" + in);
+            } catch (Exception e) {
+                url = new URL(s3.getFileURL(bucketName, "default.jpg"));
+                uCon = (HttpURLConnection) url.openConnection();
+                in = uCon.getInputStream();
+            }
 
-			HttpHeaders headers = new HttpHeaders();
+            
+            entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+            headers,
+            HttpStatus.CREATED);
+        }catch (FileNotFoundException effe){
+            System.out.println("File Not found Exception");
+            String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
+            MediaType mType = MediaUtils.getMediaType(formatName);
+            HttpHeaders headers = new HttpHeaders();
+            in = new FileInputStream(uploadpath+"/noimg.jpg");
 
-			in = new FileInputStream(uploadPath + fileName);
-			System.out.println(in);
+                headers.setContentType(mType);
 
-			// 타입 검사하는 것 이미지 파일이면 화면에 보이고 아니면 다운로드 처리
-			if (mType != null) {
-
-				// 이미지를 출력
-				headers.setContentType(mType);
-			} else {
-				// 이미지파일이 아닌 경우에는 다운로드
-				fileName = fileName.substring(fileName.indexOf("_") + 1);
-				// MIME 타입을 다운로드용으로 사용되는 MediaType.APPLICATION_OCTET_STREAM 으로 지정
-				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-				headers.add("Content-Disposition",
-						"attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
-			}
-			// 가져온 이미지를 확인후에 entity에 새로운 객체를 생성자에 넣어줌으로써 IOUtils.toByteArray(in)에 데이타를 넣고
-			// headers에 정보넣고 마지막으로 상태코드를 넣는다
-			entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// 오류 발생시 데이터가 없으니 상태코드로 배드 리퀘스트를 전송한다.
-			entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-		} finally {
-			// inputStream은 열었으면 꼭 닫아줘야한다.그래서 try - catch - finally 문으로 finally에 넣어준다.
-			in.close();
-		}
-
-		return entity;
-	}
+            entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+                    headers,
+                    HttpStatus.CREATED);
+         
+        }catch (Exception e){
+            e.printStackTrace();
+            entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
+        }finally {
+            in.close();
+        }
+        return entity;
+    }
+	
 
 	// 회원가입 POST 이메일 인증 도 함께함
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -415,31 +420,38 @@ public class UserController {
 
 	// 잃어버린 비밀번호를 찾는 것
 	@RequestMapping(value = "/forget", method = RequestMethod.POST)
-	public String forgetPOST(UserVO vo, Model model, RedirectAttributes rttr, HttpServletResponse response,
+	public void forgetPOST(UserVO vo, Model model, RedirectAttributes rttr, HttpServletResponse response,
 			HttpSession session) throws Exception {
 
-		service.serchEmail(vo.getEmail());
+		System.out.println(service.serchEmail(vo.getEmail()));
 
 		// 클라이언트로 부터 받아온 이메일이 DB에 들어있는지 확인하는과정 1이면 가입되어있다고 판단해서 새로운 비밀번호를 설정하고 설정한 비밀번호를
 		// 이메일로 전송해줌.
 		if (service.serchEmail(vo.getEmail()) == 1) {
 			// 해당회원이 탈퇴된 회원인지 체크함
 			UserVO vo2 = service.viewUser(vo.getEmail());
+			System.out.println(vo2);
 
+            //구글 회원은 비밀번호를 찾기를 못한다.
+            if(vo2.getGoogle().equals("1")) {
+            	response.setContentType("text/html; charset=UTF-8");
+    			PrintWriter out = response.getWriter();
+    			out.println("<script>alert('가입되지 않은  Email입니다. 다시 확인해 주세요'); history.go(-1);</script>");
+    			out.flush();
+    			return;         	
+            }
+     
 			// 해당회원이 탈퇴된 회원인지 체크함
 			if (vo2.getStatus() == 2) {
-
 				response.setContentType("text/html; charset=UTF-8");
-
 				PrintWriter out = response.getWriter();
-
 				out.println("<script>alert('탈퇴된 회원의  Email입니다. 다시 확인해 주세요'); history.go(-1);</script>");
-
 				out.flush();
-
-				return "/user/login";
-
+				return;
 			}
+			//가입된 상태의 회원의경우 비밀번호를 임의로 변경 후에 해당메일로 비밀번호 발송
+			if(vo2.getStatus() == 1) {
+		
 			// 임의의 문자와 숫자를 뽑아냄
 			UUID uid = UUID.randomUUID();
 
@@ -466,22 +478,23 @@ public class UserController {
 			sendMail.send(); // 메일보내기
 
 			service.forgetpassword(vo);
-
-			return "redirect:/user/login";
-		} else // Email이 DB에 없으면 0으로 되고 Email이 가입되지않았다는 alert창을 띄우고 다시 history.go(-1)로 로그인페이지로
-				// 돌아간다.
-		{
-
+			//경고창 뛰움 비밀번호가 임시비밀번호로 바뀌었으니 가서 확인하고 로그인 후에 새로운 비밀번호로 설정하라고 띄움
 			response.setContentType("text/html; charset=UTF-8");
-
 			PrintWriter out = response.getWriter();
-
-			out.println("<script>alert('가입되지 않은  Email입니다. 다시 확인해 주세요'); history.go(-1);</script>");
-
+			out.println("<script>alert('해당 메일로 임시 비밀번호가 발송되었습니다. 임시 비밀번호를 통해서 로그인 후에 비밀번호를 변경해주세요.');history.go(-1);</script>");
 			out.flush();
-
-			return "/user/login";
+		
+			return;
+			}
+		} else {// Email이 DB에 없으면 0으로 되고 Email이 가입되지않았다는 alert창을 띄우고 다시 history.go(-1)로 로그인페이지로
+				// 돌아간다.
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('가입되지 않은  Email입니다. 다시 확인해 주세요'); history.go(-1);</script>");
+			out.flush();
+			return;
 		}
+		
 	}
 
 	// 구글 Callback호출 메소드
@@ -552,40 +565,27 @@ public class UserController {
 		UserVO vo2 = service.viewUser(vo.getEmail());
 		System.out.println(vo2.toString());
 		if (vo2.getStatus() == 2) {
-
 			// 페이지를 따로넘기지않고 alert창을 뛰움
 			response.setContentType("text/html; charset=UTF-8");
-
 			PrintWriter out = response.getWriter();
-
 			out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1);</script>");
-
 			out.flush();
-
 			return "user/login";
-
 		}
 		// DB로부터 정보 받아와서 세션을에 저장하고싶어서 보냄
 		vo = singupService.serchGoogle(vo);
-
 		System.out.println("니가 그거냐" + vo.toString());
-
 		session.setAttribute("login", vo);
-
-		System.out.println(session.getAttribute("login"));
 		/*
 		 * vo.setNickname(profile.getAccountEmail());
 		 * System.out.println(profile.getDisplayName()==null);
 		 */
-
 		return "user/googleSuccess";
-
 	}
 
 	// 비밀번호 변경창
 	@RequestMapping(value = "/passwordchange", method = RequestMethod.GET)
 	public String passwordconfirm(HttpServletRequest request, HttpSession session) throws Exception {
-
 		System.out.println("현재 비밀번호 확인다");
 
 		UserVO vo = (UserVO) session.getAttribute("login");
@@ -604,7 +604,6 @@ public class UserController {
 			if(vo.getGoogle().equals("1"))
 			return "redirect:/user/connect";
 		}
-
 		return "user/passwordchange";
 	}
 
@@ -669,8 +668,6 @@ public class UserController {
 	// 회원 탈퇴 현재 비밀번호 확인
 	@RequestMapping(value = "/secessionUser", method = RequestMethod.GET)
 	public String secessionUser(HttpSession session) throws Exception {
-
-		System.out.println("11");
 
 		UserVO vo = (UserVO) session.getAttribute("login");
 
@@ -743,6 +740,7 @@ public class UserController {
 		session.removeAttribute("success");
 
 		System.out.println("구글키" + session.getAttribute("googlekey"));
+		
 		System.out.println("성공" + session.getAttribute("success"));
 
 		return "user/secessionUserConfirm";
@@ -861,7 +859,5 @@ public class UserController {
 		sendMail.send();
 
 		return "true";
-
 	}
-
 } // end메인
