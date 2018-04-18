@@ -49,6 +49,13 @@ public class ProjectServiceImpl implements ProjectService {
 		// TODO Auto-generated method stub
 		return dao.checkProject(vo);
 	}
+	//
+	@Override
+	public List<ProjectVO> hiddenList(int u_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.hiddenList(u_id);
+	}
+	
 	
 	
 }
