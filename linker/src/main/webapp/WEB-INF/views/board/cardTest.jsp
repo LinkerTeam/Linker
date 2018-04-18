@@ -10,7 +10,7 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardTest.css?ver=12" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardTest.css?ver=11" type="text/css" rel="stylesheet" />
 </head>
 
 
@@ -20,7 +20,7 @@
 	
 	<div class="content">
 
-		<div class="projectTitle"><h2>${project.title}</h2></div>
+		<div class="projectTitle"><input type="text" name="projectTitle" value="${project.title}" onKeyUp='limitMemo(this, 20)'></div>
         <div class="cardlistContent">
 
 			<!-- 카드리스트 전체 -->
@@ -108,7 +108,54 @@
 		var u_id = ${project.u_id}; //유저 id
 		var p_id = ${project.id}; //프로젝트 id
 		var p_ps_id = ${project.ps_id}; //프로젝트 상태값
+		var p_title; //프로젝트 title
 		
+		
+		
+		
+		/* 프로젝트 title 수정 | 관련된 모든 이벤트 */
+		$("input[name=projectTitle]").on({			
+			click: function(){
+				$(this).select(); //전체선택
+			},
+			focusin: function (event) { 
+				p_title = $(this).val(); // 기존의 프로젝트 제목을 저장
+			},
+			focusout: function (event) {
+				if($(this).val() !== p_title)
+					projectTitleModify($(this).val()); //ajax처리
+			},
+			keydown: function (key) { //Enter키 누르면
+				if (key.keyCode == 13) {
+					event.preventDefault(); //기본 이벤트 제거
+			       	$(this).blur(); //포커스 없앤다
+				};
+			},
+		});
+		
+		
+		/* 프로젝트 title 수정 | ajax 처리 */
+		function projectTitleModify(p_title){
+			$.ajax({
+				type : 'put',
+				url : "/main/" + p_id + "/" + u_id,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PUT"
+				},
+				data : JSON.stringify({title : p_title}),
+				dataType : 'text', 
+				success : function(result) {
+					if(result === "SUCCESS"){
+						console.log(p_id + "번 프로젝트의 제목을 " + p_title + "로 변경했습니다.");
+						$("input[name=projectTitle]").val(p_title); //수정사항 input tag에 적용
+					};
+				},
+				error : function() {
+					alert("에러가 발생했습니다.");
+				}
+			});//ajax
+		};
 		
 		
 		
@@ -136,8 +183,8 @@
 						
 		
 		/* 매개변수 카드id와 카드title이 주어지면 그것을 이용해 카드 태그를 문자열로 만드는 함수 */
-		function newCardAdd(cardId, cardTitle){
-			var newTitle = "<div data-id='" + cardId + "' class='cardtitleLi'>" + 
+		function newCardAdd(cardId, cardlistId, cardTitle){
+			var newTitle = "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='cardtitleLi'>" + 
 						   "    <div id='cardLink' onclick='loadCardData(this)'>" + cardTitle + "</div>" + 
 						   "    <button class=cardModifyBtn><i class='far fa-edit'></i></button>" + 
 						   "</div>";
@@ -212,7 +259,7 @@
 			  		for(var i = 0; i < uniqID.length; i++){ 
 			  			for(var j = 0; j < data.length; j++){
 				  			if(data[j].c_id !== 0 && data[j].cl_id === uniqID[i]){ //카드id가 0이 아니고 카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같을 때
-				  				var cardStr = newCardAdd(data[j].c_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출(data의 id와 title을 매개변수로 줌)
+				  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출(data의 id와 title을 매개변수로 줌)
 								$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
 				  			};
 			  			};
@@ -308,7 +355,7 @@
 				}),
 				success : function(cardId){
 					if (cardId !== null || cardId !== 0) {
-						var cardStr = newCardAdd(cardId, title); //새로운 카드 태그 생성
+						var cardStr = newCardAdd(cardId, cl_id, title); //새로운 카드 태그 생성
 						$(".addCard").eq(cardlistIndex).before(cardStr); //카드추가창 위에 새카드 태그 삽입
 						$(".createCardTextarea").val(''); //textarea 초기화
 						cards[cardlistIndex].scrollTop = cards[cardlistIndex].scrollHeight; //스크롤 조정
@@ -654,7 +701,7 @@
 						
 						switch (ps_id) {
 				            case 1: //보드에 카드리스트 태그 삽입
-				            	//여기는 드래그앤드롭 들어가서(-)
+				            	newCardlistAdd(id, title);
 				                break;
 				            case 2: //보관탭에 동적 카드리스트 태그 삽입
 				            	$(".nav-tab-content-Box-archive.archiveCardlist").prepend( createArchivedCardlist(id, title) );

@@ -36,9 +36,9 @@ public class CardTestController {
 		check.setT_id(teamID);
 		check.setU_id(vo.getId());
 		//해당팀원이 아니면 그 팀에 모든 프로젝트에 들어갈수없게 막는다.
-		if(proService.checkProject(check)==0) {		
-			return "redirect:/main";  //redirect:는  해당 jsp가 아니라 해당 mapping을 URI를 찾아감   
-		} else {
+//		if(proService.checkProject(check)==0) {		
+//			return "redirect:/main";  //redirect:는  해당 jsp가 아니라 해당 mapping을 URI를 찾아감   
+//		} else {
 		ProjectVO pvo = proService.titleName(p_ID);
 		pvo.setT_id(teamID);
 		pvo.setId(p_ID);
@@ -46,7 +46,7 @@ public class CardTestController {
 		System.out.println(pvo.toString());
 		model.addAttribute("project",pvo);
 		return "/board/cardTest";
-		}
+//		}
 	};
 	
 }

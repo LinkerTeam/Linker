@@ -2,6 +2,7 @@ package com.linker.service;
 
 import java.util.List;
 
+import com.linker.domain.CardAttachVO;
 import com.linker.domain.CardVO;
 
 public interface CardService {
@@ -15,4 +16,11 @@ public interface CardService {
 	public List<CardVO> listCard(CardVO vo) throws Exception;
 	//카드 상세내용 조회
 	public CardVO readPopcard(CardVO vo) throws Exception;
+	
+	//첨부파일 조회
+	public List<CardAttachVO> allAttach(Integer c_id) throws Exception;
+	//첨부파일 업로드
+	public void addAttach(CardAttachVO vo) throws Exception;
+	//첨부파일 삭제
+	public void deleteAttach(String file) throws Exception;
 }
