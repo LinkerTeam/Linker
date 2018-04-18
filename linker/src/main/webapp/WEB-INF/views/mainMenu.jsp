@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,7 +10,40 @@
 <!-- CSS -->
 
 <link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
+<style>
+.list-modal{
+	position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*width: 100%;
+    height: 100%;*/
+    background-color: rgb(0, 0, 0);
+    /* 모달창 옆에 백그라운드 농도  */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Black w/ opacity */
+    z-index: 3;
+    /*overflow-y: auto;*/
+  
+    display: none;
+    transition: opacity 0.3s 0, visibility 0 0.3s;
+}
+.list-modal.is-visible {
+    display: block;
+}
+.list-content{
+ 	position: relative;
+    height: auto;
+    box-sizing: border-box;
+    width: 400px;
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px 45px 20px 20px;
+    margin: 250px auto 0 auto;
 
+}
+</style>
 </head>
 
 <body>
@@ -28,7 +63,15 @@
 	<!--확장메뉴 | 하단 메뉴영역-->
 	<ul class="mainNav-menu">
 		<li class="mainNav-menu-header">Main navigation</li>
-		<li><a href="http://localhost:9090/main">Project</a></li>
+		<li>
+			<div class="list-modal">
+				<div class="list-content">			 
+					<div class="head-list">Hidden Project List</div>
+					<div class="content-list"></div>
+				</div>
+			</div>
+			<a href="#" class="project-list">Project</a>
+		</li>
 		<li><a href="#">ERD</a></li>
 		<li><a href="#">CodeLauncher</a></li>
 		<li><a href="#">Chat</a></li>
@@ -197,6 +240,8 @@
 		
 		var i = 0;
 		var j = 0;
+		var p_id=null;
+		var u_id=null;
 	
 		/* 왼쪽 메인메뉴 | 확장 & 축소 이벤트 */
 		function openNav() {
@@ -513,8 +558,103 @@
 	    	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 board close화면 출력
 	    });
 	    		
+		//모달창 띄우기
+		$(".project-list").on("click",function(){	
+			$('.list-modal').addClass('is-visible');		
+			
+			$.ajax({
+				type:"GET",
+				url:"/main/projectlist",
+				success : function(data){
+					if(data != null){
+					console.log(data);
+					$('.content-list').html("");
+					for(var i = 0; i < data.length ; i++){
+					var str ="<div class='list-li'><a href='http://localhost:9090/board/"
+					+data[i].t_id+
+					"/"
+					+data[i].id+"'>"
+					+data[i].title+"</a>"
+					+"<button class='preload' p='"+data[i].id+"' u='"+data[i].u_id+"' t='"+data[i].t_id+"'>re-load</button>"
+					+"<button class='pdelete' p='"+data[i].id+"' u='"+data[i].u_id+"'>delete</button></div>"
+					$('.content-list').append(str);
+					}
+				
+					}
+					
+				},
+				error : function(){
+					alert("통신의 오류가 발생했습니다.");
+				}
+			});   
+		})
+		//모달창 닫기
+		$(".list-modal").on("click",function(e){
+			if($(e.target).hasClass("list-modal")){
+				$(".list-modal").removeClass("is-visible");		
+			}
+		})
 		
+		 $('.content-list').on("click",".preload",function(){
+			u_id = $(this).attr("u");
+			p_id = $(this).attr("p");
+			var ps_id = 1;
+			var parent = $(this).parent();
+
+		    	$.ajax({
+		    		type : "put",
+		    		url : "/main/" + p_id + "/" + u_id,
+		    		headers : {
+		    			"Content-Type" : "application/json",
+		    			"X-HTTP-Method-Override" : "PUT"
+		    		},	
+		    		data : JSON.stringify({ps_id : ps_id}),
+		    		dataType : "text", 
+		    		success : function(result) {
+		    			if(result === "SUCCESS"){	
+		    				if(ps_id == 1){
+		    				
+		    					parent.html("");
+		    				}
+		    			};//if
+		    		},
+		    		error : function() {
+		    			alert("에러가 발생했습니다.");
+		    		}
+		    	});//ajax
+		});
 		
+		$('.content-list').on("click",".pdelete",function(){
+			u_id = $(this).attr("u");
+			p_id = $(this).attr("p");
+			ps_id = 3;
+			var parent = $(this).parent();
+			
+			if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true){
+				return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return				
+			}
+			
+			$.ajax({
+	    		type : "put",
+	    		url : "/main/" + p_id + "/" + u_id,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},	
+	    		data : JSON.stringify({ps_id : ps_id}),
+	    		dataType : "text", 
+	    		success : function(result) {
+	    			if(result === "SUCCESS"){	
+	    				if(ps_id == 3){
+	    					parent.html("");
+	    				}
+	    			};//if
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});//ajax
+		});
 	</script>
 </body>
 </html>

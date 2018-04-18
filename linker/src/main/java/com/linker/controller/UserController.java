@@ -1,5 +1,6 @@
 package com.linker.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,7 +11,6 @@ import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -252,7 +252,15 @@ public class UserController {
 		System.out.println("session에 들어있는 값" + user);
 		// session에 들어있는 값중 이메일만 따로 추출해서 문자열에 넣어준다.
 		String email = user.getEmail();
-
+		
+		//=====================기존 이미지 파일 삭제=======================
+		//s3 클래스 사용
+		S3Util s3 = new S3Util();
+		String bucketName = "linkers104";
+		//기존 DB에 있던 정보를 삭제 하고 들어온 정보로 다시 새롭게 쓴다.
+		s3.fileDelete(bucketName, uploadpath+user.getProfile());
+		//=====================기존 이미지 파일 삭제=======================		
+		
 		// 세션으로부터 받은 email값을 통해서 service.viewUser()매서드를 통해서 다시 DB로부터 값을 받아온다. 세션으로부터
 		// 들어있는 값이아닌 DB값으로
 		model.addAttribute("vo", service.viewUser(email));
@@ -271,9 +279,10 @@ public class UserController {
 					uploadfile.getBytes());
 			// 들어온 파일의 주소를 db에 저장하기위해서 set으로 지정해줌 그런데 파일을 넣지않아도 파일이 저장된다.
 			dto.setProfile(realPath);
+			System.out.println(realPath);
 		}
 		System.out.println(dto.getProfile());
-
+       
 		dto.setEmail(email);
 
 		service.updateUser(dto);
@@ -306,7 +315,8 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-        InputStream in = null;
+       System.out.println(" 나여기 들어왔어요");
+		InputStream in = null;
         ResponseEntity<byte[]> entity = null;
         HttpURLConnection uCon = null;
         System.out.println("FILE NAME: " + fileName);

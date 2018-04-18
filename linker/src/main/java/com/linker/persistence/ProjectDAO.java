@@ -23,5 +23,7 @@ public interface ProjectDAO {
 	public List<UserVO> teamProfile(int t_id) throws Exception;
 	//해당 팀원이 아니면 프로젝트에 들어갈수없음
 	public int checkProject(ProjectVO vo)throws Exception;
+	//
+	public List<ProjectVO> hiddenList(int u_id)throws Exception;
 	
 }

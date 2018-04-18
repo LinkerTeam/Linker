@@ -14,7 +14,9 @@ public class UploadFileUtils {
 
 
 	public static String uploadFile(String uploadPath, String originalName, byte[] byteData) throws Exception {
+		//s3 클래스 사용
 		S3Util s3 = new S3Util();
+		//bucketName 작성
 		String bucketName = "linkers104";
 		//랜덤의 uid 를 만들어준다.
 		UUID uid = UUID.randomUUID();
@@ -27,11 +29,11 @@ public class UploadFileUtils {
 		String savedPath = calcPath(uploadPath);
 
 		String uploadedFileName = null;
-
+		//파일 설정  2018/04/15/asdasd_id.jpg 형태로 만듬
 		uploadedFileName = (savedPath + savedName).replace(File.separatorChar, '/');
 		//S3Util 의 fileUpload 메서드로 파일을 업로드한다.
 		s3.fileUpload(bucketName, uploadPath+uploadedFileName, byteData);
-
+		
 
 		logger.info(uploadedFileName);
 		//	s3.fileUpload(bucketName, new File(fileName))

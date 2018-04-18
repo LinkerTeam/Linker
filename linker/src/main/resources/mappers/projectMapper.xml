@@ -71,5 +71,19 @@
 	JOIN linker.team_has_user ON team_has_user.u_id = project.u_id
 	WHERE team_has_user.u_id=#{u_id} AND project.t_id=#{t_id};
 	</select>
+	
+	<!--  -->
+	<select id="hiddenList" resultType="projectVO">
+	SELECT 
+		user.id AS u_id
+		,project.title
+		,project.ps_id
+		,project.t_id
+    	,project.id
+	FROM linker.user
+	JOIN linker.team_has_user ON user.id = team_has_user.u_id
+	JOIN linker.project ON team_has_user.t_id = project.t_id
+	WHERE user.id =#{u_id} AND project.ps_id =2;
+	</select>
 
 </mapper>
