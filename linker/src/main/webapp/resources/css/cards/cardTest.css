@@ -7,12 +7,19 @@ textarea:focus {
 
 
 /* 헤더, 양쪽메뉴 제외한 본문영역 중 상단 프로젝트 타이틀 영역 */
-.projectTitle {
+.projectTitle > input {
+	width: 400px;
     height: 40px;
-    padding-left: 20px;
-    font-size: 18px;
-    line-height: 35px;
+    padding-left: 10px;
     color: #484848;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 40px;
+    background-color: #b0b0b0;
+}
+.projectTitle > input:focus{
+	outline: none;
 }
 /* 본문영역 중 프로젝트 타이틀을 제외한 영역 */
 .cardlistContent {

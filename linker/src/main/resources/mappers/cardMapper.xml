@@ -10,7 +10,7 @@
 		<!-- 자동생성된 id값을 가져오기 위해 useGeneratedKeys를 true로 설정. -->
 	<insert id="createCard" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO linker.card (title, u_id, cl_id)
-		VALUES(#{title}, #{u_id}, #{cl_id})
+		VALUES (#{title}, #{u_id}, #{cl_id})
 	</insert>
 	
 	<!-- 카드 수정(제목, 내용 수정 -->
@@ -70,5 +70,32 @@
 		INNER JOIN linker.cardlist cl ON c.cl_id = cl.id
 		WHERE c.id = #{id}
 	</select>
+	
+	
+	<!-- 첨부파일 조회 -->
+	<select id="allAttach" resultType="CardAttachVO">
+		SELECT 
+			f.id
+			, f.file
+			, f.c_id
+			, c.ps_id
+			, f.cdate
+			, f.size
+		FROM linker.c_file f
+		LEFT JOIN linker.card c ON f.c_id = c.id
+		WHERE c_id = #{c_id}
+	</select>
+	
+	<!-- 첨부파일 업로드 -->
+	<insert id="addAttach">
+		INSERT INTO linker.c_file(file, c_id, size)
+		VALUES (#{file}, #{c_id}, #{size})
+	</insert>
+	
+	<!-- 첨부파일 삭제 -->
+	<delete id="deleteAttach">
+		DELETE FROM linker.c_file
+		WHERE file = #{file}
+	</delete>
 	
 </mapper>

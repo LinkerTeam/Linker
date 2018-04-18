@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<div id="popupBox" class="overlay">
+	<div id="popupBox">
         <div class="popupCard">
         	<!-- 카드의 상태값이 보관/가리기일 때 상단bar-->
         	<div class="popCard-banner archive"><p><i class="fas fa-archive"></i> This card is archived. You can't edit this card anymore.</p></div>
@@ -55,14 +55,7 @@
                 </article>
 
                 <!-- 첨부파일 -->
-                <article>
-                    <div class="attach">
-                        <div class="title-attach title">
-                            <i class="fas fa-paperclip"></i><strong>첨부파일</strong>
-                        </div>
-                        <div class="attach-content v"></div>
-                    </div>
-                </article>
+                <%@include file="cardAttach.jsp"%>
                 <!-- 댓글작성 -->
                 <article>
                     <div class="comment">
@@ -115,8 +108,11 @@
                     <li><div class="popupCard-aside-sendToCardlist"><i class="fas fa-undo-alt"></i><p>send to cardlist</p></div></li>
                 </ul>
             </aside>
-
         </div>
+    </div>
+    <div id='#imgModal'>
+    	<span class="closeModal imageModal">&times;</span>
+    	<div class='imgModal'></div>
     </div>
     
     <script>
@@ -147,6 +143,7 @@
 	    	25. 클릭한 왼쪽메인메뉴 활성화 표시(-)
 	    	26. board를 close하면 설정탭에서 close-board 메뉴 사라져야 함(중복클릭 문제)
 				-> 오른쪽 메인메뉴 분리할 예정이므로 메뉴 정리 되면 고치기(-)
+			27. jpeg는 thumbnail 파일이 안 생김. (-)
 	    **************************************************************************************************************
 	    	<해결한 것>
 	    	1. 카드모달 닫을 때 새로고침 되지 않게 (+)
@@ -164,9 +161,6 @@
 	    	21. 가리기 경고창(+)
 	    **************************************************************************************************************/	    
 	
-	    //임의의 프로젝트 id값을 준다.(프로젝트4에 대한 화면 출력)
-	    var p_id = 4;
-	
 	    var cardModal = document.getElementById("popupBox"); //전체 모달창 객체
 	    var popCardTitle = document.getElementsByClassName("title-modify")[0]; //제목input태그
 	    var cancelBtn = document.getElementsByClassName("cancelBtn")[0]; //내용 수정 취소버튼
@@ -175,6 +169,7 @@
 	    var contentTextarea = document.getElementsByClassName("content-textarea"); //내용[0]/댓글[1] textarea
 	    
 		var popCardId; //카드 상세내용 조회할 때 클릭한 카드id값을 담을 변수
+		var popCardlistId; //카드 상세내용 조회할 때 클릭한 카드의 카드리스트 id값을 담을 변수
 		var popCardPsId; //카드 상세내용 조회할 때 클릭한 카드의 ps_id값을 담을 변수
 		var popCardContent; //카드 상세내용 조회할 때 클릭한 카드 내용을 담을 변수
 		
@@ -216,6 +211,7 @@
             	
             	$(".title-modify").prop("disabled", false); //제목 수정 할 수 있게
             	$(".content-textarea").prop("disabled", false); //내용 수정 할 수 있게
+            	$(".attach-content").show(); //첨부파일 추가 영역 출력
                 break;
             case 2: //보관일 때
             	$(".changeStatus").removeClass("changeStatus"); //관련된 모든 클래스 이름에서 changeStatus 제거하여 CSS 속성 초기화
@@ -223,10 +219,11 @@
             	$(".popupCard").addClass("changeStatus");//2. 카드모달창 padding 조절
             	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 보관버튼 숨기기
             	$(".popupCard-aside-hide").removeClass("changeStatus"); //3. 가리기버튼 출력
-            	$(".popupCard-aside-sendToCardlist").addClass("changeStatus"); //4. send to cardlist메뉴 출력.
+            	$(".popupCard-aside-sendToCardlist").addClass("changeStatus"); //4. send to cardlist메뉴 출력
             	
             	$(".title-modify").prop("disabled", true); //제목 수정 못하게
             	$(".content-textarea").prop("disabled", true); //내용 수정 못하게
+            	$(".attach-content").hide(); //첨부파일 추가 영역 숨기기
             	break;
             case 3: //가리기일 때
             	$(".changeStatus").removeClass("changeStatus"); //관련된 모든 클래스 이름에서 changeStatus 제거하여 CSS 속성 초기화
@@ -238,6 +235,7 @@
             	
             	$(".title-modify").prop("disabled", true); //제목 수정 못하게
             	$(".content-textarea").prop("disabled", true); //내용 수정 못하게
+            	$(".attach-content").hide(); //첨부파일 추가 영역 숨기기
                 break;
     		};
 		};
@@ -247,10 +245,12 @@
 		/* 카드 상세내용 조회 */
 	    function loadCardData(obj) {
 	       	popCardId = obj.parentNode.getAttribute("data-id"); //클릭한 카드의 id값을 가져와서 var id에 담음.
+	       	
 	       	modifyCardTitle = $(obj); //클릭한 카드의 title표시하는 div를 전역변수에 담아둠(제목 수정 처리에 이용할 예정)
 	    	
 	    	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data){
-	    		popCardPsId = data.ps_id; //클릭한 카드의 ps_id값 전역변수에 담아두기 		
+	    		popCardPsId = data.ps_id; //클릭한 카드의 ps_id값 전역변수에 담아두기 	
+	    		popCardlistId = data.cl_id; //클릭한 카드의 카드리스트 id값 전역변수에 담아두기(send to board에 쓸 예정)
 	    		
 	    		//DB에서 카드 id, 내용 가져오기(id는 화면에 표시하지 않는다.)
 	    		$(".card-id-Hidden").eq(0).html(data.id);
@@ -266,6 +266,7 @@
 		    	cardStatus(data.ps_id); //카드 상태값에 따라 진행, 보관, 가리기 구별하여 각각 다른 형태의 카드모달창 출력
 	    	});//JSON
 	    	allReply(); //모든 댓글 getJSON으로 받아오는 함수
+	    	allAttach(); //모든 첨부파일 getJSON으로 받아오는 함수
 	    	cardModal.style.display = "block"; //모달창 띄우기
 	    };
 	    
@@ -441,12 +442,14 @@
 	    		var str = "";
 	    		
 	    		$(data).each(function(){
-	    			var edit = "";
+	    			var edit = ""; 
 		    		var myReply = "";
+		    		var ps_id = this.ps_id;
+		    		
 	    			if(this.cdate !== this.udate){ //수정된 댓글에만 출력됨
 		    			edit = "<p class='edited'>(edited)</p>";
 		    		};
-	    			if(this.u_id === u_id){ //본인이 쓴 댓글에만 출력됨
+	    			if(ps_id === 1 && this.u_id === u_id){ //카드의 상태값이 1일 때, 본인이 쓴 댓글에만 출력됨
 	    				myReply = "<div class='replyBtn reply'>" +
 							   	  "    <button class='replyModifyBtn reply'>수정</button>" +
 							   	  "    <button class='replyDeleteBtn reply'>삭제</button>" +
@@ -454,7 +457,7 @@
 					};
 					
 	    			str += "<div data-id='" + this.id + "' data-uid='" + this.u_id + "'class='replyArea'>" +
-						   "	<img src='http://localhost:9090/user/displayFile?fileName=" + this.profile + "' />" +
+						   "	<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate" + this.profile + "' />" +
 						   "	<div class='reply-commentArea'>" +
 						   "		<div class='reply-info'>" +
 						   "        	<p class='reply-nickname'>" + this.nickname + "</p>" +
@@ -550,6 +553,12 @@
 	    	$(".replyModify-area").prevAll().hide(); //댓글 작성자, 수정/삭제 버튼은 숨기기
 	    });
 	    
+	    /* 댓글 수정 | 수정 X버튼 누를 경우 textarea사라짐 */
+	    $(".activity-content").on("click", ".cancelBtn.reply", function(){
+	    	$(this).parent().parent().prevAll().toggle();
+	    	$(this).parent().parent(".replyModify-area").remove();
+	    });
+	    
 	    
 	    
 	    /* 댓글 수정 | 댓글 수정 후 Save버튼을 클릭할 경우 - ajax처리 */
@@ -637,15 +646,16 @@
 	    
 	    
 	    
+	    
 	    /*
 	     * 카드 보관/가리기 관련
 	     */
 	    
 	    
 	    /* 카드 보관/가리기 | 보관탭에 삽입될 카드 태그 생성 */
-	    function createArchivedCard(id, title){
+	    function createArchivedCard(id, cl_id, title){
 	    	var str = "<div class='nav-tab-content-Box-archive archive-cards'>" +
-					  "    <div data-id='" + id + "' class='cardtitleLi tab-cards'>" +
+					  "    <div data-id='" + id + "' data-clId='"  + cl_id +  "' class='cardtitleLi tab-cards'>" +
 					  "        <div id='cardLink' onclick='loadCardData(this)'>" + title + "</div>" +
 					  "        <div class='cardStatus'><i class='fas fa-archive'></i> archived</div>" +
 					  "    </div>" +
@@ -659,8 +669,8 @@
 	    };
 	    
 	    /* 카드 보관/가리기 | 가리기탭에 삽입될 카드 태그 생성 */
-	    function createTrashboxCard(id, title){
-	    	var str = "<div data-id='" + id + "' class='cardtitleLi tab-cards'>" +
+	    function createTrashboxCard(id, cl_id, title){
+	    	var str = "<div data-id='" + id + "' data-clId='"  + cl_id +  "' class='cardtitleLi tab-cards'>" +
 					  "    <div id='cardLink' onclick='loadCardData(this)'>" + title + "</div>" +
 					  "    <div class='cardStatus'><i class='fas fa-archive'></i> hidden</div>" +
 					  "</div>";
@@ -694,7 +704,7 @@
 	    
 	    
 	    /* 카드 보관/가리기 수정 | ajax처리 */
-	    function cardStatusChange(id, ps_id, title){
+	    function cardStatusChange(id, ps_id, cl_id, title){
 	    	$.ajax({
 	    		type : 'put',
 	    		url : "/board/" + p_id + "/cardstatus/" + id,
@@ -705,21 +715,21 @@
 	    		data : JSON.stringify({ps_id : ps_id}),
 	    		dataType : 'text', 
 	    		success : function(data) {	
-			    	$(".cardtitleLi[data-id=" + id + "]").parent(".nav-tab-content-Box-archive.archive-cards").remove(); //가리기탭에서 카드 밑의 send to cardlist, Trashbox 버튼까지 함께 삭제
-			    	$(".cardtitleLi[data-id=" + id + "]").remove(); //카드리스트에서 카드 삭제
-			    	
-			    	switch (ps_id) {
-			            case 1: //카드리스트에 카드 태그 삽입
-			            	
-			                break;
-			            case 2: //보관탭에 카드 태그 삽입
-			            	$(".nav-tab-content-Box-archive.archiveCard").prepend( createArchivedCard(id, title) ); //보관탭에 동적 카드태그 삽입
-			            	break;
-			            case 3: //가리기탭에 카드 태그 삽입
-			            	$(".nav-tab-content-Box-hidden.hiddenCard").prepend( createTrashboxCard(id, title) ); //가리기탭에 동적 카드태그 삽입
-			                break;
-		    		};
-			    	cardStatus(ps_id); //상태값에 맞게 카드모달창 형태 변경 
+					$(".cardtitleLi[data-id=" + id + "]").parent(".nav-tab-content-Box-archive.archive-cards").remove(); //가리기탭에서 카드 밑의 send to cardlist, Trashbox 버튼까지 함께 삭제
+					$(".cardtitleLi[data-id=" + id + "]").remove(); //카드리스트에서 카드 삭제
+				   
+					switch (ps_id) {
+				    	case 1: //카드리스트에 카드 태그 삽입
+				    		$(".cardlist[data-id='" + cl_id + "']").children(".cards").append( newCardAdd(id, cl_id, title) );
+				    		break;
+				    	case 2: //보관탭에 카드 태그 삽입
+				    		$(".nav-tab-content-Box-archive.archiveCard").prepend( createArchivedCard(id, cl_id, title) ); //보관탭에 동적 카드태그 삽입
+				    		break;
+				    	case 3: //가리기탭에 카드 태그 삽입
+				    		$(".nav-tab-content-Box-hidden.hiddenCard").prepend( createTrashboxCard(id, cl_id, title) ); //가리기탭에 동적 카드태그 삽입
+				    		break;
+			    	};
+					cardStatus(ps_id); //상태값에 맞게 카드모달창 형태 변경 
 	    		},
 	    		error : function() {
 	    			alert("에러가 발생했습니다.");
@@ -734,6 +744,7 @@
 	    	var className = $(this).attr("class"); //클릭한 요소의 class이름
 	    	var title = $(".title-cardTitle input").val(); //클릭한 카드의 title
 	    	
+	    	
 	    	if(className === "popupCard-aside-sendToCardlist changeStatus"){ //send to cardlist 버튼이면
 	    		popCardPsId = STATUS_ING; //ps_id = 1
 	    	} else if(className === "popupCard-aside-archive"){ //보관 버튼이면
@@ -746,9 +757,224 @@
 	    		return; 
 	    	};
 	    	
-	    	cardStatusChange(popCardId, popCardPsId, title); //상태변경에 대한 ajax처리 함수 호출
+	    	cardStatusChange(popCardId, popCardPsId, popCardlistId, title); //상태변경에 대한 ajax처리 함수 호출
 	    });
 	    
+	    
+	    
+	    
+	    /*
+		* 첨부파일
+		*/
+		
+		
+		/* 목록 조회 */
+		function allAttach(){
+			$.getJSON("/board/" + p_id + "/card/" + popCardId + "/allAttach", function(list){
+		    	var str = "";
+		    	$(list).each(function(){
+					var attachInfoStr = "<div class='attachInfo'>" +
+									    "	<p class='fileName'>" + originalFileName(this.file) + "</p>" + 
+									    "	<p class='uploadDate'>" + this.cdate + "</p>" +
+									    "	<p class='fileSize'>" + fileUnit(this.size) + "</p>";
+					if(this.ps_id === 1){ //진행카드만 delete버튼 추가하고 div 닫음
+						attachInfoStr += "<button class='attachDeleteBtn' data-src='" + this.file + "'>Delete</button></div>";						
+					} else { //진행카드가 아니면 delete버튼 없이 div 닫음
+						attachInfoStr += "</div>";	
+					};
+					
+					if(checkImageType(this.file)){ //이미지 파일 일 때(썸네일 img 태그 포함)
+						str += "<div class='attachLi'>" +
+							   "    <div class='attachThumbnail'>" +
+							   "        <a href='#'>" +
+							   "            <img class='thumbnail' src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/uploadFile" + this.file + "'/>" +
+							   "        </a>" + 
+							   "    </div>" + attachInfoStr +
+							   "</div>";
+					} else { //일반 파일일 때
+						str += "<div class='attachLi'>" +
+				  			   "    <div class='attachThumbnail'>" +
+							   "        <a href='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/uploadFile" + this.file + "'>" +
+							   "            <p>" + checkFileType(this.file) + "</p>" +
+							   "        </a>" + 
+							   "    </div>" + attachInfoStr +
+							   "</div>";
+					};
+		    	}); //each
+		    	$(".uploadedList").html(str);
+	    	}); //getJSON
+		};
+		
+	
+		/* 파일 확인 | 이미지 파일인지 확인 */
+		function checkImageType(fileName){
+			var pattern = /jpg$|gif$|png$|jpeg$/i; // i: 대소문자 구분 안 하도록
+			return fileName.match(pattern);
+		};
+		
+		
+		/* 파일 확인 | 일반 파일의 확장자 추출 */
+		function checkFileType(fileName) {
+			var fileType = fileName.lastIndexOf(".") + 1; //뒤에서부터 . 문자를 찾아 index반환
+			return fileName.substr(fileType).toUpperCase(); //.toUpperCase() : 대문자로 변환
+		};
+		
+		
+		/* 파일명 정리 | 원본 파일명 추출하기 */
+		function originalFileName(fileName){
+			var originalName = fileName.indexOf("_") + 1; //파일명 중 _ 의 index값 구함
+			
+			if(checkImageType(fileName)){ //이미지 파일일 경우 썸네일 파일명(s_) 때문에 _가 2번 들어가므로 
+				fileName = fileName.substr(originalName); //전체 파일명 중에서 s_ 뒤의 문자열 구한 다음에
+				originalName = fileName.indexOf("_") + 1; //한번 더 _ 의 index값 구함
+			};
+			
+			return fileName.substr(originalName); //_ 뒤의 문자열 return
+		};
+		
+		
+		/* 파일 확인 | 파일 크기가 10MB 이상일 때 띄우는 경고창을 숨기는 함수 */
+		function hideDiv (){ 
+			document.getElementsByClassName("fileSizeWarning")[0].style.display="none"; 
+		};
+			
+		
+		/* 파일 확인 | 파일 크기 측정하여 적합할 경우 ajax 호출 */
+		function fileCheck(file) {
+			var maxSize = 10485760; // 10MB
+			var fileSize = 0;
+			
+			fileSize = file.size; //첨부할 file의 size
+			
+			console.log("파일사이즈 : " + fileSize + ", 최대파일사이즈 : 10MB");
+			
+			if (fileSize > maxSize) { //파일 사이즈가 10MB가 넘을 경우
+				var str = "<div class='fileSizeWarning'><span>10MB 이하의 파일만 등록 가능합니다.</span></div>";
+				$("#popupBox").after(str); //경고메시지 띄움
+				
+				setTimeout("hideDiv()", 5000); //5초 뒤에 경고메시지 사라짐
+				return; //ajax 호출 하지 않고 return
+			};
+			
+			//FormData객체 : <form>태그로 만든 데이터 전송 방식과 동일하게 파일 데이터 전송
+			var formData = new FormData();
+			formData.append("file", file); //FormData객체에 파일 데이터 객체를 추가함
+			
+			$.ajax({
+				url : "/board/" + p_id + "/card/" + popCardId + "/addAttach",
+				data : formData,
+				dataType : "text",
+				processData : false, //데이터를 일반적 query string으로 변환할 것인지에 대한 설정. 기본값 true로 설정할 경우 'application/x-www-form-urlencoded' 타입으로 전송하게 된다.
+				contentType : false, //기본값인 application/x-www-form-urlencoded 말고 multipart/form-data방식으로 파일전송 하기 위해 false
+				type : "POST",
+				success : function(data) {
+					if (data !== null)
+						allAttach(); //첨부파일 목록 갱신
+				},
+				error : function() {
+					alert("에러가 발생했습니다.");
+				}
+			}); //ajax
+		};
+		
+		
+		/* 파일 확인 | 파일 크기에 따라 출력 단위 결정 */
+		function fileUnit(fileSize){
+			var str;
+			if (fileSize / 1024 > 1) { //1KB 초과일 때 
+				if (((fileSize / 1024) / 1024) > 1) { // 1MB 이상
+					fileSize = (Math.round(((fileSize / 1024) / 1024) * 100) / 100);
+					str = fileSize + "MB";
+				} else { // KB
+					fileSize = (Math.round((fileSize / 1024) * 100) / 100);
+					str = fileSize + "KB";
+				};
+			} else { //1KB 이하일 때 
+				fileSize = (Math.round(fileSize * 100) / 100);
+				str = fileSize + "Byte";
+			};  
+			return str;
+		};
+		
+		
+		
+		/* 일반 파일첨부 방식 | 파일 첨부창 띄우기 */
+		$(".chooseFile").click(function(){
+			$(".upfileInput").click();
+		});
+		
+		
+		/* 일반 파일첨부 방식 | 파일 첨부창에서 업로드할 파일을 선택 후 */
+		function upfileInput(obj) {
+			var file = obj.files[0];
+			fileCheck(file); //첨부한 파일크기 측정하여 ajax처리 하는 함수 호출		
+		};
+		
+		
+		
+		/* Drag & drop 방식 | 브라우저에 파일을 끌어다 놓았을 때 파일 보여주는 창 띄우는 것을 막음 */
+		$(".popupCard").on("dragenter dragover", function(event){
+			event.preventDefault(); //이벤트 제한
+		});
+				
+			
+		/* Drag & drop 방식 | 브라우저의 지정 위치에 파일을 drop했을 때 */
+		$(".popupCard").on("drop", function(event){
+			event.preventDefault(); //기본 이벤트 제한
+	
+			var files = event.originalEvent.dataTransfer.files; //전달된 파일 데이터를 가져옴
+			var file = files[0];
+			
+			fileCheck(file); //파일크기 측정하여 ajax처리 하는 함수 호출			
+		});
+	
+			
+			
+		/* 삭제 | delete 버튼을 눌렀을 경우 confirm 후 ajax처리 */
+		$(".uploadedList").on("click", ".attachDeleteBtn", function(e) {
+			if(!(confirm("삭제한 첨부파일은 되돌릴 수 없습니다. 정말 삭제하시겠습니까?"))) return;
+			
+			var deleteBtn = $(this);
+	
+			$.ajax({
+				url : "/board/deleteAttach",
+				type : "POST",
+				data : {
+					fileName : $(this).attr("data-src")
+				},
+				dataType : "text",
+				success : function(result) {
+					if (result === "DELETED") {
+						deleteBtn.parent().parent().remove();
+					};
+				}
+			});
+		});
+	
+		
+		
+		/* 이미지파일 조회 | img파일 썸네일을 누를 경우 */
+		$(".uploadedList").on("click", ".thumbnail", function() {
+			var fileName = $(this).parent().parent().next().children(".fileName").text();
+			var str = "<img class='originalImg' src='" + $(this).attr("src") + "' /><p>" + fileName + "</p>";
+			
+			$(".imgModal").html(str); //이미지 보여주는 동적 태그 생성하여 삽입
+			$(".imgModal").show(); //모달창 출력
+			$(".closeModal.imageModal").show(); //X버튼 출력
+		});
+	    
+
+		
+	    /* 첨부파일 | img 모달창에서 X버튼 누르면 모달창 닫기 */
+	    $(document).on("click", function(e){
+			var className = $(e.target).attr("class"); //클릭한 요소의 class이름
+			
+			//클릭한 요소가 이미지모달창이 아니면 모달창 닫기
+			if(className !== "thumbnail" && className !== "originalImg"){
+				$(".imgModal").hide();
+				$(".closeModal.imageModal").hide(); //X버튼 숨기기				
+			};
+		});
 	    
 	    
     </script>

@@ -7,10 +7,11 @@
 
 	<!-- 특정 카드의 모든 댓글 조회 -->
 	<select id="listReply" resultType="CardReplyVO">
-		SELECT 
+		SELECT
 			r.id
-			, r.c_id
 			, r.u_id
+			, r.c_id
+			, c.ps_id
 			, u.profile
 			, u.nickname
 			, r.content
@@ -18,6 +19,7 @@
 			, r.udate
 		FROM linker.c_reply r
 		INNER JOIN linker.user u ON r.u_id = u.id
+		LEFT JOIN linker.card c ON r.c_id = c.id
 		WHERE r.c_id = #{c_id}
 		ORDER BY id DESC
 	</select>
