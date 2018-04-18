@@ -85,7 +85,7 @@ public class UserController {
 /*	@Resource(name = "uploadPath")
 	private String uploadPath;*/
 	
-	String uploadpath = "linker/certificate";
+	private String uploadpath = "linker/certificate";
 	
 	S3Util s3 = new S3Util();
 	

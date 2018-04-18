@@ -64,7 +64,7 @@
 	</select>
 	
 	
-	<!-- 해당팀원이 아니면 프로젝트를 들어가는것을 막는 것 -->
+<!-- 해당팀원이 아니면 프로젝트를 들어가는것을 막는 것 -->
 	<select id="checkProject" resultType="int">
 	SELECT count(*)
 	FROM linker.project
@@ -85,5 +85,6 @@
 	JOIN linker.project ON team_has_user.t_id = project.t_id
 	WHERE user.id =#{u_id} AND project.ps_id =2;
 	</select>
+
 
 </mapper>

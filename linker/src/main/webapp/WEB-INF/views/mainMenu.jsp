@@ -341,12 +341,14 @@
 					
 			  		if(ps_id === 2){ //보관카드 조회
 			  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드 태그 생성
-							str += createArchivedCard(data[i].id, data[i].title);
+							str += createArchivedCard(data[i].id, data[i].cl_id, data[i].title);
 						};
 						$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기카드 조회
+			  			console.log(p_id);
+						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
-							str += createTrashboxCard(data[i].id, data[i].title);
+							str += createTrashboxCard(data[i].id, data[i].cl_id, data[i].title);
 						};
 						$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //가리기탭에 동적 태그 삽입
 			  		};
@@ -399,6 +401,7 @@
 		$(".tab-content-box-controls > .switchBtn-archive").click(function(){
 			$(".tab-content-box-controls > .switchBtn-archive").toggle();
 			$(".nav-tab-content-Box-archive.archiveCard").toggle();
+			$(".nav-tab-content-Box-archive.archiveCardlist").toggle();
 			
 			readCardlistStatus(2); //상태값이 2인 카드리스트 조회
 		});
@@ -406,6 +409,7 @@
 		$(".tab-content-box-controls > .switchBtn-hidden").click(function(){
 			$(".tab-content-box-controls > .switchBtn-hidden").toggle();
 			$(".nav-tab-content-Box-hidden.hiddenCard").toggle();
+			$(".nav-tab-content-Box-hidden.hiddenCardlist").toggle();
 			
 			readCardlistStatus(3); //상태값이 3인 카드리스트 조회
 		});
@@ -418,18 +422,20 @@
 			var STATUS_ING = 1; //진행
 	    	var STATUS_HIDDEN = 3; //가리기
 	    	var className = $(this).attr("class"); //클릭한 요소의 class이름
-	    	var id = $(this).parent().prev().attr("data-id");
+	    	var id = $(this).parent().prev().attr("data-id"); //카드 아이디
 	    	var title = $(this).parent().prev().children(":first").text();
+	    	var cl_id = $(this).parent().prev().attr("data-clId"); //선택한 카드의 카드리스트 id
+	    	console.log(cl_id);
 	    	
 	    	switch (className) {
 	            case "archive-reopen switchBtn-archive return returnCard": //카드의 send to 
 	            	ps_id = STATUS_ING; //ps_id = 1
-	            	cardStatusChange(id, ps_id, title);
+	            	cardStatusChange(id, ps_id, cl_id, title);
 	                break;
 	            case "archive-hidden switchBtn-archive return returnCard": //카드의 Trashbox
 	            	if(confirm("Trashbox로 보내진 카드는 되돌릴 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
 		    			ps_id = STATUS_HIDDEN; //ps_id = 3
-	            	cardStatusChange(id, ps_id, title);
+	            	cardStatusChange(id, ps_id, cl_id, title);
 	            	break;
 	            case "archive-reopen switchBtn-archive return returnCardlist": //카드리스트의 send to 
 	            	ps_id = STATUS_ING; //ps_id = 1
@@ -441,7 +447,7 @@
 		            cardlistStatusChange(id, ps_id, title);
 	            	break;
     		};
-	    	cardStatusChange(id, ps_id, title); //상태변경에 대한 ajax처리 함수 호출
+	    	cardStatusChange(id, ps_id, cl_id, title); //상태변경에 대한 ajax처리 함수 호출
 		});
 		
 		

@@ -4,13 +4,15 @@
 .popupCard ul{
     list-style: none;
 }
+.popupCard header {
+	margin-bottom: 10px;
+}
 .popupCard section {
     float: left;
     width: 600px;
 }
-.popupCard article {
-    /*border: solid 1px black;*/
-    margin-top: 10px;
+.popupCard article:not(:nth-child(1)) {
+    margin-top: 30px;
 }
 /* 팝업화면 | 화면 전체 */
 #popupBox {
@@ -23,7 +25,7 @@ height: 100%;
 background-color: rgb(0,0,0); /* Fallback color */
 background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 overflow: auto;
-z-index: 9999;
+z-index: 9997;
 }
 /* 팝업화면 | 카드 전체 */
 .popupCard {
@@ -117,6 +119,9 @@ z-index: 9999;
 .title-cardTitle p{
 	display: none;
 }
+.title-attach.title{
+	margin-bottom: 15px;	
+}
 /* ~~~~~ 헤더부분 */
 	
 /* 카드창 닫기버튼 */
@@ -131,21 +136,12 @@ z-index: 9999;
 }
 	
 /* 왼쪽 | 카드 실제 내용 부분 */
-	
+
 /* 각 항목의 Title */
 .title strong {
     display: inline-block;
     margin-left: 10px;
 }
-/* 추후 지울 것 */
-.v {
-    border: solid 1px red;
-    width: 560px;
-    height: 50px;
-    margin: 5px 10px 5px 10px;
-    padding: 5px;
-}
-	
 /* 카드 내용~~~~~ */
 .cardContent {
     display: inline-block;
@@ -197,7 +193,7 @@ z-index: 9999;
     cursor: pointer;
 }
 .content-Btn {
-    margin: 0 0 5px 10px;
+    margin-left: 10px;
     display: none;
 }
 .saveBtn {
@@ -229,8 +225,6 @@ z-index: 9999;
 
 /* ~~~~~카드 내용 */
 
-
-/* 댓글 작성*/
 .content-textarea.reply{/* 댓글textarea */
 	resize: none;
 	width: 551px;
@@ -356,7 +350,8 @@ z-index: 9999;
     -o-box-shadow: 1px 1px 3px 0px #B5B5B5;
 }
 	
-.popupCard aside ul li div:hover, .file:hover, .popup-profile:hover, .comment-attachment:hover {
+.popupCard aside ul li div:hover, .file:hover, 
+.popup-profile:hover, .comment-attachment:hover {
     background-color: rgb(204, 205, 206);
     box-shadow: 1px 1px 3px 0px #919191;
     -webkit-box-shadow: 1px 1px 3px 0px #919191;

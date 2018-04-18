@@ -37,7 +37,7 @@ public class UploadFileUtils {
 
 		logger.info(uploadedFileName);
 		//	s3.fileUpload(bucketName, new File(fileName))
-
+		System.out.println("파일저장완료");
 		return uploadedFileName;
 
 	}
