@@ -29,17 +29,12 @@
 	
 	<!-- 팀에 속하면서 인증상태가 1인 멤버만 출력 : 멤버리스트 출력 시 사용-->
      <select id="TeamHasUsers" resultType="TeamMemberVO">
-        SELECT thu.t_id, thu.u_id, u.nickname,
-		thu.auth, u.email, thu.status
-        FROM linker.team_has_user AS thu
-        JOIN linker.user AS u ON thu.u_id = u.id
-        WHERE thu.status=1 AND
-        thu.t_id IN (
-        SELECT t_id
-        FROM linker.user
-        WHERE id=#{u_id}
-        )    
-     </select>
+	select thu.t_id, thu.u_id, u.nickname,
+	thu.auth, u.email, thu.status
+	from linker.team_has_user as thu
+	join linker.user  as u on id= thu.u_id
+	where thu.status = 1 and t_id=#{t_id};   
+   </select>
 
    <!-- email과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 이메일 인증 하이퍼링크를 누르면 실행/ emailConfirm-->
  	 <select id="userHasTeamEmail" resultType="TeamMemberVO">
@@ -74,10 +69,10 @@
 	</insert>
 
 	<!-- member 생성/ 팀 추가할 때 실행됨 -->
-	<insert id="connectTeamMember">
-		INSERT INTO linker.team_has_user(t_id, u_id, auth, status)
-		VALUES (#{t_id},#{u_id},0, 1)
-	</insert>
+	<insert id="connectTeamMember" >
+ 		INSERT INTO linker.team_has_user(t_id, u_id, auth, status)
+ 		VALUES (#{t_id},#{u_id},0, 1)
+ 	</insert>
 	
 	<!-- member 추방/그 팀에서 권한이 0 또는 1인 user만 가능 -->
 	<delete id="deleteMember">
