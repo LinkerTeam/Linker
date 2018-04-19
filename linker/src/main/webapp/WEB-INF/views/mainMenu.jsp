@@ -6,6 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
+<<<<<<< HEAD
+<link href="/resources/css/mainMenu.css?ver=11" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+=======
 <link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
@@ -54,6 +60,7 @@
                  <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/b3ctziwlj/icon_post_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/4pnqw9jzr/icon_post.png'"><img src="https://s5.postimg.org/4pnqw9jzr/icon_post.png" width="30" border="0" /><span class="icon-menuName">Postman</span></a>
              </nav>
             
+>>>>>>> 316a4db4f5026618727c6bfd3066209fb882a328
 
 	<!-- 오른쪽 메뉴 -->
 	<!-- .mainAside-open | 열림 상태 -->
@@ -205,35 +212,6 @@
 		var j = 0;
 		var p_id=null;
 		var u_id=null;
-	
-		/* 왼쪽 메인메뉴 | 확장 & 축소 이벤트 */
-		function openNav() {
-		    var mainNav = document.getElementsByClassName("mainNav"); //확장메뉴
-		    var content = document.getElementsByClassName("content"); //본문
-		    var iconBar = document.getElementsByClassName("iconBar"); //축소메뉴
-		    var logoBg = document.getElementsByClassName("logo-background"); //헤더 로고영역
-		    var logoFull = document.getElementsByClassName("logo-full"); //확장로고
-		    var logoMini = document.getElementsByClassName("logo-mini"); //축소로고
-	
-		    i++; //왼쪽 메뉴버튼 클릭할 때마다 i의 값 1씩 증가하도록
-	
-		    if (i % 2 === 1) { //클릭수가 홀수이면 축소메뉴 노출
-		        content[0].style.marginLeft = "60px"; //본문 위치 메뉴너비에 맞춰 옮기기
-		        iconBar[0].style.width = "60px"; //메뉴 영역 230px에서 60px로 줄이기
-		        logoBg[0].style.width = "60px"; //로고 영역 230px에서 60px로 줄이기
-		        mainNav[0].style.width = "0"; //확장메뉴 숨긴다
-		        logoFull[0].style.width = "0"; //확장로고 숨긴다
-		        logoMini[0].style.width = "60px"; //축소로고 너비 확보
-		    }
-		    else { //클릭수가 짝수이면 확장메뉴 노출
-		        mainNav[0].style.width = "230px"; //확장메뉴 너비 확보
-		        content[0].style.marginLeft = "230px"; //본문 위치 메뉴너비에 맞춰 옮기기
-		        logoBg[0].style.width = "230px"; //확장시 로고영역 확보
-		        logoFull[0].style.width = "230px"; //확장로고 너비 확보
-		        logoMini[0].style.width = "0"; //축소로고 숨긴다
-		    };
-		};
-	
 	
 		
 		/* 오른쪽 메인메뉴 | 숨기기 & 펼치기 이벤트 */
@@ -562,6 +540,8 @@
 			}
 		})
 		
+<<<<<<< HEAD
+=======
 		 $('.content-list').on("click",".preload",function(){
 			u_id = $(this).attr("u");
 			p_id = $(this).attr("p");
@@ -622,6 +602,7 @@
 	    		}
 	    	});//ajax
 		});
+>>>>>>> 316a4db4f5026618727c6bfd3066209fb882a328
 	</script>
 </body>
 </html>

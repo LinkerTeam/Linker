@@ -6,9 +6,9 @@
 <mapper namespace="com.linker.mapper.teamMapper">
 	
 	<!-- 새로운 team 생성 -->
-	<insert id="createTeam" parameterType="TeamVO" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
-		INSERT INTO linker.team(name) VALUES(#{name})
-	</insert>
+	<insert id="createTeam" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
+ 		INSERT INTO linker.team(name) VALUES(#{name})
+ 	</insert>
 
 	<!-- team수정(이름) /그 팀에서 권한이 0인 user만 가능-->
 	<update id="modifyTeam">
@@ -27,9 +27,9 @@
 	<!-- team 목록 출력 -->
 	<select id="listTeam" resultType="TeamVO">
 		SELECT u_id, t_id, team.name, team.cdate, auth
-		FROM linker.team_has_user 
-		JOIN linker.team ON team.id=t_id
-		WHERE u_id=#{u_id}
+ 		FROM linker.team_has_user 
+ 		JOIN linker.team ON team.id=t_id
+		WHERE u_id=#{u_id} and status = 1
 	</select>
 	
 	<!-- team 삭제 /그 팀에서 권한이 0인 user만 가능-->

@@ -6,31 +6,26 @@
 <mapper namespace="com.linker.mapper.UserMapper">
 
 	<insert id="insertMember">
-		INSERT INTO
-		linker.user(email,password,nickname)
-		VALUES(#{email},#{password},#{nickname})
+	INSERT INTO
+	linker.user(email,password,nickname)
+	VALUES(#{email},#{password},#{nickname})
 	</insert>
 
-	<select id="getTime" resultType="string">
-		SELECT NOW()
-	</select>
-	
 	<update id="createAuthKey">
-		UPDATE linker.user SET authCode = #{authCode}
-		 WHERE email =#{email}
+	UPDATE linker.user SET authCode = #{authCode}
+	WHERE email =#{email}
 	</update>
    
     <update id="status">
-     UPDATE linker.user SET status = 1
-     WHERE email=#{email}
-     
+    UPDATE linker.user SET status = 1
+    WHERE email=#{email}
     </update>
    
    <!-- 구글 회원가입 -->
    <insert id="insertGoogle">
-     INSERT INTO  
-     linker.user(email,nickname,google)
-     VALUES (#{email},#{nickname},1)
+   INSERT INTO  
+   linker.user(email,nickname,google)
+   VALUES (#{email},#{nickname},1)
    </insert>
    
    <!-- 구글 로그인 처음인지 확인 -->
