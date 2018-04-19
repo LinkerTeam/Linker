@@ -300,8 +300,6 @@
 						};
 						$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기카드 조회
-			  			console.log(p_id);
-						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
 							str += createTrashboxCard(data[i].id, data[i].cl_id, data[i].title);
 						};
