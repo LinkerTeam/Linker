@@ -6,42 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-
-<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
-<style>
-.list-modal{
-	position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /*width: 100%;
-    height: 100%;*/
-    background-color: rgb(0, 0, 0);
-    /* 모달창 옆에 백그라운드 농도  */
-    background-color: rgba(0, 0, 0, 0.8);
-    /* Black w/ opacity */
-    z-index: 3;
-    /*overflow-y: auto;*/
-  
-    display: none;
-    transition: opacity 0.3s 0, visibility 0 0.3s;
-}
-.list-modal.is-visible {
-    display: block;
-}
-.list-content{
- 	position: relative;
-    height: auto;
-    box-sizing: border-box;
-    width: 400px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 20px 45px 20px 20px;
-    margin: 250px auto 0 auto;
-
-}
-</style>
+<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>

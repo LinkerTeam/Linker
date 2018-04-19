@@ -38,8 +38,13 @@ public class CardServiceImpl implements CardService{
 	}
 	//상태값에 따른 카드 목록 조회
 	@Override
-	public List<CardVO> listCard(CardVO vo) throws Exception {
-		return dao.listCard(vo);
+	public List<CardVO> statusCardList(CardVO vo) throws Exception {
+		return dao.statusCardList(vo);
+	}
+	//특정 카드리스트에 대한 진행상태의 카드 목록 조회
+	@Override
+	public List<CardVO> listCards(CardVO vo) throws Exception {
+		return dao.listCards(vo);
 	}
 	//카드 상세내용 조회
 	@Override

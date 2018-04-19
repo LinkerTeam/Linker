@@ -13,6 +13,7 @@
 		VALUES (#{title}, #{u_id}, #{cl_id})
 	</insert>
 	
+	
 	<!-- 카드 수정(제목, 내용 수정 -->
 	<update id="updateCard">
 		UPDATE linker.card
@@ -22,6 +23,7 @@
 		</set>
 		WHERE id = #{id}	
 	</update>
+	
 	
 	<!-- 카드 수정(상태 변경) -->
 	<update id="updateCardStatus">
@@ -33,8 +35,9 @@
 		WHERE c.id = #{id}
 	</update>
 	
+	
 	<!-- 상태값에 따른 카드 조회 -->
-	<select id="listCard" resultType="CardVO">
+	<select id="statusCardList" resultType="CardVO">
 		SELECT
 			c.id
 			, c.u_id
@@ -53,6 +56,27 @@
 	</select>
 	
 	
+	<!-- 특정 카드리스트에 대한 진행상태의 카드 목록 -->
+	<select id="listCards" resultType="CardVO">
+		SELECT
+			c.id
+			, c.u_id
+			, c.title
+			, c.content
+			, c.cdate
+			, c.udate
+			, c.cl_id
+			, c.ps_id
+			, cl.p_id
+		FROM linker.card c
+		INNER JOIN linker.cardlist cl ON c.cl_id=cl.id
+		WHERE p_id = #{p_id}
+		AND c.cl_id = #{cl_id}
+		AND c.ps_id = 1
+		ORDER BY udate DESC
+	</select>
+	
+	
 	<!-- 카드 상세내용 조회(카드모달창에 나오는 내용들) -->
 	<select id="readPopcard" resultType="CardVO">
 		SELECT
@@ -66,8 +90,11 @@
 			, c.ps_id
 			, cl.p_id
 			, cl.ps_id AS cl_ps_id
+            , u.nickname
+            , u.profile
 		FROM linker.card c
 		INNER JOIN linker.cardlist cl ON c.cl_id = cl.id
+		INNER JOIN linker.user u ON c.u_id = u.id
 		WHERE c.id = #{id}
 	</select>
 	
