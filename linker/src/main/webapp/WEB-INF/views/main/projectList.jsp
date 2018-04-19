@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=22" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=1" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
@@ -31,9 +31,13 @@
 
 
 		<!-- 프로젝트 본문 -->
-
-		<!-- <div class="content project"> -->
-
+		<a href="#" class="project-list">Project</a>
+		<div class="list-modal">
+			<div class="list-content">			 
+				<div class="head-list">Hidden Project List</div>
+				<div class="content-list"></div>
+			</div>
+		</div>
 
 		<!-- Projects In a Team -->
 		<!-- 팀 정보 -->
@@ -279,46 +283,147 @@
     });
     
     $('.teambtn').on("click", function(){
-   
-      var titleName= $('.team-title').val();
-      
-        if(titleName == '' || titleName == null){
-        	
-        	alert('이름을 다시 입력해주세요');
-        	return;
-        }
+    	   
+    	var titleName= $('.team-title').val();
         
-        $.ajax({
-           type : 'POST',
-           url : '/main/team',
-           contentType : 'text/javascript',
-           headers : {
-      	     "X-HTTP-Method-Override" : "POST",
-      	     "content-type" : "application/json"
-        },
-      	   dataType : 'json',
-      	   data:JSON.stringify({
-           		name : titleName            	
-        }),
-      	  success : function(result) {  
-        	console.log(typeof(result));
-        	
-			if(result == true){
-				alert("팀이 추가되었습니다.");
-				self.location = '/main/team';
-				return true;
-			}
-        	
-        },error : function(){
-        		alert('error');
-        }	
-       });
-
-    });
-    $('.fa-star').on("click",function(){
-    	alert(1);
-    });
+    		if(titleName == '' || titleName == null){
+				alert('이름을 다시 입력해주세요');
+             	return;
+         	};
+          
+			$.ajax({
+				type : 'POST',
+             	url : '/main/team',
+             	contentType : 'text/javascript',
+             	headers : {
+					"X-HTTP-Method-Override" : "POST",
+                	"content-type" : "application/json"
+          		},
+              	dataType : 'json',
+              	data:JSON.stringify({
+					name : titleName               
+          		}),
+             	success : function(result) {  
+             	console.log(typeof(result));
+	           		if(result != null){
+	              		alert("팀이 추가되었습니다.");
+	              		self.location = '/main/team';
+	           		};
+          		},
+          		error : function(){
+                	alert('error');
+          		}   
+         	});
+      	});
     	    
+    
+    
+  	//모달창 띄우기
+	$(".project-list").on("click",function(){	
+		$('.list-modal').addClass('is-visible');		
+		
+		$.ajax({
+			type:"GET",
+			url:"/main/projectlist",
+			success : function(data){
+				
+				if(data.length !== 0){
+					$('.content-list').html("");
+					for(var i = 0; i < data.length ; i++){
+						var str ="<div class='list-li'><a href='http://localhost:9090/board/"
+						+data[i].t_id+
+						"/"
+						+data[i].id+"'>"
+						+data[i].title+"</a>"
+						+"<button class='preload' p='"+data[i].id+"' u='"+data[i].u_id+"' t='"+data[i].t_id+"'>re-load</button>"
+						+"<button class='pdelete' p='"+data[i].id+"' u='"+data[i].u_id+"'>delete</button></div>"
+						$('.content-list').append(str);
+						/* 	if($('.content-list').text()=='No Project Hidden List');{
+							$('.content-list').text().value.replace("No Project Hidden List","");
+							} */
+					} 
+				}else{
+					$('.content-list').html("");
+					str ="<div class='no-project'>No Project List</div>"
+					$('.content-list').append(str);
+					}
+				
+				
+			},
+			error : function(){
+				alert("통신의 오류가 발생했습니다.");
+			}
+		}); //ajax
+	});
+  	
+  	
+	//모달창 닫기
+	$(".list-modal").on("click",function(e){
+		if($(e.target).hasClass("list-modal")){
+			$(".list-modal").removeClass("is-visible");		
+		}
+	})
+	
+	 $('.content-list').on("click",".preload",function(){
+		u_id = $(this).attr("u");
+		p_id = $(this).attr("p");
+		var ps_id = 1;
+		var parent = $(this).parent();
+
+	    	$.ajax({
+	    		type : "put",
+	    		url : "/main/" + p_id + "/" + u_id,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},	
+	    		data : JSON.stringify({ps_id : ps_id}),
+	    		dataType : "text", 
+	    		success : function(result) {
+	    			if(result === "SUCCESS"){	
+	    				if(ps_id == 1){
+	    				
+	    					parent.html("");
+	    				}
+	    			};//if
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});//ajax
+	});
+	
+	$('.content-list').on("click",".pdelete",function(){
+		u_id = $(this).attr("u");
+		p_id = $(this).attr("p");
+		ps_id = 3;
+		var parent = $(this).parent();
+		
+		if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true){
+			return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return				
+		}
+		
+		$.ajax({
+    		type : "put",
+    		url : "/main/" + p_id + "/" + u_id,
+    		headers : {
+    			"Content-Type" : "application/json",
+    			"X-HTTP-Method-Override" : "PUT"
+    		},	
+    		data : JSON.stringify({ps_id : ps_id}),
+    		dataType : "text", 
+    		success : function(result) {
+    			if(result === "SUCCESS"){	
+    				if(ps_id == 3){
+    					parent.html("");
+    				}
+    			};//if
+    		},
+    		error : function() {
+    			alert("에러가 발생했습니다.");
+    		}
+    	});//ajax
+	});
 </script>
 </body>
 </html>
