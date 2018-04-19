@@ -54,6 +54,14 @@ public class ProjectDAOImpl implements ProjectDAO {
 		
 		return session.selectOne(namespace+".checkProject",vo);
 	}
+	//
+	@Override
+	public List<ProjectVO> hiddenList(int u_id) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList(namespace+".hiddenList",u_id);
+	}
+	
+	
 	
 	
 }

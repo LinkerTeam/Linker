@@ -12,8 +12,8 @@ public class PrivateKey{
 			String key = readFile("c:\\zzz\\PrivateKey.txt");
 			accessKey = key.substring(0, 20);
 			secretKey = key.substring(22);
-			System.out.println(accessKey);
-			System.out.println(secretKey);
+		/*	System.out.println(accessKey);
+			System.out.println(secretKey);*/
 		}catch(Exception e){
 			e.printStackTrace();
 		}		

@@ -11,6 +11,17 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
+<style type="text/css">
+.fa-star{
+    display: block;
+    color:green;
+    margin-top:-20px;
+    padding-left: 350px;
+}
+.fa-star:hover {
+	color:navy;
+}
+</style>
 </head>
 <body>
 	<%@include file="../header.jsp"%>
@@ -53,7 +64,10 @@
 							<ul class="projects">
 								<li><a
 									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}"><span
-										class="name">${projectList.title}</span></a></li>
+										class="name">${projectList.title}</span>
+										<span><i class="far fa-star"></i></span>
+									</a>
+								</li>
 							</ul>
 						</c:if>
 					</c:if>
@@ -211,7 +225,6 @@
           		       +"</a></li>"
           		       +"</ul>";
           		   $(parent).after(str);
-          		   return true;
           	   }
    		},error : function() {
           		alert('error');
@@ -301,6 +314,9 @@
         }	
        });
 
+    });
+    $('.fa-star').on("click",function(){
+    	alert(1);
     });
     	    
 </script>

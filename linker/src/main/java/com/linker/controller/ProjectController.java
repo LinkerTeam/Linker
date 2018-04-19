@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpRequest;
@@ -131,6 +132,19 @@ public class ProjectController {
 		}
 		return entity;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="projectlist", method = RequestMethod.GET)
+	public ResponseEntity<List<ProjectVO>> projectList(HttpServletRequest request) throws Exception{
+		
+		HttpSession session = request.getSession();
+		UserVO vo = (UserVO)session.getAttribute("login");
+		
+		System.out.println("projectlist");
+		
+		return new ResponseEntity<List<ProjectVO>>(service.hiddenList(vo.getId()),HttpStatus.OK);
+	}
+
 
 
 }
