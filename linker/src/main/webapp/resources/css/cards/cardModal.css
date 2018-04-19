@@ -122,6 +122,15 @@ z-index: 9997;
 .title-attach.title{
 	margin-bottom: 15px;	
 }
+.popupCardProfile > img {
+	width: 25px;
+	height: 25px;
+}
+.popupCardUserInfo > p, .popupCardProfile {
+	display: inline-block;
+	color: #a9a9a9;
+	font-size: 14px;
+}
 /* ~~~~~ 헤더부분 */
 	
 /* 카드창 닫기버튼 */
@@ -254,12 +263,15 @@ z-index: 9997;
 	float: left;
 	margin: 7px 0;
 }
-.replyArea > img { /* 작성자 프로필사진 */
+.replyArea > img,
+.popupCardProfile > img { /* 작성자 프로필사진 */
     position: relative;
-    float: left;
-    width: 45px;
-    height: 45px;
     border-radius: 20px;
+}
+.replyArea > img{
+	width: 45px;
+    height: 45px;
+	float: left;
 }
 .reply-commentArea { /* 닉네임, 댓글내용 영역 */
     width: 492px;

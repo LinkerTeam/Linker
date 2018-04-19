@@ -13,7 +13,9 @@ public interface CardDAO {
 	//카드 수정(상태)
 	public void updateCardStatus(CardVO vo) throws Exception;	
 	//상태값에 따른 카드 조회
-	public List<CardVO> listCard(CardVO vo) throws Exception;
+	public List<CardVO> statusCardList(CardVO vo) throws Exception;
+	//특정 카드리스트에 대한 진행상태의 카드 목록 조회
+	public List<CardVO> listCards(CardVO vo) throws Exception;
 	//팝업카드 조회
 	public CardVO readPopcard(CardVO vo) throws Exception;
 }

@@ -24,6 +24,11 @@
                 	<input type="text" class="title-modify" maxlength="20"  onkeydown="enterPress(event); limitMemo(this, 20);"/><!--카드 제목 DB에서 가져옴-->
                 	<p class="card-id-Hidden"></p><!-- id값(hidden) -->
                 </div>
+                <div class="popupCardUserInfo">
+                	<div class="popupCardProfile"></div>
+                	<p class="popupCardUserNickname"></p>
+                	<p class="popupCardCdate"></p>
+                </div>
             </header>
             <!-- 닫기 버튼 -->
             <div class="popupCardClose">&times;</div>
@@ -174,7 +179,8 @@
 		var popCardContent; //카드 상세내용 조회할 때 클릭한 카드 내용을 담을 변수
 		
 		var deleteReplyId; //ajax처리를 위한 댓글의 id
-	    
+
+		
 		
 		/* 카드 상태값에 따라 카드모달창 출력이 달라짐 */
 		/*
@@ -202,7 +208,6 @@
 				.popupCard-aside-archive.changeStatus,
 				.popupCard-aside-hide.changeStatus{ display: none; }
 		*/
-		
 		/* 카드 상태값에 따라 다른 형태의 카드모달창 출력 */
 		function cardStatus(ps_id){
 			switch (ps_id) {
@@ -256,6 +261,10 @@
 	    		$(".card-id-Hidden").eq(0).html(data.id);
 	    		$(".title-cardTitle input").val(data.title);//카드제목 수정input태그에 'value'값으로 넣는다
 	    			//.html로 담았다가 7시간 삽질함.
+	    		$(".popupCardProfile").html("<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate" + data.profile + "'/>"); //작성자의 프로필
+	    		$(".popupCardUserNickname").text(data.nickname); //작성자의 닉네임
+	    		$(".popupCardCdate").text(data.cdate); //카드 생성 날짜
+	    		
 	    		$(contentTextarea[0]).val(data.content);
 	    		popCardContent = data.content; //전역변수에 클릭한 카드의 내용을 담아둠
 	    		
@@ -921,6 +930,14 @@
 		/* Drag & drop 방식 | 브라우저의 지정 위치에 파일을 drop했을 때 */
 		$(".popupCard").on("drop", function(event){
 			event.preventDefault(); //기본 이벤트 제한
+
+			if(popCardPsId === 2 || popCardPsId === 3){
+				var str = "<div class='fileSizeWarning'><span>이 카드는 보관상태로, 파일을 첨부할 수 없습니다.</span></div>";
+				$("#popupBox").after(str); //경고메시지 띄움
+				
+				setTimeout("hideDiv()", 5000); //5초 뒤에 경고메시지 사라짐
+				return;
+			};
 	
 			var files = event.originalEvent.dataTransfer.files; //전달된 파일 데이터를 가져옴
 			var file = files[0];
