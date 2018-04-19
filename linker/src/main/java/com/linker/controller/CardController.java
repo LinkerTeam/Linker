@@ -78,9 +78,9 @@ public class CardController{
 	}
 	
 	
-	//상태값에 따른 카드 조회 (보관, 가리기 탭에서 조회하는 카드 목록)
+	//상태값에 따른 카드 목록 조회 (보관, 가리기 탭에서 조회하는 카드 목록)
 	@RequestMapping(value="/{p_id}/cards/{ps_id}", method = RequestMethod.GET)
-	public ResponseEntity<List<CardVO>> listCard(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id){
+	public ResponseEntity<List<CardVO>> statusCardList(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id){
 		ResponseEntity<List<CardVO>> entity = null;
 		
 		CardVO vo = new CardVO();
@@ -88,7 +88,27 @@ public class CardController{
 		vo.setPs_id(ps_id);
 		
 		try { 
-			entity = new ResponseEntity<>(service.listCard(vo), HttpStatus.OK);
+			entity = new ResponseEntity<>(service.statusCardList(vo), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
+	//특정 카드리스트에 대한 카드 목록 조회
+	//	(카드리스트의 상태를 2, 3으로 변경했다가 다시 1로 변경했을 때, 해당 카드리스트에 대한 카드만을 조회할 때 사용)
+	@RequestMapping(value="/{p_id}/cardlist/{cl_id}/cards", method = RequestMethod.GET)
+	public ResponseEntity<List<CardVO>> listCards(@PathVariable("p_id") int p_id, @PathVariable("cl_id") int cl_id){
+		ResponseEntity<List<CardVO>> entity = null;
+		
+		CardVO vo = new CardVO();
+		vo.setP_id(p_id);
+		vo.setCl_id(cl_id);
+		
+		try { 
+			entity = new ResponseEntity<>(service.listCards(vo), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);

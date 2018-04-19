@@ -14,19 +14,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 카드리스트 수정 -->
-	<!-- 카드리스트 id(cl_id)가 넘어오면 그 카드리스트의 상태값(ps_id)을 넘어온 상태값으로 변경하고(2 or 3),
-			그 카드리스트에 속한 카드들 중에서 상태값이 1인 카드들만 상태값을 4로 변경 
-			(만일 그 카드리스트에 속한 카드 중에 상태값이 2나 3인 카드들은 4로 바꾸지 않고 자기의 값을 유지한다)-->
-	<!-- <update id="updateCardlist">
-		UPDATE cardlist cl
-		LEFT JOIN card c ON cl.id = c.cl_id
-		<set>
-			<if test="cl_title != null">cl.title = #{cl_title}</if>
-			<if test="cl_ps_id != 0 and cl_ps_id != null">cl.ps_id = #{cl_ps_id}, c.ps_id = 4</if>
-		</set>
-		WHERE cl.id = #{cl_id}
-		AND (c.ps_id = 1 OR c.ps_id IS NULL)
-	</update> -->
 	<update id="updateCardlist">
 		UPDATE linker.cardlist cl
 		<set>

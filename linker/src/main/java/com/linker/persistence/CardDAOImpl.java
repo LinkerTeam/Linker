@@ -34,8 +34,13 @@ public class CardDAOImpl implements CardDAO{
 	}
 	//상태값에 따른 카드 목록 조회
 	@Override
-	public List<CardVO> listCard(CardVO vo) throws Exception {
-		return session.selectList(namespace + ".listCard", vo);
+	public List<CardVO> statusCardList(CardVO vo) throws Exception {
+		return session.selectList(namespace + ".statusCardList", vo);
+	}
+	//특정 카드리스트에 대한 진행상태의 카드 목록 조회
+	@Override
+	public List<CardVO> listCards(CardVO vo) throws Exception {
+		return session.selectList(namespace + ".listCards", vo);
 	}
 	//카드 상세내용 조회
 	@Override

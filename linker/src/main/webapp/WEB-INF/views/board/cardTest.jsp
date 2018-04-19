@@ -259,7 +259,7 @@
 			  		for(var i = 0; i < uniqID.length; i++){ 
 			  			for(var j = 0; j < data.length; j++){
 				  			if(data[j].c_id !== 0 && data[j].cl_id === uniqID[i]){ //카드id가 0이 아니고 카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같을 때
-				  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출(data의 id와 title을 매개변수로 줌)
+				  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출
 								$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
 				  			};
 			  			};
@@ -271,7 +271,6 @@
 			   	}
 			});//ajax
 		};
-		
 		
 		
 
@@ -289,6 +288,29 @@
 		};
 		
 		
+		
+		/* 카드 조회 | 특정 카드리스트에 대한 카드 목록 조회 */
+		function listCards(cl_id){
+			console.log(cl_id);
+	    	$.ajax({
+	    		type : "GET",
+				url : "/board/" + p_id + "/cardlist/" + cl_id + "/cards",
+				success : function(data){
+					//for문을 돌면서 각각의 카드에 대한 태그를 문자열로 만든다.
+			  		for(var i = 0; i < data.length; i++){ 
+						var str = newCardAdd(data[i].c_id, data[i].cl_id, data[i].title); //문자열로 카드 태그를 만드는 함수 호출
+						//마지막 카드리스트(달성/가리기 카드리스트가 send to board가 되면 맨 마지막에 삽입되므로)에 카드 태그 삽입
+						$(".cards").last().children(".addCard").before(str); 
+					};
+				}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+	    	}); //ajax
+	    };
+		
+		
+	    
 		/* 카드 등록 | Add a card... 눌렀을 때 카드추가창 보이기 */
 		$(".cardlists").on("click", ".createCardBox", function(){
 			var index = $("footer.createCardBox").index(this);//카드리스트의 전체 footer 중 클릭한 footer의 인덱스값 얻기
@@ -702,6 +724,7 @@
 						switch (ps_id) {
 				            case 1: //보드에 카드리스트 태그 삽입
 				            	newCardlistAdd(id, title);
+				            	listCards(id); //소속된 카드 중 상태값이 1인 카드만 출력
 				                break;
 				            case 2: //보관탭에 동적 카드리스트 태그 삽입
 				            	$(".nav-tab-content-Box-archive.archiveCardlist").prepend( createArchivedCardlist(id, title) );
@@ -738,7 +761,8 @@
 		});
 		
 		
-		
+	    
+	    
 	</script>
 </body>
 </html>

@@ -6,42 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-
-<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
-<style>
-.list-modal{
-	position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /*width: 100%;
-    height: 100%;*/
-    background-color: rgb(0, 0, 0);
-    /* 모달창 옆에 백그라운드 농도  */
-    background-color: rgba(0, 0, 0, 0.8);
-    /* Black w/ opacity */
-    z-index: 3;
-    /*overflow-y: auto;*/
-  
-    display: none;
-    transition: opacity 0.3s 0, visibility 0 0.3s;
-}
-.list-modal.is-visible {
-    display: block;
-}
-.list-content{
- 	position: relative;
-    height: auto;
-    box-sizing: border-box;
-    width: 400px;
-    background: #fff;
-    border-radius: 4px;
-    padding: 20px 45px 20px 20px;
-    margin: 250px auto 0 auto;
-
-}
-</style>
+<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -343,8 +308,6 @@
 						};
 						$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
 			  		} else if(ps_id === 3) { //가리기카드 조회
-			  			console.log(p_id);
-						console.log(ps_id);
 			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
 							str += createTrashboxCard(data[i].id, data[i].cl_id, data[i].title);
 						};
