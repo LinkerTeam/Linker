@@ -71,6 +71,12 @@
 		<beans:constructor-arg value="C:\\zzz\\upload">
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	<!-- 첨부파일을 저장할 경로 설정 | 2018.04.15(일) 20:40 오윤주 -->
+	<beans:bean id="cardUploadPath" class="java.lang.String">
+		<beans:constructor-arg value="C:\\zzz\\cardUpload">
+		</beans:constructor-arg>
+	</beans:bean>
 
 	<!-- google Class Bean설정 추가 -->
 	<!-- 클라이언트ID와 보안비밀 세팅 -->

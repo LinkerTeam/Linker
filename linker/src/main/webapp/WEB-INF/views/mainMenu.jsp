@@ -6,10 +6,61 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
+<<<<<<< HEAD
 <link href="/resources/css/mainMenu.css?ver=11" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
+=======
+<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<!--왼쪽 메뉴(확장메뉴, 축소메뉴)-->
+	<!--확장 메뉴(글자)-->
+	<nav class="mainNav"> <!--확장메뉴 | 상단 프로필영역-->
+	<div class="profile-area">
+		<a href="#" class="profile-img-area"> 
+			<img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile-img" />
+		</a>
+		<div class="profile-nickname-area">
+			<div class="profile-nickname">${login.nickname}</div>
+		</div>
+	</div>
+	
+	
+	<!--확장메뉴 | 하단 메뉴영역-->
+	<ul class="mainNav-menu">
+		<li class="mainNav-menu-header">Main navigation</li>
+		<li>
+			<div class="list-modal">
+				<div class="list-content">			 
+					<div class="head-list">Hidden Project List</div>
+					<div class="content-list"></div>
+				</div>
+			</div>
+			<a href="#" class="project-list">Project</a>
+		</li>
+		<li><a href="#">ERD</a></li>
+		<li><a href="#">CodeLauncher</a></li>
+		<li><a href="#">Chat</a></li>
+		<li><a href="#">Postman</a></li>
+	</ul>
+	</nav>
+
+
+	<!--축소 메뉴(아이콘)-->
+             <nav class="iconBar">
+                 <a href="#"><img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile-img" /></a>
+                 <!--마우스 오버시 아이콘 색변경 되도록-->
+                 <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/u765gerlj/icon_project_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/wbqihhlif/icon_project.png'"><img src="https://s5.postimg.org/wbqihhlif/icon_project.png" width="30" border="0" /><span class="icon-menuName">Project</span></a>
+                 <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/beuacuicn/icon_erd_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/6sy64hp3r/icon_erd.png'"><img src="https://s5.postimg.org/6sy64hp3r/icon_erd.png" width="30" border="0" /><span class="icon-menuName">ERD</span></a>
+                 <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/a12ngyix3/icon_code_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/8m12s8a47/icon_code.png'"><img src="https://s5.postimg.org/8m12s8a47/icon_code.png" width="30" border="0" /><span class="icon-menuName">CodeLauncher</span></a>
+                 <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/aqlftbyw7/icon_chat_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/pmjz0x2l3/icon_chat.png'"><img src="https://s5.postimg.org/pmjz0x2l3/icon_chat.png" width="30" border="0" /><span class="icon-menuName">Chat</span></a>
+                 <a href="#" onmouseover="this.childNodes[0].src = 'https://s5.postimg.org/b3ctziwlj/icon_post_A.png'" onmouseout="    this.childNodes[0].src = 'https://s5.postimg.org/4pnqw9jzr/icon_post.png'"><img src="https://s5.postimg.org/4pnqw9jzr/icon_post.png" width="30" border="0" /><span class="icon-menuName">Postman</span></a>
+             </nav>
+            
+>>>>>>> 316a4db4f5026618727c6bfd3066209fb882a328
 
 	<!-- 오른쪽 메뉴 -->
 	<!-- .mainAside-open | 열림 상태 -->
@@ -452,7 +503,106 @@
 	    	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 board close화면 출력
 	    });
 	    		
+		//모달창 띄우기
+		$(".project-list").on("click",function(){	
+			$('.list-modal').addClass('is-visible');		
+			
+			$.ajax({
+				type:"GET",
+				url:"/main/projectlist",
+				success : function(data){
+					if(data != null){
+					console.log(data);
+					$('.content-list').html("");
+					for(var i = 0; i < data.length ; i++){
+					var str ="<div class='list-li'><a href='http://localhost:9090/board/"
+					+data[i].t_id+
+					"/"
+					+data[i].id+"'>"
+					+data[i].title+"</a>"
+					+"<button class='preload' p='"+data[i].id+"' u='"+data[i].u_id+"' t='"+data[i].t_id+"'>re-load</button>"
+					+"<button class='pdelete' p='"+data[i].id+"' u='"+data[i].u_id+"'>delete</button></div>"
+					$('.content-list').append(str);
+					}
+				
+					}
+					
+				},
+				error : function(){
+					alert("통신의 오류가 발생했습니다.");
+				}
+			});   
+		})
+		//모달창 닫기
+		$(".list-modal").on("click",function(e){
+			if($(e.target).hasClass("list-modal")){
+				$(".list-modal").removeClass("is-visible");		
+			}
+		})
 		
+<<<<<<< HEAD
+=======
+		 $('.content-list').on("click",".preload",function(){
+			u_id = $(this).attr("u");
+			p_id = $(this).attr("p");
+			var ps_id = 1;
+			var parent = $(this).parent();
+
+		    	$.ajax({
+		    		type : "put",
+		    		url : "/main/" + p_id + "/" + u_id,
+		    		headers : {
+		    			"Content-Type" : "application/json",
+		    			"X-HTTP-Method-Override" : "PUT"
+		    		},	
+		    		data : JSON.stringify({ps_id : ps_id}),
+		    		dataType : "text", 
+		    		success : function(result) {
+		    			if(result === "SUCCESS"){	
+		    				if(ps_id == 1){
+		    				
+		    					parent.html("");
+		    				}
+		    			};//if
+		    		},
+		    		error : function() {
+		    			alert("에러가 발생했습니다.");
+		    		}
+		    	});//ajax
+		});
+		
+		$('.content-list').on("click",".pdelete",function(){
+			u_id = $(this).attr("u");
+			p_id = $(this).attr("p");
+			ps_id = 3;
+			var parent = $(this).parent();
+			
+			if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true){
+				return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return				
+			}
+			
+			$.ajax({
+	    		type : "put",
+	    		url : "/main/" + p_id + "/" + u_id,
+	    		headers : {
+	    			"Content-Type" : "application/json",
+	    			"X-HTTP-Method-Override" : "PUT"
+	    		},	
+	    		data : JSON.stringify({ps_id : ps_id}),
+	    		dataType : "text", 
+	    		success : function(result) {
+	    			if(result === "SUCCESS"){	
+	    				if(ps_id == 3){
+	    					parent.html("");
+	    				}
+	    			};//if
+	    		},
+	    		error : function() {
+	    			alert("에러가 발생했습니다.");
+	    		}
+	    	});//ajax
+		});
+>>>>>>> 316a4db4f5026618727c6bfd3066209fb882a328
 	</script>
 </body>
 </html>
