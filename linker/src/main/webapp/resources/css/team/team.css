@@ -1,129 +1,108 @@
+
 @charset "UTF-8";
+
 /*사이드 컨텐트 + 팀목록 컨텐트 */
 .wrapContent{
 	width:100%;
-	height: 100%;
-	margin:0;
-	padding:0;
 	z-index:999;
 	background: #fcfcfc;
+	height : 100%;
+	overflow : hidden;
+	font-size: 14px;
 }
-/*사이드 컨텐트, 팀목록 컨텐트 */
+/*사이드 컨텐트, 팀목록 컨텐트. 각각의 컨텐츠 공통 css */
 div.smallContent{
-	height: 100%; 
+	position : absolute;
 	vertical-align: top;
 }
-/* 사이드 컨텐트*/
-#sideContent {
-	float:left;
-	width: 260px;
+#sideContent{
+	text-align: center;
+	width : 200px;
+	margin : 40px;
+	height : 100%;
+	z-index : 1;
+}
+.sidemenu{
+	margin : 30px 0 100px 0;
+	text-align: center;
+}
+.sidemenu>*{
+	margin : 10px 0;
+}
+#memberSearch{
+	background : #d3d3d3;
+	border : none;
+	height : 30px;
 }
 /* 팀 목록 컨텐트*/
 #listContent{
-	padding-left : 260px;
+	/* font-size: 14px; */
+	padding-left : 280px; 
 	height: 100%;
+	margin-left : 40px;
+	
 } 
-
+/* 팀목록, 멤버목록 감싸는 body */
+.listBoxBody{
+	border-radius : 16px;
+	padding : 10px 30px;
+}
 /* 팀리스트  y 스크롤 */
 .listBoxBody::-webkit-scrollbar {
     width: 10px;
-    height: 12px;
-}
-.listBoxBody::-webkit-scrollbar-track {
-    background: rgba(0,0,0,.05);
-    border-radius: 3px;
-}
-.listBoxBody::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,.1);
     border-radius: 10px;
 }
 /*팀 목록 작은 컨텐츠 */
-.listBoxBody{
-	overflow-y: scroll; 
+#listContent>.listBoxBody{
+	overflow-y: scroll;
 	border: none;
-	font-size: 14px;
-	border-radius : 16px;
-	margin : 50px;
-	padding : 10px;
 	box-sizing : border-box;
-	height : calc(100% - 215px);
 }
-/*팀 목록 row */
-.team{
-	margin-top : 5px;
-	border-bottom: 1px solid black;
+/* 멤버 목록 (제목 + 목록) */
+.memberList{
+	background : #E7E7E7;
+	border : 1px solid #d3d3d3;
+	border-radius: 3px; 
+	box-shadow: 0 2px 2px -2px #777;
 }
-/*팀 목록 row에 있는 요소들 하나하나 : 텍스트 + 버튼*/
-.team>div{
-	display:inline-block;
+/* 멤버 목록을 감싸는 body */
+.memberList>.listBoxBody{
+	margin : 20px;
 }
-/*팀원 목록 row에 있는 요소들 하나하나 : 텍스트 + 버튼*/
-.memberList>div{
-	display: inline-block;
-	margin : 10px auto;
-}
-/*멤버 목록 작은 컨텐츠*/
-.memberListTableBody{
-	display:none;
+/* 멤버 목록에 있는 제목 */
+div.smallContent h3{
+	padding : 20px;
 	text-align: center;
-}
-.memberListTableBody .ListBoxBody{
-	margin-top : 50px;
-}
-/* ------------팀 목록 요소들 설정 시작*/
-.name, .cdate{
-	width : 200px;
-}
-.auth{
-	width : 100px;
-}
-/* ------------팀 목록 요소들 설정 끝*/
-
-/* ------------멤버목록 요소들 설정 시작*/
-.email{
-	width:200px;
-	text-align: left;
-}
-.auth, .nickname{
- 	width:100px;
- 	text-align: left;
- }
-/* ------------멤버 목록 요소들 설정 끝*/
-
-/*검색 작은 컨탠츠, 팀 추가 작은 컨탠츠*/
-div.sidemenu{
-	 text-align: center;
-}
-div.sidemenu div{
-	display : inline-block;
-}
-/*각 컨텐츠마다 제목(검색, 팀추가, 팀목록, 멤버목록, 멤버추가)*/
-.title{
-	margin : 0 40px;
-	font-size : 14px;
 	border-bottom: 1px solid #d3d3d3;
-	padding:50px;
 }
-/*검색 텍스트 요소*/
-#memberSearch{
-    border: none;
-    background-color: #d3d3d3;
-    height: 30px;
-    width: 200px;
-    margin : 10px 0;
+/* 목록 컬럼 row */
+.category{
+	line-height : 40px;
+}
+.teamCategory{
+	background : #E7E7E7;
+}
+/* 목록 컬럼과 목록들 정렬*/
+.teamCategory div, .memberCategory div, .oneListRow div{
+	display:inline-block;
+	padding : 0 0 0 40px;
+	width : 150px;
+}
+.oneListRow{
+	font-size: 14px;
+	line-height : 40px;
 }
 /*모든 버튼 설정*/
 input[type=button], input[type=submit]{
-	display:block;
 	background-color: #FA5883;
     margin : 10px auto; 
     border: none;
     border-radius: 5px;
-
+    text-align: center;
 }
 /*멤버추가, 팀 추가 버튼 구체적 설정*/
 input[type=button].addMemberBtn, .addMembersBtn, .addTeam{
-    font-size: 12px;
+    font-size: 14px;
 	padding : 15px 15px;
 	width: 150px;
 }
