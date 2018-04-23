@@ -10,16 +10,16 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardTest.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardTest.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 
 <body>
 	<%@include file="../header.jsp"%>
-	<%@include file="../mainMenu.jsp"%>
 	
-	<div class="content">
-
+	<div class="content board">
+		<%@include file="cardShowMenu.jsp"%>
+		
 		<div class="projectTitle"><input type="text" name="projectTitle" value="${project.title}" onKeyUp='limitMemo(this, 20)'></div>
         <div class="cardlistContent">
 
@@ -34,10 +34,10 @@
                 
                 <!-- 카드리스트 제일 끝의 Add a list...버튼 -->
            		<div class="cardlist addCardlist">
-	                <div class="addList">Add a list...</div>
+	                <div class="addList">카드리스트 추가</div>
 	                <div class="cardlistCreateBox">
-	                    <textarea name="title" id="createListTextarea" placeholder="Add a List..." onKeyUp='limitMemo(this, 20)'></textarea><br />
-	                    <button type="button" id="listAddBtn">add</button>
+	                    <textarea name="title" id="createListTextarea" placeholder="카드리스트 추가" onKeyUp='limitMemo(this, 20)'></textarea><br />
+	                    <button type="button" id="listAddBtn">추가</button>
 	                    <button type="button" id="listCancleBtn">&times;</button>
 	                </div>
                 </div>
@@ -48,10 +48,10 @@
 		<div id="modifyModal" class="modifyModal">
 			<div class="modifyModal-title"></div>
 			<!-- 수정 모달 내용 -->
-			<span class="closeModal">&times;</span>
 			<div class="modifyModal-content" style="top: 0; left: 0;">
 			    <textarea name="content" id="modifyTextarea" rows="2" style="resize:none" onKeyPress="javascript: if(event.keyCode == 13) return false;" onKeyUp="limitMemo(this, 20)"></textarea><br />
-			    <button type="button" id="saveBtn" class="saveBtn">save</button>
+			    <button type="button" id="saveBtn" class="saveBtn">저장</button>
+			    <span class="closeModal modifyCardTitle">&times;</span>
 			</div>
         </div>
         
@@ -62,7 +62,7 @@
 	<div class="popupMenuWrap">
 	    <!-- 제목 -->
 	    <div class="popupMenuHeader">
-	        <div class="title">List Actions</div>
+	        <div class="title">리스트</div>
 	        <button class="popupMenuCloseBtn">
 	            <i class="far fa-times-circle"></i>
 	        </button>
@@ -70,8 +70,8 @@
 	    <!-- 메뉴목록 -->
 	    <div class="popupMenuContent">
 	        <ul class="popupMenuList">
-	            <li class="to-archive"><a href="#">Archive</a></li>
-	            <li class="to-hide"><a href="#">Trashbox</a></li>
+	            <li class="to-archive"><a href="#">보관함으로</a></li>
+	            <li class="to-hide"><a href="#">휴지통으로</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -88,7 +88,7 @@
 		var addList = document.getElementsByClassName("addList")[0]; //카드리스트 제일 마지막의 Add a List...(카드 리스트 추가)
 		var createList = document.getElementsByClassName("create")[0]; //카드리스트 추가할 때 생기는 미니창
 		var createListTextarea = document.getElementById("createListTextarea"); //카드리스트 추가하는 textarea
-		var listAddBtn = document.getElementById("listAddBtn"); //카드리스트 추가할 때의 save버튼
+		var listAddBtn = document.getElementById("listAddBtn"); //카드리스트 추가할 때의 저장버튼
 		
 		var cards = document.getElementsByClassName("cards"); //카드리스트 각각의 div 중 실제 카드 목록이 들어가는 div
 		var createCardBox = document.getElementsByClassName("createCardBox"); //카드리스트 각각의 div 중 footer-Add a card...부분
@@ -114,19 +114,21 @@
 		
 		
 		/* 프로젝트 title 수정 | 관련된 모든 이벤트 */
-		$("input[name=projectTitle]").on({			
-			click: function(){
-				$(this).select(); //전체선택
-			},
+		$("input[name=projectTitle]").on({	
 			focusin: function (event) { 
+				$(this).select(); //전체선택
 				p_title = $(this).val(); // 기존의 프로젝트 제목을 저장
 			},
 			focusout: function (event) {
+				//유효성 검사: 빈값을 입력할 경우 기본의 제목을 출력
+				if($(this).val() === null || $.trim($(this).val()) === "") 
+					$(this).val(p_title); 
+				//기존의 제목과 입력한 값이 다를 경우에만 ajax호출
 				if($(this).val() !== p_title)
 					projectTitleModify($(this).val()); //ajax처리
 			},
 			keydown: function (key) { //Enter키 누르면
-				if (key.keyCode == 13) {
+				if (key.keyCode === 13 || key.keyCode === 27) {
 					event.preventDefault(); //기본 이벤트 제거
 			       	$(this).blur(); //포커스 없앤다
 				};
@@ -169,11 +171,11 @@
 						  "	   <div class='cards'>" +
 						  "		   <div class='addCard'>" + 
 						  "    		   <textarea name='title' id='createCardTextarea' class='createCardTextarea' style='resize:none' onKeyUp='limitMemo(this, 20)'></textarea><br />" + 
-						  "    		   <button type='button' id='addBtn'>add</button>" + 
+						  "    		   <button type='button' id='addBtn'>추가</button>" + 
 						  "    		   <button type='button' id='cancleBtn'>&times;</button>" + 
 						  "		   </div>" +
 						  "   	</div>" +
-						  "   	<footer class='createCardBox'>Add a card...</footer>" + 
+						  "   	<footer class='createCardBox'>카드 추가</footer>" + 
 						  "</div>";
 			$(".cardlists").children(".addCardlist").before(listStr);
 			// 타이틀 길이만큼 필드의 높이를 조정
@@ -184,9 +186,9 @@
 		
 		/* 매개변수 카드id와 카드title이 주어지면 그것을 이용해 카드 태그를 문자열로 만드는 함수 */
 		function newCardAdd(cardId, cardlistId, cardTitle){
-			var newTitle = "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='cardtitleLi'>" + 
-						   "    <div id='cardLink' onclick='loadCardData(this)'>" + cardTitle + "</div>" + 
-						   "    <button class=cardModifyBtn><i class='far fa-edit'></i></button>" + 
+			var newTitle = "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='cardtitleLi' onclick='loadCardData(this)'>" + 
+						   "    <div id='cardLink'>" + cardTitle + "</div>" + 
+						   "    <button class='cardModifyBtn' onclick='cardTitleModifyModal(this)'><i class='far fa-edit'></i></button>" + 
 						   "</div>";
 			return newTitle;
 		};
@@ -235,7 +237,6 @@
 								 	a.push(b);
 								 return a;
 							 }, []);
-
 					//data 배열에서 id: uniqID[i]의 index를 구함
 					for (var i = 0; i < uniqID.length; i++) {
 					    var index = data.map(function (item) {
@@ -258,7 +259,8 @@
 			  		//for문을 돌면서 각각의 카드에 대한 태그를 문자열로 만든다.
 			  		for(var i = 0; i < uniqID.length; i++){ 
 			  			for(var j = 0; j < data.length; j++){
-				  			if(data[j].c_id !== 0 && data[j].cl_id === uniqID[i]){ //카드id가 0이 아니고 카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같을 때
+			  				//카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같고 ps_id가 1(진행)일 때
+				  			if(data[j].cl_id === uniqID[i] && data[j].c_ps_id === 1){ 
 				  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출
 								$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
 				  			};
@@ -291,7 +293,6 @@
 		
 		/* 카드 조회 | 특정 카드리스트에 대한 카드 목록 조회 */
 		function listCards(cl_id){
-			console.log(cl_id);
 	    	$.ajax({
 	    		type : "GET",
 				url : "/board/" + p_id + "/cardlist/" + cl_id + "/cards",
@@ -352,7 +353,7 @@
 		
 		
 		
-		/* 카드 등록 | save버튼 눌렀을 때의 처리 */
+		/* 카드 등록 | 저장버튼 눌렀을 때의 처리 */
 		$(".cardlists").on("click", "#addBtn", function(){
 			cardlistIndex = $(".addCard #addBtn").index(this); //전체 add버튼 중 this의 인덱스값 구하기
 			
@@ -392,23 +393,24 @@
 	    
 		
 		/* 카드 제목 수정 |  카드 목록에서 수정 버튼 클릭할 경우 모달창 띄우기 */
-		$(".cardlists").on("click", ".cardtitleLi button", function(e){
-			modifyCardTitle = $(this).prev(); //수정할 카드의 title표시하는 div를 전역변수에 담아둠(수정 save버튼 처리에 이용할 예정)
+		function cardTitleModifyModal(obj){
+			event.stopPropagation(); //이벤트 전파 방지. 부모의 이벤트인 카드모달창 띄우는 이벤트가 발생하지 않도록 한다.
+			modifyCardTitle = $(obj).prev(); //수정할 카드의 title표시하는 div를 전역변수에 담아둠(수정 저장버튼 처리에 이용할 예정)
 			// 모달창을 클릭한 카드의 위치에서 뜨도록 함.
 			// 1. 클릭한 수정버튼의 부모 찾아가서(cardtitleLi) 그 부모의 좌표값을 구하기
-			var cardtitleLiX = $(this).parent("div").offset().left; //그 수정버튼의 부모 태그의 x좌표
-			var cardtitleLiY = $(this).parent("div").offset().top; //그 수정버튼의 부모 태그의 y좌표
+			var cardtitleLiX = $(obj).parent("div").offset().left; //그 수정버튼의 부모 태그의 x좌표
+			var cardtitleLiY = $(obj).parent("div").offset().top; //그 수정버튼의 부모 태그의 y좌표
 	
 			// 2. 카드리스트의 전체높이 구하기
-			var headerHeight = parseInt($(this).parent().parent().prev().css("height")); //카드리스트 헤더 높이
-			var listHeight = parseInt($(this).parent().parent().css("height")); //카드리스트 중 카드부분 높이
+			var headerHeight = parseInt($(obj).parent().parent().prev().css("height")); //카드리스트 헤더 높이
+			var listHeight = parseInt($(obj).parent().parent().css("height")); //카드리스트 중 카드부분 높이
 			var footerHeight = parseInt($(".createCardBox").css("height")); //카드리스트 푸터 높이
 			var x = headerHeight + listHeight + footerHeight; //카드리스트 전체높이
 						
-			var listScrollHeight = $(this).parent().parent().prop("scrollHeight"); //클릭한 수정버튼의 조상 .cards의 scrollHeight
+			var listScrollHeight = $(obj).parent().parent().prop("scrollHeight"); //클릭한 수정버튼의 조상 .cards의 scrollHeight
 			
-			var cardId = $(this).parent().attr("data-id"); //카드의 id값을 담는다.
-			var title = $(this).parent().children("a").text(); //카드의 자손 중 a태그의 내용을 담는다.
+			var cardId = $(obj).parent().attr("data-id"); //카드의 id값을 담는다.
+			var title = $(obj).parent().children("a").text(); //카드의 자손 중 a태그의 내용을 담는다.
 			
 			if(cardtitleLiY > x){ // 3. 클릭한 카드의 y좌표가 전체높이보다 크면 수정창 위치 조정하여 띄움
 				$(".modifyModal-content").css({
@@ -436,9 +438,9 @@
 			$("#modifyTextarea").select();
 	
 			// 닫힘버튼(X) 누르면 모달창 닫힘.
-			closeModal.onclick = function(){
+			$(".closeModal.modifyCardTitle").click(function(){
 				modifyModal.style.display = "none";
-			};
+			});
 			// 모달창 범위 밖을 클릭하면 모달창 닫힘.
 			window.onclick = function(event) {
 				if (event.target == modifyModal)
@@ -446,11 +448,11 @@
 			}; 
 			
 			$(".modifyModal-title").html(cardId); //저장버튼 눌렀을 때의 처리를 위해 숨겨둔 div태그 안에 수정한 카드의 id값 담아두기
-		});
+		};
 	
 	
 	
-		/* 카드 제목 수정 | save버튼 클릭할 경우 */
+		/* 카드 제목 수정 | 저장버튼 클릭할 경우 */
 		$("#saveBtn").on("click", function(){
 			var id = $(".modifyModal-title").html(); //div태그에 담긴 카드 id값 가져와서 var id에 담기
 			var title = $("#modifyTextarea").val(); //수정textarea의 내용 담기
@@ -522,7 +524,7 @@
 		
 		
 		
-		/* 카드리스트 등록 | save버튼 눌렀을 때의 처리 */
+		/* 카드리스트 등록 | 저장버튼 눌렀을 때의 처리 */
 		$(".cardlists").on("click", "#listAddBtn", function(){
 			var title = $("#createListTextarea").val(); //사용자가 입력한 내용은 변수로 처리
 			
@@ -611,14 +613,10 @@
 		
 		
 		/* 카드리스트 제목 수정 | 관련 이벤트 */
-		$('.cardlists').on({			
-			click: function(){
-				// 카드리스트 제목 클릭하면 전체선택
-				$(this).select();
-			},
+		$('.cardlists').on({
 			focusin: function (event) {
-				// 현재 입력된 카드리스트 제목 저장
-				$(this).data('data-title', $(this).val());
+				$(this).select(); // 카드리스트 제목 클릭하면 전체선택
+				$(this).data('data-title', $(this).val()); // 현재 입력된 카드리스트 제목 저장
 			},
 			focusout: function (event) {
 				// 입력된 글자가 MAX-LANGTH 넘어 갈 경우 필드 높이 자동 조절
@@ -694,7 +692,7 @@
 			var className = $(e.target).attr("class");
 			
 			if(className !== "cardlistPopBtn" && className !== "title" && className !== "popupMenuHeader" 
-					&& className !== "popupMenuContent" && className !== "cardlistMore"){ 
+					&& className !== "popupMenuContent" && className !== "cardlistMore") { 
 				closeCardlistPop();
 			};
 		});
@@ -761,8 +759,6 @@
 		});
 		
 		
-	    
-	    
 	</script>
 </body>
 </html>
