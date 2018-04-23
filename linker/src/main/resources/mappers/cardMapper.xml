@@ -111,6 +111,7 @@
 		FROM linker.c_file f
 		LEFT JOIN linker.card c ON f.c_id = c.id
 		WHERE c_id = #{c_id}
+		ORDER BY f.cdate DESC
 	</select>
 	
 	<!-- 첨부파일 업로드 -->

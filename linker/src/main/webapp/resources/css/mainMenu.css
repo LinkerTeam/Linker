@@ -1,395 +1,87 @@
 @charset "UTF-8";
 
-/* 전체 div */
-.container {
-    height: 100%;
-    margin-top: -50px;
-    padding-top: 50px;
-    box-sizing: border-box;
-}
-.mainContainer {
-    position: relative;
-    overflow-y: auto;
-    height: 100%;
-}
-.mainContent {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: #dddddd;
-}
-	
 
-/* 오른쪽 메뉴~~~~~ */
-.mainAside {
-    height: 100%;
+/* 메뉴 전체 */
+.my-aside {
+	display: flex;
+    height: 232px;
     position: absolute;
     top: 50px; /*헤더 높이만큼 띄움*/
-    right: 0;
+    right: 6px;
     bottom: 0;
-    background-color: #232323;
+    border-radius: 3px;
+    background-color: #f1f4f7;
     overflow-x: hidden;
     transition: 0.2s; /*열었다 닫았다 할 때*/
     color: #fff;
     z-index: 999;
+    overflow-y: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 
+    			0 6px 6px rgba(0,0,0,0.23);
 }
-.nav-tabs-wrap {
+/* 닫기버튼 */
+.my-aside-close {
     position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    overflow: hidden;
-}
-	/* 오른쪽 메뉴 탭 */
-.nav-tab {
-    position: relative;
-}
-.nav-tabs > li .nav-tab-btn {
-    float: left;
-    width: 25%;
-}
-.nav-tabs:after {
-    display: block;
-    content: "";
-    clear: both;
-}
-	/* 오른쪽 메뉴 탭 버튼 */
-.nav-tabs .nav-tab-btn a {
-    display: block;
-    height: 40px;
-    line-height: 40px;
-    font-size: 11pt;
-    font-weight: 300;
-    color: #ddd;
-    text-align: center;
-    background: #585858;
-}
-.nav-tabs .active .nav-tab-btn a {
-    background: #232323;
-}
-	/* 오른쪽 메뉴 탭 내용 */
-.nav-tabs .nav-tab-content {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 40px;
-    right: 0;
-    bottom: 0;
-}
-.tab-content-box {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 12px 18px 12px 18px; /**************여기*/
-    box-sizing: border-box;
-}
-	/* 오른쪽 메뉴 열림상태 */
-.mainAside-open .active .nav-tab-btn a {
+	color: #afafaf;
+    font-size: 40px;
     font-weight: bold;
-}
-
-.mainAside-open .active .nav-tab-content {
-    display: block;
-}
-/************ 이력탭 ************/
-.pic-list > li {
-    position: relative;
-    margin-left: 38px;
-    padding: 10px 0;
-    border-top: 1px solid #3a3b3b;
-    line-height: 1.5;
-    color: #ddd;
-}
-	/* 이력목록 > 프로필사진 */
-.pic-list > li:nth-child(1) {
-    border-top: none;
-}
-.pic-list-writer {
-    position: absolute;
-    left: -38px;
-    top: 12px;
-}
-.pic-list-writer .profile img {
-    float: left;
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-}
-	/* 이력목록 > 내용 */
-.pic-list-desc {
-    /*margin: 0 24px 0 0;*/
-    word-wrap: break-word; /* 단어 단위로 자동 개행 */
-    font-size: 12pt;
-}
-
-.pic-list-desc .name {
-    font-weight: bold;
-    color: #eee;
-    margin-right: 5px;
-}
-	/* 이력목록 > 시간날짜 */
-.pic-list-datetime {
-    font-size: 12px;
-    color: #818181;
-}
-	/* 더보기 링크 */
-.show-more {
-    display: none;
-    padding: 12px 12px 12px 0;
-    font-size: 12px;
-    margin-left: 38px;
-    color: #aaa;
-}
-
-.show-more:hover {
-    color: #fff;
-}
-
-
-/************ 보관탭 ************/
-.cardtitleLi.tab-cards{
-	width: 280px;
-	margin: 10px 0 0 7px;
-	box-shadow: 3px 3px 2px 0px rgba(105, 104, 104, 0.73);
-}
-.cardtitleLi.tab-cards:hover{
-	background-color: #dedede;
-}
-.cardtitleLi.tab-cards > #cardLink{
-	line-height: 30px;
-	padding: 5px 10px;
-}
-.tab-cardlist{
-	width: 290px;
-	flex-direction: column; /* 세로로 나열 */
-	margin-left: 4px!important;
-}
-.cardlistTitleBox.tab-cardlist{
-	width: 259px!important;
-	padding: 13px 10px;
-	margin-bottom: 10px;
-	border-radius: 3px;
-	font-size: 15px;
-	color: #5e5e5e;
-	box-shadow: 3px 3px 2px 0px rgba(105, 104, 104, 0.73);
-	background-color: #e2e4e6;
-	cursor: default;
-}
-.cardStatus{
-	margin-left: 15px;
-	padding: 0 5px 5px 5px;
-	font-size: 12px;
-	color: #bfbfbf;
-}
-.tab-content-box-controls{
-	margin-bottom: 20px;
-}
-.tab-content-box-controls > input{
-	width: 175px;
-	height: 30px;
-	padding: 7px;
-	border: solid 1px #3f3f3f;
-	border-radius: 3px;
-	background-color: #3f3f3f;
-	transition: 0.2s;
-}
-.tab-content-box-controls > input:focus{
-	outline: none;
-	background-color: #afafaf;
-}
-.switchBtn-archive, .switchBtn-hidden, .quiet{
-	border: none;
-	background-color: #232323;
-	color: #818181;
-	text-decoration-line: underline;
-}
-.switchBtn-archive, .switchBtn-hidden{
-	outline: none;
-	cursor: pointer;
-}
-.quiet{
-	margin: 0 0 15px 10px;
-	text-decoration-line: none;
-	cursor: default; /* 버튼 사이 -에 커서 text로 잡혀서 추가 */
-}
-	/* 보관/가리기 탭 | switch to lists버튼 */
-.swhitchCardlist{
-	display: none;
-}
-.nav-tab-content-Box-archive.archiveCardlist,
-.nav-tab-content-Box-hidden.hiddenCardlist{
-	display:none;
-}
-    
-
-/************ 설정탭 ************/
-	/* 설정탭 | 팀 멤버 프로필 사진 */
-.all-members {
-    margin: 0 0 13px 10px;
-    width: 294px;
-}
-
-.all-members .profile-img {
-    width: 40px;
-}
-	/* 설정탭 | 초대 버튼~~~~~ */
-.invite {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.invite-button {
-    font-size: 14px;
-    font-weight: 400;
-    white-space: nowrap;
-    width: 100%;
-    height: 26px;
-    line-height: 25px;
-    display: inline-block;
-    zoom: 1;
-    color: #919191;
-    position: relative;
-    -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
-    transition: border .25s linear, color .25s linear, background-color .25s linear;
-    background-color: #3e3e3e;
-    border-color: #8a8a8a;
-    -webkit-box-shadow: 0 3px 0 #4e5b5c;
-    box-shadow: 0 2px 0 #575757;
-}
-.invite-button:hover {
-    background-color: #313131;
-}
-.invite-button:active { /*버튼 클릭시 효과*/
-    top: 3px;
-    outline: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-.invite span {
-    margin-left: 10px;
-}
-/* ~~~~~설정탭 | 초대 버튼 */
-
-
-/* 설정탭 | 메뉴~~~~~ */
-.mainAside-tab4-menu {
-    margin-top: 20px;
-}
-.settingMenu a {
-    border-bottom: solid 0.5px #454545;
-    color: #818181;
-    font-size: 18px;
-    padding: 15px 10px 15px 10px;
-    display: block;
-}
-.settingMenu a:hover {
-    background-color: #121212;
-    color: #f1f1f1;
-}
-/* ~~~~~설정탭 | 메뉴 */
-
-/* ~~~~~오른쪽 메뉴 */
-
-
-
-/* board close 관련 */
-.hiddenContent{ /* content 숨기기 */
-	display: none;
-}
-/* 모달창 */
-.closeBoardModal {
-    display: none;
-    position: absolute;
-    z-index: 1001; /* 테스트 후 값 조정 */
-}
-.closeBoardModal.is-visible {
-    display: block;
-}
-/* 모달창 | 내부요소 전체 */
-.closeBoardModal-content{
-    position: relative;
-    box-sizing: border-box;
-    width: 294px;
-    height : 164px;
-    background: #fff;
-    border-radius: 4px;
-    color : black;
-    font-size: 15px;
-    line-height: 1.1em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
-				0 1px 2px rgba(0,0,0,0.24);
-}
-/* 모달창 | 상단 타이틀 p태그 + 닫기버튼 */
-.closeBoardModal-title{
-	text-align: center;
-	line-height: 34px;
-}
-/* 모달창 | 상단 타이틀 p태그 */
-.closeTitle{
-	display: block;
-	margin: 0 7px;
-	border-bottom: solid 1px #d0d0d0;
-	color: #919191;
-}
-/* 모달창 | 닫기 버튼 */
-.closeBoardModal-title > .closeModal{
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 0 5px;
-	line-height: 28px;
-}
-/* 모달창 | 하단 설명 부분 */
-.closeBoardModal-text > p{
-	padding: 8px 15px;
-	word-break: keep-all;/* 띄어쓰기 기준으로 줄바꿈 */
-	color: #232323;
-}
-/* 모달창 | close버튼 */
-.closeBoardBtn{
-    width: 92%;
-    height: 40px;
-    margin-left: 12px;
-    background: #eb5a46;
-    color: #fff;
-    font-size: 17px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
     cursor: pointer;
 }
-/* close, delete화면 | 전체div */
-.closeBoardMessage, .deleteBoardMessage{
+.my-aside-close:hover {
+	color: black;
+}
+.my-aside.is-hidden {
+	display: none;
+}
+/* 상단 닉네임/이메일/프로필 전체영역 */
+.my-aside-info {
+	width: 208px;
+    padding: 12px 0 16px 0;
+    margin: 12px 8px 2px 8px;
+    border-bottom: solid 1px #cbcdce;
+    cursor: default;
+}
+/* 닉네임/이메일 영역 */
+.my-aside-info-text {
+    position: relative;
+    text-align: center;
+}
+.my-aside-info-text > p {
 	text-align: center;
-	color: #5f5f5fd4;
+    font-size: 18px;
+    color: black;
 }
-/* close화면 | title표시 부분 */
-.closeBoardTitle, .deleteBoardTitle{
-	padding-top: 50px;
-  	font-size: 30px;
-  	font-weight: bold;
+/* 프로필 영역 */
+.my-aside-info-img {
+    position: relative;
+    text-align: center;
 }
-/* close화면 | reopen, delete버튼 */
-.boardReopen, .boardDelete{
-	margin-top: 30px;
-	font-size: 17px;
-	text-decoration: underline;
-	cursor: pointer;
+.my-aside-info-img > img {
+    width: 130px;
+    margin: 14px;
 }
-.boardReopen:hover, .boardDelete:hover{
-  color: #1b1b1b;
+/* 메뉴 영역 */
+.my-aside-menu {
+	width: 233px;
 }
-/* delete화면 */
-.deleteBoardMessage > p{
-	max-width: 600px;
-	margin: 0 auto;
-	margin-top: 30px;
-	font-size: 18px;
+/* 각각의 메뉴들 */
+.setting-menu a {
+    border-bottom: solid 1px #cbcdce;
+    color: #818181;
+    font-size: 18px;
+    padding: 15px 10px 10px 10px;
+    display: block;
 }
+.setting-menu a:hover {
+    background-color: #cbcdce;
+}
+/* 첫번째 메뉴 */
+.user-modify {
+	margin-top: 6px;
+}
+
+
+
 
 
 /* close board 목록에 대한 추가사항 */

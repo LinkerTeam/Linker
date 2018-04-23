@@ -10,9 +10,7 @@ public class CardVO {
 	private int u_id;		//회원 아이디
 	private String title;	//카드 제목
 	private String content;	//카드 내용
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd a hh:mm:ss", timezone="GMT+9")
-	private Date cdate;		//카드 생성날짜
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd a hh:mm:ss", timezone="GMT+9")
+	private String cdate;		//카드 생성날짜
 	private Date udate;		//카드 업데이트날짜
 	private int ps_id;		//카드 상태값
 	
@@ -56,10 +54,10 @@ public class CardVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getCdate() {
+	public String getCdate() {
 		return cdate;
 	}
-	public void setCdate(Date cdate) {
+	public void setCdate(String cdate) {
 		this.cdate = cdate;
 	}
 	public Date getUdate() {

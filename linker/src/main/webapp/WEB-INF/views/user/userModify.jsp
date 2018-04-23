@@ -7,10 +7,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>회원정보 상세 페이지</title>
 <style type="text/css">
-*, *:after, *:before {
-	/* -webkit-,-moz-등의 접두사는 특정브라우저를 따로 안정성을위해서 적어둔다.  */
-	box-sizing: border-box;
-}
+
 #main {
 	font-family: Dotum, sans-serif;
 	font-size: 12px;
