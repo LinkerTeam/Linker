@@ -608,6 +608,8 @@
 							   	  "</div>";
 					};
 					
+					var content = this.content.replace(/(\n|\r\n)/g, '<br>');
+					
 	    			str += "<div data-id='" + this.id + "' data-uid='" + this.u_id + "'class='replyArea'>" +
 						   "	<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate" + this.profile + "' />" +
 						   "	<div class='reply-commentArea'>" +
@@ -615,7 +617,7 @@
 						   "        	<p class='reply-nickname'>" + this.nickname + "</p>" +
 						   "        	<p class='reply-cdate'>" + this.cdate + "</p>" + edit + myReply +
 						   "		</div>" +
-						   "		<pre class='reply-content'>" + this.content + "</pre>" +
+						   "		<p class='reply-content'>" + content + "</p>" +
 						   "	</div>" +
 						   "</div>";
 	    		});
