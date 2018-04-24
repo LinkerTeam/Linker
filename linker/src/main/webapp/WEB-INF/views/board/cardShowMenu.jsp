@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
