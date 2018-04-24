@@ -16,6 +16,7 @@
 
 <body>
 	<%@include file="../header.jsp"%>
+	<%@include file="../mainMenu.jsp"%>
 	
 	<div class="content board">
 		<%@include file="cardShowMenu.jsp"%>

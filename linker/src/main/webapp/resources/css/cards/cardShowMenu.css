@@ -317,7 +317,7 @@
     position: relative;
     box-sizing: border-box;
     width: 294px;
-    height : 164px;
+    height : 186px;
     background: #fff;
     border-radius: 4px;
     color : black;
@@ -348,9 +348,9 @@
 }
 /* 모달창 | 하단 설명 부분 */
 .closeBoardModal-text > p {
-	padding: 8px 15px;
-	word-break: keep-all;/* 띄어쓰기 기준으로 줄바꿈 */
+	padding: 12px 15px;
 	color: #232323;
+    line-height: 1.2em;
 }
 /* 모달창 | close버튼 */
 .closeBoardBtn {
