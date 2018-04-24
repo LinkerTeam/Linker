@@ -25,7 +25,7 @@
 		        
 			    <!--오른쪽메뉴 설정단추-->
 			    <span class="rtMenu-button" style="cursor:pointer">
-			        <img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" alt="프로필 사진" />
+			        <img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="header-profile" alt="프로필 사진" />
 			    </span>
 		    </div>
 		    
@@ -51,11 +51,19 @@
 			$(".header-search").children("form").children("button").css("left", "220px");
 		});	
 		
+		
+		
 		/* 오른쪽 프로필 사진 클릭하면 menu 출력/숨기기 */
 		$(".rtMenu-button").click(function(){
 			if($(".my-aside").hasClass("is-hidden"))
 				$(".my-aside").removeClass("is-hidden");
 			else
+				$(".my-aside").addClass("is-hidden");
+		});
+		
+		/* 오른쪽 메뉴 이외의 영역을 클릭하면 메뉴 닫기 */
+		$(document).click(function(e){
+			if(!($(e.target).hasClass("header-profile")) && !($(e.target).hasClass("header-menu"))) 
 				$(".my-aside").addClass("is-hidden");
 		});
 		

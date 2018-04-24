@@ -8,7 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -109,7 +109,7 @@
 				<!-- Tab4 | 보드설정 -->
 				<li>
 					<div class="nav-tab-btn">
-						<a href="#"  class="trashbox-tab">보드설정</a>
+						<a href="#"  class="trashbox-tab">설정</a>
 					</div>
 					<div class="nav-tab-content">
 						<ul>
@@ -119,15 +119,15 @@
 						<div class='closeBoardModal'>
 							<div class="closeBoardModal-content">
 								<div class='closeBoardModal-title'>
-									<span class="closeTitle">Close Board?</span>
+									<span class="closeTitle">Close Project?</span>
 									<span class="closeModal">&times;</span>
 								</div>
 								<div class='closeBoardModal-text'>
 									<p class="closeBoardModal-text">
-										상단바에서 "Boards"메뉴를 클릭하고 "Closed Boards보기"를 선택한 후,
-										"Re-open"을 클릭하여 보드를 다시 열 수 있습니다.
+										프로젝트를 종료하면 모든 카드리스트와 카드를 조회할 수 없게 됩니다. <br>
+										다시 오픈하시려면 상단바의 '종료된 프로젝트 관리' 메뉴를 이용하십시오.
 									</p>
-									<button class="closeBoardBtn" value="OK">close</button>
+									<button class="closeBoardBtn" value="OK">프로젝트 종료하기</button>
 								</div>
 							</div> 
 						</div>

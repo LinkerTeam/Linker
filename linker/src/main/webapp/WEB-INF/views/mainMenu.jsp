@@ -6,48 +6,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-	<aside class="my-aside is-hidden">
-		<div class="my-aside-close">&times;</div>
-		<div class="my-aside-info">
-		    <div class="my-aside-info-text" style="cursor:pointer">
-				<p>${login.nickname}<br/>(${login.email})</p>
+	<aside class="header-menu my-aside is-hidden">
+		<span class="my-aside-close">&times;</span>
+		<div class="header-menu my-aside-info">
+		    <div class="header-menu my-aside-info-text">
+				<p class="header-menu">${login.nickname}<br/>(${login.email})</p>
 			</div>
-			<div class="my-aside-info-img" style="cursor:pointer">
-				<img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" alt="프로필 사진" />
+			<div class="header-menu my-aside-info-img">
+				<img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="header-menu" alt="프로필 사진" />
 			</div>
 		</div>
 		<!--메뉴-->
 		<div class="my-aside-menu">
-			<div class="setting-menu user-modify">
-				<a href="http://localhost:9090/user/userModify">회원정보수정</a>
-			</div>
 			<div class="setting-menu team-modify">
 				<a href="http://localhost:9090/main/team">팀 정보 수정</a>
+			</div>
+			<div class="setting-menu board-status-modify">
+				<a href="#" class="closeBoardList">종료된 프로젝트 관리</a>
+			</div>
+			<div class="setting-menu user-modify">
+				<a href="http://localhost:9090/user/userModify">회원정보수정</a>
 			</div>
 			<div class="setting-menu pwd-modify">
 				<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
 			</div>
-			<div class="setting-menu board-status-modify">
-				<a href="#" class="closeBoard">종료 프로젝트</a>
-			</div>
 			<div class="setting-menu logout">
 				<a href="http://localhost:9090/user/logout" class="logoutBtn">로그아웃</a>
 			</div>
-			
 		</div>
 	</aside>
 	
 	
 	<script>
-	    
-		/* 오른쪽 프로필 메뉴의 닫기 버튼 */
-		$(".my-aside-close").click(function(){
-			$(".my-aside").addClass("is-hidden");
-		});
+		
 	
 	
 		
