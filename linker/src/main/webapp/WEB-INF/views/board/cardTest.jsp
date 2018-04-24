@@ -10,7 +10,7 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <!-- CSS -->
-<link href="/resources/css/cards/cardTest.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardTest.css?ver=111111111" type="text/css" rel="stylesheet" />
 </head>
 
 
@@ -396,6 +396,7 @@
 		/* 카드 제목 수정 |  카드 목록에서 수정 버튼 클릭할 경우 모달창 띄우기 */
 		function cardTitleModifyModal(obj){
 			event.stopPropagation(); //이벤트 전파 방지. 부모의 이벤트인 카드모달창 띄우는 이벤트가 발생하지 않도록 한다.
+			
 			modifyCardTitle = $(obj).prev(); //수정할 카드의 title표시하는 div를 전역변수에 담아둠(수정 저장버튼 처리에 이용할 예정)
 			// 모달창을 클릭한 카드의 위치에서 뜨도록 함.
 			// 1. 클릭한 수정버튼의 부모 찾아가서(cardtitleLi) 그 부모의 좌표값을 구하기
@@ -407,6 +408,8 @@
 			var listHeight = parseInt($(obj).parent().parent().css("height")); //카드리스트 중 카드부분 높이
 			var footerHeight = parseInt($(".createCardBox").css("height")); //카드리스트 푸터 높이
 			var x = headerHeight + listHeight + footerHeight; //카드리스트 전체높이
+			console.log("카드리스트 전체 높이 : "+x);
+			console.log("부모의 y좌표 : "+cardtitleLiY);
 						
 			var listScrollHeight = $(obj).parent().parent().prop("scrollHeight"); //클릭한 수정버튼의 조상 .cards의 scrollHeight
 			
@@ -414,11 +417,13 @@
 			var title = $(obj).parent().children("a").text(); //카드의 자손 중 a태그의 내용을 담는다.
 			
 			if(cardtitleLiY > x){ // 3. 클릭한 카드의 y좌표가 전체높이보다 크면 수정창 위치 조정하여 띄움
+				console.log("위치 조정");
 				$(".modifyModal-content").css({
 					"left" : cardtitleLiX,
 					"top" : x + 15
 				});
 			} else { // 4. 클릭한 카드의 y좌표가 전체높이보다 작으면 그 위치에서 수정창 띄움
+				console.log("그대로 띄움");
 				$(".modifyModal-content").css({
 					"left" : cardtitleLiX,
 					"top" : cardtitleLiY
