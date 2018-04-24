@@ -6,9 +6,11 @@ textarea:focus {
 }
 
 /* board화면에 세로 스크롤 잡혀서 없앰 */
-.content.board{
-	overflow-y: hidden;
+.content.board {
+    display: list-item;
+    width: 100%;
 	background-color: #0079bf;
+	overflow: hidden;
 }
 
 /* 헤더, 양쪽메뉴 제외한 본문영역 중 상단 프로젝트 타이틀 영역 */
@@ -32,6 +34,8 @@ textarea:focus {
 /* 본문영역 중 프로젝트 타이틀을 제외한 영역 */
 .cardlistContent {
     display: flex; 
+    float: left;
+    width: 100%;
     height: calc(100% - 60px); /* 상단 프로젝트 타이틀과 하단 스크롤 영역을 제외한 높이 */
     line-height: 1.3em; /* 가변단위. 1em은 현재 폰트크기임. */
 }
@@ -39,7 +43,6 @@ textarea:focus {
 /* 전체 카드리스트의 실질적 영역 */
 .cardlists {
     display: flex;
-    overflow-x: auto;
     overflow-y: hidden; /* 가로스크롤만 생기도록 */
     transition: 0.2s;
 }
