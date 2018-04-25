@@ -102,7 +102,7 @@ public class UserController {
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 
-		System.out.println("구글:" + url);
+		//System.out.println("구글:" + url);
 
 		model.addAttribute("google_url", url);
 
@@ -234,13 +234,15 @@ public class UserController {
 	@RequestMapping(value = "/userModify", method = RequestMethod.POST)
 	public String UserUpdate(UserDTO dto, Model model, HttpServletRequest request) throws IOException, Exception {
 		// MultipartFile은 POST 방슥으로 들어온 파일 데이터를 의미
-		System.out.println(dto);
+		//System.out.println(dto);
 
-		System.out.println(dto.getProfile());
+		//System.out.println(dto.getProfile());
 		// 화면으로 부터 받아온 파일을 MultipartFile타입 uploadfile에 넣어준다
 		MultipartFile uploadfile = dto.getProfileName();
 
 		System.out.println("너는 뭐냐?" + uploadfile);
+		
+		
 
 		// 요청으로부터 세션을 받아와서 저장함 로그인한상태면 세션에 로그인 값이 지정됨
 		HttpSession session = request.getSession();
@@ -249,18 +251,24 @@ public class UserController {
 		// 들어있다.
 		UserVO user = (UserVO) session.getAttribute("login");
 
-		System.out.println("session에 들어있는 값" + user);
+		//System.out.println("session에 들어있는 값" + user);
 		// session에 들어있는 값중 이메일만 따로 추출해서 문자열에 넣어준다.
 		String email = user.getEmail();
 		
 		//=====================기존 이미지 파일 삭제=======================
 		//s3 클래스 사용
+		//기본 파일인경우에는 기본 파일을 삭제 하기를 막기위해서 if문을 걸어둠
+		System.out.println(user.getProfile().equals("/default.gif"));
+		System.out.println((!user.getProfile().equals(user.getProfile())));
+		if(!(user.getProfile().equals("/default.gif")) || (!user.getProfile().equals(user.getProfile()))) {
+		System.out.println("나입니다아");
 		S3Util s3 = new S3Util();
 		String bucketName = "linkers104";
 		//기존 DB에 있던 정보를 삭제 하고 들어온 정보로 다시 새롭게 쓴다.
 		s3.fileDelete(bucketName, uploadpath+user.getProfile());
+		}
 		//=====================기존 이미지 파일 삭제=======================		
-		
+	
 		// 세션으로부터 받은 email값을 통해서 service.viewUser()매서드를 통해서 다시 DB로부터 값을 받아온다. 세션으로부터
 		// 들어있는 값이아닌 DB값으로
 		model.addAttribute("vo", service.viewUser(email));
@@ -271,8 +279,8 @@ public class UserController {
 		String imageType = uploadfile.getOriginalFilename()
 				.substring(uploadfile.getOriginalFilename().lastIndexOf(".") + 1);
 
-		System.out.println("imageType는?" + imageType);
-		System.out.println("bb는?" + (imageType.equals("jpg")));
+		//System.out.println("imageType는?" + imageType);
+		//System.out.println("bb는?" + (imageType.equals("jpg")));
 		// 이미지 타입을 검사해서 이미지인 경우에만 DB에 저장 한다.
 		if (imageType.equals("jpg") || imageType.equals("png") || imageType.equals("gif") || imageType.equals("jpge")) {
 			String realPath = UploadFileUtils.uploadFile(uploadpath, uploadfile.getOriginalFilename(),
@@ -281,7 +289,7 @@ public class UserController {
 			dto.setProfile(realPath);
 			System.out.println(realPath);
 		}
-		System.out.println(dto.getProfile());
+		//System.out.println(dto.getProfile());
        
 		dto.setEmail(email);
 
@@ -315,7 +323,7 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping("/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-       System.out.println(" 나여기 들어왔어요");
+       System.out.println(" 나여기 displayFile");
 		InputStream in = null;
         ResponseEntity<byte[]> entity = null;
         HttpURLConnection uCon = null;
@@ -333,9 +341,7 @@ public class UserController {
 
             try {
                 url = new URL(s3.getFileURL(bucketName, inputDirectory+fileName));
-                System.out.println("https://s3.ap-northeast-2.amazonaws.com/"+inputDirectory+"/linker"+fileName);
-                //https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate/2018/04/16/2e66c20a-6e93-43ae-93e5-b812a023bc61_avatar.png
-                //https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate/2018/04/16/2e66c20a-6e93-43ae-93e5-b812a023bc61_avatar.png
+                //System.out.println("https://s3.ap-northeast-2.amazonaws.com/"+inputDirectory+"/linker"+fileName);
                 uCon = (HttpURLConnection) url.openConnection();
                 System.out.println("���� :" + uCon);
                 in = uCon.getInputStream(); 
@@ -376,7 +382,7 @@ public class UserController {
 	// 회원가입 POST 이메일 인증 도 함께함
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signupPOST(UserVO vo, Model model, RedirectAttributes rttr) throws Exception {
-		logger.info("로그인 post............");
+		//logger.info("로그인 post............");
 
 		logger.info(vo.toString());
 
@@ -398,7 +404,7 @@ public class UserController {
 
 		logger.info(vo.toString());
 
-		/* return "/user/login"; */
+		
 	}
 
 	// 이메일 확인을 눌렀을떄 나오는 창
@@ -515,7 +521,7 @@ public class UserController {
 
 		System.out.println("/user/googlecallback");
 
-		// 사용자 정보 가져오는 로직
+		// ===========================사용자 정보 가져오는 로직
 		String code = request.getParameter("code");
 
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
@@ -539,22 +545,22 @@ public class UserController {
 		// Person클래스에 사용자에 정보가 담겨져있다 프로필정보 get매서드로 프로필 정보를 가져온다 처음 동의시에만 한번 가져올수있다. 가입된
 		// 사람은 프로필정보를 안가져온다.
 		Person person = plusOperations.getGoogleProfile();
-		// 사용자 정보 가져오는 로직 여기까지
+		// ============================사용자 정보 가져오는 로직 여기까지
 
 		// 구글로부터 받아온 프로필을 우리 쪽 DB에 저장하고 비교하는 작업 하는 로직
 		String email = person.getAccountEmail();
 		String nickname = person.getDisplayName();
 
-		System.out.println(nickname);
+		//System.out.println(nickname);
 
 		UserVO vo = new UserVO();
 
 		vo.setEmail(email);
 		vo.setNickname(nickname);
 
-		System.out.println("vo 뭐다냥" + vo.toString());
+		//System.out.println("vo 뭐다냥" + vo.toString());
 
-		System.out.println(singupService.serchGoogle(vo));
+		//System.out.println(singupService.serchGoogle(vo));
 
 		if (singupService.serchGoogle(vo) == null) {
 			// 처음 로그인한 사용자.
@@ -573,7 +579,7 @@ public class UserController {
 
 		// 만약 처음 접속시 값을 못가져오기때문에 순서가 중요하다.
 		UserVO vo2 = service.viewUser(vo.getEmail());
-		System.out.println(vo2.toString());
+		//System.out.println(vo2.toString());
 		if (vo2.getStatus() == 2) {
 			// 페이지를 따로넘기지않고 alert창을 뛰움
 			response.setContentType("text/html; charset=UTF-8");
@@ -584,7 +590,6 @@ public class UserController {
 		}
 		// DB로부터 정보 받아와서 세션을에 저장하고싶어서 보냄
 		vo = singupService.serchGoogle(vo);
-		System.out.println("니가 그거냐" + vo.toString());
 		session.setAttribute("login", vo);
 		/*
 		 * vo.setNickname(profile.getAccountEmail());
@@ -612,7 +617,7 @@ public class UserController {
 		// 구글 로그인으로 비밀번호창 으로 들어올땐 여길 들어올수없게 한다.
 		if (!(vo.getGoogle() == null)) {
 			if(vo.getGoogle().equals("1"))
-			return "redirect:/user/connect";
+			return "redirect:/main";
 		}
 		return "user/passwordchange";
 	}

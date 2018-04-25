@@ -26,9 +26,11 @@
     text-align: center;
     list-style: none;
 }
+
 /* 백그라운드 배경화면 속성 */
 body {
-    background: #ffffff;
+    background: gray;
+    height : 100%;
 }
 
 .main-nav a {
@@ -42,53 +44,63 @@ body {
     color: #FFF;
 }
 
+.wap{
+	height:100%;
+}
 .main-nav {
-    /*width: 90%;*/
+	position:absolute;
+	width: 100px; /* 정렬하려는 요소의 넓이를 반드시 지정 */ 
+	margin: 0 auto;
+  /*   margin: 150px 150px 150px 150px; */
+  	position:static;
     max-width: 240px;
     margin: 0 auto;
-    height: 100%;
     cursor: pointer;
-    z-index: 2;
+    
 }
 
 
-    .main-nav ul {
-        position: absolute;
-        top: 40%;
-        margin: 0;
-        padding: 0;
-        margin: 0 auto;
-    }
+.main-nav ul {
+   	position:fixed;
+    margin: 0;
+    padding: 0;
+    margin: 0 auto;
+    top:45%;
+    right: 36%;
+    
+}
 
-    .main-nav li {
-        list-style: none;
-        float: left;
-        width: 200px;
-        text-align: center;
-        cursor: pointer;
-    }
+.main-nav li {
+    list-style: none;
+    float: left;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+    
+  
+ }
 
-        /* 메인버튼 로그인 */
-        .main-nav li:nth-child(1) a {
-            background: #d83d3d;
-            border: 2px solid #fff;
-        }
+    /* 메인버튼 로그인 */
+.main-nav li:nth-child(1) a {
+    background: #d83d3d;
+    border: 2px solid #fff;
+}
 
-            .main-nav li:nth-child(1) a:hover {
-                background: #fff;
-                color: #d83d3d;
-            }
+.main-nav li:nth-child(1) a:hover {
+    background: #fff;
+    color: #d83d3d;
+}
 
-        /* 메인버튼 회원가입 */
-        .main-nav li:nth-child(2) a {
-            background: #7e0909;
-            border: 2px solid #fff;
-        }
+/* 메인버튼 회원가입 */
+.main-nav li:nth-child(2) a {
+    background: #7e0909;
+    border: 2px solid #fff;
+}
 
-            .main-nav li:nth-child(2) a:hover {
-                background: #fff;
-                color: #7e0909;
-            }
+.main-nav li:nth-child(2) a:hover {
+    background: #fff;
+    color: #7e0909;
+}
 
 /* 이부분까지 메인창  */
 
@@ -148,9 +160,6 @@ form .fieldset:first-child {
     display: none;
     transition: opacity 0.3s 0, visibility 0 0.3s;
 }
-
-
-
 
 /* 메인박스 로그인창과 회원가입창 비밀번호 찾기 창 */
 .user-modal-container, #reset-password {

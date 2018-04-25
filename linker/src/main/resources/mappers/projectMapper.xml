@@ -64,7 +64,7 @@
 	</select>
 	
 	
-<!-- 해당팀원이 아니면 프로젝트를 들어가는것을 막는 것 -->
+	<!-- 해당팀원이 아니면 프로젝트를 들어가는것을 막는 것 -->
 	<select id="checkProject" resultType="int">
 	SELECT count(*)
 	FROM linker.project
@@ -72,7 +72,7 @@
 	WHERE team_has_user.u_id=#{u_id} AND project.t_id=#{t_id};
 	</select>
 	
-	<!--  -->
+	<!-- 종료 된 프로젝트리스트 -->
 	<select id="hiddenList" resultType="projectVO">
 	SELECT 
 		user.id AS u_id
@@ -85,6 +85,51 @@
 	JOIN linker.project ON team_has_user.t_id = project.t_id
 	WHERE user.id =#{u_id} AND project.ps_id =2;
 	</select>
+	
+	<!-- 프로젝트 타이틀 변경 -->
+	<update id="modifiyTitle">
+	UPDATE linker.project 
+	SET title=#{title} 
+	WHERE id =#{id};
+	</update>
+	
+	<!-- 즐겨찾기 추가 -->
+	<insert id="favoriteAdd" useGeneratedKeys="true" keyProperty="u_id">
+	INSERT INTO 
+		linker.user_has_project (u_id,p_id) 
+	VALUES (#{u_id},#{p_id});
+	</insert>
+	
+	<!--  즐겨찾기 리스트 가져오기 -->
+	<select id="favoriteList" resultType="ProjectVO">
+	SELECT title,project.u_id,project.id,t_id
+	FROM linker.user
+	JOIN linker.user_has_project ON user_has_project.u_id = user.id
+	JOIN linker.project ON project.id = user_has_project.p_id
+	WHERE user.id=#{u_id}
+	ORDER BY user_has_project.cdate DESC;
+	</select>
+	
+	<!--즐겨찾기 삭제  -->
+	<delete id="favoriteDelete">
+	DELETE 
+	FROM linker.user_has_project 
+	WHERE u_id=#{u_id} AND p_id=#{p_id};
+	</delete>
+	
+<!-- 	
+	select count(*)
+from
+(select p.id,p.title,p.u_id,p.t_id,f.status
+from
+(SELECT * FROM linker.project) p
+left join
+(SELECT * FROM linker.user_has_project) f
+on p.id=f.p_id) pf
 
-
+join linker.user
+on pf.u_id = user.id 
+where user.id = 33;
+; -->
+	
 </mapper>

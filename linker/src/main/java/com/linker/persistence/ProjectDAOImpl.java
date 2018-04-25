@@ -1,6 +1,8 @@
 package com.linker.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -54,11 +56,38 @@ public class ProjectDAOImpl implements ProjectDAO {
 		
 		return session.selectOne(namespace+".checkProject",vo);
 	}
-	//
+	//숨기 프로젝트 리스트
 	@Override
 	public List<ProjectVO> hiddenList(int u_id) throws Exception {
-		// TODO Auto-generated method stub
 		return session.selectList(namespace+".hiddenList",u_id);
+	}
+	//프로젝트 이름 바꾸기
+	@Override
+	public void modifiyTitle(ProjectVO vo) throws Exception {
+		 session.update(namespace+".modifiyTitle",vo);
+	}
+	//프로젝트 즐겨찾기 추가
+	@Override
+	public void favoriteAdd(int u_id, int p_id) throws Exception {	
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("u_id",u_id);
+		map.put("p_id",p_id);
+		session.insert(namespace+".favoriteAdd",map);	
+	}
+	//즐겨찾기 리스트
+	@Override
+	public List<ProjectVO> favoriteList(int u_id) throws Exception {
+		return  session.selectList(namespace+".favoriteList",u_id);
+	}
+	
+	//즐겨찾기 삭제
+	@Override
+	public void favoriteDelete(int u_id, int p_id) throws Exception {
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("u_id", u_id);
+		map.put("p_id", p_id);
+		session.delete(namespace+".favoriteDelete",map);
+		
 	}
 	
 	

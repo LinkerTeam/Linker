@@ -96,5 +96,12 @@
 		WHERE u_id=#{u_id}
 		AND t_id=#{t_id}
 	</update>
-
+	
+	<!-- 팀 멤버의 프로필사진 가져오기 -->
+	<select id="hasTeamProfile" resultType="UserVO">
+		SELECT nickname,profile,email
+		FROM linker.user
+		JOIN linker.team_has_user ON team_has_user.u_id = user.id
+		where team_has_user.t_id = #{t_id};
+	</select>
 </mapper>

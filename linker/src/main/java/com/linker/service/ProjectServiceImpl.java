@@ -46,14 +46,31 @@ public class ProjectServiceImpl implements ProjectService {
 	//해당 팀원이 아니면 프로젝트에 URI로 못들어가게 막음
 	@Override
 	public int checkProject(ProjectVO vo) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.checkProject(vo);
 	}
 	//
 	@Override
 	public List<ProjectVO> hiddenList(int u_id) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.hiddenList(u_id);
+	}
+
+	@Override
+	public void modifiyTitle(ProjectVO vo) throws Exception {
+		dao.modifiyTitle(vo);
+	}
+	//프로젝트 즐겨찾기
+	@Override
+	public void favoriteAdd(int u_id, int p_id) throws Exception {
+		dao.favoriteAdd(u_id, p_id);
+	}
+
+	@Override
+	public List<ProjectVO> favoriteList(int u_id) throws Exception {
+		return dao.favoriteList(u_id);
+	}
+	//즐겨찾기 삭제
+	public void favoriteDelete(int u_id,int p_id) throws Exception{
+		dao.favoriteDelete(u_id, p_id);
 	}
 	
 	

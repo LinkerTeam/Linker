@@ -6,6 +6,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import com.linker.domain.TeamMemberVO;
+import com.linker.domain.UserVO;
 import com.linker.dto.TeamMemberDTO;
 
 public interface TeamMemberService {
@@ -32,5 +33,7 @@ public interface TeamMemberService {
 	public void modifyStatus(int u_id, int t_id) throws Exception;	
 	//멤버삭제
 	public void deleteMember(int u_id, int t_id) throws Exception;
+	//팀프로필가져오기
+	public List<UserVO> hasTeamProfile(int t_id) throws Exception;
 
 }

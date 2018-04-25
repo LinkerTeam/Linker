@@ -18,4 +18,12 @@ public interface ProjectService {
 	public int checkProject(ProjectVO vo)throws Exception;
 	//
 	public List<ProjectVO> hiddenList(int u_id)throws Exception;
+	//프로젝트 일므 바꾸기
+	public void modifiyTitle(ProjectVO vo)throws Exception;
+	//프로젝트 즐겨찾기
+	public void favoriteAdd(int u_id,int p_id)throws Exception;
+	//즐겨찾기 프로젝트
+	public List<ProjectVO> favoriteList(int u_id)throws Exception;
+	//즐겨찾기 삭제
+	public void favoriteDelete(int u_id,int p_id) throws Exception;
 }
