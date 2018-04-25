@@ -24,44 +24,36 @@ a {
 
 #header {
     position: relative;
-    background-color: #FA5883;
+    background-color: #0067a3;
     height: 50px;
     color: white;
 }
 
 /* 로고 영역~~~~~ */
-.logo-background {
+.header-background {
     display: block;
-    background-color: #fa4575;
-    width: 230px;
+    width: 100%;
     height: 100%;
     float: left;
+    position: absolute;
     text-align: center;
 }
-/* 메뉴 확장시 로고 */
+.logo-link {
+	display: inline-block;
+	position: absolute;
+    height: 50px;
+}
 .logo-full {
-    position: absolute;
+    position: relative;
+    height: 50px;
     color: white;
-    width: 230px;
     top: 0;
     left: 0;
     overflow-x: hidden;
     transition: 0.2s; /*열었다 닫았다*/
     z-index: 1;
 }
-/* 메뉴 축소시 로고 */
-.logo-mini {
-    color: #fa4575;
-    float: left;
-    width: 0px;
-    top: 0;
-    left: 0;
-    overflow-x: hidden;
-    transition: 0.2s; /*열었다 닫았다*/
-    z-index: 1;
-}
-
-.logo-full img, .logo-mini img { /*로고영역 내 로고img 위치 조정*/
+.logo-full img { /*로고영역 내 로고img 위치 조정*/
     margin-top: 14px;
 }
 /* ~~~~~로고 영역 */
@@ -75,7 +67,13 @@ a {
 /* 오른쪽메뉴 설정단추 */
 .rtMenu-button {
     float: right;
-    margin: 12px;
+    margin: 6px;
+}
+.rtMenu-button > img {
+	float: left;
+    width: 37px;
+    height: 37px;
+    border-radius: 20px;
 }
 
 
@@ -93,48 +91,43 @@ a {
     margin-top: 7px;
 }
 .header-search input {
-	position: fixed;
-    width: 200px;
+    position: fixed;
+    float: left;
+    width: 150px;
     height: 34px;
     top: 0px;
-    right: 50px;
+    left: 10px;
     z-index: 1;
-    background: #ff708e;
     padding-left: 15px;
     font-size: 12pt;
     color: white;
+    background-color: #4e97c2;
+    transition: all 0.5s ease;
 }
 #search:focus { /*검색창 활성화할 때 효과*/
+    width: 230px;
     background-color: white;
     color: black;
     transition: all 0.5s ease;
 }
 .header-search button {
-    height: 26px;
-    width: 26px;
+ 	height: 29px;
+    width: 31px;
     position: fixed;
-    top: 5px;
-    right: 56px;
-    background: #FA5883;
+    top: 4px;
+    left: 140px;
+    background: #4e97c2;
     cursor: pointer;
     z-index: 2;
 }
 .header-search button span {
-    color: #F9F0DA;
-    font-size: 15px;
+    color: #fff;
+    font-size: 20px;
     font-weight: bold;
 }
 .header-search button:hover {
     transition: 0.2s;
-    background-color: #ff3168;
-}
-/* placeholder 글씨색 바꾸기 - 크롬 4–56*/
-#search::-webkit-input-placeholder {
-    color: #ffa2b6;
-}
-/* placeholder 글씨색 바꾸기 - IE 10+*/
-#search:-ms-input-placeholder {
-    color: #ffa2b6;
+    background-color: #0067a3;
 }
 /* ~~~~~헤더 검색창 */
 
@@ -143,7 +136,7 @@ a {
 .content {
     height: 100%;
     position: relative;
-    background-color: rgba(156, 156, 156, 0.80);
+    background-color: #fff;
     transition: 0.2s;
     overflow-y: auto;
 }

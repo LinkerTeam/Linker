@@ -5,34 +5,46 @@ textarea:focus {
     outline: none;
 }
 
+/* board화면에 세로 스크롤 잡혀서 없앰 */
+.content.board {
+    display: list-item;
+    width: 100%;
+	background-color: #0079bf;
+	overflow: hidden;
+}
 
 /* 헤더, 양쪽메뉴 제외한 본문영역 중 상단 프로젝트 타이틀 영역 */
 .projectTitle > input {
-	width: 400px;
-    height: 40px;
-    padding-left: 10px;
-    color: #484848;
+    width: 400px;
+    margin: 10px;
+    padding: 5px;
+    color: #fff;
+    outline: none;
     border: none;
-    font-size: 16px;
+    border-radius: 3px;
+    font-size: 20px;
     font-weight: bold;
-    line-height: 40px;
-    background-color: #b0b0b0;
+    background-color: #0079bf;
 }
 .projectTitle > input:focus{
-	outline: none;
+	color: black;
+	background-color: white;
+	
 }
 /* 본문영역 중 프로젝트 타이틀을 제외한 영역 */
 .cardlistContent {
     display: flex; 
-    height: calc(100% - 45px); /* 상단 프로젝트 타이틀과 하단 스크롤 영역을 제외한 높이 */
+    float: left;
+    width: 100%;
+    height: calc(100% - 60px); /* 상단 프로젝트 타이틀과 하단 스크롤 영역을 제외한 높이 */
     line-height: 1.3em; /* 가변단위. 1em은 현재 폰트크기임. */
 }
 
 /* 전체 카드리스트의 실질적 영역 */
 .cardlists {
     display: flex;
-    overflow-x: auto;
     overflow-y: hidden; /* 가로스크롤만 생기도록 */
+    transition: 0.2s;
 }
 .cardlists > * {
     flex: 0 0 auto;
@@ -43,11 +55,11 @@ textarea:focus {
     height: 12px;
 }
 ::-webkit-scrollbar-track {
-    background: rgba(0,0,0,.05);
+    background: rgba(0,0,0,.32);
     border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,.1);
+    background: rgba(255, 255, 255, 0.55);
     border-radius: 10px;
 }/* ~스크롤디자인 */
 
@@ -79,16 +91,20 @@ textarea:focus {
 textarea.cardlistTitle {
 	resize: none; /* 사용자가 임의로 크기를 조절할 수 없게 함 */
 	width: 100%;
-	padding: 0;
+	padding: 0 0 0 3px;
     border: none;
 	border-radius: 0;
 	background-color: #e2e4e6;
     color: #484848;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     line-height: 165%;
 	box-sizing: border-box;
 	overflow-y: hidden; /* 가끔 스크롤 짧게 잡혀서 추가 */
+}
+textarea.cardlistTitle:focus {
+	background-color: white;
+	outline: auto;
 }
 /* 카드리스트의 상단 | more버튼(팝업) */
 .cardlistPopBtn {
@@ -119,7 +135,7 @@ textarea.cardlistTitle {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     color: #656565;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     cursor: pointer;
 }
@@ -151,7 +167,6 @@ textarea.cardlistTitle {
 .cardtitleLi{
     display: block;
 	position: relative; /* 수정버튼에 position: absolute; 주기 위해 */
-    margin-top: 3px;
     background-color: #fff;
     border-radius: 3px;
 	color: #5e5e5e;
@@ -168,17 +183,17 @@ textarea.cardlistTitle {
 }
 /* 제목수정 버튼 */
 .cardModifyBtn {
-	display: none; 
+	display: none;
     position: absolute;
     top: 4px;
     right: 4px;
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 26px;
     border: none;
     border-radius: 2px;
     background-color: #edeff0;
     opacity: 0.2;
-    font-size: 11px;
+    font-size: 16px;
     cursor: pointer;
 }
 .cardModifyBtn:hover {
@@ -198,6 +213,7 @@ textarea.cardlistTitle {
 /* .cardtitleLi의 첫번째 자식 | 실제 카드가 클릭되는 영역 */
 #cardLink{
 	padding: 6px;
+	font-size: 16px;
 }
 
 
@@ -238,7 +254,7 @@ textarea.cardlistTitle {
     width: 100%; /* 모달 뒷배경이 화면에 꽉차도록 */
     height: 100%; /* 모달 뒷배경이 화면에 꽉차도록 */
     background-color: rgb(0,0,0); /* 모달 뒷배경색 */
-    background-color: rgba(0,0,0,0.4); /* 모달 뒷배경 opacity */
+    background-color: rgba(0,0,0,0.6); /* 모달 뒷배경 opacity */
     z-index: 3; 
 }
 /* 카드 제목 수정시 카드id 담기 위해(화면출력X) */
@@ -284,11 +300,23 @@ textarea.cardlistTitle {
 }
 /* 모달 닫힘버튼(X) */
 .closeModal {
-    color: #aaaaaa;
+   	color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
+/* 카드수정모달 */
+.modifyModal-content > .closeModal {
+	position: absolute;
+    float: left;
+    color: #ffffffe3;
+    font-size: 33px;
+}
+/* 카드수정모달의 닫기버튼 */
+.modifyModal-content > .closeModal:hover, .closeModal:focus {
+	color: #d6d6d6;
+}
+/* 카드수정모달의 닫기버튼 */
 .closeModal:hover, .closeModal:focus {
     color: #000;
     text-decoration: none;
@@ -329,14 +357,14 @@ textarea.cardlistTitle {
     line-height: 40px;
     border-radius: 3px;
     margin-right: 10px;
-    background-color: rgba(121, 121, 121, 0.60);
-    color: #dadada;
+    background-color: rgba(0,0,0,.12);
+    color: #b3d3e5;
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
 }
 .addList:hover {
-    background-color: rgba(121, 121, 121, 0.95);
+	background-color: rgba(0,0,0,.32);
 }
 .cardlistCreateBox{
 	display: none;
@@ -352,7 +380,7 @@ textarea.cardlistTitle {
     display: none;
     position: absolute;
     width: 150px;
-    z-index: 100;
+    z-index: 999;
 }
 .popupMenuWrap.is-visible {
     display: block;
@@ -409,4 +437,45 @@ textarea.cardlistTitle {
 .popupMenuList li a:hover {
     background-color: #bacad3;
     color: #111;
+}
+
+
+/* close board, delete board 관련 */
+
+/* close, delete화면 | 전체div */
+.closeBoardMessage, .deleteBoardMessage {
+	height: 100%;
+	color: #5f5f5fd4;
+	text-align: center;
+	background-color: #edeff0;
+}
+/* close화면 | title표시 부분 */
+.closeBoardTitle, .deleteBoardTitle {
+	padding-top: 50px;
+  	font-size: 30px;
+  	font-weight: bold;
+}
+/* close화면 | reopen, delete버튼 */
+.boardReopen, .boardDelete {
+	display: inline-block;
+	margin-top: 50px;
+	font-size: 20px;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.boardDelete {
+	margin-top: 100px;
+}
+.boardReopen:hover {
+  color: #1b1b1b;
+}
+.boardDelete:hover {
+	color: red;
+}
+/* delete화면 */
+.deleteBoardMessage > p {
+	max-width: 600px;
+	margin: 0 auto;
+	margin-top: 30px;
+	font-size: 18px;
 }

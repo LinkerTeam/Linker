@@ -1,0 +1,404 @@
+@charset "UTF-8";
+
+/* 오른쪽 메뉴 버튼 */
+/* Important styles */
+#toggle {
+    display: block;
+    position: absolute;
+    float: right;
+    width: 28px;
+    height: 30px;
+    padding: 13px 5px 0;
+    top: 10px;
+    right: 10px;
+}
+#toggle span:after,
+#toggle span:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -9px;
+}
+#toggle span:after{
+  top: 9px;
+}
+#toggle span {
+  position: relative;
+  display: block;
+}
+#toggle span,
+#toggle span:after,
+#toggle span:before {
+  width: 100%;
+  height: 5px;
+  background-color: white;
+  transition: all 0.3s;
+  backface-visibility: hidden;
+  border-radius: 2px;
+}
+/* on activation */
+#toggle.on span {
+  background-color: transparent;
+}
+#toggle.on span:before {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+#toggle.on span:after {
+  transform: rotate(-45deg) translate(7px, -8px);
+}
+#toggle.on {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 오른쪽 메뉴~~~~~ */
+.boardAside {
+    height: 100%;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    bottom: 0;
+    background-color: #e8e8e8;
+    overflow-x: hidden;
+    transition: 0.2s; /*열었다 닫았다 할 때*/
+    color: #fff;
+    z-index: 999;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+    			0 1px 2px rgba(0,0,0,0.24);
+}
+.nav-tabs {
+	display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.nav-tabs-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+	/* 오른쪽 메뉴 탭 */
+.nav-tab {
+    position: relative;
+}
+.nav-tabs:after {
+    display: block;
+    content: "";
+    clear: both;
+}
+	/* 오른쪽 메뉴 탭 버튼 */
+.nav-tabs .nav-tab-btn a {
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    font-size: 11pt;
+    font-weight: 300;
+    color: #616161;
+    text-align: center;
+    background: #b1b1b1;
+    font-weight: 400;
+}
+.nav-tabs .active .nav-tab-btn a {
+    background: #e8e8e8;
+    color: #616161;
+}
+	/* 오른쪽 메뉴 탭 내용 */
+.nav-tabs .nav-tab-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    right: 0;
+    bottom: 0;
+}
+.tab-content-box {
+    width: 100%;
+	height: calc(100% - 40px); 
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 12px 18px 12px 18px; /**************여기*/
+    box-sizing: border-box;
+}
+	/* 오른쪽 메뉴 열림상태 */
+.boardAside-open .active .nav-tab-btn a {
+    font-weight: bold;
+}
+
+.boardAside-open .active .nav-tab-content {
+    display: block;
+}
+/************ 이력탭 ************/
+.pic-list > li {
+    position: relative;
+    margin-left: 38px;
+    padding: 10px 0;
+    border-top: 1px solid #3a3b3b;
+    line-height: 1.5;
+    color: #111;
+}
+	/* 이력목록 > 프로필사진 */
+.pic-list > li:nth-child(1) {
+    border-top: none;
+}
+.pic-list-writer {
+    position: absolute;
+    left: -38px;
+    top: 12px;
+}
+.pic-list-writer .profile img {
+    float: left;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+	/* 이력목록 > 내용 */
+.pic-list-desc {
+    /*margin: 0 24px 0 0;*/
+    word-wrap: break-word; /* 단어 단위로 자동 개행 */
+    font-size: 12pt;
+    font-weight: 400;
+}
+
+.pic-list-desc .name {
+    font-weight: bold;
+    margin-right: 5px;
+}
+	/* 이력목록 > 시간날짜 */
+.pic-list-datetime {
+    font-size: 12px;
+    color: #818181;
+}
+	/* 더보기 링크 */
+.show-more {
+    display: none;
+    padding: 12px 12px 12px 0;
+    font-size: 12px;
+    margin-left: 38px;
+    color: #aaa;
+}
+
+.show-more:hover {
+    color: #fff;
+}
+
+/************ 보관탭 ************/
+/* 카드/카드리스트 보관함/trashbox title표시 */
+.tab-archive-title > span,
+.tab-trashbox-title > span {
+    margin-left: 6px;
+    color: #616161;
+    font-weight: bold;
+}
+.tab-archive-title-cardlist,
+.tab-trashbox-title-cardlist {
+	display: none;
+}
+/* 검색 | 전체form */
+.tab-search-form {
+	position: relative;
+	top: 50%;
+	left: 50%;
+	width: 280px;
+	height: 40px;
+	margin-top: 31px;
+	border-radius: 7px;
+	box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+	transform: translate(-50%, -50%);
+	background: #fff;
+	transition: all 0.3s ease;
+}
+/* 검색 | input */
+.tab-search-input {
+	position: absolute;
+	top: 10px;
+	left: 15px;
+	font-size: 16px;
+	background: none;
+	color: #5a6674;
+	width: 195px;
+	height: 20px;
+	border: none;
+	-webkit-appearance: none;
+	outline: none;
+}
+/* 검색 | input 취소버튼 */
+.tab-search-input::-webkit-search-cancel-button {
+	-webkit-appearance: none;
+}
+/* 검색 | 돋보기 버튼 */
+.tab-search-button {
+	position: relative;
+    float: right;
+    top: 10px;
+    right: 11px;
+    height: 20px;
+    width: 20px;
+    padding: 0;
+    margin: 0;
+    font-size: 18px;
+    color: #616161;
+    border: none;
+    background: none;
+    outline: none!important;
+    cursor: pointer;
+}
+
+.cardtitleLi.tab-cards {
+	width: 280px;
+	margin-left: 7px;
+	margin-bottom: 0;
+	border: 1px solid #d6d6d6;
+}
+.cardtitleLi.tab-cards > #cardLink {
+	line-height: 30px;
+	padding: 5px 10px;
+}
+.tab-cardlist {
+	width: 290px;
+	flex-direction: column; /* 세로로 나열 */
+	margin-left: 4px!important;
+}
+.cardlistTitleBox.tab-cardlist {
+    width: 270px!important;
+    padding: 15px 5px;
+    border-radius: 3px;
+    font-size: 15px;
+    color: #5e5e5e;
+    background-color: #e8e8e8;
+    cursor: default;
+}
+.cardStatus {
+	margin-left: 15px;
+	padding: 0 5px 5px 5px;
+	font-size: 12px;
+	color: #bfbfbf;
+}
+.switchBtn-archive, .switchBtn-hidden, .quiet {
+	border: none;
+	background-color: #e8e8e8;
+	color: #818181;
+	text-decoration-line: underline;
+}
+.switchBtn-archive:hover, .switchBtn-hidden:hover {
+	color: black;
+}
+.switchBtn-archive, .switchBtn-hidden {
+	outline: none;
+	cursor: pointer;
+}
+.tab-content-box-controls > div > button {
+	float: right;
+}
+.quiet {
+	padding: 0 0 15px 10px;
+	text-decoration-line: none;
+	cursor: default; /* 버튼 사이 -에 커서 text로 잡혀서 추가 */
+}
+	/* 보관/가리기 탭 | switch to lists버튼 */
+.swhitchCardlist {
+	display: none;
+}
+/* 보관/가리기 탭 | 탭내용 */
+.nav-tab-content-Box-archive.archiveCardlist,
+.nav-tab-content-Box-hidden.hiddenCardlist {
+	display:none;
+}
+/* 카드 휴지통 하위 카드태그들 */
+.nav-tab-content-Box-hidden.hiddenCard > .cardtitleLi.tab-cards {
+	margin-bottom: 7px;
+}
+/* 카드리스트 휴지통의 하위 카드리스트태그 */
+.hiddenCardlist > .tab-cardlist > .tab-cardlist {
+	border-bottom: 1px solid #d2d2d2;
+}
+/* 카드리스트 보관함의 하위 카드리스트태그 */
+.archiveCardlist > .archive-cards > .quiet {
+	border-bottom: 1px solid #d2d2d2;
+	padding: 0 0 9px 10px;
+}
+.archiveCardlist > .archive-cards > .cardlist > .cardlistTitleBox {
+	height: 4px;
+}
+
+/* ~~~~~오른쪽 메뉴 */
+
+
+
+/* 프로젝트 종료하기 관련 */
+.nav-tab-content > ul > li {
+    width: 270px;
+    margin: 27px auto;
+    padding: 15px;
+	color: #616161;
+    font-weight: bold;
+    border-bottom: solid 1px #d2d2d2;
+	cursor: pointer;
+}
+.hiddenContent { /* content 숨기기 */
+	display: none;
+}
+/* 모달창 */
+.closeBoardModal {
+    display: none;
+    position: absolute;
+    z-index: 1001; /* 테스트 후 값 조정 */
+}
+.closeBoardModal.is-visible {
+    display: block;
+    left: 18px;
+    top: 78px;
+}
+/* 모달창 | 내부요소 전체 */
+.closeBoardModal-content {
+    position: relative;
+    box-sizing: border-box;
+    width: 294px;
+    height : 186px;
+    background: #fff;
+    border-radius: 4px;
+    color : black;
+    font-size: 15px;
+    line-height: 1.1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+				0 1px 2px rgba(0,0,0,0.24);
+}
+/* 모달창 | 상단 타이틀 p태그 + 닫기버튼 */
+.closeBoardModal-title {
+	text-align: center;
+	line-height: 34px;
+}
+/* 모달창 | 상단 타이틀 p태그 */
+.closeTitle {
+	display: block;
+	margin: 0 7px;
+	border-bottom: solid 1px #d0d0d0;
+	color: #919191;
+}
+/* 모달창 | 닫기 버튼 */
+.closeBoardModal-title > .closeModal {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 5px;
+	line-height: 28px;
+}
+/* 모달창 | 하단 설명 부분 */
+.closeBoardModal-text > p {
+	padding: 12px 15px;
+	color: #232323;
+    line-height: 1.2em;
+}
+/* 모달창 | close버튼 */
+.closeBoardBtn {
+    width: 92%;
+    height: 40px;
+    margin-left: 12px;
+    background: #eb5a46;
+    color: #fff;
+    font-size: 17px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

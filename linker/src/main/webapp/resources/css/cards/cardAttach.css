@@ -1,7 +1,21 @@
 @charset "UTF-8";
 
 .uploadedList {
+	width: 570px;
 	margin-left: 10px;
+	display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.uploadedList-btn {
+	display: inline-block;
+	margin: 10px;
+	color: #737373;
+    font-size: 18px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.uploadedList-btn:hover {
+	color: black;
 }
 .attachLi {
 	position: relative;
@@ -23,7 +37,7 @@
 .attach-content > p, .chooseFile {
 	display: inline-block;
 	color: #737373;
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 35px;
 }
 .chooseFile {
@@ -59,8 +73,13 @@
 	color: #737373;
 	margin-bottom: 5px;
 }
-.fileName {
+.fullFileName{
+	display: none;
+}
+.miniFileName {
+	width: 162px;
 	color: black;
+	word-break: break-all;
 }
 .uploadDate {
 	font-size: 14px;
@@ -104,23 +123,26 @@
 .closeModal.imageModal{
 	display: none;
     position: absolute;
-    top: 0;
+    top: -11px;
     right: 0;
     padding: 11px;
-    font-size: 40px;
+    font-size: 50px;
 	z-index: 9999;
+}
+.closeModal.imageModal:hover{
+	font-size: 60px;
+	color: #fff;
+	padding: 7px;
 }
 .imgModal > img{
 	display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px; 
+    margin: 50px auto; 
     max-width: 100%; /* 원본 이미지 최대 가로 길이가 창 화면을 넘지 않도록 */
 }
 .imgModal > p {
     margin: 30px;
     color: white;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
 }

@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardAttach.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardAttach.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
  
 <body>
@@ -17,12 +17,14 @@
 		</div>
 		<!-- Drag & drop하여 파일 추가하는 box -->
 		<div class="attach-content">
-			<p>Drag and drop or</p>
-			<div class="chooseFile">choose your files</div>
+			<p>카드 위로 파일을 끌어다놓거나</p>
+			<div class="chooseFile">여기를 눌러 파일을 선택하세요</div>
 			<input class="upfileInput" type="file" value="upload" onchange="upfileInput(this)"/>
 		</div>
 		<!-- 첨부파일 목록이 출력되는 곳 -->
 		<div class="uploadedList"></div>
+		<div class="uploadedList-btn more">더 보기...</div>
+		<div class="uploadedList-btn short">접기...</div>
 	</div>
 	</article>
 	

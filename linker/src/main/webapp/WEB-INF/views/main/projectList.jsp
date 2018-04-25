@@ -7,10 +7,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+
     <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=657" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
+
 </head>
 <body>
 	<%@include file="../header.jsp"%>

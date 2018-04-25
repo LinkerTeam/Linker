@@ -102,3 +102,7 @@ hr {
 input, select {
     vertical-align:middle;
 }
+
+button {
+	outline: none;
+}

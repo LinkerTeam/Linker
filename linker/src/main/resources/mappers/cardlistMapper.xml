@@ -44,7 +44,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN linker.card c ON cl.id = c.cl_id
 	    WHERE p_id = #{p_id}
 	    AND cl.ps_id = 1
-	    AND (c.ps_id = 1 OR c.ps_id IS NULL)
     <!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
 	</select>
 	
@@ -59,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, udate
 		FROM linker.cardlist
 		WHERE ps_id = #{ps_id}
+		AND p_id = #{p_id}
 		ORDER BY udate DESC
 	</select>
 </mapper>
