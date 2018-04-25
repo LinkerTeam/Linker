@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.linker.domain.TeamMemberVO;
+import com.linker.domain.UserVO;
 
 @Repository
 public class TeamMemberDAOImpl implements TeamMemberDAO {
@@ -130,7 +131,10 @@ public class TeamMemberDAOImpl implements TeamMemberDAO {
       return session.delete(namespace + ".deleteMember", vo);
    }
    
-   
-   
+   // 팀 멤버 프로필 가져오기
+   @Override
+   public List<UserVO> hasTeamProfile(int t_id) throws Exception {
+	  return   session.selectList(namespace+".hasTeamProfile", t_id);
+   }
 
 }

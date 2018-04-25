@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.linker.domain.TeamMemberVO;
+import com.linker.domain.UserVO;
 
 @Repository
 public interface TeamMemberDAO {
@@ -35,5 +36,8 @@ public interface TeamMemberDAO {
    public int modifyMemberAuth(TeamMemberVO vo) throws Exception;
    //멤버삭제
    public int deleteMember(int u_id, int t_id) throws Exception;
+   //해당 팀의 멤버의 닉네임과 프로필사진 가져오기
+   public List<UserVO> hasTeamProfile(int t_id) throws Exception;
+   
 
 }

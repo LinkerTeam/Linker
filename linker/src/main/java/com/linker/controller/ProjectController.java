@@ -73,6 +73,11 @@ public class ProjectController {
         	  profile.add(member);
           }      
 		
+          
+          
+        //즐겨찾기 리스트 
+        model.addAttribute("favoriteList", service.favoriteList(userID));
+          
 		//7번 유저의 모든 팀을 가져온다.
 		model.addAttribute("team", teamService.listTeam(userID));
 		model.addAttribute("profile",profile);
@@ -144,7 +149,75 @@ public class ProjectController {
 		
 		return new ResponseEntity<List<ProjectVO>>(service.hiddenList(vo.getId()),HttpStatus.OK);
 	}
+	
+	//즐겨찾기 추가
+	@ResponseBody
+	@RequestMapping(value="favorite/{p_id}", method = RequestMethod.GET)
+	public ResponseEntity<String> favorite(@PathVariable int p_id,HttpSession session) throws Exception{
+		
+		UserVO vo = (UserVO) session.getAttribute("login");
+		System.out.println(p_id);
+		System.out.println(vo.toString());
+		
+		service.favoriteAdd(vo.getId(), p_id);
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+			
+		} catch (Exception e) {
+			
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			
+		}
+		
+		return entity;
+		
+	}
+	
+	//즐겨찾기 불러오기
+	@ResponseBody
+	@RequestMapping(value="favoritelist", method = RequestMethod.GET)
+	public ResponseEntity<List<ProjectVO>> favoriteList(HttpSession session)throws Exception{
+		ResponseEntity<List<ProjectVO>> entity = null;
+		
+		UserVO vo = (UserVO) session.getAttribute("login");
+		
+		int u_id = vo.getId();
+		
+		try {
+			entity = new ResponseEntity<List<ProjectVO>>(service.favoriteList(u_id),HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<List<ProjectVO>>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
 
+	//즐겨찾기 삭제
+	@ResponseBody
+	@RequestMapping(value = "/favoriteDelete", method = RequestMethod.DELETE)
+	public ResponseEntity<String> favoriteDelete(@RequestBody ProjectVO pvo,HttpSession session) throws Exception{
+		System.out.println("즐겨찾기 삭제");
+		System.out.println("pvo는??"+pvo);
+		ResponseEntity<String> entity = null;
+		
+		UserVO vo = (UserVO) session.getAttribute("login");
+		
+		int u_id = vo.getId();
+		int p_id = pvo.getId();
+		System.out.println(u_id+"와 ");
+		service.favoriteDelete(u_id, p_id);
+		
+		try {
+			entity= new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		
+		return entity;
+		
+	}
 
 
 }

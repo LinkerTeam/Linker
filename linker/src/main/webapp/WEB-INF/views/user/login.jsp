@@ -12,7 +12,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <!-- css초기화 시트 -->
     <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-    <link href="/resources/css/login.css?ver=2" type="text/css" rel="stylesheet" />
+    <link href="/resources/css/login.css?ver=32" type="text/css" rel="stylesheet" />
 
 
 </head>
@@ -23,7 +23,7 @@
         <nav class="main-nav">
             <ul>
                 <li>
-                    <a class="login_btn" href="#0">로그인</a>
+                    <a class="login_btn" href="#modal">로그인</a>
                 </li>
                 <li>
                     <a class="signup_btn" href="#0">회원가입</a>
@@ -32,7 +32,7 @@
         </nav>
         
         <!-- 모달창 -->
-        <div class="user-modal">
+        <div class="user-modal" id="modal">
             <div class="user-modal-container">
                <div id="box">
                 <ul class="switcher">

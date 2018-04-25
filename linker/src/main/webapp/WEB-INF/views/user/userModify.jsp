@@ -19,13 +19,14 @@
 	max-width: 954px;
 	height: 100%;
 	margin: 0px auto;
+	overflow: hidden;
 }
 #contain {
 	position: relative;
 	padding: 32px 51px 95px;
 }
 #content {
-	height: 730px;
+	height: 760px;
 	line-height: 14px;
 	width: 550px;
 	margin: 30px auto;
@@ -139,8 +140,6 @@
 					<!-- 데이터를 전송시에는  method="post" enctype="Multipart/form-data" 형식이여야함  사진, 동영상 등 글자가 아닌 파일은 모두 Multipart/form-data 형식의 데이터 데이터를 여러조각으로 나누어서 전송  -->
 					<form name="form1" method="post" enctype="multipart/form-data"
 						action="/user/userModify" onsubmit='return subcheck();'>
-
-
 						<table id="table" border="1" width="410px" height="400px">
 							<!-- 테이블에서 tr은 줄 td는 각 행 -->
 
@@ -159,14 +158,13 @@
 									</p>
 									<div id="checkMsg"></div></td>
 							</tr>
-
 							<!-- 누락된 부분 -->
-
 							<tr>
 								<td><p class="inputtext">프로필사진</p></td>
 								<td>
 									<div class="file_input">
 										<p>
+											
 											<label> 프로필 사진올리기 <input type="file"
 												name="profileName" class='uploadprofile' id='file'
 												accept=".jpg, .jpge, .png, .gif">
@@ -175,28 +173,26 @@
 										<p id="status"></p>
 										<div id='holder'></div>
 										<!-- accept=".jpg,png "  특정파일만 올릴수있게 파일 업로드시 설정해줌 -->
+										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  용량은 최대 4MB까지 가능합니다.</span>
 								</td>
-
 								</p>
 								</div>
 							</tr>
-
 							<%-- 이미지 불러오기!!  --%>
-
 						</table>
 						<p>
 							<input type="submit" value="수정" class="btn">
 						</p>
 						<p>
-							<input type="reset" value="삭제" id="btnDelete" class="btn">
+							<input type="button" value="취소" id="btnDelete" class="btn">
 						</p>
 
-
-
 					</form>
-					<div class="secessionSpan">Linker를 더 이상 이용하지 않는다면 
-					<a href="http://localhost:9090/user/secessionUser" class="secession">회원탈퇴 바로가기▶</a>
-				    </div>
+					<div class="secessionSpan">
+						Linker를 더 이상 이용하지 않는다면 <a
+							href="http://localhost:9090/user/secessionUser" class="secession">회원탈퇴
+							바로가기▶</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -206,10 +202,13 @@
 		console.log("${vo.nickname}");
 		console.log(file);
 
+		//유요성 검사 테스트
 		function subcheck() {
-
 			var nickname = document.getElementById('nickname').value;
-
+			//파일명 가져오기
+			var fileValue = $("#file").val().split("\\");
+			var fileName = fileValue[fileValue.length-1]; // 파일명
+			
 			if (nickname == null || nickname == '') {
 				alert('닉네임을 비울수 없습니다.');
 				document.getElementById('nickname').focus();
@@ -230,11 +229,17 @@
 				}
 
 				//닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
-				if (document.getElementById("nickcheck").style.color == 'red') {
+				if (document.getElementById("check").style.color === 'red') {
 					alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
 					return false;
 				}
 			}
+			if(fileName == null || fileName == ""){
+				alert("이미지 파일을 업로드 해주세요.");
+				return false;
+			}
+			console.log(fileName);
+
 			return true;
 		}
 
@@ -260,7 +265,7 @@
 					if (img.width > 56 && img.height > 56 || img.width == 0
 							&& img.height == 0) { // holder width
 						img.width = 200;
-						img.height = 150;
+						img.height = 170;
 					}
 					//holder값을 삭제후에 자식으로 이미지를 넣어준다.
 					holder.innerHTML = "";
@@ -316,7 +321,14 @@
 				var pattern = /jpg$|gif$|png$|jpeg$/i;
 				return fileName.match(pattern);
 			}
+			
+			$('#btnDelete').on("click",function(){
+			 	
+				history.go(-1);
+			});	
+			
 		}
+		
 	</script>
 </body>
 </html>

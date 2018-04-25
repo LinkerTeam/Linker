@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.linker.domain.TeamMemberVO;
 import com.linker.domain.TeamVO;
+import com.linker.domain.UserVO;
 import com.linker.dto.TeamMemberDTO;
 import com.linker.persistence.TeamDAO;
 import com.linker.persistence.TeamMemberDAO;
@@ -164,4 +165,10 @@ public class TeamMemberServiceImpl implements TeamMemberService{
       tmdao.deleteMember(u_id, t_id);
    }
 
+   //팀멤버 가져오기
+   @Override
+   public List<UserVO> hasTeamProfile(int t_id) throws Exception {
+	  return tmdao.hasTeamProfile(t_id);
+   }
+   
 }

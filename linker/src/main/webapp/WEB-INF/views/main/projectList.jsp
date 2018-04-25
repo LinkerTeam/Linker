@@ -7,21 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=1" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=657" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
-<style type="text/css">
-.fa-star{
-    display: block;
-    color:green;
-    margin-top:-20px;
-    padding-left: 350px;
-}
-.fa-star:hover {
-	color:navy;
-}
-</style>
 </head>
 <body>
 	<%@include file="../header.jsp"%>
@@ -30,35 +19,25 @@
 	<div class="content">
 
 
-		<!-- 프로젝트 본문 -->
-		<a href="#" class="project-list">Project</a>
+		
+		<!-- 종료 프로젝트 모달창 -->
 		<div class="list-modal">
 			<div class="list-content">			 
 				<div class="head-list">Hidden Project List</div>
 				<div class="content-list"></div>
 			</div>
-		</div>
+		</div> 
 
+		<div class="main-favorite"></div>
 		<!-- Projects In a Team -->
 		<!-- 팀 정보 -->
 		<c:forEach items="${team}" var="teamList">
 			<div class="projectBox">
 				<div class="teamInfo">
 					<i class="fas fa-users"></i> <span class="title">${teamList.name}</span>
-					<a class="tid">${teamList.t_id} </a> <a class="uid">${teamList.u_id}
-					</a>
-					<!-- 이중 for문을 돌려서 List<List<UserVO>>를 뽑아낸다!! -->
-					<c:forEach items="${profile}" var="teamMember">
-						<c:forEach items="${teamMember}" var="teamMember">
-							<c:if test="${teamList.t_id == teamMember.t_id}">
-								<ul class="teamMembers">
-									<li><img
-										src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${teamMember.profile}"><span
-										class="tooltip">${teamMember.nickname}</span></li>
-								</ul>
-							</c:if>
-						</c:forEach>
-					</c:forEach>
+					<a class="tid">${teamList.t_id}</a>
+					<a class="uid">${teamList.u_id}</a>
+					<a class="memberbtn">팀멤버</a>
 				</div>
 				<!-- 진행 프로젝트 목록 -->
 
@@ -67,15 +46,16 @@
 						<c:if test="${projectList.ps_id ==1}">
 							<ul class="projects">
 								<li><a
-									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}"><span
+									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" "><span
 										class="name">${projectList.title}</span>
-										<span><i class="far fa-star"></i></span>
+										    <span ><i class="far fa-star add-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
 									</a>
 								</li>
 							</ul>
 						</c:if>
 					</c:if>
 				</c:forEach>
+			
 
 				<!-- 프로젝트 추가 버튼 -->
 				<span class="addProject"><button class="createProjectBtn"
@@ -101,6 +81,17 @@
 						<button class="teambtn disabled" disabled="disabled">Create</button>
 					</form>
 					<span class="tclosebtn"><i class="fas fa-times"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 팀 멤버 모달창 -->
+		<div class="member-modal">
+			<div class="member-content">
+				<h1 class="member-head">
+				
+				</h1>
+				<div class="member-list">
 				</div>
 			</div>
 		</div>
@@ -316,10 +307,10 @@
          	});
       	});
     	    
-    
+  /*   
     
   	//모달창 띄우기
-	$(".project-list").on("click",function(){	
+	$(".closeBoard").on("click",function(){	
 		$('.list-modal').addClass('is-visible');		
 		
 		$.ajax({
@@ -330,23 +321,18 @@
 				if(data.length !== 0){
 					$('.content-list').html("");
 					for(var i = 0; i < data.length ; i++){
-						var str ="<div class='list-li'><a href='http://localhost:9090/board/"
+						var str ="<div class='listbox'><div class='list-li'><a href='http://localhost:9090/board/"
 						+data[i].t_id+
 						"/"
 						+data[i].id+"'>"
 						+data[i].title+"</a>"
-						+"<button class='preload' p='"+data[i].id+"' u='"+data[i].u_id+"' t='"+data[i].t_id+"'>re-load</button>"
-						+"<button class='pdelete' p='"+data[i].id+"' u='"+data[i].u_id+"'>delete</button></div>"
+						+"<div class='option'><a class='preload' p='"+data[i].id+"' u='"+data[i].u_id+"' t='"+data[i].t_id+"'>Re-load</a>"
+						+"<a class='pdelete' p='"+data[i].id+"' u='"+data[i].u_id+"'>Delete</a></div></div></div>"
 						$('.content-list').append(str);
-						/* 	if($('.content-list').text()=='No Project Hidden List');{
-							$('.content-list').text().value.replace("No Project Hidden List","");
-							} */
 					} 
 				}else{
-					$('.content-list').html("");
-					str ="<div class='no-project'>No Project List</div>"
-					$('.content-list').append(str);
-					}
+						nolist();
+					 }
 				
 				
 			},
@@ -356,6 +342,12 @@
 		}); //ajax
 	});
   	
+  	//프로젝트리스트가 없을때
+  	function nolist(){
+  		$('.content-list').html("");
+		str ="<div class='no-project'>No Project List</div>"
+		$('.content-list').append(str);
+  	}
   	
 	//모달창 닫기
 	$(".list-modal").on("click",function(e){
@@ -368,7 +360,10 @@
 		u_id = $(this).attr("u");
 		p_id = $(this).attr("p");
 		var ps_id = 1;
-		var parent = $(this).parent();
+		var parent = $(this).parent().parent().parent();
+		var ppp = $(this).parent().parent().parent().children('.listbox');
+		console.log(typeof(ppp) );
+		console.log(parent);
 
 	    	$.ajax({
 	    		type : "put",
@@ -384,6 +379,14 @@
 	    				if(ps_id == 1){
 	    				
 	    					parent.html("");
+	    					 var listno=$('.listbox').html();
+	    					console.log(listno);
+	    					console.log(listno == "");
+	    					if(listno == ""){
+	    						
+	    						nolist();
+	    					}
+	    					 
 	    				}
 	    			};//if
 	    		},
@@ -393,6 +396,7 @@
 	    	});//ajax
 	});
 	
+	//종료 된 프로젝트에서 완전히 삭제처리 
 	$('.content-list').on("click",".pdelete",function(){
 		u_id = $(this).attr("u");
 		p_id = $(this).attr("p");
@@ -415,7 +419,14 @@
     		success : function(result) {
     			if(result === "SUCCESS"){	
     				if(ps_id == 3){
-    					parent.html("");
+    					parent.parent().html("");
+    					var listno=$('.listbox').html();
+    					console.log(listno == "");
+    					if(listno == "" ){
+    						
+    						nolist();
+    					}
+    					
     				}
     			};//if
     		},
@@ -423,8 +434,196 @@
     			alert("에러가 발생했습니다.");
     		}
     	});//ajax
-	});
+	}); */
+	
+	$('.projects').on("mouseenter",function(){
+		$(this).children().children().children().children('.fa-star').addClass('visible');
+	})
+	$('.projects').on("mouseleave",function(){
+		$('.fa-star').removeClass('visible');
+	})
+	
 
+	$(document).on("click", '.add-favo', function(){
+		
+		p_id = $(this).attr("p_id");
+		t_id = $(this).attr("t_id");
+		title = $(this).parents().parents().children().eq(0).text();
+		$(this).removeClass('add-favo');
+		$(this).addClass('delete-favo');
+		favorites();
+
+		//단순히 링크가 동작하지 않게 하기 (고전적인 방법)
+		return false;
+	})
+	
+	//ajax 즐겨찾기추가 함수
+	function favorites(){	
+		console.log(p_id);
+		$.ajax({
+				type : "get",
+				url : "main/favorite/"+p_id,
+				success : function(data){
+					console.log(data);
+					console.log( );
+					//맨처음 아무것도 없을때는 불러오기 처리	
+					if($('.hidden').attr("class") != "hidden"){
+						favoriteList();
+						console.log(1);
+					}else{
+					  str = "<ul class='projects'>"
+						  +"<li><a "
+						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
+						  +" class='name'>"+title+"</span>"		
+						  +"</a><span><i class='far fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span>"
+						  +"</li>"
+					      +"</ul>";
+					  $('.projects').eq(0).prepend(str);
+					}
+				},error : function(){
+					alert("통신 오류 입니다.");
+				}
+					
+		})//end ajax
+
+	}
+	
+	
+	
+	//버튼 눌렀을때 팀불러오기
+	$('.memberbtn').on("click",function(){
+		t_id = $(this).parents().children().eq(2).text();
+		title =  $(this).parents().children().eq(1).text();
+		console.log(t_id);
+		$('.member-modal').addClass('is-visible');
+		memberlist(t_id);
+	});
+	//모달창 닫기
+	$('.member-modal').on("click",function(e){
+		
+		if($(e.target).hasClass('member-modal')){
+			$('.member-modal').removeClass('is-visible');
+		}
+	})
+	
+	//팀  프로필 ajax 불러오기
+	function memberlist(t_id){
+		$.ajax({
+			type : "get",
+			url : "/team/list/"+t_id,
+			success : function(data){
+				if(data.length > 0){
+					console.log(data);
+					$('.member-head').html(title);
+					$('.member-list').html('');
+					for(var i = 0; i < data.length; i++ ){		
+						var str = "<div class='m-list'>"
+						+"<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate"+data[i].profile+"' class='profile-img'>"
+						+data[i].nickname+"</div>";
+						$('.member-list').append(str);
+					}
+				} else{
+					alert("통신오류");	
+				}
+				
+			},error : function(){
+				alert("통신오류로인해 실패했습니다.");
+			}
+		})//ajax	
+	}
+	//즐겨찾기 불러오기
+	favoriteList();
+	
+	//즐겨찾기 해당리스트 함수
+	function favoriteList(){
+		
+		$.ajax({
+			type : "get",
+			url : "main/favoritelist",
+			success : function(data){
+				if(data.length > 0 ){
+					var str="";
+					
+					console.log(data);
+					for(var i = 0; i < data.length ; i++){
+						 
+						    str += "<ul class='projects'>"
+								  +"<li><a "
+								  +"href='http://localhost:9090/board/"+data[i].t_id+"/"+data[i].id+"'><span"
+								  +" class='name'>"+data[i].title+"</span>"		
+								  +"</a><span><i class='far fa-star delete-favo' p_id='"+data[i].id+"'></i></span>"
+								  +"</li>"
+							      +"</ul>";
+					}
+				    var pre ="<div class='projectBox'>"
+								          +"<div class='teamInfo'>"
+								    	  +"<i class='fas fa-users'></i> <span class='title'>즐겨찾기</span> </div>";		
+			 		var plus="</div><span class='hidden'><button class='favorite-heigth'"
+							+"type='button'>hidden</button></span>";
+				    var complete =pre+str+plus;
+							//태그 깨꿋이 지우기
+				    		$('.main-favorite').html('');
+							//태그를 붙이기 위해서 하나만듬.
+							$('.main-favorite').html(complete);
+							
+				}
+			},error : function(){
+				alert("통신오류입니다.")
+				
+			}
+		})//ajax
+	}
+	
+	//즐겨찾기 삭제
+	$(document).on("click",'.delete-favo',function(){
+		
+		p_id = $(this).attr("p_id");
+		var tag = $(this).parents('li');
+		
+		$.ajax({
+				type : 'delete',
+				url : '/main/favoriteDelete',
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				data : JSON.stringify({id : p_id}),
+				dataType : 'text',
+				success : function(data){
+					if(data == "SUCCESS"){
+						favoriteList();
+						/* console.log(tag.children().length); */
+						fovalist();
+					}
+				},error : function(){
+					alert("통신 오류입니다.");
+				}
+		
+		}); //end ajax
+		return false;
+	})
+	
+	//즐겨찾기 갯수 체크함수
+	function fovalist(){
+		$.ajax({
+			type : "get",
+			url : "main/favoritelist",
+			success : function(data){
+				console.log(data.length == 0);
+				if(data.length == 0){
+					$('.projectBox').eq(0).remove();
+					$('.hidden').remove();
+					console.log(1);
+				}
+			},error : function(){
+				alert("통신오류입니다.");
+			}
+		})
+	}
+	
+	
+	
+	
 </script>
 </body>
 </html>
