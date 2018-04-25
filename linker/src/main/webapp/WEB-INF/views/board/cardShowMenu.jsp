@@ -8,11 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css?ver=1111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-	<span class="showMenu-button" style="cursor:pointer" onclick="openAside()">메뉴보기</span>
+	<a href="#menu" id="toggle"><span></span></a>
+
 	<!-- 오른쪽 메뉴 -->
 	<!-- .boardAside-open | 열림 상태 -->
 	<aside id="boardAside" class="boardAside">
@@ -148,9 +149,52 @@
 		var j = 0;
 		var p_id = null;
 		var u_id = null;
+
+	    var theToggle = document.getElementById('toggle'); //오른쪽 메뉴 버튼 
 		
-		
-		/* 오른쪽 메인메뉴 | 숨기기 & 펼치기 이벤트 */
+	    
+	    /* 오른쪽 메뉴 button event */
+	 	// hasClass
+		 function hasClass(elem, className) {
+		 	return new RegExp(' ' + className + ' ').test(' ' + elem.className + ' ');
+		 };
+		 // addClass
+		 function addClass(elem, className) {
+		     if (!hasClass(elem, className)) {
+		     	elem.className += ' ' + className;
+		     };
+		 };
+		 // removeClass
+		 function removeClass(elem, className) {
+		 	var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, ' ') + ' ';
+		 	if (hasClass(elem, className)) {
+		         while (newClass.indexOf(' ' + className + ' ') >= 0 ) {
+		             newClass = newClass.replace(' ' + className + ' ', ' ');
+		         };
+		         elem.className = newClass.replace(/^\s+|\s+$/g, '');
+		     };
+		 };
+		 // toggleClass
+		 function toggleClass(elem, className) {
+		 	var newClass = ' ' + elem.className.replace( /[\t\r\n]/g, " " ) + ' ';
+		     if (hasClass(elem, className)) {
+		         while (newClass.indexOf(" " + className + " ") >= 0 ) {
+		             newClass = newClass.replace( " " + className + " " , " " );
+		         };
+		         elem.className = newClass.replace(/^\s+|\s+$/g, '');
+		     } else {
+		         elem.className += ' ' + className;
+		     };
+		 };
+		 theToggle.onclick = function() {
+		    toggleClass(this, 'on');
+		    openAside();
+		    return false;
+		 };
+		 
+		 
+		 
+		/* 오른쪽 메뉴 | 숨기기 & 펼치기 이벤트 */
 		function openAside() {
 			var boardAside = document.getElementById('boardAside'); //오른쪽 메뉴 전체
 		    var content = document.getElementsByClassName('cardlists'); //카드리스트가 출력되는 전체부분
@@ -174,7 +218,7 @@
 		    };
 		};
 	
-		/* 오른쪽 메인메뉴 | 탭버튼 제어 */
+		/* 오른쪽 메뉴 | 탭버튼 제어 */
 		var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
 		for(var i = 0; i < tabMenu[0].childElementCount; i++){
 			tabMenu[0].children[i].addEventListener("click", function(){
@@ -435,7 +479,7 @@
 	    	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 board close화면 출력
 	    });
 	    
-	    
+
 	</script>
 	
 </body>
