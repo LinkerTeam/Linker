@@ -29,8 +29,9 @@
 	margin: 30px auto;
 	padding: 32px 29px 32px;
 	border: 1px solid #dadada;
-	background: #fff;
+	background: #edeff0;
 	border-radius: 5px;
+	box-sizing: border-box;
 }
 .btn {
 	margin-top: 20px;
@@ -67,6 +68,7 @@
 	height: 400px;
 	border-top: 1px solid #444444;
 	border-collapse: collapse;
+	width: 488px;
 }
 #table td {
 	border-bottom: 1px solid #444444;
@@ -125,6 +127,7 @@
 
 	<%@include file="../header.jsp"%>
 	<%@include file="../mainMenu.jsp"%>
+	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
 
@@ -170,7 +173,7 @@
 										<p id="status"></p>
 										<div id='holder'></div>
 										<!-- accept=".jpg,png "  특정파일만 올릴수있게 파일 업로드시 설정해줌 -->
-										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  용량은 최대 4MB까지 가능합니다.</span>
+										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  </br>용량은 최대 4MB까지 가능합니다.</span>
 								</td>
 								</p>
 								</div>
@@ -196,15 +199,20 @@
 	</div>
 	<script>
 		var file = document.getElementById('file').value;
+		//파일체인지 이벤트시에 용량을 넣고 유효성검사에 사용하기위해서 외부선언
+		var fileSize = 0;
 		console.log("${vo.nickname}");
-		console.log(file);
-
+		console.log($('#file').val().slice(12));
+		
+	
 		//유요성 검사 테스트
 		function subcheck() {
 			var nickname = document.getElementById('nickname').value;
 			//파일명 가져오기
 			var fileValue = $("#file").val().split("\\");
-			var fileName = fileValue[fileValue.length-1]; // 파일명
+			var fileName = fileValue[fileValue.length-1]; // 업로드한 파일명
+			console.log(fileName);
+			
 			
 			if (nickname == null || nickname == '') {
 				alert('닉네임을 비울수 없습니다.');
@@ -231,33 +239,57 @@
 					return false;
 				}
 			}
-			if(fileName == null || fileName == ""){
-				alert("이미지 파일을 업로드 해주세요.");
+			
+			//이미지 파일 명 길이 제한 
+			if(!(fileName.length < 200)){
+				alert("파일명이 너무 깁니다 이름을 변경후 다시 등록 해주세요.");
 				return false;
 			}
-			console.log(fileName);
+			//이미지 파일 사이즈  검사
+			if(!(fileSize < (4*1024*1024))){
+				alert('이미지 용량이 너무 큽니다 이미지파일 용량을 확인해주세요.');
+				return false;
+			}
 
 			return true;
 		}
 
+		//파일 업로드시 이미지 미리보기 
 		window.onload = function() {
-			//파일 업로드시 이미지 미리보기 
 			var upload = document.getElementsByClassName('uploadprofile')[0];
 			var holder = document.getElementById('holder');
 			var state = document.getElementById('status');
-
+			
+			//파일 변경시 해당 함수 실행
 			upload.onchange = function(e) {
-
+				//파일 사이즈 가져오기
+				fileSize = $("#file")[0].files[0].size;
+				
 				e.preventDefault(); //기존 이벤트를 제거한다
 				//업로드된 이미지 가져와서 변수에 넣기
 				var file = upload.files[0];
+				
 				var reader = new FileReader();
+				
+				//올린 파일 명에 확장자를 가져와서 체크함
+				var fileValue2 = $("#file").val().split("\\");
+				var fileName2= fileValue2[fileValue2.length-1]; // 업로드한 파일명
+				//이미지 파일인지 체크함
+				if(!(checkImageType(fileName2))){
+					alert("이미지 파일이 아닙니다. 다시 확인 해주세요.");
+					
+					return;
+				}
+				console.log(fileName2);
+			
 				reader.onload = function(event) {
 					var img = new Image();
 					img.src = event.target.result;
 					// note: no onload required since we've got the dataurl...I think! :)
 					console.log(img.width);
 					console.log(img.height);
+					console.log(img.name);
+					console.log(img.size);
 					//이미지 크기가 너무크면 그 이미지를 줄여서 보여주는 조건
 					if (img.width > 56 && img.height > 56 || img.width == 0
 							&& img.height == 0) { // holder width
@@ -272,6 +304,10 @@
 
 				return false;
 			};
+			
+			function nameAndsizeCheck(){
+				
+			}
 
 			//이미지 타입체크
 			function checkImageType(fileName) {
@@ -325,7 +361,6 @@
 			});	
 			
 		}
-		
 	</script>
 </body>
 </html>

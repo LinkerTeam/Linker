@@ -13,13 +13,22 @@
     <!-- css초기화 시트 -->
     <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
     <link href="/resources/css/login.css?ver=32" type="text/css" rel="stylesheet" />
-
+<style type="text/css">
+.password-confirm{
+ display:block;
+ padding-top : 10px;
+ padding-left: 20px;
+}
+.password{
+ margin-bottom: 15px;
+}
+</style>
 
 </head>
 
 
 <body>
-    <div class="wap">
+    <div class="wrap">
         <nav class="main-nav">
             <ul>
                 <li>
@@ -107,8 +116,6 @@
                             <label for="nickname"> Nickname </label>
                             <input type="text" class="nickname" placeholder="Nickname" name="nickname" id="nickname">
                             <a href="#0" value="중복확인" id="checkbtn" class="check" >중복확인</a><div id="checkMsg"></div>
-                       
-
                         </p>
 
                         <p class="fieldset" id="lastinput">
@@ -116,6 +123,7 @@
                             <label for="email"> Password </label>
                             <input type="password" class="password" placeholder="Password" name="password" id="pw">
                             <a href="#0" class="hide-password" id="password2" >보이기</a>
+                            <span class="password-confirm">패스워드는 8자이상 입력해야합니다.</span>
                        
                             
                             <p class="fieldset agree">
