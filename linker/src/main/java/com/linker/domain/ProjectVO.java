@@ -12,25 +12,8 @@ public class ProjectVO {
 	private Date cdate;
 	private String writerEmail;
 	private String writerNickName;
-	 
-	public String getWriterEmail() {
-		return writerEmail;
-	}
-	public void setWriterEmail(String writerEmail) {
-		this.writerEmail = writerEmail;
-	}
-	public String getWriterNickName() {
-		return writerNickName;
-	}
-	public void setWriterNickName(String writerNickName) {
-		this.writerNickName = writerNickName;
-	}
-	public Date getCdate() {
-		return cdate;
-	}
-	public void setCdate(Date cdate) {
-		this.cdate = cdate;
-	}
+	private int favorite;
+	
 	public int getId() {
 		return id;
 	}
@@ -61,9 +44,36 @@ public class ProjectVO {
 	public void setPs_id(int ps_id) {
 		this.ps_id = ps_id;
 	}
+	public Date getCdate() {
+		return cdate;
+	}
+	public void setCdate(Date cdate) {
+		this.cdate = cdate;
+	}
+	public String getWriterEmail() {
+		return writerEmail;
+	}
+	public void setWriterEmail(String writerEmail) {
+		this.writerEmail = writerEmail;
+	}
+	public String getWriterNickName() {
+		return writerNickName;
+	}
+	public void setWriterNickName(String writerNickName) {
+		this.writerNickName = writerNickName;
+	}
+	public int getFavorite() {
+		return favorite;
+	}
+	public void setFavorite(int favorite) {
+		this.favorite = favorite;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProjectVO [id=" + id + ", title=" + title + ", u_id=" + u_id + ", t_id=" + t_id + ", ps_id=" + ps_id
-				+ ", cdate=" + cdate + ", writerEmail=" + writerEmail + ", writerNickName=" + writerNickName + "]";
+				+ ", cdate=" + cdate + ", writerEmail=" + writerEmail + ", writerNickName=" + writerNickName
+				+ ", favorite=" + favorite + "]";
 	}
+	
 }

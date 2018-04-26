@@ -381,7 +381,7 @@ input#agree:focus {
 }
 .delete-favo{
 	position: absolute;
-	margin-top: -95px;
+	margin-top:-20px;
 	margin-left: 270px;
 	color: #e6c60a;
 }

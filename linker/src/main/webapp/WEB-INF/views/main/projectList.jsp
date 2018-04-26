@@ -17,23 +17,17 @@
 <body>
 	<%@include file="../header.jsp"%>
 	<%@include file="../mainMenu.jsp"%>
+	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
 
-
+	
 		
-		<!-- 종료 프로젝트 모달창 -->
-		<div class="list-modal">
-			<div class="list-content">			 
-				<div class="head-list">Hidden Project List</div>
-				<div class="content-list"></div>
-			</div>
-		</div> 
 
 		<div class="main-favorite"></div>
 		<!-- Projects In a Team -->
 		<!-- 팀 정보 -->
-		<c:forEach items="${team}" var="teamList">
+		  <c:forEach items="${team}" var="teamList">
 			<div class="projectBox">
 				<div class="teamInfo">
 					<i class="fas fa-users"></i> <span class="title">${teamList.name}</span>
@@ -50,20 +44,37 @@
 								<li><a
 									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" "><span
 										class="name">${projectList.title}</span>
-										    <span ><i class="far fa-star add-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
+										<c:if test="${projectList.favorite} ">
+										 	<span ><i class="far fa-star add-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
+										</c:if>
+										<c:if test="${projectList.favorite} ">
+										    <span ><i class="far fa-star delete-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
+										</c:if>
+										
+										<c:choose>
+											    <c:when test="${projectList.favorite == 0}">
+											      <span ><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											    </c:when>
+											    <c:otherwise>
+											          <span ><i class="far fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											    </c:otherwise>
+											
+											
+										</c:choose>
+											
 									</a>
 								</li>
 							</ul>
 						</c:if>
 					</c:if>
-				</c:forEach>
+				</c:forEach> 
 			
 
 				<!-- 프로젝트 추가 버튼 -->
 				<span class="addProject"><button class="createProjectBtn"
 						type="button">Create new project…</button></span>
 			</div>
-		</c:forEach>
+		</c:forEach>   
 		<div class="teaminsert">
 			<a class="teaminsert-a" href="#"> <span>Create a new team…</span>
 			</a>
@@ -90,9 +101,7 @@
 		<!-- 팀 멤버 모달창 -->
 		<div class="member-modal">
 			<div class="member-content">
-				<h1 class="member-head">
-				
-				</h1>
+				<h1 class="member-head"></h1>
 				<div class="member-list">
 				</div>
 			</div>
@@ -199,9 +208,7 @@
     	 
     	var title=$("#add-prj").val();
 
-         console.log(u_id);
-         console.log(t_id);
-         console.log(title);
+      
 
           $.ajax({
              type : 'POST',
@@ -308,192 +315,12 @@
           		}   
          	});
       	});
-    	    
-  /*   
-    
-  	//모달창 띄우기
-	$(".closeBoard").on("click",function(){	
-		$('.list-modal').addClass('is-visible');		
-		
-		$.ajax({
-			type:"GET",
-			url:"/main/projectlist",
-			success : function(data){
-				
-				if(data.length !== 0){
-					$('.content-list').html("");
-					for(var i = 0; i < data.length ; i++){
-						var str ="<div class='listbox'><div class='list-li'><a href='http://localhost:9090/board/"
-						+data[i].t_id+
-						"/"
-						+data[i].id+"'>"
-						+data[i].title+"</a>"
-						+"<div class='option'><a class='preload' p='"+data[i].id+"' u='"+data[i].u_id+"' t='"+data[i].t_id+"'>Re-load</a>"
-						+"<a class='pdelete' p='"+data[i].id+"' u='"+data[i].u_id+"'>Delete</a></div></div></div>"
-						$('.content-list').append(str);
-					} 
-				}else{
-						nolist();
-					 }
-				
-				
-			},
-			error : function(){
-				alert("통신의 오류가 발생했습니다.");
-			}
-		}); //ajax
-	});
-  	
-  	//프로젝트리스트가 없을때
-  	function nolist(){
-  		$('.content-list').html("");
-		str ="<div class='no-project'>No Project List</div>"
-		$('.content-list').append(str);
-  	}
-  	
-	//모달창 닫기
-	$(".list-modal").on("click",function(e){
-		if($(e.target).hasClass("list-modal")){
-			$(".list-modal").removeClass("is-visible");		
-		}
-	})
 	
-	 $('.content-list').on("click",".preload",function(){
-		u_id = $(this).attr("u");
-		p_id = $(this).attr("p");
-		var ps_id = 1;
-		var parent = $(this).parent().parent().parent();
-		var ppp = $(this).parent().parent().parent().children('.listbox');
-		console.log(typeof(ppp) );
-		console.log(parent);
-
-	    	$.ajax({
-	    		type : "put",
-	    		url : "/main/" + p_id + "/" + u_id,
-	    		headers : {
-	    			"Content-Type" : "application/json",
-	    			"X-HTTP-Method-Override" : "PUT"
-	    		},	
-	    		data : JSON.stringify({ps_id : ps_id}),
-	    		dataType : "text", 
-	    		success : function(result) {
-	    			if(result === "SUCCESS"){	
-	    				if(ps_id == 1){
-	    				
-	    					parent.html("");
-	    					 var listno=$('.listbox').html();
-	    					console.log(listno);
-	    					console.log(listno == "");
-	    					if(listno == ""){
-	    						
-	    						nolist();
-	    					}
-	    					 
-	    				}
-	    			};//if
-	    		},
-	    		error : function() {
-	    			alert("에러가 발생했습니다.");
-	    		}
-	    	});//ajax
-	});
-	
-	//종료 된 프로젝트에서 완전히 삭제처리 
-	$('.content-list').on("click",".pdelete",function(){
-		u_id = $(this).attr("u");
-		p_id = $(this).attr("p");
-		ps_id = 3;
-		var parent = $(this).parent();
-		
-		if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true){
-			return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return				
-		}
-		
-		$.ajax({
-    		type : "put",
-    		url : "/main/" + p_id + "/" + u_id,
-    		headers : {
-    			"Content-Type" : "application/json",
-    			"X-HTTP-Method-Override" : "PUT"
-    		},	
-    		data : JSON.stringify({ps_id : ps_id}),
-    		dataType : "text", 
-    		success : function(result) {
-    			if(result === "SUCCESS"){	
-    				if(ps_id == 3){
-    					parent.parent().html("");
-    					var listno=$('.listbox').html();
-    					console.log(listno == "");
-    					if(listno == "" ){
-    						
-    						nolist();
-    					}
-    					
-    				}
-    			};//if
-    		},
-    		error : function() {
-    			alert("에러가 발생했습니다.");
-    		}
-    	});//ajax
-	}); */
-	
-	$('.projects').on("mouseenter",function(){
-		$(this).children().children().children().children('.fa-star').addClass('visible');
-	})
-	$('.projects').on("mouseleave",function(){
-		$('.fa-star').removeClass('visible');
-	})
-	
-
-	$(document).on("click", '.add-favo', function(){
-		
-		p_id = $(this).attr("p_id");
-		t_id = $(this).attr("t_id");
-		title = $(this).parents().parents().children().eq(0).text();
-		$(this).removeClass('add-favo');
-		$(this).addClass('delete-favo');
-		favorites();
-
-		//단순히 링크가 동작하지 않게 하기 (고전적인 방법)
-		return false;
-	})
-	
-	//ajax 즐겨찾기추가 함수
-	function favorites(){	
-		console.log(p_id);
-		$.ajax({
-				type : "get",
-				url : "main/favorite/"+p_id,
-				success : function(data){
-					console.log(data);
-					console.log( );
-					//맨처음 아무것도 없을때는 불러오기 처리	
-					if($('.hidden').attr("class") != "hidden"){
-						favoriteList();
-						console.log(1);
-					}else{
-					  str = "<ul class='projects'>"
-						  +"<li><a "
-						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
-						  +" class='name'>"+title+"</span>"		
-						  +"</a><span><i class='far fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span>"
-						  +"</li>"
-					      +"</ul>";
-					  $('.projects').eq(0).prepend(str);
-					}
-				},error : function(){
-					alert("통신 오류 입니다.");
-				}
-					
-		})//end ajax
-
-	}
 	
 	
 	
 	//버튼 눌렀을때 팀불러오기
-	$('.memberbtn').on("click",function(){
+	$(document).on("click",".memberbtn",function(){
 		t_id = $(this).parents().children().eq(2).text();
 		title =  $(this).parents().children().eq(1).text();
 		console.log(t_id);
@@ -553,7 +380,7 @@
 								  +"<li><a "
 								  +"href='http://localhost:9090/board/"+data[i].t_id+"/"+data[i].id+"'><span"
 								  +" class='name'>"+data[i].title+"</span>"		
-								  +"</a><span><i class='far fa-star delete-favo' p_id='"+data[i].id+"'></i></span>"
+								  +"<span><i class='far fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
 								  +"</li>"
 							      +"</ul>";
 					}
@@ -573,7 +400,61 @@
 				alert("통신오류입니다.")
 				
 			}
-		})//ajax
+		})// end ajax
+	}
+	
+	//마우스 오버시 별나오기
+	$(document).on("mouseenter",".projects",function(){
+		$(this).children().children().children().children('.fa-star').addClass('visible');
+	})
+	//마우스 떠날때 별사라지기
+	$(document).on("mouseleave",".projects",function(){
+		$('.fa-star').removeClass('visible');
+	})
+	
+	//즐겨찾기 추가
+	$(document).on("click", '.add-favo', function(){
+		
+		p_id = $(this).attr("p_id");
+		t_id = $(this).attr("t_id");
+		title = $(this).parents().parents().children().eq(0).text();
+		favorites();
+		$(this).addClass('delete-favo');
+		$(this).removeClass('add-favo');
+	
+		/* teamList(); */
+		//단순히 링크가 동작하지 않게 하기 (고전적인 방법)
+		return false;
+	})
+	
+	//ajax 즐겨찾기추가 함수
+	function favorites(){	
+		
+		$.ajax({
+				type : "get",
+				url : "main/favorite/"+p_id,
+				success : function(data){
+					console.log(data);
+					
+					//맨처음 아무것도 없을때는 불러오기 처리	
+					if($('.hidden').attr("class") != "hidden"){
+						favoriteList();
+					}else{
+					  str = "<ul class='projects'>"
+						  +"<li><a "
+						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
+						  +" class='name'>"+title+"</span>"		
+						  +"<span><i class='far fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
+						  +"</li>"
+					      +"</ul>";
+					  $('.projects').eq(0).prepend(str);
+					}
+				},error : function(){
+					alert("통신 오류 입니다.");
+				}
+					
+		})//end ajax
+
 	}
 	
 	//즐겨찾기 삭제
@@ -594,8 +475,13 @@
 				success : function(data){
 					if(data == "SUCCESS"){
 						favoriteList();
+						$('#'+p_id).addClass('add-favo');
+						$('#'+p_id).removeClass('delete-favo');
+						$('#'+p_id).removeClass('is-visible');
+						/* teamList(); */
 						/* console.log(tag.children().length); */
 						fovalist();
+					
 					}
 				},error : function(){
 					alert("통신 오류입니다.");
@@ -615,16 +501,13 @@
 				if(data.length == 0){
 					$('.projectBox').eq(0).remove();
 					$('.hidden').remove();
-					console.log(1);
+					
 				}
 			},error : function(){
 				alert("통신오류입니다.");
 			}
 		})
 	}
-	
-	
-	
 	
 </script>
 </body>

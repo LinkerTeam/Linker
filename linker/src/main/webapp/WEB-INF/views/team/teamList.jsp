@@ -12,6 +12,7 @@
 <body>
 	<%@include file="../header.jsp"%>
 	<%@include file="../mainMenu.jsp"%>
+	<%@include file="../closeBoard.jsp"%>
 	
 	<!-- content 시작 -->	
 	<div class="content">

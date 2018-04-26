@@ -1,6 +1,5 @@
 package com.linker.controller;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -80,10 +79,6 @@ public class UserController {
 	// 스프링시큐리티 암호화 객체
 	@Inject
 	private BCryptPasswordEncoder pwdEncoder;
-
-	// 파일 저장 주소를 넣어줌
-/*	@Resource(name = "uploadPath")
-	private String uploadPath;*/
 	
 	private String uploadpath = "linker/certificate";
 	
@@ -232,15 +227,15 @@ public class UserController {
 
 	// 04. 회원 정보 수정 처리
 	@RequestMapping(value = "/userModify", method = RequestMethod.POST)
-	public String UserUpdate(UserDTO dto, Model model, HttpServletRequest request) throws IOException, Exception {
+	public String UserUpdate(UserDTO dto, Model model, HttpServletRequest request,HttpServletResponse response) throws IOException, Exception {
 		// MultipartFile은 POST 방슥으로 들어온 파일 데이터를 의미
 		//System.out.println(dto);
 
 		//System.out.println(dto.getProfile());
 		// 화면으로 부터 받아온 파일을 MultipartFile타입 uploadfile에 넣어준다
 		MultipartFile uploadfile = dto.getProfileName();
-
-		System.out.println("너는 뭐냐?" + uploadfile);
+		System.out.println("나마에와?"+dto.getProfileName());
+		System.out.println("너는 뭐냐?" + uploadfile.getOriginalFilename().toLowerCase());
 		
 		
 
@@ -258,10 +253,9 @@ public class UserController {
 		//=====================기존 이미지 파일 삭제=======================
 		//s3 클래스 사용
 		//기본 파일인경우에는 기본 파일을 삭제 하기를 막기위해서 if문을 걸어둠
-		System.out.println(user.getProfile().equals("/default.gif"));
-		System.out.println((!user.getProfile().equals(user.getProfile())));
-		if(!(user.getProfile().equals("/default.gif")) || (!user.getProfile().equals(user.getProfile()))) {
-		System.out.println("나입니다아");
+		//기본파일이거나 본래파일과 같거나 아무 파일도안넣었을때
+		if(!(user.getProfile().equals("/default.gif")) && (!(uploadfile.getOriginalFilename().equals("")))) {
+		System.out.println("기본파일 삭제하는데 성공");
 		S3Util s3 = new S3Util();
 		String bucketName = "linkers104";
 		//기존 DB에 있던 정보를 삭제 하고 들어온 정보로 다시 새롭게 쓴다.
@@ -281,14 +275,14 @@ public class UserController {
 
 		//System.out.println("imageType는?" + imageType);
 		//System.out.println("bb는?" + (imageType.equals("jpg")));
-		// 이미지 타입을 검사해서 이미지인 경우에만 DB에 저장 한다.
-		if (imageType.equals("jpg") || imageType.equals("png") || imageType.equals("gif") || imageType.equals("jpge")) {
+		// 이미지 타입을 검사해서 이미지인 경우에만 DB에 저장 한다. .toLowerCase()로 파일 확장자가 JPG 대문자인경우 소문자로 바꿔서 체크한다.
+		if (imageType.toLowerCase().equals("jpg") || imageType.toLowerCase().equals("png") || imageType.toLowerCase().equals("gif") || imageType.toLowerCase().equals("jpeg")) {
 			String realPath = UploadFileUtils.uploadFile(uploadpath, uploadfile.getOriginalFilename(),
 					uploadfile.getBytes());
 			// 들어온 파일의 주소를 db에 저장하기위해서 set으로 지정해줌 그런데 파일을 넣지않아도 파일이 저장된다.
 			dto.setProfile(realPath);
 			System.out.println(realPath);
-		}
+		} 
 		//System.out.println(dto.getProfile());
        
 		dto.setEmail(email);

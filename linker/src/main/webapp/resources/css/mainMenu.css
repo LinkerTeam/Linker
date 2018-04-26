@@ -79,11 +79,6 @@
 .setting-menu.team-modify {
 	margin-top: 6px;
 }
-
-
-
-
-
 /* close board 목록에 대한 추가사항 */
 .list-modal{
 	position: fixed;
@@ -91,29 +86,82 @@
     left: 0;
     right: 0;
     bottom: 0;
-    /*width: 100%;
-    height: 100%;*/
+    width: 100%;
+    height: 100%;
     background-color: rgb(0, 0, 0);
     /* 모달창 옆에 백그라운드 농도  */
     background-color: rgba(0, 0, 0, 0.8);
     /* Black w/ opacity */
-    z-index: 3;
+    z-index: 9999;
     /*overflow-y: auto;*/
   
     display: none;
     transition: opacity 0.3s 0, visibility 0 0.3s;
 }
+
 .list-modal.is-visible {
     display: block;
 }
+
+/*종료 프로젝트 컨텐츠 박스  */
 .list-content{
  	position: relative;
     height: auto;
     box-sizing: border-box;
-    width: 400px;
-    background: #fff;
+    width: 650px;
+    background: #edeff0;
     border-radius: 4px;
     padding: 20px 45px 20px 20px;
     margin: 250px auto 0 auto;
 
+}
+/* 프로젝트가 아무것도 없을때 css */
+.no-project{
+	border: 1px dashed #c4c9cc;
+	height: 30px;
+	background: #e2e4e6;
+	text-align: center;
+	padding-top: 10px;
+	margin-top: 20px;
+}
+/* 종료프로젝리트 리스트 */
+.list-li a{
+	font-size: 20px;
+}
+/* 종료프로젝리트 리스트 */
+.list-li{
+	border-bottom: 1px solid #d6dadc;
+	height: 40px;
+	padding-top: 30px;
+}
+.option{
+	float: right;
+	height: 40px;
+}
+/* 리로드 삭제 버튼*/
+.preload,.pdelete{
+	background: #e2e4e6;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 32px;
+    margin-top: 8px;
+    max-width: 300px;
+    overflow: hidden;
+    padding: 7px 7px 7px 11px;
+    position: relative;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    user-select: none;
+    white-space: nowrap;
+    float: left;
+    margin: 0 0 0 4px;
+    }
+    
+ /* 삭제 버튼 */
+.pdelete{
+    border-color: #eb5a46;
+    border-bottom-color: #b04632;
+    color: #fff;
+    background: #eb5a46;
 }

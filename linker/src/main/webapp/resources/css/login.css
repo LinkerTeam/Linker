@@ -22,14 +22,14 @@
 /* 버튼의 크기와 넓이 그리고 중간에글자 넣기  속성 */
 .user-modal-container li {
     width: 50%;
-    float: left;
+    float: left;s
     text-align: center;
     list-style: none;
 }
 
 /* 백그라운드 배경화면 속성 */
 body {
-    background: gray;
+    background: #fff;
     height : 100%;
 }
 
@@ -44,7 +44,7 @@ body {
     color: #FFF;
 }
 
-.wap{
+.wrap{
 	height:100%;
 }
 .main-nav {
@@ -93,7 +93,7 @@ body {
 
 /* 메인버튼 회원가입 */
 .main-nav li:nth-child(2) a {
-    background: #7e0909;
+    background: #9e2c2c;
     border: 2px solid #fff;
 }
 
@@ -217,12 +217,16 @@ form button, .full-width.has-padding.input {
     border: none;
     outline: none;
     height: 40px;
-    background: red;
+    background: #F64747;
     color: #fff;
     font-size: 18px;
     margin-left: 15px;
     cursor: pointer;
     width: 95%;
+}
+
+.full-width.has-padding.input:hover{
+	background: #d83d3d;
 }
 
 .switcher {
@@ -262,7 +266,7 @@ label {
 
 /* 로그인버튼 색깔 */
 .login_btn1 {
-    background-color: red;
+    background-color: #F64747;
 }
 
 /* 잃어버린 비밀번호 찾기 위치 선정 */
