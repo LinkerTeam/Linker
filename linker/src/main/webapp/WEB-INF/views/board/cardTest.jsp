@@ -16,8 +16,7 @@
 
 <body>
 	<%@include file="../header.jsp"%>
-	<%@include file="../mainMenu.jsp"%>
-	<%@include file="../closeBoard.jsp"%>
+	<%@include file="../closeBoard.jsp"%> 
 	
 	<div class="content board">
 		<%@include file="cardShowMenu.jsp"%>
@@ -223,6 +222,7 @@
 				type : "GET",
 				url : "/board/" + p_id,
 				success : function(data) {
+					console.log(data);
 					var allID = new Array(); //카드리스트 id를 담을 배열
 					var idIndex = new Array(); //data배열의 id에서 uniqID들의 index값
 					

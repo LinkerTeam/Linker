@@ -15,6 +15,7 @@
 </head>
  
 	<body>
+	<%@include file="mainMenu.jsp"%>
 		<!--header-->
 		<header id="header">
 		    <!--로고부분-->

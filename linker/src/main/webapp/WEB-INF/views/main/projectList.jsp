@@ -43,20 +43,13 @@
 							<ul class="projects">
 								<li><a
 									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" "><span
-										class="name">${projectList.title}</span>
-										<c:if test="${projectList.favorite} ">
-										 	<span ><i class="far fa-star add-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
-										</c:if>
-										<c:if test="${projectList.favorite} ">
-										    <span ><i class="far fa-star delete-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
-										</c:if>
-										
+										class="name">${projectList.title},${projectList.favorite}</span>
 										<c:choose>
 											    <c:when test="${projectList.favorite == 0}">
 											      <span ><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
 											    </c:when>
 											    <c:otherwise>
-											          <span ><i class="far fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											          <span ><i class="fas fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
 											    </c:otherwise>
 											
 											
@@ -380,7 +373,7 @@
 								  +"<li><a "
 								  +"href='http://localhost:9090/board/"+data[i].t_id+"/"+data[i].id+"'><span"
 								  +" class='name'>"+data[i].title+"</span>"		
-								  +"<span><i class='far fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
+								  +"<span><i class='fas fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
 								  +"</li>"
 							      +"</ul>";
 					}
@@ -416,11 +409,13 @@
 	$(document).on("click", '.add-favo', function(){
 		
 		p_id = $(this).attr("p_id");
-		t_id = $(this).attr("t_id");
+		t_id = $(this).attr("t_id").substring(1);
 		title = $(this).parents().parents().children().eq(0).text();
 		favorites();
 		$(this).addClass('delete-favo');
+		$(this).addClass('fas');
 		$(this).removeClass('add-favo');
+		$(this).removeClass('far');
 	
 		/* teamList(); */
 		//단순히 링크가 동작하지 않게 하기 (고전적인 방법)
@@ -444,7 +439,7 @@
 						  +"<li><a "
 						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
 						  +" class='name'>"+title+"</span>"		
-						  +"<span><i class='far fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
+						  +"<span><i class='fas fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
 						  +"</li>"
 					      +"</ul>";
 					  $('.projects').eq(0).prepend(str);
@@ -476,8 +471,10 @@
 					if(data == "SUCCESS"){
 						favoriteList();
 						$('#'+p_id).addClass('add-favo');
+						$('#'+p_id).addClass('far');
 						$('#'+p_id).removeClass('delete-favo');
 						$('#'+p_id).removeClass('is-visible');
+						$('#'+p_id).removeClass('fas');
 						/* teamList(); */
 						/* console.log(tag.children().length); */
 						fovalist();

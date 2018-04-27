@@ -28,7 +28,8 @@
 		FROM linker.user as u
 		LEFT JOIN linker.team_has_user AS thu ON thu.u_id = u.id
 		LEFT JOIN linker.project AS p ON thu.t_id = p.t_id
-		LEFT JOIN linker.user_has_project AS uhp ON uhp.p_id = p.id
+		LEFT JOIN linker.user_has_project AS uhp ON uhp.p_id = p.id 
+		AND uhp.u_id = u.id
 		WHERE u.id = #{u_id}
 		AND p.ps_id = 1
 		ORDER BY p.cdate DESC

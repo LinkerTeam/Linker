@@ -29,7 +29,7 @@
 		SELECT u_id, t_id, team.name, team.cdate, auth
  		FROM linker.team_has_user 
  		JOIN linker.team ON team.id=t_id
-		WHERE u_id=#{u_id} and status = 1
+		WHERE u_id=#{u_id} and team_has_user.status = 1
 	</select>
 	
 	<!-- team 삭제 /그 팀에서 권한이 0인 user만 가능-->
