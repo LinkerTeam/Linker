@@ -47,18 +47,15 @@ body {
 .wrap{
 	height:100%;
 }
+
 .main-nav {
 	position:absolute;
 	width: 100px; /* 정렬하려는 요소의 넓이를 반드시 지정 */ 
 	margin: 0 auto;
-  /*   margin: 150px 150px 150px 150px; */
-  	position:static;
     max-width: 240px;
     margin: 0 auto;
     cursor: pointer;
-    
 }
-
 
 .main-nav ul {
    	position:fixed;
@@ -67,7 +64,6 @@ body {
     margin: 0 auto;
     top:45%;
     right: 36%;
-    
 }
 
 .main-nav li {
@@ -76,11 +72,10 @@ body {
     width: 200px;
     text-align: center;
     cursor: pointer;
-    
-  
+ 
  }
 
-    /* 메인버튼 로그인 */
+ /* 메인버튼 로그인 */
 .main-nav li:nth-child(1) a {
     background: #d83d3d;
     border: 2px solid #fff;
@@ -102,8 +97,7 @@ body {
     color: #7e0909;
 }
 
-/* 이부분까지 메인창  */
-
+/* ------------ 이 부분까지 메인창  ------------ */
 
 /* 메인박스의 인풋박스(로그인창이나그런것들) 설정 값 */
 .form input {
@@ -114,7 +108,7 @@ body {
     border: none;
 }
 
-*/
+
 /* 감추는 css 로그인폼과 회원가입폼을 감춰 둔다*/
 #login,
 #signup,
@@ -139,8 +133,6 @@ form .fieldset:first-child {
     margin-bottom: 0;
 }
 
-
-
 /* 로그인 박스 만든것 */
 .user-modal {
     position: fixed;
@@ -148,14 +140,10 @@ form .fieldset:first-child {
     left: 0;
     right: 0;
     bottom: 0;
-    /*width: 100%;
-    height: 100%;*/
     background-color: rgb(0, 0, 0);
     /* 모달창 옆에 백그라운드 농도  */
     background-color: rgba(0, 0, 0, 0.8);
-    /* Black w/ opacity */
     z-index: 3;
-    /*overflow-y: auto;*/
     cursor: pointer;
     display: none;
     transition: opacity 0.3s 0, visibility 0 0.3s;
@@ -172,34 +160,31 @@ form .fieldset:first-child {
     border-radius: 0.25em;
 }
 
-    /*          
-        위에 로그인 과 회원가입을 테이블로해서 깔끔하게 함. */
-    .user-modal-container .switcher:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+/* 위에 로그인 과 회원가입을 테이블로해서 깔끔하게 함. */
+.user-modal-container .switcher:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 
-    /* 로그인과 회원가입 css 글자 가운데 해주고 float지정해줌 */
-    .user-modal-container .switcher li {
-        width: 50%;
-        float: left;
-        text-align: center;
-        list-style: none;
-    }
+/* 로그인과 회원가입 css 글자 가운데 해주고 float지정해줌 */
+.user-modal-container .switcher li {
+    width: 50%;
+    float: left;
+    text-align: center;
+    list-style: none;
+}
 
-
-    /* 메인박스에 로그인 버튼과 회원가입버튼의 색깔 설정과 라인설정한곳  */
-    .user-modal-container .switcher a {
-        display: block;
-        width: 100%;
-        height: 50px;
-        line-height: 50px;
-        background: rightgray;
-        color: #809191;
-        text-decoration: none;
-    }
-
+/* 메인박스에 로그인 버튼과 회원가입버튼의 색깔 설정과 라인설정한곳  */
+.user-modal-container .switcher a {
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background: rightgray;
+    color: #809191;
+    text-decoration: none;
+}
 
 /* input text와 password 값 css준거 색깔 컬러 넓이를 지정함 */
 .form input[type="text"],
@@ -236,7 +221,6 @@ form button, .full-width.has-padding.input {
 /* 메인박스의 마진값으로 위치 선정함 */
 .user-modal-container {
     margin-top: 100px;
-    /*margin-left: 700px;*/
 }
 
 label {
@@ -244,7 +228,6 @@ label {
 }
 
 .close-form {
-    /* form X button on top right  */
     display: block;
     position: absolute;
     width: 40px;
@@ -253,7 +236,6 @@ label {
     top: -40px;
     text-indent: 100%;
 }
-
 
 /* 안쪽 로그인 회원가입 css */
 .switcher li {
@@ -278,9 +260,9 @@ label {
     color: white;
 }
 
-    #login .form-bottom-message > a:hover {
-        color: gray;
-    }
+#login .form-bottom-message > a:hover {
+    color: gray;
+}
 /* 비밀번호찾기에서 뒤로가기 위치선정 */
 #back {
     position: absolute;
@@ -290,10 +272,9 @@ label {
     color: white;
 }
 
-    #back:hover {
-        color: gray;
-    }
-
+#back:hover {
+    color: gray;
+}
 
 /* 아이콘들 위치 선정과 아이콘 배경및 색깔 변경  */
 .fa-unlock-alt {
@@ -331,26 +312,22 @@ label {
     height: 20px;
 }
 
-
-
 /* 마지막인풋박스에 마진준것 */
 #lastinput {
     margin-bottom: 40px;
 }
-
-
 
 /* 체크박스들 위치선정 */
 .fieldset.agree {
     padding-left: 20px;
 }
 
-    /* 리멤버 체크박스랑 동의 박스 위치선정 */
-    .fieldset.agree input {
-        margin: 0;
-        height: auto;
-        vertical-align: middle;
-    }
+/* 리멤버 체크박스랑 동의 박스 위치선정 */
+.fieldset.agree input {
+    margin: 0;
+    height: auto;
+    vertical-align: middle;
+}
 
 .form-message {
     text-align: center;
@@ -384,9 +361,11 @@ label {
     color: #ffffff;
 }
 
-
 /* 소셜 로그인 */
-.social-login {padding: 0 1.4em 1.4em 1.4em;}
+.social-login {
+	padding: 0 1.4em 1.4em 1.4em;
+}
+
 .social-login .go-google {
     display: block;
     text-align: center;
@@ -406,12 +385,11 @@ label {
 }
 
 
-   #checkMsg,#EmailcheckMsg{
-     height: 15px;
-     padding-left: 20px;
-   }
-   #agree{
-    height: 30px;
-   
-   }
+#checkMsg,#EmailcheckMsg{
+	height: 15px;
+	padding-left: 20px;
+}
+#agree{
+ 	height: 30px;
+}
    
