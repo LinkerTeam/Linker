@@ -52,39 +52,21 @@ public class ProjectController {
 	
 	@RequestMapping(value="", method=RequestMethod.GET)
 	public String projectListGET(Model model,HttpSession session) throws Exception{
-		      System.out.println("나이니다.");
-		  
-		   //현재 로그인 사용자의 정보를 세션을통해서 가져온다.
-		   UserVO vo =(UserVO) session.getAttribute("login");
-		   
-		   int userID = vo.getId();
-		
-		   System.out.println(userID);
-          List<TeamVO> vo2=(List<TeamVO>) teamService.listTeam(userID);
-         
-          //팀멤버의 정보를 가져오기위해서 List<List<UserVO>>를 사용함  
-          List<List<UserVO>> profile = new ArrayList<List<UserVO>>();
-          
-          //각각의 팀멤버를 불러와서 List에 담는다.
-          for(int i=0; i<vo2.size();i++) {
-        	  
-        	  TeamVO tvo=vo2.get(i);
-        	  List<UserVO> member= (List<UserVO>) service.teamProfile(tvo.getT_id());
-        	  profile.add(member);
-          }      
-		
-          
-          
+	   
+		System.out.println("프로젝트 메인페이지.");
+	  
+	   //현재 로그인 사용자의 정보를 세션을통해서 가져온다.
+	   UserVO vo =(UserVO) session.getAttribute("login");
+	   
+	   int userID = vo.getId();
+
         //즐겨찾기 리스트 
-        model.addAttribute("favoriteList", service.favoriteList(userID));
-          
+        model.addAttribute("favoriteList", service.favoriteList(userID));   
 		//7번 유저의 모든 팀을 가져온다.
 		model.addAttribute("team", teamService.listTeam(userID));
-		model.addAttribute("profile",profile);
 		//7번유저의 모든 프젝을 가져온다.
 		model.addAttribute("result",service.listProject(userID));
-		
-		System.out.println("나입니다.");
+
 		return "main/projectList";
 	}	
 	
@@ -92,7 +74,7 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping(value="/insertProject", method= RequestMethod.POST)
 	public ResponseEntity<Integer> createProject(@RequestBody ProjectVO vo) throws Exception{
-		System.out.println("여기는 프로젝트를 만드는것");
+		System.out.println("프로젝트 생성");
 		
 		System.out.println(vo.toString());
 			
@@ -115,7 +97,7 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping(value="t/{teamID}/p", method = RequestMethod.GET)
    public List<ProjectVO> listProject(@PathVariable int teamID) throws Exception{
-		System.out.println("프로젝트를 보자!");
+		System.out.println("프로젝트를 리스트!");
 		
 		return service.listProject(teamID);
   
@@ -165,25 +147,19 @@ public class ProjectController {
 		
 		try {
 			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
-			
 		} catch (Exception e) {
-			
 			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-			
 		}
-		
 		return entity;
-		
 	}
 	
 	//즐겨찾기 불러오기
 	@ResponseBody
 	@RequestMapping(value="favoritelist", method = RequestMethod.GET)
 	public ResponseEntity<List<ProjectVO>> favoriteList(HttpSession session)throws Exception{
+		
 		ResponseEntity<List<ProjectVO>> entity = null;
-		
 		UserVO vo = (UserVO) session.getAttribute("login");
-		
 		int u_id = vo.getId();
 		
 		try {
@@ -198,15 +174,14 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping(value = "/favoriteDelete", method = RequestMethod.DELETE)
 	public ResponseEntity<String> favoriteDelete(@RequestBody ProjectVO pvo,HttpSession session) throws Exception{
+		
 		System.out.println("즐겨찾기 삭제");
-		System.out.println("pvo는??"+pvo);
 		ResponseEntity<String> entity = null;
 		
 		UserVO vo = (UserVO) session.getAttribute("login");
 		
 		int u_id = vo.getId();
 		int p_id = pvo.getId();
-		System.out.println(u_id+"와 ");
 		service.favoriteDelete(u_id, p_id);
 		
 		try {
@@ -214,12 +189,8 @@ public class ProjectController {
 		} catch (Exception e) {
 			entity = new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
-		
 		return entity;
 		
 	}
-	
-	
-
 
 }

@@ -173,7 +173,7 @@
 										<p id="status"></p>
 										<div id='holder'></div>
 										<!-- accept=".jpg,png "  특정파일만 올릴수있게 파일 업로드시 설정해줌 -->
-										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  </br>용량은 최대 4MB까지 가능합니다.</span>
+										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  </br>용량은 최대 1MB까지 가능합니다.</span>
 								</td>
 								</p>
 								</div>
@@ -245,8 +245,8 @@
 				alert("파일명이 너무 깁니다 이름을 변경후 다시 등록 해주세요.");
 				return false;
 			}
-			//이미지 파일 사이즈  검사
-			if(!(fileSize < (4*1024*1024))){
+			//이미지 파일 사이즈  검사 1mb보다 큰지 작은지 체크
+			if(!(fileSize < (1*1024*1024))){
 				alert('이미지 용량이 너무 큽니다 이미지파일 용량을 확인해주세요.');
 				return false;
 			}
@@ -348,7 +348,8 @@
 											}
 										}); //end ajax    
 							}); //end on
-
+			
+			//이미지 체크 매개변수에 값을넣어서 맞으면 true 틀리면 false를 반환함 if()에 사용 
 			function checkImageType(fileName) {
 				// i는 대.소 문자의 구분없음
 				var pattern = /jpg$|gif$|png$|jpeg$/i;

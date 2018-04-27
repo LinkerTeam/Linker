@@ -21,9 +21,6 @@
 
 	<div class="content">
 
-	
-		
-
 		<div class="main-favorite"></div>
 		<!-- Projects In a Team -->
 		<!-- 팀 정보 -->
@@ -44,19 +41,12 @@
 								<li><a
 									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" "><span
 										class="name">${projectList.title}</span>
-										<c:if test="${projectList.favorite} ">
-										 	<span ><i class="far fa-star add-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
-										</c:if>
-										<c:if test="${projectList.favorite} ">
-										    <span ><i class="far fa-star delete-favo" p_id="${projectList.id}" t_id="${projectList.t_id}"></i></span>
-										</c:if>
-										
 										<c:choose>
 											    <c:when test="${projectList.favorite == 0}">
 											      <span ><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
 											    </c:when>
 											    <c:otherwise>
-											          <span ><i class="far fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											          <span ><i class="fas fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
 											    </c:otherwise>
 											
 											
@@ -126,11 +116,14 @@
 
 </body>
 <script>
-
+ //즐겨찾기 불러오기
+ favoriteList();
+ 
  var u_id =null;
  var t_id =null;
  //생성한 프로젝트의 부모를 넣기위해서 지정해줌 ajax시 부모를 알기위해서
  var parent =null;
+ 
 
     // 프로젝트 생성 모달창 닫기
     function closeProjectModal(){
@@ -208,8 +201,6 @@
     	 
     	var title=$("#add-prj").val();
 
-      
-
           $.ajax({
              type : 'POST',
              url : '/main/insertProject',
@@ -239,35 +230,26 @@
    	 } 
     
     //팀프로젝트 모달창 띄우기
-    $('.teaminsert-a').on("click", function(){
-    	
-    	$('.create-modal').addClass('is-visible');
-    	
+    $('.teaminsert-a').on("click", function(){  	
+    	$('.create-modal').addClass('is-visible'); 	
     });
     
     
     
     //팀프로젝트  모달창 닫기 외부클릭시
     $('.create-modal').on("click", function(event){
-    	if($(event.target).hasClass("create-modal")){
-    		
-    		$('.create-modal').removeClass('is-visible');
-    		
+    	if($(event.target).hasClass("create-modal")){  		
+    		$('.create-modal').removeClass('is-visible');	
     	}
-    
-    	
     });
     
         //팀프로젝트  모달창 닫기 x자 클릭시
     $('.tclosebtn').on("click", function(){
-    	
     	$('.create-modal').removeClass('is-visible');
-    	
     });
     
     //입력시 버튼활성화및 비활성화
     $('.team-title').on("input", function(){
-    	 
     	var teamtitle = $('.team-title').val();
     	 
     	if(teamtitle.length == 0){
@@ -276,16 +258,12 @@
     		
     	}else{
     		$('.teambtn').removeClass('disabled');
-    		$('.teambtn').removeAttr("disabled");
-    		
-    	} 
-    	 	
+    		$('.teambtn').removeAttr("disabled");	
+    	}  	
     });
     
     $('.teambtn').on("click", function(){
-    	   
     	var titleName= $('.team-title').val();
-        
     		if(titleName == '' || titleName == null){
 				alert('이름을 다시 입력해주세요');
              	return;
@@ -315,9 +293,6 @@
           		}   
          	});
       	});
-	
-	
-	
 	
 	//버튼 눌렀을때 팀불러오기
 	$(document).on("click",".memberbtn",function(){
@@ -359,9 +334,7 @@
 				alert("통신오류로인해 실패했습니다.");
 			}
 		})//ajax	
-	}
-	//즐겨찾기 불러오기
-	favoriteList();
+	}	
 	
 	//즐겨찾기 해당리스트 함수
 	function favoriteList(){
@@ -380,7 +353,7 @@
 								  +"<li><a "
 								  +"href='http://localhost:9090/board/"+data[i].t_id+"/"+data[i].id+"'><span"
 								  +" class='name'>"+data[i].title+"</span>"		
-								  +"<span><i class='far fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
+								  +"<span><i class='fas fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
 								  +"</li>"
 							      +"</ul>";
 					}
@@ -416,11 +389,13 @@
 	$(document).on("click", '.add-favo', function(){
 		
 		p_id = $(this).attr("p_id");
-		t_id = $(this).attr("t_id");
+		t_id = $(this).attr("t_id").substring(1);
 		title = $(this).parents().parents().children().eq(0).text();
 		favorites();
 		$(this).addClass('delete-favo');
+		$(this).addClass('fas');
 		$(this).removeClass('add-favo');
+		$(this).removeClass('far');
 	
 		/* teamList(); */
 		//단순히 링크가 동작하지 않게 하기 (고전적인 방법)
@@ -444,17 +419,15 @@
 						  +"<li><a "
 						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
 						  +" class='name'>"+title+"</span>"		
-						  +"<span><i class='far fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
+						  +"<span><i class='fas fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
 						  +"</li>"
 					      +"</ul>";
 					  $('.projects').eq(0).prepend(str);
 					}
 				},error : function(){
 					alert("통신 오류 입니다.");
-				}
-					
+				}				
 		})//end ajax
-
 	}
 	
 	//즐겨찾기 삭제
@@ -476,8 +449,10 @@
 					if(data == "SUCCESS"){
 						favoriteList();
 						$('#'+p_id).addClass('add-favo');
+						$('#'+p_id).addClass('far');
 						$('#'+p_id).removeClass('delete-favo');
 						$('#'+p_id).removeClass('is-visible');
+						$('#'+p_id).removeClass('fas');
 						/* teamList(); */
 						/* console.log(tag.children().length); */
 						fovalist();

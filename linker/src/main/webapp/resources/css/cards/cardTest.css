@@ -7,7 +7,6 @@ textarea:focus {
 
 /* board화면에 세로 스크롤 잡혀서 없앰 */
 .content.board {
-    display: list-item;
     width: 100%;
 	background-color: #0079bf;
 	overflow: hidden;
