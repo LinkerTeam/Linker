@@ -30,7 +30,7 @@
 	<!-- team 목록 출력 -->
 	<select id="listTeam" resultType="TeamVO">
 		SELECT u_id, t_id, t.name, t.cdate, auth
- 		FROM linker.team_has_user AS t hu
+ 		FROM linker.team_has_user AS thu
  		JOIN linker.team AS t ON t.id=thu.t_id
 		WHERE u_id=#{u_id} 
 		AND thu.status = 1
