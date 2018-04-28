@@ -7,13 +7,18 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.linker.domain.TeamVO;
+import com.linker.domain.HistoryVO;
 import com.linker.persistence.TeamDAO;
+import com.linker.persistence.HistoryDAO;
 
 @Service
 public class TeamServiceImpl implements TeamService{
 	
 	@Inject
 	TeamDAO tdao;
+	
+	@Inject
+	HistoryDAO hdao;
 
 	//팀생성 
 	@Override
@@ -38,14 +43,19 @@ public class TeamServiceImpl implements TeamService{
 
 	//팀수정(이름)
 	@Override
-	public int modifyTeam(TeamVO vo) throws Exception {
-		return tdao.modifyTeam(vo);
+	public HistoryVO modifyTeam(TeamVO vo) throws Exception {
+		int h_id = hdao.historyInsertTeamModify(vo);
+		tdao.modifyTeam(vo);
+		return hdao.historySelectTeamModify(h_id);
+		
 	}
-
+	
 	//팀삭제
 	@Override
-	public int deleteTeam(int t_id) throws Exception {
-		return tdao.deleteTeam(t_id);
+	public HistoryVO deleteTeam(TeamVO vo) throws Exception {
+		int h_id = hdao.historyInsertTeamDelete(vo);
+		tdao.deleteTeam(vo.getT_id());
+		return hdao.historySelectTeamDelete(h_id);
 	}
 	
 }

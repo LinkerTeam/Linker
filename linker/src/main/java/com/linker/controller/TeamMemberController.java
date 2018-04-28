@@ -50,60 +50,42 @@ public class TeamMemberController {
 	@Inject
 	private TeamService teamService;
 
-	//로그인과 연결하기 전, 임시로 u_id, t_id를 지정함.
-
-
 	//멤버 중복 체크 + 멤버 추가 + 메일 전송
 	@ResponseBody
 	@RequestMapping(value="/team/{t_id}", method=RequestMethod.POST)
 	public ResponseEntity<String> memberAddPOST(@RequestBody TeamMemberVO vo, @PathVariable int t_id) throws Exception{		
-		
-		 
 		ResponseEntity<String> entity = null;
-		logger.info("memberAdd post vo 값 : " + vo.toString());		
 		try {
-			//초대이메일이 이미 팀원에 속해있는지 검사한다.
+			//초대이메일이 이미 팀원에 속해있는지 검사한다.(vo : email이 들어가 있음)
 			int resultNum=memberservice.checkMember(vo.getEmail(), t_id);
 			if(resultNum == 1) { //회원이면서 팀원이 아닌경우
 				//email에 관련된 u_id 정보를 찾아 새로 생성
-				logger.info("팀원이 등록되지 않았습니다. 사용이 가능합니다.");
 				memberservice.create(vo.getEmail(), t_id);
-				logger.info("step1");
-				logger.info("step2");
 				entity = new ResponseEntity<String>("1", HttpStatus.OK);
 			}else if(resultNum == 0 ){//회원이면서 팀원인경우
-				logger.info("해당 이메일은 이미 팀원이 되어 있거나 이미 초대 메일이 발송된 회원입니다. 다시 한번 확인해 주세요.");
 				entity = new ResponseEntity<String>("0", HttpStatus.OK);
 			}else{//회원이 아닌경우
-				logger.info("해당 이메일은 회원이 아닙니다.");
 				entity = new ResponseEntity<String>("-1", HttpStatus.OK);
-			}
-			
-		}catch(Exception e){
+			}	
+		}catch(Exception e){//에러
 			entity = new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
 	
 	//초대받은 user가 메일에서 하이퍼링크를 누르면 뜨는 창(emailConfirm).jsp [해설 : emailConfirm.jsp 1.]
-	@RequestMapping(value="/team/emailConfirm",method=RequestMethod.GET)
-	public String emailConfirmGET(String name, TeamMemberVO tmvo, Model model) throws Exception{
-		//logger.info("emailConfirm에 들어온 데이터 vo : " + tmvo);
-		
-		//memberAdd.jsp에 입력된 초대받으려는 user의 정보(u_id, email, nickname)를 가져온다.
-		TeamMemberVO tmvo2=memberservice.userEmail(tmvo.getEmail());
-		//logger.info("tmvo2 : " + tmvo2);
-		
-		//t_id에 대한 팀 정보를 가져온다.
-		TeamVO tvo = teamService.infoTeam(tmvo.getT_id());
-		
-		//초대받은 유저의 메일 인증 status 값을 1로 수정.
-		memberservice.modifyStatus(tmvo2.getU_id(), tmvo.getT_id());
-		//logger.info("service 인증코드 수정 완료." + tmvo2);
-		
-		model.addAttribute("email", tmvo.getEmail());
-		model.addAttribute("name", tvo.getName());
-		
-		return "team/emailConfirm";
-	}
+		@RequestMapping(value="/team/emailConfirm",method=RequestMethod.GET)
+		public String emailConfirmGET(String name, TeamMemberVO tmvo, Model model) throws Exception{
+			//memberAdd.jsp에 입력된 초대받으려는 user의 정보(u_id, email, nickname)를 가져온다.
+			TeamMemberVO tmvo2=memberservice.userEmail(tmvo.getEmail());
+			//t_id에 대한 팀 정보를 가져온다.
+			TeamVO tvo = teamService.infoTeam(tmvo.getT_id());
+			//초대받은 유저의 메일 인증 status 값을 1로 수정.
+			memberservice.modifyStatus(tmvo2.getU_id(), tmvo.getT_id());
+			
+			model.addAttribute("email", tmvo.getEmail());
+			model.addAttribute("name", tvo.getName());
+			
+			return "team/emailConfirm";
+		}
 }
