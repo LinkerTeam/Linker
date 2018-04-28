@@ -10,6 +10,9 @@ public class TeamMemberVO {
 	private String email;//회원이메일
 	private int status;//메일 인증이 되었는지 확인하는 상태. 0 : 인증 안함. 1 : 인증함.
 	
+	private int inviteU_id; //멤버 이력때 사용, 멤버가 추가했을 때
+	private int leavU_id; //멤버 이력때 사용, 멤버가 탈퇴했을 때
+	
 	public int getT_id() {
 		return t_id;
 	}
@@ -52,11 +55,24 @@ public class TeamMemberVO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getInviteU_id() {
+		return inviteU_id;
+	}
+	public void setInviteU_id(int inviteU_id) {
+		this.inviteU_id = inviteU_id;
+	}
+	public int getLeavU_id() {
+		return leavU_id;
+	}
+	public void setLeavU_id(int leavU_id) {
+		this.leavU_id = leavU_id;
+	}
 	
 	@Override
 	public String toString() {
 		return "TeamMemberVO [u_id=" + u_id + ", t_id=" + t_id + ", auth=" + auth + ", nickname=" + nickname + ", name="
-				+ name + ", email=" + email + ", status=" + status + "]";
+				+ name + ", email=" + email + ", status=" + status + ", inviteU_id=" + inviteU_id + ", leavU_id="
+				+ leavU_id + "]";
 	}
 	
 	

@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.linker.domain.TeamMemberVO;
 import com.linker.domain.TeamVO;
 import com.linker.domain.UserVO;
+import com.linker.domain.HistoryVO;
 import com.linker.dto.TeamMemberDTO;
 import com.linker.service.TeamMemberService;
 import com.linker.service.TeamService;
 
-/*
+/* 코드 작성자 : 김소영
+ * 주석 작성자 : 김소영
  * TeamController와 연결된 view: 팀 목록 출력(teamList.jsp) 출력
  * TeamController와 연결된 DB: team, team_has_user, user
  * 
@@ -87,11 +89,10 @@ public class TeamController {
 	//teamList.jsp 열기
 	  @RequestMapping(value="/team", method=RequestMethod.GET)
 	  public String teamListGET(Model model,HttpSession session) throws Exception{
-	     UserVO vo = (UserVO) session.getAttribute("login");
+	    UserVO vo = (UserVO) session.getAttribute("login");
 	    model.addAttribute("u_id", vo.getId());
 	    model.addAttribute("email", vo.getEmail());
 	    model.addAttribute("nickname", vo.getNickname());
-
 		return "team/teamList";
 	}
 	
@@ -100,10 +101,8 @@ public class TeamController {
 	 @RequestMapping(value="/member/{u_id}", method=RequestMethod.GET)
 	 public ResponseEntity<List<TeamMemberVO>> allMemberGET(@PathVariable("u_id") int u_id, @RequestParam int t_id, HttpSession session){
 	    ResponseEntity<List<TeamMemberVO>> entity = null;
-	    logger.info("u_id : " + u_id);
 	    try { 
 	       entity = new ResponseEntity<List<TeamMemberVO>>(memberService.TeamHasUsers(t_id), HttpStatus.OK);
-	       logger.info(entity.toString());
 	    } catch (Exception e) {
 	       e.printStackTrace();
 	       entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -116,10 +115,8 @@ public class TeamController {
 	 @RequestMapping(value="/team/{u_id}", method=RequestMethod.GET)
 	 public ResponseEntity<List<TeamVO>> allTeamGET(@PathVariable("u_id") int u_id,HttpSession session){
 	    ResponseEntity<List<TeamVO>> entity = null;
-	    logger.info("u_id : " + u_id);
 	    try { 
 	       entity = new ResponseEntity<List<TeamVO>>(teamService.listTeam(u_id), HttpStatus.OK);
-	       logger.info(entity.toString());
 	    } catch (Exception e) {
 	       e.printStackTrace();
 	       entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -130,21 +127,14 @@ public class TeamController {
 	 //팀 추가
 	 @ResponseBody
 	 @RequestMapping(value="/team", method=RequestMethod.POST)
-	 public ResponseEntity<Integer> teamLsitPOST(@RequestBody TeamVO tvo,HttpSession session) throws Exception{
-	 	
+	 public ResponseEntity<HistoryVO> teamLsitPOST(@RequestBody TeamVO tvo,HttpSession session) throws Exception{
 	 	UserVO vo = (UserVO) session.getAttribute("login");
-	 	
-	 	//logger.info("createTeam tvo : " + tvo.toString());
-	 	ResponseEntity<Integer> entity = null;
+	 	ResponseEntity<HistoryVO> entity = null;
 	 	try {
-	 		//logger.info("받은 name : " + tvo.getName());
 	 		teamService.createTeam(tvo);		
-	 		//logger.info("이게 vo : " + tvo.toString());
 	 		int t_id=tvo.getId();
-	 		//logger.info("tvo : " + tvo.getT_id());
-	 		//logger.info("t_id는 : " + t_id);
-	 		memberService.connectTeamMember(vo.getId(), t_id);
-	 		entity = new ResponseEntity<Integer>(t_id, HttpStatus.OK);
+	 		HistoryVO hvo = memberService.connectTeamMember(vo.getId(), t_id, tvo.getName());
+	 		entity = new ResponseEntity<HistoryVO>(hvo, HttpStatus.OK);
 	 	}catch(Exception e) {
 	 		entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	 	}
@@ -153,26 +143,12 @@ public class TeamController {
 
 	 //팀 목록(teamList.jsp)에서 팀 이름 수정.
 	@RequestMapping(value="/team", method=RequestMethod.PUT)
-	public ResponseEntity<Boolean> teamListModifyUPDATE(@RequestBody TeamVO tvo) throws Exception{
-
-		//logger.info("teamListUPDATE");
-		
-		ResponseEntity<Boolean> entity = null;
-		//logger.info("teamListUPDATE : " + tvo);
+	public ResponseEntity<HistoryVO> teamListModifyUPDATE(@RequestBody TeamVO tvo) throws Exception{
+		ResponseEntity<HistoryVO> entity = null;
 		try {
-			//logger.info("teamListUPDATE2");
-			teamService.modifyTeam(tvo);
-			//logger.info("teamListUPDATE3");
-			//DB team_has_user(u_id)를 사용하여 user가 속한 팀 목록을 조회.
-			//logger.info("teamListUPDATE3-1 ListTeam : " + teamList);
-			//logger.info("teamList size : " + teamList.size());
-			
-			//성공할 경우
-			entity=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-			//logger.info("teamListUPDATE4");
-			//logger.info("teamListUPDATE3-2 ListTeam : " + teamList);			
+			HistoryVO hvo = teamService.modifyTeam(tvo);
+			entity=new ResponseEntity<HistoryVO>(hvo, HttpStatus.OK);
 		}catch(Exception e) {	
-			//실패할 경우
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -182,31 +158,13 @@ public class TeamController {
 
 	//팀 목록(teamList.jsp)에서 팀 삭제.
 	@RequestMapping(value="/team", method=RequestMethod.DELETE)
-	public ResponseEntity<Boolean> teamListRemoveDELETE(@RequestBody TeamVO tvo) throws Exception{
-	
-		//logger.info("teamListDELETE");
-		
-		ResponseEntity<Boolean> entity = null;
-	
-		//logger.info("teamListDELETE : " + tvo);
+	public ResponseEntity<HistoryVO> teamListRemoveDELETE(@RequestBody TeamVO tvo) throws Exception{
+		ResponseEntity<HistoryVO> entity = null;
 		try {
-			//logger.info("teamListDELETE2");
-	
-			teamService.deleteTeam(tvo.getT_id());
-			//logger.info("teamListDELETE3");
-			//DB team_has_user(u_id)를 사용하여 user가 속한 팀 목록을 조회.
-			//List<TeamVO> teamList=teamService.listTeam(tvo.getU_id());
-	
-			//logger.info("teamListDELETE3-1 ListTeam : " + teamList);
-			//logger.info("teamList size : " + teamList.size());
-			
-			//성공할 경우
-			entity=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-	
-			//logger.info("teamListDELETE4");
+			HistoryVO hvo = teamService.deleteTeam(tvo);
+			logger.info("hvo.toString() : " + hvo);
+			entity=new ResponseEntity<HistoryVO>(hvo, HttpStatus.OK);
 		}catch(Exception e) {
-		
-			//실패할 경우
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -217,22 +175,10 @@ public class TeamController {
 	@ResponseBody
 	@RequestMapping(value="/team/{t_id}/{u_id}", method=RequestMethod.PUT)
 	public ResponseEntity<Boolean> memberListTransferUPDATE(@PathVariable int t_id, @PathVariable int u_id, @RequestBody TeamMemberDTO dto) throws Exception{
-
-		//logger.info("memberListUPDATE");
 		ResponseEntity<Boolean> entity = null;
-
-		//logger.info("memberListUPDATE : " + dto);
 		try {
-			//logger.info("memberListUPDATE2");
 			memberService.TransferAuth(dto);
-			//logger.info("memberListUPDATE3");
-			//List<TeamMemberVO> memberList= memberService.TeamHasUsers(u_id);
-
-			//logger.info("memberListUPDATE3-1 ListTeam : " + memberList);
 			entity=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-
- 			//logger.info("memberListUPDATE4");
- 			
  		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -243,28 +189,11 @@ public class TeamController {
 	//멤버 수정
 	@RequestMapping(value="/team/{t_id}", method=RequestMethod.PUT)
 	public @ResponseBody ResponseEntity<Boolean> memberListModifyUPDATE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
-
-		
 		UserVO vo = (UserVO) session.getAttribute("login");
-		
-		//logger.info("memberListUPDATE");			
 		ResponseEntity<Boolean> entity = null;
-
-		//logger.info("memberListUPDATE : " + mvo);
 			try {
-				//logger.info("memberListUPDATE2");
 				memberService.modifyAuth(mvo);
-				//logger.info("memberListUPDATE3");
-				
-				//List<TeamMemberVO> memberList= memberService.TeamHasUsers(vo.getId());
-
-				//logger.info("memberListUPDATE3-1 ListTeam : " + memberList);
-				//logger.info("memberList size : " + memberList.size());
 				entity=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-
-				//logger.info("memberListUPDATE4");
- 				//logger.info("memberListUPDATE3-2 ListTeam : " + memberList);
-				
 			}catch(Exception e) {
 				e.printStackTrace();
 				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -275,27 +204,11 @@ public class TeamController {
 	//멤버 삭제
 	@RequestMapping(value="/team/{t_id}", method=RequestMethod.DELETE)
 	public @ResponseBody ResponseEntity<Boolean> memberListRemoveDELETE(@PathVariable int t_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
-
-		//logger.info("memberListDELETE");
-		
 		UserVO vo = (UserVO) session.getAttribute("login");
-		
-		//logger.info("t_id, u_id : " + t_id + "," + mvo.getU_id()); //ajax에 보내진 데이터들은 @requestBody mvo에 자동 저장된다.
 		ResponseEntity<Boolean> entity = null;
-
-		//logger.info("memberListDELETE : " + mvo);
 		try {
-			//logger.info("memberListDELETE2");
-			//logger.info("memberListDELETE : " + t_id);
 			memberService.deleteMember(mvo.getU_id(),t_id);
-			//logger.info("memberListDELETE3");
-			//List<TeamMemberVO> memberList= memberService.TeamHasUsers(vo.getId());
-
-			//logger.info("memberListDELETE3-1 ListTeam : " + memberList);
-			//logger.info("memberList size : " + memberList.size());
 			entity=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-
-			//logger.info("memberListDELETE4");
  		}catch(Exception e) {
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
