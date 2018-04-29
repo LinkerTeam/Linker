@@ -1,0 +1,54 @@
+@charset "UTF-8";
+
+/* 전체리스트 | 체크박스 */
+.form-check-input {
+	width: 20px;
+	height: 20px;	
+}
+
+/* 회원정보수정 | 프로필 */
+.user-profile {
+	width: 50px;
+    border-radius: 23px;
+}
+/* 회원정보수정 | 프로필 감싸는 div */
+.card .author {
+	text-align: center;
+}
+/* 회원정보수정 | 프로필 수정 버튼 */
+.text-center > .profile {
+	background-color: #fff!important;
+}
+/* 회원정보수정 | input 양쪽 padding 축소 */
+.form-control.border-input {
+	padding: 7px 9px;
+}
+/* 프로필 변경 | input태그 */
+.upfileInput {
+	display: none!important;
+}
+/* 프로필 파일명 input value 가운데정렬 */
+.author > .border-input {
+	margin: 10px 0;
+	text-align: center;
+}
+
+
+/* 비밀번호 체크 */
+p.error {
+    color: #D06079;
+    display: inline-block;
+	padding: 5px;
+	text-align: center;
+	font-size: 1.3em;
+}
+.error.success {
+	color: #73af55;
+}
+.error.nickname {
+	margin: 0;
+}
+.error.submit {
+	display: block;
+	font-weight: bold;
+}

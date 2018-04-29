@@ -16,7 +16,6 @@
 </head>
 <body>
 	<%@include file="../header.jsp"%>
-	<%@include file="../mainMenu.jsp"%>
 	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
@@ -38,20 +37,17 @@
 					<c:if test="${ teamList.t_id == projectList.t_id}">
 						<c:if test="${projectList.ps_id ==1}">
 							<ul class="projects">
-								<li><a
-									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" "><span
-										class="name">${projectList.title}</span>
+								<li>
+									<a href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url">
+										<span class="name">${projectList.title}</span>
 										<c:choose>
-											    <c:when test="${projectList.favorite == 0}">
-											      <span ><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
-											    </c:when>
-											    <c:otherwise>
-											          <span ><i class="fas fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
-											    </c:otherwise>
-											
-											
+											<c:when test="${projectList.favorite == 0}">
+												<span><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											</c:when>
+											<c:otherwise>
+												<span ><i class="fas fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											</c:otherwise>
 										</c:choose>
-											
 									</a>
 								</li>
 							</ul>

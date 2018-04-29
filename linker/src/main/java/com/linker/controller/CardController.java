@@ -126,7 +126,6 @@ public class CardController{
 		vo.setP_id(p_id);
 		vo.setId(id);
 		
-		
 		try { 
 			entity = new ResponseEntity<>(service.readPopcard(vo), HttpStatus.OK);
 		} catch (Exception e) {
