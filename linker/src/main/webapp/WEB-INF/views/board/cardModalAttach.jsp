@@ -1,3 +1,11 @@
+
+<%-----------------------------------------------------------------------------
+ * 파일명칭 : cardModalAttach.jsp	
+ * 설    명 : 카드 상세 내용 조회 모달에서의 첨부파일 
+ * 작 성 자 : 오 윤 주
+ * 작성일자 : 2018/03
+------------------------------------------------------------------------------%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardAttach.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardModalAttach.css?ver=1" type="text/css" rel="stylesheet" />
 </head>
  
 <body>
@@ -27,10 +35,9 @@
 		<div class="uploadedList-btn short">접기...</div>
 	</div>
 	</article>
-	
-	<script>
-	
-	
-	</script>
 </body>
+
+<script src="../../../resources/js/jquery-3.3.1.min.js"></script>
+<script src="../../../resources/js/board/cardModalAttach.js" type="text/javascript"></script>
+
 </html>

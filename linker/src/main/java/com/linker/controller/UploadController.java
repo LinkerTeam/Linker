@@ -68,8 +68,8 @@ public class UploadController {
 	@ResponseBody
 	@RequestMapping(value = "/{p_id}/card/{c_id}/addAttach", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8") //produces: 한국어로 전송하기 위한 설정
 	public ResponseEntity<String> uploadAjax(@PathVariable("c_id") Integer c_id, MultipartFile file) throws Exception {
-		
 		String fileName = UploadFileUtils.uploadFile(uploadpath, file.getOriginalFilename(), file.getBytes());
+		
 		CardAttachVO vo = new CardAttachVO();
 		vo.setC_id(c_id);
 		vo.setFile(fileName);
