@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,17 +37,12 @@
 				<a href="http://localhost:9090/user/logout" class="logoutBtn">로그아웃</a>
 			</div>
 		</div>
-			<!-- 종료 프로젝트 모달창 -->
-			<!-- 	<div class="list-modal">
-					<div class="list-content">			 
-						<div class="head-list">Hidden Project List</div>
-						<div class="content-list"></div>
-					</div>
-				</div>   -->
 	</aside>
 	
 	
 	<script>
+	//구글로그인시 비밀번호 변경 메뉴 안보이게만듬
+	googlecheck();
 		//모달창 띄우기
 		$(".closeBoardList").on("click",function(){	
 			$('.list-modal').addClass('is-visible');		
@@ -187,7 +181,18 @@
 				}
 			}); //ajax
 		}
-
+		
+		//구글로그인시에 비밀번호 변경 메뉴 가리기
+		function googlecheck(){
+			var key = ${login.google};
+			
+			if(key == 0){
+				$('.pwd-modify').css("display","block");
+			} else{
+				$('.pwd-modify').css("display","none");
+			}
+			
+		}
 		
 	</script>
 </body>
