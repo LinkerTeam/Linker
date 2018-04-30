@@ -50,6 +50,8 @@
 	
 	<script src="../../resources/js/jquery-3.3.1.min.js"></script>
 	<script>
+	//구글로그인시 비밀번호 변경 메뉴 안보이게만듬
+	googlecheck();
 		//모달창 띄우기
 		$(".closeBoardList").on("click",function(){	
 			$('.list-modal').addClass('is-visible');		
@@ -188,7 +190,18 @@
 				}
 			}); //ajax
 		}
-
+		
+		//구글로그인시에 비밀번호 변경 메뉴 가리기
+		function googlecheck(){
+			var key = ${login.google};
+			
+			if(key == 0){
+				$('.pwd-modify').css("display","block");
+			} else{
+				$('.pwd-modify').css("display","none");
+			}
+			
+		}
 		
 	</script>
 </body>

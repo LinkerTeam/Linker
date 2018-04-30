@@ -69,7 +69,6 @@
 </head>
 <body>
 	<%@include file="../header.jsp"%>
-	<%@include file="../mainMenu.jsp"%>
 	<%@include file="../closeBoard.jsp"%>
 	<div class="content">
 		<div id="main">

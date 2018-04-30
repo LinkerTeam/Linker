@@ -8,6 +8,7 @@
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+
   *,
 *:after,
 *:before {
@@ -15,7 +16,7 @@
     box-sizing: border-box;
 }
   
- #main{
+#main{
     font-family: Dotum,sans-serif;
     font-size: 12px;
     position: relative;
@@ -23,17 +24,13 @@
     max-width: 954px;
     height: 100%;
     margin: 0px auto;
-    
-   
- }
+}
  
-  #contain{
+#contain{
     position: relative;
-    padding: 32px 51px 95px;
-  
-      }
-   #content{
-    
+    padding: 32px 51px 95px; 
+}
+#content{
     height : 500px;
     line-height: 14px;
     width: 450px;
@@ -43,99 +40,101 @@
     background: #fff;
     border-radius: 5px;
     }
-   
-   
 
-  .pwWaring{
+.pwWaring{
     font-style: normal;
     color: red;
-  }
+}
   
-  .password{
+.password{
     height: 40px;
     width:  100%;
     border : 3px soild;
     padding-left: 20px;
-  }
+ }
   .password:focus{
   	outline: none;
-  }
-  
- 
+ }
   .text{
     text-align: center;
     margin-bottom: 50px;
-  }
+ }
   .btn{
-   margin-top: 20px;
-   width:400px;
-    border: none;
-  outline: none;
-  height: 40px;
-  background: #FA5883;
- color: #fff;
- font-size: 18px;
-
- cursor: pointer;
-  width: 100%;
-  border-radius: 5px;
-  }
-  input[type="password"]{
-     margin-bottom:  10px;
-  }
-  input[type="password"] {
 	margin-top: 20px;
+	width:400px;
+	border: none;
+	outline: none;
+	height: 40px;
+	background: #FA5883;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+	width: 100%;
+	border-radius: 5px;
+ }
+input[type="password"]{
+	margin-bottom:  10px;
 }
- 
-  .title{
-   font-size: 20px;
-   margin-bottom: 40px;
-  }
+input[type="password"] {
+	margin-top: 20px;
+} 
+.title{
+	font-size: 20px;
+	margin-bottom: 40px;
+}
 </style>
 </head>
 <body>
    <%@include file="../header.jsp"%>
-   <%@include file="../mainMenu.jsp"%>
    <%@include file="../closeBoard.jsp"%>
-<div class="content">
-  <div id="main">
-   <div id="contain">
-    <div id="content">
-     <h1 class="title">비밀번호 변경</h1>
-     <span>안전한 비밀번호로 내정보를 보호하세요</span>
-     <p><em class="pwWaring">다른 아이디/사이트에서 사용한 적 없는 비밀번호 </em></p>
-     <p><em class="pwWaring">이전에 사용한 적 없는 비밀번호</em>가 안전합니다.  </p>
-       <form role='form' method="post">
-        
-         
-        
-         <p><input type="password"  class="password" name="password0" id="password0" placeholder="현재 비밀번호"></p>     
-       
-         <p><input type="password" class="password" name="password" id="password"  placeholder="새 비밀번호"></p>
-
-         <p><input type="password" class="password" name="password2" id="password2" placeholder="새 비밀번호확인"></p>  
-          
-          	<button type="button" id="btw" class="btn" value="전송">확인</button><br>
-          	<button type="reset" class="btn" vlaue="취소">취소</button>
-        
-       </form>             
-      </div>
-    </div>
-   </div>  
-  </div>
-     <script>
+	
+		<div class="content">
+			<div id="main">
+				<div id="contain">
+					<div id="content">
+						<h1 class="title">비밀번호 변경</h1>
+						<span>안전한 비밀번호로 내정보를 보호하세요</span>
+						<p>
+							<em class="pwWaring">다른 아이디/사이트에서 사용한 적 없는 비밀번호 </em>
+						</p>
+						<p>
+							<em class="pwWaring">이전에 사용한 적 없는 비밀번호</em>가 안전합니다.
+						</p>
+						<form role='form' method="post">
+							<p>
+								<input type="password" class="password" name="password0"
+									id="password0" placeholder="현재 비밀번호">
+							</p>
+	
+							<p>
+								<input type="password" class="password" name="password"
+									id="password" placeholder="새 비밀번호">
+							</p>
+	
+							<p>
+								<input type="password" class="password" name="password2"
+									id="password2" placeholder="새 비밀번호확인">
+							</p>
+	
+							<button type="button" id="btw" class="btn" value="전송">확인</button>
+							<br>
+							<button type="reset" class="btn" vlaue="취소">취소</button>
+	
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script>
       
     /*ajax와 form 전송을 한버튼으로 처리하기!!! ajax성공후에 값이 올바르면  if(유효성검사 함수를넣음)넣어서  맞으면 form을 전송  */
       $('#btw').on('click', function(){
-    	   
-    	   
+
             event.preventDefault();
         	var formObj = $("form[role='form']");
         	var pw=$('#password0');
         	var pwval=pw.val();
-        	
-        	
-       
+
         	  $.ajax({
                   type: 'POST',    // POST 방식
                   url: '/user/passwordcheck',  //보내는 form action을 지정해줌
@@ -164,23 +163,27 @@
                   },error:function(){
                  	 alert("데이터오류");
                   }
-                
               });    //end ajax   
  
    		   });
- 
+ 		
+		 //현재 비밀번호 체크함    
          function passwordcheck(){
+			 //현재 비밀번호
         	 var password0 =document.getElementById('password0').value;
-        	 var password1 =document.getElementById('password').value;
+        	 //새비밀번호
+			 var password1 =document.getElementById('password').value;
+			 //새비밀번호 체크
         	 var password2 =document.getElementById('password2').value;
+			 
+        	 var pwcheck = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,20}$/;
         	 
-        	 
+        	 console.log(!(pwcheck.test(password1)));
         	 if(password0 == null || password0 ==''){
         		 alert("비밀번호를 입력해주세요");
         		 document.getElementById('password0').focus();
         		 return false;
         	 }
-        	 
         	 
         	 if (password1 == null || password1 == ""){
         		 alert("비밀번호를 입력해주세요");
@@ -191,6 +194,12 @@
         	 if (password2 == null || password2 == ""){
         		 alert("비밀번호를 입력해주세요");
         		 document.getElementById('password2').focus();
+        		 return false;
+        	 }
+        	 
+        	 if(pwcheck(password1) == false){
+        		 alert('비밀번호를 다시 입력해주세요. 8자리이상 영문자 대소문자 와 최소 1개의 숫자 혹은 특수 문자를 포함해주셔야합니다. ');
+        		 
         		 return false;
         	 }
         	 
@@ -215,7 +224,11 @@
         	 
         	 return true;
          }
-     
+		 
+		 //패스워드에 숫자1개이상+특문 1개이상 체크
+         function pwcheck(password){
+      	   return /[\@\#\$\%\^\&\*\(\)\_\+\!]/.test(password) && /[0-9]/.test(password);
+         }
      
      </script>
 </body>

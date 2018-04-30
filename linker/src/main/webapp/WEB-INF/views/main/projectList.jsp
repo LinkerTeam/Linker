@@ -19,10 +19,10 @@
 	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
-
+		<!-- 즐겨찾기 목록  -->
 		<div class="main-favorite"></div>
 		<!-- Projects In a Team -->
-		<!-- 팀 정보 -->
+		  <!-- 팀 정보 -->
 		  <c:forEach items="${team}" var="teamList">
 			<div class="projectBox">
 				<div class="teamInfo">
@@ -31,23 +31,26 @@
 					<a class="uid">${teamList.u_id}</a>
 					<a class="memberbtn">팀멤버</a>
 				</div>
+				
 				<!-- 진행 프로젝트 목록 -->
-
 				<c:forEach items="${result}" var="projectList">
+					<!-- 팀의 id와 프로젝트의 t_id가 같은경우에만 출력  -->
 					<c:if test="${ teamList.t_id == projectList.t_id}">
+						<!-- 상태코드를 확인해서 1인경우 진행중인 상태만 나오기 위해서 -->
 						<c:if test="${projectList.ps_id ==1}">
 							<ul class="projects">
-								<li>
-									<a href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url">
-										<span class="name">${projectList.title}</span>
+								<li><a
+									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" ">
+									<span class="name">${projectList.title}</span>
+										<!-- 즐겨찾기 상태 확인  1인경우 즐겨찾기 -->
 										<c:choose>
-											<c:when test="${projectList.favorite == 0}">
-												<span><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
-											</c:when>
-											<c:otherwise>
-												<span ><i class="fas fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
-											</c:otherwise>
-										</c:choose>
+											    <c:when test="${projectList.favorite == 0}"> 
+											    	<span><i class="far fa-star add-favo" id='${projectList.id}' data-p_id="${projectList.id}" data-t_id="t${projectList.t_id}"></i></span>
+											    </c:when>
+											    <c:otherwise>
+											    	<span><i class="fas fa-star delete-favo" id='${projectList.id}' data-p_id="${projectList.id}" data-t_id="t${projectList.t_id}"></i></span>
+											    </c:otherwise>
+										</c:choose>	
 									</a>
 								</li>
 							</ul>
@@ -55,12 +58,12 @@
 					</c:if>
 				</c:forEach> 
 			
-
 				<!-- 프로젝트 추가 버튼 -->
-				<span class="addProject"><button class="createProjectBtn"
-						type="button">Create new project…</button></span>
+				<span class="addProject"><button class="createProjectBtn" type="button">Create new project…</button></span>
 			</div>
-		</c:forEach>   
+		</c:forEach>
+		   
+		<!-- 팀추가  -->
 		<div class="teaminsert">
 			<a class="teaminsert-a" href="#"> <span>Create a new team…</span>
 			</a>
@@ -119,7 +122,6 @@
  var t_id =null;
  //생성한 프로젝트의 부모를 넣기위해서 지정해줌 ajax시 부모를 알기위해서
  var parent =null;
- 
 
     // 프로젝트 생성 모달창 닫기
     function closeProjectModal(){
@@ -258,6 +260,7 @@
     	}  	
     });
     
+    //팀 추가 만들기
     $('.teambtn').on("click", function(){
     	var titleName= $('.team-title').val();
     		if(titleName == '' || titleName == null){
@@ -329,7 +332,7 @@
 			},error : function(){
 				alert("통신오류로인해 실패했습니다.");
 			}
-		})//ajax	
+		})//end ajax	
 	}	
 	
 	//즐겨찾기 해당리스트 함수
@@ -349,7 +352,7 @@
 								  +"<li><a "
 								  +"href='http://localhost:9090/board/"+data[i].t_id+"/"+data[i].id+"'><span"
 								  +" class='name'>"+data[i].title+"</span>"		
-								  +"<span><i class='fas fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
+								  +"<span><i class='fas fa-star delete-favo' data-p_id='"+data[i].id+"'></i></span></a>"
 								  +"</li>"
 							      +"</ul>";
 					}
@@ -384,8 +387,8 @@
 	//즐겨찾기 추가
 	$(document).on("click", '.add-favo', function(){
 		
-		p_id = $(this).attr("p_id");
-		t_id = $(this).attr("t_id").substring(1);
+		p_id = $(this).attr("data-p_id");
+		t_id = $(this).attr("data-t_id").substring(1);
 		title = $(this).parents().parents().children().eq(0).text();
 		favorites();
 		$(this).addClass('delete-favo');
@@ -415,7 +418,7 @@
 						  +"<li><a "
 						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
 						  +" class='name'>"+title+"</span>"		
-						  +"<span><i class='fas fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
+						  +"<span><i class='fas fa-star delete-favo' data-p_id='"+p_id+"' data-t_id='"+t_id+"'></i></span></a>"
 						  +"</li>"
 					      +"</ul>";
 					  $('.projects').eq(0).prepend(str);
@@ -429,7 +432,7 @@
 	//즐겨찾기 삭제
 	$(document).on("click",'.delete-favo',function(){
 		
-		p_id = $(this).attr("p_id");
+		p_id = $(this).attr("data-p_id");
 		var tag = $(this).parents('li');
 		
 		$.ajax({

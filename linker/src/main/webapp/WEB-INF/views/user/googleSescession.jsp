@@ -32,14 +32,13 @@
 	background: #fff;
 	border-radius: 5px;
 }
- .h1{
-      text-align: center;
-      font-size: 20px;
-      margin-bottom: 60px;
- 
+.h1{
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 60px;
  }
 
- .btn{
+.btn{
     margin-top: 40px;
 	width: 400px;
 	border: none;
@@ -51,21 +50,14 @@
 	cursor: pointer;
 	width: 100%;
 	border-radius: 5px;
-   
- 
  }
  
- 
- .confirm{
-       width: 300px;
-       height: 25px;
-    
- 
- 
+.confirm{
+    width: 300px;
+    height: 25px;
  }
  
  .send{
-   
     margin-top: 10px;
 	border: none;
 	outline: none;
@@ -76,48 +68,51 @@
 	width: 130px;
 	border-radius: 5px;
 	height: 40px;
- 
  }
 
- .notes{
-     margin-bottom: 15px;
-     font-size: 16px;
-     line-height: 25px;
- 
+.notes{
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 25px;
  }
  
-  .label{
+.label{
     font-size: 15px;
     font-weight:bold;
-  
   }
 
 .point{
-  color: red;
-  font-weight: bold;
+	color: red;
+	font-weight: bold;
 }
+
 </style>
 <body>
   <%@include file="../header.jsp"%>
-  <%@include file="../mainMenu.jsp"%>
   <%@include file="../closeBoard.jsp"%>
+	
 	<div class="content">
 		<div id="main">
 			<div id="contain">
 				<div id="content">
-				  <h1 class="h1">Google회원 탈퇴 페이지</h1>
-				  <div class="notes">구글회원은 가입 탈퇴를 하기위해선 <span class="point">GOOGLE Email 인증</span>이 팔요합니다.</div>
+					<h1 class="h1">Google회원 탈퇴 페이지</h1>
+					<div class="notes">
+						구글회원은 가입 탈퇴를 하기위해선 <span class="point">GOOGLE Email 인증</span>이
+						팔요합니다.
+					</div>
 					<form name="form" role="form" method="post">
-						 <label class="label">인증 번호 입력</label><br>
-						  <input type="text" name="confirm" class="confirm" placeholder="60분이내에 인증번호를 입력해주세요. " > 
-						   <button value="인증번호" id="emailsend" class="send" >인증 번호 발송</button>
-						 <input type="submit" class="btn" value="확인">
+						<label class="label">인증 번호 입력</label><br> <input type="text"
+							name="confirm" class="confirm"
+							placeholder="60분이내에 인증번호를 입력해주세요. ">
+						<button value="인증번호" id="emailsend" class="send">인증 번호
+							발송</button>
+						<input type="submit" class="btn" value="확인">
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<script>
 	 $('#emailsend').on('click', function(event){
   	   //POST 방식으로 FROM 보내기 작성 $.ajax형식으로 보내기
@@ -130,20 +125,16 @@
   		   success:function(data){
   			   //$.trim()은  데이터의 문자의 앞뒤의 공백을 제거해주는 것 중간의 공백은 제거하지않는다.
   			   if($.trim(data)=="true"){
-  				  
   				  alert("EMAIL 전송 완료");
   			  }else{
-  				 
   				alert("EMAIL 전송 실패");
   			  }
   		   },error:function(){
             	 alert("error");
              }	   
-  		   
   	   }); //end ajax
      }); // end 이벤트
-	
-	
+
 	</script>
 </body>
 </html>
