@@ -225,7 +225,7 @@ input[type="password"] {
         	 return true;
          }
 		 
-		 //패스워드에 숫자1개이상+특문 1개이상 
+		 //패스워드에 숫자1개이상+특문 1개이상 체크
          function pwcheck(password){
       	   return /[\@\#\$\%\^\&\*\(\)\_\+\!]/.test(password) && /[0-9]/.test(password);
          }
