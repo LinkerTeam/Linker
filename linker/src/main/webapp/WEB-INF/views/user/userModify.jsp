@@ -16,7 +16,6 @@
 	max-width: 954px;
 	height: 100%;
 	margin: 0px auto;
-	overflow: hidden;
 }
 #contain {
 	position: relative;

@@ -6,39 +6,52 @@
 <mapper namespace="com.linker.mapper.teamMemberMapper">
 	<!-- 회원인지 아닌지 확인 / 결과=0 회원x, 결과=1 회원o -->
 	<select id="checkUser" resultType="int">
-		 SELECT count(email)
+		SELECT 
+			count(email)
 		FROM linker.user AS u
 		WHERE email= #{email};
 	</select>
 
 	<!-- 회원 메일 인증 상태가 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
 	<select id="checkMemberStatus" resultType="int">
-		SELECT count(email)
+		SELECT 
+			count(email)
 		FROM linker.user AS u
 		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
-		WHERE email= #{email} and t_id = #{t_id} and thu.status = 0;
+		WHERE email= #{email} AND t_id = #{t_id} AND thu.status = 0;
 	</select>
 	
 	<!-- 회원이 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
 	<select id="checkMember" resultType="int">
-		SELECT count(email)
+		SELECT 
+			count(email)
 		FROM linker.user AS u
 		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
-		WHERE email= #{email} and t_id = #{t_id} and thu.status = 1;
+		WHERE email= #{email} AND t_id = #{t_id} AND thu.status = 1;
 	</select>
 	
-	<!-- 팀에 속하면서 인증상태가 1인 멤버만 출력 : 멤버리스트 출력 시 사용-->
+	<!-- 팀에 속하면서 인증상태가 1인 멤버만 출력 : 멤버리스트 출력 시 사용  / ※검색결과에 사용하지 않음-->
      <select id="TeamHasUsers" resultType="TeamMemberVO">
-	select thu.t_id, thu.u_id, u.nickname,
-	thu.auth, u.email, thu.status
-	from linker.team_has_user as thu
-	join linker.user  as u on id= thu.u_id
-	where thu.status = 1 and t_id=#{t_id};   
+	SELECT 
+		thu.t_id
+		, thu.u_id
+		, u.nickname
+		, thu.auth
+		, u.email
+		, thu.status
+	FROM linker.team_has_user AS thu
+	JOIN linker.user  AS u ON id = thu.u_id
+	WHERE thu.status = 1 AND t_id=#{t_id};   
    </select>
 
    <!-- email과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 이메일 인증 하이퍼링크를 누르면 실행/ emailConfirm-->
  	 <select id="userHasTeamEmail" resultType="TeamMemberVO">
-        SELECT thu.u_id, nickname, auth, thu.t_id, email
+        SELECT 
+        	thu.u_id
+        	, nickname
+        	, auth
+        	, thu.t_id
+        	, email
 		FROM linker.user AS u
 		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
 		JOIN linker.team AS t ON t.id=thu.t_id
@@ -47,8 +60,13 @@
       
     <!-- 회원 아이디과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 멤버 초대 창 열 때 필요 버튼을 누르면 Query 실행-->
  	 <select id="userHasTeamUid" resultType="TeamMemberVO">
-         SELECT thu.u_id, nickname,
-		t.name, auth, thu.t_id, email
+         SELECT 
+         	thu.u_id
+         	, nickname
+         	, t.name
+         	, auth
+         	, thu.t_id
+         	, email
 		FROM linker.user AS u
 		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
 		JOIN linker.team AS t ON t.id=thu.t_id
@@ -57,7 +75,10 @@
      
 	<!--email을 이용해서 userID정보를 가져옴/emailConfirm-->
  	 <select id="userEmail" resultType="TeamMemberVO">
-        SELECT id as u_id, nickname, email
+        SELECT 
+        	id as u_id
+        	, nickname
+        	, email
 		FROM linker.user
 		WHERE email= #{email}
      </select> 
@@ -96,12 +117,12 @@
 		WHERE u_id=#{u_id}
 		AND t_id=#{t_id}
 	</update>
-	
+
 	<!-- 팀 멤버의 프로필사진 가져오기 -->
 	<select id="hasTeamProfile" resultType="UserVO">
 		SELECT nickname,profile,email
 		FROM linker.user
 		JOIN linker.team_has_user ON team_has_user.u_id = user.id
-		where team_has_user.t_id = #{t_id};
+		WHERE team_has_user.t_id = #{t_id};
 	</select>
 </mapper>

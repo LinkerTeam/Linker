@@ -1,62 +1,73 @@
-
 @charset "UTF-8";
 
 /*사이드 컨텐트 + 팀목록 컨텐트 */
 .wrapContent{
 	width:100%;
+	height: 100%;
+	margin:0;
+	padding:0;
 	z-index:999;
 	background: #fcfcfc;
-	height : 100%;
-	overflow : hidden;
-	font-size: 14px;
+	overflow: hidden;
 }
-/*사이드 컨텐트, 팀목록 컨텐트. 각각의 컨텐츠 공통 css */
-div.smallContent{
+/* 팀목록 제목 + 팀 멤버 검색 + 팀 추가 버튼 컨텐츠*/
+.titleContent{
+	padding : 60px 30px 10px 30px;
+	height : 60px;
+}
+/* 목록 제목 + 멤버검색 + 팀추가버튼 요소*/
+.titleContent > .title{
+	display : inline-block;
+	
+}
+/* 목록 제목 */
+.title:nth-child(1){
+	padding-left : 30px;
+	font-size: 20pt;
+}
+/* 멤버 검색 */
+.title:nth-child(2){
 	position : absolute;
-	vertical-align: top;
+	left : 50%;
 }
-#sideContent{
-	text-align: center;
-	width : 200px;
-	margin : 40px;
-	height : 100%;
-	z-index : 1;
-}
-.sidemenu{
-	margin : 30px 0 100px 0;
-	text-align: center;
-}
-.sidemenu>*{
-	margin : 10px 0;
-}
-#memberSearch{
-	background : #d3d3d3;
-	border : none;
-	height : 30px;
+/* 팀 추가 버튼*/
+.title:nth-child(3){
+	float : right;
+	margin-top : 6px;
+	background-color: #FFA7A7;
+    border: none;
+    margin : 0;
 }
 /* 팀 목록 컨텐트*/
 #listContent{
-	/* font-size: 14px; */
-	padding-left : 280px; 
+	font-size: 11pt;
 	height: 100%;
-	margin-left : 40px;
-	
 } 
-/* 팀목록, 멤버목록 감싸는 body */
+/* 팀목록, 멤버목록의 작은 컨텐츠 */
 .listBoxBody{
-	border-radius : 16px;
+/* 	border-radius : 16px; */
 	padding : 10px 30px;
+	height: 80%;
 }
 /* 팀리스트  y 스크롤 */
 .listBoxBody::-webkit-scrollbar {
     width: 10px;
+    height: 12px;
+}
+.listBoxBody::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.05);
+    border-radius: 3px;
+}
+.listBoxBody::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.1);
     border-radius: 10px;
 }
-/*팀 목록 작은 컨텐츠 */
+/*팀 목록의 작은 컨텐츠 */
 #listContent>.listBoxBody{
 	overflow-y: scroll;
-	border: none;
+	border-top: 1px solid #d3d3d3;
 	box-sizing : border-box;
+	height : calc(100% - 215px);
 }
 /* 멤버 목록 (제목 + 목록) */
 .memberList{
@@ -65,46 +76,68 @@ div.smallContent{
 	border-radius: 3px; 
 	box-shadow: 0 2px 2px -2px #777;
 }
-/* 멤버 목록을 감싸는 body */
+/* 멤버 목록의 작은 컨텐츠 */
 .memberList>.listBoxBody{
 	margin : 20px;
 }
-/* 멤버 목록에 있는 제목 */
-div.smallContent h3{
+/* 멤버목록의 작은 컨텐츠의 제목들 */
+.memberList h3{
 	padding : 20px;
 	text-align: center;
-	border-bottom: 1px solid #d3d3d3;
 }
 /* 목록 컬럼 row */
 .category{
 	line-height : 40px;
 }
+/* 팀 목록 컬럼*/
 .teamCategory{
-	background : #E7E7E7;
+	background : #FFA7A7;
+	padding-left : 65px;
 }
-/* 목록 컬럼과 목록들 정렬*/
+/* 멤버 목록 컬럼 */
+.memberCategory{
+	background: #d3d3d3;
+}
+/* 팀, 멤버의 목록 컬럼과 목록들 정렬*/
 .teamCategory div, .memberCategory div, .oneListRow div{
 	display:inline-block;
 	padding : 0 0 0 40px;
 	width : 150px;
 }
+/* 팀, 멤버 목록 한줄 한줄 */
 .oneListRow{
-	font-size: 14px;
+	padding : 15px 30px 15px 0;
+	font-size: 11pt;
 	line-height : 40px;
+}
+/*멤버 추가 컨탠츠*/
+div.sidemenu{
+	 text-align: center;
+}
+div.sidemenu div{
+	display : inline-block;
+}
+/*멤버추가, 팀 추가 버튼 구체적 설정*/
+input[type=button].addMemberBtn, .addTeam{
+    font-size: 11pt;
+	padding : 15px 15px;
+	width: 200px;
+}
+/*검색 텍스트 요소*/
+#memberSearch{
+    border: none;
+    background-color: #FFA7A7;
+    height: 36px;
+    width: 250px;
+    margin : 10px 0;
+    vertical-align: middle;
+    
 }
 /*모든 버튼 설정*/
 input[type=button], input[type=submit]{
-	background-color: #FA5883;
+	background-color: #FFA7A7;
     margin : 10px auto; 
     border: none;
-    border-radius: 5px;
-    text-align: center;
-}
-/*멤버추가, 팀 추가 버튼 구체적 설정*/
-input[type=button].addMemberBtn, .addMembersBtn, .addTeam{
-    font-size: 14px;
-	padding : 15px 15px;
-	width: 150px;
 }
 /*모달 창 배경 설정*/
  .modal{
@@ -115,7 +148,6 @@ input[type=button].addMemberBtn, .addMembersBtn, .addTeam{
     width: 100%;
     height: 100%;
     overflow: scroll;
-    border-radius: 5px;
     position: fixed;
     z-index: 2; 
 } 
@@ -136,7 +168,7 @@ input[type=button].addMemberBtn, .addMembersBtn, .addTeam{
 	 margin : 10px;
 }
 /*모달 div 구체적 설정*/
-.modalContent div, .modalContent>input[type="text"]{
+.modalContent div, .modalContent input[type="text"]{
     padding: 5px;
     margin : 10px;
 }
