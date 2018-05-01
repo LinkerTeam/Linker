@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,16 +8,16 @@
 <link href="/resources/css/team/team.css?ver=222" type="text/css" rel="stylesheet" />
 </head>
 <body>
-	<%@include file="../header.jsp"%>
+	<%@include file="team_header.jsp"%>
 
 	<!-- content 시작 -->
 	<div class="content">
-		<!-- wrapContent 시작 -->
-		<div class="wrapContent">
-			<%@include file="teamShowMenu.jsp"%>
-			<div class="smallContent" id="listContent">
+		<!-- wrap-content 시작 -->
+		<div class="wrap-content">
+			<%-- <%@include file="teamShowMenu.jsp"%> --%>
+			<div class="small-content" id="list-content">
 				<!-- 팀 목록 컨텐트 시작 -->
-				<div class="titleContent">
+				<div class="title-content">
 					<!-- 팀 목록 제목  -->
 					<div class="title">
 						<h3>Team List</h3>
@@ -25,23 +25,23 @@
 					<!-- 팀 멤버 검색  -->
 					<div class="title">
 						<i class="fas fa-search"></i> <input type="text"
-							name="memberSearch" id="memberSearch"
+							name="memberSearch" id="member-search"
 							placeholder=" Search Member.." />
 					</div>
 					<!-- 팀 추가 버튼  -->
 					<div class="title">
-						<input type="button" class="addTeam" id="addTeamBtn"
+						<input type="button" class="add-team" id="add-team-btn"
 							value="Add Team" />
 					</div>
 				</div>
 				<!-- 팀 목록 작은 컨텐트 -->
-				<div class="category teamCategory">
+				<div class="category team-category">
 					<div class="t_id" style="display: none;">t_id</div>
 					<div class="name">이름</div>
 					<div class="cdate">생성일자</div>
 					<div class="auth">권한</div>
 				</div>
-				<div class="listBoxBody">
+				<div class="list-box-body">
 					<!--  팀 목록 동적생성 -->
 				</div>
 			</div>
@@ -49,81 +49,77 @@
 		<!-- 한 팀의 정보 끝 -->
 
 		<!-- 팀 추가 모달창 -->
-		<div class="modal" id="teamModalAddDiv">
-			<div class="modalContent">
+		<div class="modal" id="team-modal-add-div">
+			<div class="modal-content">
 				<div>
 					<label for="name">팀이름: </label> <input type="text" id="name"
 						name="name" placeholder="write team name here." />
 				</div>
 				<div>
-					<input type="button" id="teamModalAddBtn" value="확인" /> <input
-						type="button" class="modalCancleBtn" name="cancle" value="취소" />
+					<input type="button" id="team-modal-add-btn" value="확인" /> <input
+						type="button" class="modal-cancle-btn" name="cancle" value="취소" />
 				</div>
 			</div>
 		</div>
 
 		<!-- 팀이름수정 모달 창 -->
-		<div class="modal" id="teamModalModifyDiv">
-			<div class="modalContent">
+		<div class="modal" id="team-modal-modify-div">
+			<div class="modal-content">
 				<div>
 					<p>수정할 팀 이름을 입력하세요.</p>
-					<input type="text" id="modalTextTxt" name="modalTextTxt" maxlength="20" />
+					이름 : <input type="text" id="modal-text-txt" name="modalTextTxt" maxlength="20" />
 				</div>
 				<div>
-					<input type="button" id="teamModalModifyBtn" value="수정" /> 
-					<input type="button" class="modalCancleBtn" value="취소" />
+					<input type="button" id="team-modal-modify-btn" value="수정" /> 
+					<input type="button" class="modal-cancle-btn" value="취소" />
 				</div>
 			</div>
 		</div>
 
 		<!--팀삭제 모달 창-->
-		<div class="modal" id="teamModalDeleteDiv">
-			<div class="modalContent">
+		<div class="modal" id="team-modal-delete-div">
+			<div class="modal-content">
 				<p>정말로 삭제 하시겠습니까?</p>
 				<div>
-					<input type="button" id="teamModalDeleteBtn" value="삭제" /> 
-					<input type="button" class="modalCancleBtn" value="취소" />
+					<input type="button" id="team-modal-delete-btn" value="삭제" /> 
+					<input type="button" class="modal-cancle-btn" value="취소" />
 				</div>
 			</div>
 		</div>
 
 		<!-- 소유자권한양도 모달 창 -->
-		<div class="modal" id="memberModalTransferDiv">
+		<div class="modal" id="member-modal-transfer-div">
 			<!-- jquery에서 생성 -->
 		</div>
 
 		<!-- 멤버권한수정 모달 창 -->
-		<div class="modal" id="memberModalModifyDiv">
-			<div class="modalContent">
+		<div class="modal" id="member-modal-modify-div">
+			<div class="modal-content">
 				<p>수정할 권한을 클릭하십시오.</p>
-				<input type="button" id="memberAuthModify2Btn" value="팀원" /> 
-				<input type="button" id="memberAuthModify1Btn" value="관리자" /> 
-				<input type="button" class="modalCancleBtn" value="취소" />
+				<input type="button" id="member-auth-modify-2-btn" value="팀원" /> 
+				<input type="button" id="member-auth-modify-1-btn" value="관리자" /> 
+				<input type="button" class="modal-cancle-btn" value="취소" />
 			</div>
 		</div>
 
 		<!-- 멤버 삭제 모달 창 -->
-		<div class="modal" id="memberModalDeleteDiv">
-			<div class="modalContent">
-				<div>정말로 팀원을 삭제 하시겠습니까?</div>
-				<h2>Remove from team</h2>
-				<p>Remove all access to the team. The member will remain on all
-					their boards in this team. They will receive a notification."</p>
+		<div class="modal" id="member-modal-delete-div">
+			<div class="modal-content">
+				<div>정말로 팀원을 탈퇴 하시겠습니까?</div>
 				<div>
-					<input type="button" id="memberModalDeleteBtn" value="삭제" /> 
-					<input type="button" class="modalCancleBtn" value="취소" />
+					<input type="button" id="member-modal-delete-btn" value="삭제" /> 
+					<input type="button" class="modal-cancle-btn" value="취소" />
 				</div>
 			</div>
 		</div>
 
 		<!--  한 명의 멤버 추가버튼을 누를 때 모달창 -->
-		<div class="modal" id="addMemberModal">
-			<div class="modalContent">
-				Email: <input type="text" id="memberTxt" name="memberTxt" placeholder="e.g. linker@gmail.com">
-				<p>Search for a person in Trello by name or email address, or
-					enter an email address to invite someone new.</p>
-				<input type="submit" id="memberModalAddBtn" value="Add To Team.." />
-				<input type="button" class="modalCancleBtn" name="cancle" value="취소" />
+		<div class="modal" id="add-member-modal">
+			<div class="modal-content">
+				<p>새로운 사람을 초대 할 이메일 주소를 입력하십시오.</p>
+				Email: <input type="text" id="member-txt" name="member-txt" placeholder="e.g. linker@gmail.com"><br>
+				<input type="submit" id="member-modal-add-btn" value="Add To Team.." />
+				<input type="button" class="modal-cancle-btn" name="cancle" value="취소" />
 			</div>
 		</div>
 		<!-- 모달창 끝 -->

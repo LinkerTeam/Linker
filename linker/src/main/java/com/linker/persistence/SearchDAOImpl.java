@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
 import com.linker.domain.SearchVO;
-import com.linker.domain.TeamMemberVO;
+import com.linker.domain.TeamVO;
 
 @Repository
 public class SearchDAOImpl implements SearchDAO{
@@ -23,7 +23,7 @@ public class SearchDAOImpl implements SearchDAO{
 	
 	//팀리스트에서 멤버 검색
 	@Override
-	public List<TeamMemberVO> searchMember(int u_id, String keyword) throws Exception {
+	public List<TeamVO> searchMember(int u_id, String keyword) throws Exception {
 		SearchVO vo = new SearchVO();
 		vo.setU_id(u_id);
 		vo.setKeyword(keyword);

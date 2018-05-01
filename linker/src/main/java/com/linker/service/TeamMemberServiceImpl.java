@@ -89,9 +89,10 @@ public class TeamMemberServiceImpl implements TeamMemberService{
    }
    
    //멤버 추가
+   @Transactional
    @Override
    public HistoryVO connectTeamMember(int u_id, int t_id, String after) throws Exception{
-	  hdao.historyInsertTeamAdd(u_id, t_id, after);
+	  hdao.historyInsertTeamAdd(u_id, t_id, after);//t_id == data_id
       tmdao.connectTeamMember(u_id, t_id);
       return hdao.historySelectTeamAdd(u_id, t_id);
    }

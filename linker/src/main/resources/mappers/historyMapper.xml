@@ -37,6 +37,7 @@
 		, h.cdate
 		, after
 		, u_id
+		, data_id
 		, u.nickname
 		, u.profile
 	FROM linker.history AS h
@@ -66,7 +67,7 @@
 		, u.profile
 	FROM linker.history AS h
 	JOIN linker.user AS u ON h.u_id = u.id
-	WHERE h.id=#{id}
+	WHERE h.id=#{t_id}
 	</select>
 	
 	<!-- 팀의 이름을 수정했을 때 -->

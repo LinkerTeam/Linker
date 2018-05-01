@@ -29,19 +29,23 @@
 	
 	<!-- team 목록 출력 -->
 	<select id="listTeam" resultType="TeamVO">
-		SELECT u_id, t_id, t.name, t.cdate, auth
+		SELECT 
+			u_id
+			, t_id
+			, t.name
+			, t.cdate
+			, auth
  		FROM linker.team_has_user AS thu
  		JOIN linker.team AS t ON t.id=thu.t_id
 		WHERE u_id=#{u_id} 
 		AND thu.status = 1
-		AND thu.status = 1 
 		AND t.status = 0
 	</select>
 	
 	<!-- team 삭제 /그 팀에서 권한이 0인 user만 가능-->
-	<delete id="deleteTeam">
+	<update id="deleteTeam" keyColumn="id" keyProperty="id" useGeneratedKeys="true" >
 		UPDATE linker.team AS t
 		SET t.status = 1
 		WHERE t.id = #{t_id}
-	</delete>
+	</update>
 </mapper>
