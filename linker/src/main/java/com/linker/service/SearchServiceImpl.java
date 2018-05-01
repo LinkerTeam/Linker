@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
-import com.linker.domain.TeamMemberVO;
+import com.linker.domain.TeamVO;
 import com.linker.persistence.SearchDAO;
 
 @Service
@@ -22,10 +22,11 @@ public class SearchServiceImpl implements SearchService{
 	String e_filter = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]*$";
 	
 	@Override
-	public List<TeamMemberVO> searchMember(int u_id, String keyword) throws Exception {
+	public List<TeamVO> searchMember(int u_id, String keyword) throws Exception {
 		//키워드에 대한 멤버가 있는지 검색한다.
-		List<TeamMemberVO> teamMemberVO = sdao.searchMember(u_id, keyword);
-		return teamMemberVO;
+		List<TeamVO> teamVO = sdao.searchMember(u_id, keyword);
+		System.out.println(teamVO);
+		return teamVO;
 	}
 	
 	@Override

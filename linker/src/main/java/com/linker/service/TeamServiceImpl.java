@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.linker.domain.TeamVO;
 import com.linker.domain.HistoryVO;
@@ -42,18 +43,23 @@ public class TeamServiceImpl implements TeamService{
 	}
 
 	//팀수정(이름)
+	@Transactional
 	@Override
 	public HistoryVO modifyTeam(TeamVO vo) throws Exception {
 		int h_id = hdao.historyInsertTeamModify(vo);
+		System.out.println("service : " + h_id);
 		tdao.modifyTeam(vo);
 		return hdao.historySelectTeamModify(h_id);
 		
 	}
 	
 	//팀삭제
+	@Transactional
 	@Override
 	public HistoryVO deleteTeam(TeamVO vo) throws Exception {
+		System.out.println(vo);
 		int h_id = hdao.historyInsertTeamDelete(vo);
+		System.out.println("service - h_id : " + h_id + ", t_id : " + vo.getT_id());
 		tdao.deleteTeam(vo.getT_id());
 		return hdao.historySelectTeamDelete(h_id);
 	}

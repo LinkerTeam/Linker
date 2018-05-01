@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
-import com.linker.domain.TeamMemberVO;
+import com.linker.domain.TeamVO;
 
 public interface SearchDAO {
 
 	//팀리스트에서 멤버 검색
-	public List<TeamMemberVO> searchMember(int u_id, String keyword) throws Exception;
+	public List<TeamVO> searchMember(int u_id, String keyword) throws Exception;
 	
 	//달성 탭에서 카드 검색
 	public List<CardVO> e_searchArchiveCard(int p_id, String keyword) throws Exception;

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /* Important styles */
 
 /* 이력 메뉴 버튼 */
@@ -52,7 +52,7 @@
 }
 /*--------------------------------------------------------------------------*/
 /* 이력 메뉴 content~~~~~ */
-.boardAside {
+.board-aside {
     position: absolute;
     top: 40px;
     right: 0;

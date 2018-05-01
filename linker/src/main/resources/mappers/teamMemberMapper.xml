@@ -10,7 +10,7 @@
 			count(email)
 		FROM linker.user AS u
 		WHERE email= #{email};
-	</select>
+	</select> 
 
 	<!-- 회원 메일 인증 상태가 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
 	<select id="checkMemberStatus" resultType="int">

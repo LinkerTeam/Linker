@@ -1,7 +1,7 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /*사이드 컨텐트 + 팀목록 컨텐트 */
-.wrapContent{
+.wrap-content{
 	width:100%;
 	height: 100%;
 	margin:0;
@@ -11,19 +11,23 @@
 	overflow: hidden;
 }
 /* 팀목록 제목 + 팀 멤버 검색 + 팀 추가 버튼 컨텐츠*/
-.titleContent{
+.title-content{
 	padding : 60px 30px 10px 30px;
 	height : 60px;
 }
 /* 목록 제목 + 멤버검색 + 팀추가버튼 요소*/
-.titleContent > .title{
+.title-content > .title{
 	display : inline-block;
 	
+}
+h5.title{
+	margin : 20px;
 }
 /* 목록 제목 */
 .title:nth-child(1){
 	padding-left : 30px;
 	font-size: 20pt;
+	text-align : center;
 }
 /* 멤버 검색 */
 .title:nth-child(2){
@@ -39,49 +43,49 @@
     margin : 0;
 }
 /* 팀 목록 컨텐트*/
-#listContent{
+#list-content{
 	font-size: 11pt;
 	height: 100%;
 } 
 /* 팀목록, 멤버목록의 작은 컨텐츠 */
-.listBoxBody{
+.list-box-body{
 /* 	border-radius : 16px; */
 	padding : 10px 30px;
 	height: 80%;
 }
 /* 팀리스트  y 스크롤 */
-.listBoxBody::-webkit-scrollbar {
+.list-box-body::-webkit-scrollbar {
     width: 10px;
     height: 12px;
 }
-.listBoxBody::-webkit-scrollbar-track {
+.list-box-body::-webkit-scrollbar-track {
     background: rgba(0,0,0,.05);
     border-radius: 3px;
 }
-.listBoxBody::-webkit-scrollbar-thumb {
+.list-box-body::-webkit-scrollbar-thumb {
     background: rgba(0,0,0,.1);
     border-radius: 10px;
 }
 /*팀 목록의 작은 컨텐츠 */
-#listContent>.listBoxBody{
+#list-content>.list-box-body{
 	overflow-y: scroll;
 	border-top: 1px solid #d3d3d3;
 	box-sizing : border-box;
 	height : calc(100% - 215px);
 }
 /* 멤버 목록 (제목 + 목록) */
-.memberList{
-	background : #E7E7E7;
+.member-list{
+	background : #f1f4f7;
 	border : 1px solid #d3d3d3;
 	border-radius: 3px; 
 	box-shadow: 0 2px 2px -2px #777;
 }
 /* 멤버 목록의 작은 컨텐츠 */
-.memberList>.listBoxBody{
+.member-list>.list-box-body{
 	margin : 20px;
 }
 /* 멤버목록의 작은 컨텐츠의 제목들 */
-.memberList h3{
+.member-list h3{
 	padding : 20px;
 	text-align: center;
 }
@@ -90,43 +94,45 @@
 	line-height : 40px;
 }
 /* 팀 목록 컬럼*/
-.teamCategory{
-	background : #FFA7A7;
+.team-category{
+	background : #4e97c2;
 	padding-left : 65px;
 }
 /* 멤버 목록 컬럼 */
-.memberCategory{
-	background: #d3d3d3;
+.member-category{
+	background: #4e97c2;
 }
 /* 팀, 멤버의 목록 컬럼과 목록들 정렬*/
-.teamCategory div, .memberCategory div, .oneListRow div{
+.team-category div, .member-category div, .one-list-row div{
 	display:inline-block;
 	padding : 0 0 0 40px;
 	width : 150px;
 }
 /* 팀, 멤버 목록 한줄 한줄 */
-.oneListRow{
+.one-list-row{
 	padding : 15px 30px 15px 0;
 	font-size: 11pt;
 	line-height : 40px;
+	border : 1px solid #c4c9cc;
 }
 /*멤버 추가 컨탠츠*/
-div.sidemenu{
+div.side-menu{
 	 text-align: center;
+	 margin : 20px;
 }
-div.sidemenu div{
-	display : inline-block;
-}
+div.side-menu *{
+	margin : 20px;
+} 
 /*멤버추가, 팀 추가 버튼 구체적 설정*/
-input[type=button].addMemberBtn, .addTeam{
+input[type=button].add-member-btn, .add-team{
     font-size: 11pt;
 	padding : 15px 15px;
 	width: 200px;
 }
 /*검색 텍스트 요소*/
-#memberSearch{
-    border: none;
-    background-color: #FFA7A7;
+#member-search{
+    border: 3px solid #4e97c2;
+    background-color: #fcfcfc;
     height: 36px;
     width: 250px;
     margin : 10px 0;
@@ -135,9 +141,8 @@ input[type=button].addMemberBtn, .addTeam{
 }
 /*모든 버튼 설정*/
 input[type=button], input[type=submit]{
-	background-color: #FFA7A7;
-    margin : 10px auto; 
-    border: none;
+	background-color: #eee;
+    border: 3px solid #4e97c2;
 }
 /*모달 창 배경 설정*/
  .modal{
@@ -152,7 +157,7 @@ input[type=button], input[type=submit]{
     z-index: 2; 
 } 
 /*모달 컨텐츠 설정*/
-.modalContent{
+.modal-content{
     position: relative;
     background-color: #fefefe;
     text-align: center;
@@ -163,12 +168,15 @@ input[type=button], input[type=submit]{
     height: 300px;   
 }
 /*모달 버튼 구체적 설정*/
-.modalContent button{
+.modal-content button{
 	display:inline-block;
 	 margin : 10px;
 }
+.modal-content>input[type=button], input[type=submit]{
+	margin : 10px;
+}
 /*모달 div 구체적 설정*/
-.modalContent div, .modalContent input[type="text"]{
+.modal-content div, .modal-content input[type="text"]{
     padding: 5px;
     margin : 10px;
 }

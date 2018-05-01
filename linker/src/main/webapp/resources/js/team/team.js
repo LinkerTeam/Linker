@@ -1,15 +1,14 @@
-/* ---------------------------------------------------------------------------------------함수 정리 ----------------------------------------------------------------------------*/
+﻿/* ---------------------------------------------------------------------------------------함수 정리 ----------------------------------------------------------------------------*/
 
 //모달창을 모두 닫는 함수
 function hideModalDiv() {
-	$('#teamModalAddDiv').hide();
-	$('#teamModalModifyDiv').hide();
-	$('#teamModalDeleteDiv').hide();
-	$('#memberModalModifyDiv').hide();
-	$('#memberModalTransferDiv').hide();
-	$('#memberModalDeleteDiv').hide();
-	$('#addMemberModal').hide();
-	$('#addMembersModal').hide();
+	$('#team-modal-add-div').hide();
+	$('#team-modal-modify-div').hide();
+	$('#team-modal-delete-div').hide();
+	$('#member-modal-modify-div').hide();
+	$('#member-modal-transfer-div').hide();
+	$('#member-modal-delete-div').hide();
+	$('#add-member-modal').hide();
 }
 
 //권한 값을 팀 목록, 멤버 목록에 출력하는 함수
@@ -30,11 +29,11 @@ function auth(auth){
 function teamButton(auth){
 	var str = "";
 	if(auth == 0 ){
-		str  =  "	<div class='listBtn'><input type='button' class='selectMemberBtn' name='selectMemberBtn' style='cursor:pointer;' value='멤버보기' /></div>"
-			 +  "	<div class='listBtn'><input type='button' class='deleteTeamBtn' name='deleteTeamBtn' style='cursor:pointer;' value='팀 삭제' /></div>"
-			 +  "	<div class='listBtn'><input type='button' class='modifyTeamBtn' name='modifyTeamBtn' style='cursor:pointer;' value='팀 이름 수정' /></div>";
+		str  =  "	<div class='list-btn'><input type='button' class='select-member-btn' name='selectMemberBtn' style='cursor:pointer;' value='멤버보기' /></div>"
+			 +  "	<div class='list-btn'><input type='button' class='delete-team-btn' name='deleteTeamBtn' style='cursor:pointer;' value='팀 삭제' /></div>"
+			 +  "	<div class='list-btn'><input type='button' class='modify-team-btn' name='modifyTeamBtn' style='cursor:pointer;' value='팀 이름 수정' /></div>";
 	}else{
-		str  =  "	<div class='listBtn'><input type='button' class='selectMemberBtn' name='selectMemberBtn' style='cursor:pointer;' value='멤버보기' /></div>";
+		str  =  "	<div class='list-btn'><input type='button' class='select-member-btn' name='selectMemberBtn' style='cursor:pointer;' value='멤버보기' /></div>";
 	}
 	return str;
 }
@@ -43,25 +42,27 @@ function teamButton(auth){
 function memberButton(data, myauth){
 	var str = "";
 	if(myauth== 0 && data == 0){
-		str =  "<div class='listBtn'><input type='button' class='transferAuthBtn' name='ransferAuthBtn' value='권한 양도' /></div>";
+		str =  "<div class='list-btn'><input type='button' class='transfer-auth-btn' name='transferAuthBtn' value='권한 양도' /></div>";
 	}else if(myauth== 0 && data != 0){
-		str = "	<div class='listBtn'><input type='button' class='modifyAuthBtn' name='modifyAuthBtn' value='권한수정' /></div>"
-			+ "	<div class='listBtn'><input type='button' class='deleteMemberBtn' name='deleteMemberBtn' value='삭제' /></div>";
+		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' value='권한수정' /></div>"
+			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' value='탈퇴' /></div>";
 	}else if(myauth== 1 && data != 0){
-		str = "	<div class='listBtn'><input type='button' class='modifyAuthBtn' name='modifyAuthBtn' value='권한수정' /></div>"
-			+ "	<div class='listBtn'><input type='button' class='deleteMemberBtn' name='deleteMemberBtn' value='삭제' /></div>";
+		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' value='권한수정' /></div>"
+			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' value='탈퇴' /></div>";
+	}else if(myauth== 2 && data == 2){
+		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' value='탈퇴' /></div>";
 	}
 	return str;
 } 
 
-//멤버 추가버튼 영역 동적 태그로 출력하는 함수
+//버튼 영역 동적 태그로 출력하는 함수
 function memberAdd(){
 	var memberStr = "";
-	memberStr	+=	"<div class='sidemenu'>"
+	memberStr	+=	"<div class='side-menu'>"
 				+	"	<h5 class='title'> Member Add </h5>"
-				+	"	<input type='button' class='addMemberBtn' id='addMemberBtn' value='Add by Name or Email' />"
+				+	"	<input type='button' class='add-member-btn' id='add-member-btn' value='Add by Name or Email' />"
 				+	"</div>";
-	$('.memberList').children('.listBoxBody').append(memberStr);
+	$('.member-list').children('.list-box-body').append(memberStr);
 	return memberStr;
 }
 
@@ -85,60 +86,60 @@ function allTeamList(){
 //데이터 개수마다 동적 태그을 출력하는 함수1. 매개변수가 data인 경우
 function allTeamStr(data){
 	var str = "";
-	str =   "<div id='teamListTableBody'>"
-		+   "	<div class='oneListRow' data-id='" + data.t_id + "'>"
+	str =   "<div id='team-list-table-body'>"
+		+   "	<div class='one-list-row' data-id='" + data.t_id + "'>"
 		+	"		<div class='t_id' style='display : none;'>" + data.t_id + "</div>"
 		+	"		<div class='name'>" + data.name + "</div>"
 		+	"		<div class='cdate'>" + data.cdate + "</div>";
 	str +=	"		<div class='auth'>" + auth(data.auth) +"</div>";
 	str +=	teamButton(data.auth);//권한 따라서 버튼이 달라짐
 	str +=  "	</div>"
-		+	"	<div class='memberList' style='display : none;'>"	
+		+	"	<div class='member-list' style='display : none;'>"	
 		+   "		<h5 class='title'>Member List</h5>"
-		+   "		<div class='listBoxBody'>"
-		+   "			<div class='category memberCategory'>"
+		+   "		<div class='list-box-body'>"
+		+   "			<div class='category member-category'>"
 		+   "				<div class='t_id' style='display : none;'>u_id</div>"
 		+   "				<div class='email'>이메일</div>"
 		+   "				<div class='nickname'>닉네임</div>"
 		+   "				<div class='auth'>권한</div>"
 		+   "			</div>"
-		+   "			<div class='memberListTableBody' data-id='" + data.t_id + "'>"
+		+   "			<div class='member-list-table-body' data-id='" + data.t_id + "'>"
 		+   "			</div>"
 		+   "		</div>"
 		+   "	</div>"
 		+	"</div>";
 
-	$('#listContent').children('.listBoxBody').append(str);
+	$('#list-content').children('.list-box-body').append(str);
 	allMemberList(data.t_id, data.auth);
 }
 
 //데이터 개수마다 동적 태그을 출력하는 함수2. 매개변수가 data, num인 경우
 function allTeamStr(data, num){
 	var str = "";
-	str =   "<div id='teamListTableBody'>"
-		+   "	<div class='oneListRow' data-id='" + data.t_id + "'>"
+	str =   "<div id='team-list-table-body'>"
+		+   "	<div class='one-list-row' data-id='" + data.t_id + "'>"
 		+	"		<div class='t_id' style='display : none;'>" + data.t_id + "</div>"
 		+	"		<div class='name'>" + data.name + "</div>"
 		+	"		<div class='cdate'>" + data.cdate + "</div>";
 	str +=	"		<div class='auth'>" + auth(data.auth) +"</div>";
 	str +=			teamButton(data.auth);
 	str +=  "	</div>"
-		+	"	<div class='memberList' style='display : none;'>"	
+		+	"	<div class='member-list' style='display : none;'>"	
 		+  "		<h5 class='title'>Member List</h5>"
-		+  "		<div class='listBoxBody'>"
-		+  "			<div class='category memberCategory'>"
+		+  "		<div class='list-box-body'>"
+		+  "			<div class='category member-category'>"
 		+  "				<div class='t_id' style='display : none;'>u_id</div>"
 		+  "				<div class='email'>이메일</div>"
 		+  "				<div class='nickname'>닉네임</div>"
 		+  "				<div class='auth'>권한</div>"
 		+  "			</div>"
-		+  "			<div class='memberListTableBody' data-id='" + data.t_id + "'>"
+		+  "			<div class='member-list-table-body' data-id='" + data.t_id + "'>"
 		+  "			</div>"
 		+  "		</div>"
 		+  "	</div>"
 		+	"</div>";
 
-	$('#listContent').children('.listBoxBody').append(str);
+	$('#list-content').children('.list-box-body').append(str);
 	allMemberList(data.t_id, data.auth);
 
 }
@@ -166,7 +167,7 @@ function allMemberList(myT_id, myAuth){
 //멤버 목록 동적 태그 생성하는 함수	
 function allMemberStr(data, myAuth){
 	var str = "";
-		str =  "<div class='oneListRow' data-id='" + data.u_id + "'>"
+		str =  "<div class='one-list-row' data-id='" + data.u_id + "'>"
 			+	"	<div class='u_id' style='display:none;'  data-id='" + data.u_id + "'>" + data.u_id + "</div>"
 			+  "	<div class='email'>" + data.email + "</div>"
 			+  "	<div class='nickname'>" + data.nickname + "</div>";
@@ -174,7 +175,7 @@ function allMemberStr(data, myAuth){
 		str +=	memberButton(data.auth, myAuth);
 		str	+=  "</div>";	
 
-	$(".memberListTableBody[data-id='" + data.t_id + "']").append(str);	
+	$(".member-list-table-body[data-id='" + data.t_id + "']").append(str);	
 }
 
 /* ------------------------------------------------------------------------------함수 정리 끝 ---------------------------------------------------------------------------------------*/
@@ -183,23 +184,29 @@ function allMemberStr(data, myAuth){
 allTeamList();
 
 //팀 목록에서 팀 추가 버튼을 눌렀을 때
-$('#addTeamBtn').click(function() {
-	$('#teamModalAddDiv').show();
-});
-
-//팀 목록에서 팀 추가 버튼을 눌렀을 때
-$('#addTeamBtn').click(function() {
-	$('#teamModalAddDiv').show();
+$('#add-team-btn').click(function() {
+	$('#team-modal-add-div').show();
 });
 
 /* 팀 추가(teamAdd) 유효성 검사
  * 1. 최대 글자 수 제한
  * 2. 입력 필수
  */
-$('#teamModalAddBtn').click(function(e){
+$('#team-modal-add-btn').click(function(){
 	var name = $("#name").val();
-	var date = new Date('yyyy-MM-dd');
+	var date = new Date();
+	var year = date.getFullYear();
+	var month = date.getMonth()+1
+	var day = date.getDate();
+	var today = year+"-"+month+"-"+day;
+	var isRun = false;//버튼 다중클릭 방지 변수 초기화
 
+	//버튼 다중클릭 방지 검사
+	if(isRun == true){//버튼 클릭하지 않았을 경우
+		return;
+	}
+	
+	//팀이름 유효성 검사
 	if($('#name').val().length == 0){
 		alert("팀 이름을 입력해주세요.");
 		return;
@@ -207,6 +214,14 @@ $('#teamModalAddBtn').click(function(e){
 		alert("20자 이하로 입력해주세요.");
 		return;
 	}
+	
+	//날짜 조건
+	if(month < 10){
+        month = "0"+month;
+	}
+    if(day < 10){
+        day = "0"+day;
+    }
 
     $.ajax({
 	     type : 'post',
@@ -220,31 +235,32 @@ $('#teamModalAddBtn').click(function(e){
 	         name : name
 	     }),
 	     success : function(result) {
-	        console.log(result);
+	    	console.log(result);
+	        isRun=false;//버튼 클릭 했을 경우
 	        if(result != null){
 	        hideModalDiv();
 	    	var str = "";
 	    	var str2;
 	    	
-			str =   "<div id='teamListTableBody'>"
-				+   "	<div class='oneListRow' data-id='" + result.data_id + "'>"
+			str =   "<div id='team-list-table-body'>"
+				+   "	<div class='one-list-row' data-id='" + result.data_id + "'>"
 				+	"		<div class='t_id' style='display : none;'>" + result.data_id + "</div>"
 				+	"		<div class='name'>" + name + "</div>"
-				+	"		<div class='cdate'>" + date + "</div>";
+				+	"		<div class='cdate'>" + today + "</div>";
 			str +=	"		<div class='auth'>" + auth(0) +"</div>";
 			str +=	teamButton(0);
 			str +=  "	</div>"
-				+	"	<div class='memberList' style='display : none;'>"	
+				+	"	<div class='member-list' style='display : none;'>"	
 				+   "		<h5 class='title'>Member List</h5>"
-		        +   "		<div class='listBoxBody'>"
-		        +   "			<div class='category memberCategory'>"
+		        +   "		<div class='list-box-body'>"
+		        +   "			<div class='category member-category'>"
 		        +   "				<div class='t_id' style='display : none;'>u_id</div>"
 		        +   "				<div class='email'>이메일</div>"
 		        +   "				<div class='nickname'>닉네임</div>"
 		        +   "				<div class='auth'>권한</div>"
 		        +   "			</div>"
-		        +   "			<div class='memberListTableBody' data-id='" + result + "'>"
-		        +   "				<div class='oneListRow' data-id='" + U_ID + "'>"
+		        +   "			<div class='member-list-table-body' data-id='" + result + "'>"
+		        +   "				<div class='one-list-row' data-id='" + U_ID + "'>"
 		        +   "					<div class='u_id' style='display:none;'  data-id='" + U_ID + "'>" + U_ID + "</div>"
 				+   "					<div class='email'>" + EMAIL + "</div>"
 				+   "					<div class='nickname'>" + NICKNAME + "</div>";
@@ -256,7 +272,7 @@ $('#teamModalAddBtn').click(function(e){
 		        +   "	</div>"
 			 	+   "</div>";
 			
-			$('#listContent').children('.listBoxBody').append(str);
+			$('#list-content').children('.list-box-body').append(str);
 			memberAdd();
 			
 		    str2 = 	"<li data-id ='" + result.id + "'>"
@@ -273,7 +289,7 @@ $('#teamModalAddBtn').click(function(e){
 				
 			$('.pic-list').append(str2);	
 		
-			$('.modalContent').find('#name').val('');
+			$('.modal-content').find('#name').val('');
 			      }
 		},
 		error : function() {
@@ -283,10 +299,15 @@ $('#teamModalAddBtn').click(function(e){
 });
 	    	                   
 //멤버 한명 추가하기 버튼을 눌렀을 유효성검사 + 추가하기
-$(document).on('click','#memberModalAddBtn',function() {
-	var email = $('#memberTxt').val();
+$(document).on('click','#member-modal-add-btn',function() {
+	var email = $('#member-txt').val();
 	var reg_email = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	var isRun = false;// 버튼 다중 클릭 방지 버튼
 
+	if(isRun == true){//버튼 클릭 안했을 때
+		return;
+	}
+	
 	if(email.length == 0){                         
 		alert("이메일을 입력해주세요.");
 		return;
@@ -312,14 +333,15 @@ $(document).on('click','#memberModalAddBtn',function() {
 	      T_id : T_id
 	   }),
 	   success : function(result) {
+		   isRun=false;//버튼 클릭했을 때
 	       if(result == "1"){
 	      	 hideModalDiv();
 	         alert("해당 회원에 메일을 보냈습니다. 해당 회원이 수락하는 동시에 팀에 해당회원이 등록됩니다.");
 	      }else if(result == "0"){
-	         $('#memberTxt').val('');
+	         $('#member-txt').val('');
 	         alert(email+"은 이미 팀에 등록되어있습니다.");
 	      }else{
-	         $('#memberTxt').val('');
+	         $('#member-txt').val('');
 	         alert(email+"은 회원이 아닙니다.");
 	      } 
 	   },
@@ -329,53 +351,52 @@ $(document).on('click','#memberModalAddBtn',function() {
 	}); 
 });
 	    	                   
-//팀목록에서 수정버튼(.modifyTeamBtn)을 눌렀을 때
-$(document).on('click','.modifyTeamBtn',function() {
+//팀목록에서 수정버튼(.modify-team-btn)을 눌렀을 때
+$(document).on('click','.modify-team-btn',function() {
 	hideModalDiv();
-	$('#teamModalModifyDiv').show();
-	T_id = $(this).parents('div').children('.t_id').html();
-	U_id = $(this).parents('div').children('.u_id').html();
-	title = $(this).parents('div').children('.name').html();
-	$('#modalTextTxt').val(title);
+	$('#team-modal-modify-div').show();
+	T_id = $(this).parent().parent().children('.t_id').html();
+	U_id = $(this).parent().parent().children('.u_id').html();
+	title = $(this).parent().parent().children('.name').html();
+	$('#modal-text-txt').val(title);
 });
 
-//팀 목록에서 삭제버튼(.deleteTeamBtn)을 눌렀을 때
-$(document).on('click','.deleteTeamBtn',function() {
+//팀 목록에서 삭제버튼(.delete-team-btn)을 눌렀을 때
+$(document).on('click','.delete-team-btn',function() {
 	hideModalDiv();
-	$('#teamModalDeleteDiv').show();
-	T_id = $(this).parents('div').children('.t_id').html();
-	teamName = $(this).parents('div').children('.name').html();
+	$('#team-modal-delete-div').show();
+	T_id = $(this).parent().parent().children('.t_id').html();
+	console.log(T_id);
+	teamName = $(this).parent().parent().children('.name').html();
 });
 
-//modal창에서 취소버튼(.modalCancleBtn)을 눌렀을 때
-$(document).on('click', '.modalCancleBtn', function() {
+//modal창에서 취소버튼(.modal-cancle-btn)을 눌렀을 때
+$(document).on('click', '.modal-cancle-btn', function() {
 	hideModalDiv();
 });
 
 //팀 삭제 delete modal창에서 삭제버튼(#modalDeleteBtn)을 눌렀을 때
-$('#teamModalDeleteBtn').click(function() {
+$('#team-modal-delete-btn').click(function() {
+	console.log(T_id);
    $.ajax({
-      type : 'delete',
+      type : 'put',
       headers : {
          "Content-Type" : "application/json",
-         "X-HTTP-Method-Override" : "DELETE"
+         "X-HTTP-Method-Override" : "PUT"
       },
+      url : 'team/delete/' + T_id,
       dataType : 'json',
       contentType : 'text/javascript',
       data : JSON.stringify({
-         t_id : T_id,
          u_id : U_ID,
          name : teamName
       }),
       success : function(result) {
          var str2;
-         $('.memberList').hide();
+         $('.member-list').hide();
          hideModalDiv();
-         
-        str =	"<div class='oneListRow' data-id='" + T_id + "'>"
-        	+  "	</div>";
-		
-        $('.oneListRow[data-id=' + T_id + ']').remove();	
+
+        $('.one-list-row[data-id=' + T_id + ']').remove();	
 		
 		str2 =  "<li data-id ='" + result.id + "'>"
 	     	 +  "	<div class='pic-list-writer'>"
@@ -398,17 +419,18 @@ $('#teamModalDeleteBtn').click(function() {
 });
 
 //팀 목록 modify modal창에서 수정버튼(#modalModifyBtn)을 눌렀을 때
-$('#teamModalModifyBtn').click(function() {
-   var teamName = $('#modalTextTxt').val();
+$('#team-modal-modify-btn').click(function() {
+	console.log(T_id);
+   var teamName = $('#modal-text-txt').val();
    $.ajax({
       type : 'put',
+      url : 'team/update/' + T_id,
       headers : {
          "Content-Type" : "application/json",
          "X-HTTP-Method-Override" : "PUT"
       },
       dataType : 'json',
       data : JSON.stringify({
-            t_id : T_id,
             name : teamName,
             u_id : U_ID,
 		    before : title
@@ -416,11 +438,11 @@ $('#teamModalModifyBtn').click(function() {
       success : function(result) {
      	 var str2;
      	 hideModalDiv();
-		 str =	"<div class='oneListRow' data-id='" + T_id + "'>"
+		 str =	"<div class='one-list-row' data-id='" + T_id + "'>"
 		      +	"	<div class='name'>" + name + "</div>"
 			  + "</div>";
      		
-		 $('.oneListRow[data-id=' + T_id + ']').children('.name').html(teamName);
+		 $('.one-list-row[data-id=' + T_id + ']').children('.name').html(teamName);
 		
 		 str2 =  "<li data-id ='" + result.id + "'>"
      		  +  "	<div class='pic-list-writer'>"
@@ -444,12 +466,12 @@ $('#teamModalModifyBtn').click(function() {
 });
 
 //멤버보기 버튼을 누를 경우1(멤버리스트 동적 생성)
- $(".listBoxBody").on('click','.selectMemberBtn',function() {  
-	  $(this).parents(".oneListRow").next().toggle(); 
+ $(".list-box-body").on('click','.select-member-btn',function() {  
+	  $(this).parents(".one-list-row").next().toggle(); 
 });
   
 //멤버보기 버튼을 누를 경우2(소유자 권한 양도 모달 창 select의 option 값 가져오기)
-$(".listBoxBody").on('click','.selectMemberBtn',function() {  
+$(".list-box-body").on('click','.select-member-btn',function() {  
       var str = "";
       var checkBtn = $(this);
       
@@ -457,17 +479,17 @@ $(".listBoxBody").on('click','.selectMemberBtn',function() {
       var memberList = checkBtn.parent().parent().next();
       
       //내가 선택한 버튼의 memberList 중 컬럼을 제외한 memberList 데이터만 선택 (배열)
-      var memberListTableBody = memberList.children().children(".memberListTableBody"); 
+      var memberListTableBody = memberList.children().children(".member-list-table-body"); 
       
       //내가 선택한 버튼의 memberList에서 권한을 선택 (배열)
-      var Member = memberListTableBody.children('.oneListRow'); 
+      var Member = memberListTableBody.children('.one-list-row'); 
        
       //만약 member가 여러명이라면 
       if (Member.length > 1) { 
     	  
-         str = "<div class='modalContent'><p>&lt;경고&gt;<br>소유자는 권한을 양도하면 다시 소유자 권한으로 바꿀 수 없습니다.<br> 또한 팀에서 자동으로 탈퇴됩니다.</p>"
-             + "<label for='authTransferSelect'>권한 양도할 팀원</label>"
-             + "   <select name='authTransferSelect' id='authTransferSelect'>";
+         str = "<div class='modal-content'><p>&lt;경고&gt;<br>소유자는 권한을 양도하면 다시 소유자 권한으로 바꿀 수 없습니다.<br> 또한 팀에서 자동으로 탈퇴됩니다.</p>"
+             + "<label for='auth-transfer-select'>권한 양도할 팀원</label>"
+             + "   <select name='auth-transfer-select' id='auth-transfer-select'>";
          
          for (var i = 1; i < Member.length; i++) {
             var userNickname = memberListTableBody.children().eq(i).children().eq(2).text();
@@ -477,89 +499,117 @@ $(".listBoxBody").on('click','.selectMemberBtn',function() {
 		 }
 		
          str += "   </select>"
-	         + "<input type='button' id='authTransferBtn' value='권한 양도'/>"
-	         + "<input type='button' class='modalCancleBtn' value='취소'/></div>";
+	         + "<input type='button' id='auth-transfer-btn' value='권한 양도'/>"
+	         + "<input type='button' class='modal-cancle-btn' value='취소'/></div>";
 
 	     //소유자 권한 양도 모달 창         
-	     $("#memberModalTransferDiv").html(str);
+	     $("#member-modal-transfer-div").html(str);
 	     str = "";
 	     
 	  }else{ //만약 member가 소유자만 있다면
-	     str += "<div class='modalContent'><h3 class='title'>팀원이 소유자만 있는 경우에는 권한 양도가 불가합니다. 팀을 삭제해주세요.</h3>"
-	         + "<input type='button' class='modalCancleBtn' value='취소'/></div>";
+	     str += "<div class='modal-content'><h3 class='title'>팀원이 소유자만 있는 경우에는 권한 양도가 불가합니다. 팀을 삭제해주세요.</h3>"
+	         + "<input type='button' class='modal-cancle-btn' value='취소'/></div>";
 
-	     $("#memberModalTransferDiv").html(str);
+	     $("#member-modal-transfer-div").html(str);
 	     str = "";
 	  }  
 });
 			
 //멤버리스트에서 권한 양도 버튼을 눌렀을 경우
-$(document).on('click','.transferAuthBtn',function() {
-	//권한을 양도하고 삭제되려는 소유자의 t_id, u_id 
+$(document).on('click','.transfer-auth-btn',function() {
+	//권한을 양도하고 탈퇴되려는 소유자의 t_id, u_id 
 	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
 	s_T_id = $(this).parent().parent().parent().parent().parent().prev().children('.t_id'); //select option의 값을 가진 data를 추출하기 위해 만든 변수 .children('.t_id')
 	U_id = $(this).parents('div').children('.u_id').html();
 
-	$( '#memberModalTransferDiv' ).show();
+	$( '#member-modal-transfer-div' ).show();
 });
 					
 //멤버리스트에서 권한수정 버튼을 눌렀을 경우
-$(document).on('click','.modifyAuthBtn',function() {
+$(document).on('click','.modify-auth-btn',function() {
 	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
 	U_id = $(this).parents('div').children('.u_id').html();
 	hideModalDiv();
-	$('#memberModalModifyDiv').show();
+	$('#member-modal-modify-div').show();
 });
 
-//멤버리스트에서 삭제버튼을 눌렀을 경우
-$(document).on('click','.deleteMemberBtn',function() {
+//멤버리스트에서 탈퇴버튼을 눌렀을 경우
+$(document).on('click','.delete-member-btn',function() {
 	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
 	U_id = $(this).parents('div').children('.u_id').html();
 	hideModalDiv();
-	$('#memberModalDeleteDiv').show();
+	$('#member-modal-delete-div').show();
 });
 
 //멤버리스트에서 멤버 한명 추가버튼을 눌렀을 경우
-$(document).on('click','.addMemberBtn',function() {
+$(document).on('click','.add-member-btn',function() {
 	T_id = $(this).parent().parent().parent().prev().children('.t_id').html();
-	$('#addMemberModal').show();
+	$('#add-member-modal').show();
 });
 
-//멤버 삭제 delete modal창에서 삭제버튼(#modalDeleteBtn)을 눌렀을 때
-$(document).on('click','#memberModalDeleteBtn',function() {
-	$.ajax({
-		url : 'team/'+ T_id,
-		type : 'delete',
-		headers : {
-			"Content-Type" : "application/json",
-			"X-HTTP-Method-Override" : "DELETE"
-		},
-		dataType : 'json',
-		contentType : 'text/javascript',
-		data : JSON.stringify({
-			t_id : T_id,
-			u_id : U_id
-		}),
-		success : function(result) {
-			if(result == true){
-				hideModalDiv();
-				str =  "<div class='oneListRow' data-id='" + U_id + "'>"
-					+  "</div>";
-				$('.oneListRow[data-id=' + U_id + ']').remove();	
-			}else{
+//멤버 탈퇴 delete modal창에서 탈퇴버튼(#modalDeleteBtn)을 눌렀을 때
+$(document).on('click','#member-modal-delete-btn',function() {
+	if(U_id == U_ID){//소유자가 아닌 사용자가 해당 팀에서 자진으로 탈퇴할 경우
+		$.ajax({
+			url : 'team/delete/volunteer/'+ T_id + "/" + U_id,
+			type : 'delete',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "DELETE"
+			},
+			dataType : 'json',
+			data : JSON.stringify({
+				t_id : T_id,
+				u_id : U_id
+			}),
+			contentType : 'text/javascript',
+			success : function(result) {
+				if(result == true){
+					hideModalDiv();
+
+					$('.one-list-row[data-id=' + T_id + ']').parent().remove();	
+				}else{
+					alert("error");
+				}
+			},
+			error : function() {
 				alert("error");
 			}
-		},
-		error : function() {
-			alert("error");
-		}
-	});
+		});
+	}else{//소유자가 아닌 사용자가 해당 팀에서 타의로 탈퇴당한 경우
+		$.ajax({
+			url : 'team/delete/forced/'+ T_id + "/" + U_id,
+			type : 'delete',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "DELETE"
+			},
+			dataType : 'json',
+			data : JSON.stringify({
+				t_id : T_id,
+				u_id : U_id
+			}),
+			contentType : 'text/javascript',
+			success : function(result) {
+				if(result == true){
+					hideModalDiv();
+
+					$('.one-list-row[data-id=' + U_id + ']').remove();	
+				}else{
+					alert("error");
+				}
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	}
 });
 
 //멤버 권한 수정 modify modal창에서 '팀원'을 눌렀을 때
-$(document).on('click','#memberAuthModify2Btn',function() {
+$(document).on('click','#member-auth-modify-2-btn',function() {
 	$.ajax({
-		url : 'team/'+ T_id,
+		url : 'team/update/'+ T_id + "/" + U_id,
 		type : 'put',
 		headers : {
 			"Content-Type" : "application/json",
@@ -567,15 +617,13 @@ $(document).on('click','#memberAuthModify2Btn',function() {
 		},
 		dataType : 'json',
 		data : JSON.stringify({
-			t_id : T_id,
-			u_id : U_id,
 			auth : 2
 		}),
 		success : function(result) {
 			if(result == true){
 				hideModalDiv();
-				str =	"	<div class='auth'>" + auth(2) +"</div>";
-				$(".oneListRow[data-id='" + U_id + "']").children('.auth').html(str);
+				str = auth(2);
+				$(".one-list-row[data-id='" + U_id + "']").children('.auth').html(str);
 			}else{
 				alert("error");
 			}
@@ -587,9 +635,9 @@ $(document).on('click','#memberAuthModify2Btn',function() {
 });
 
 //멤버 권한 수정 modify modal창에서 '관리자'을 눌렀을 때
-$(document).on('click','#memberAuthModify1Btn',function() {
+$(document).on('click','#member-auth-modify-1-btn',function() {
 	$.ajax({
-		url : 'team/'+ T_id,
+		url : 'team/update/'+ T_id + "/" + U_id,
 		type : 'put',
 		headers : {
 			"Content-Type" : "application/json",
@@ -597,15 +645,13 @@ $(document).on('click','#memberAuthModify1Btn',function() {
 		},
 		dataType : 'json',
 		data : JSON.stringify({
-			t_id : T_id,
-			u_id : U_id,
 			auth : 1
 		}),
 		success : function(result) {
 			if(result == true){
 				hideModalDiv();
-				str =	"	<div class='auth'>" + auth(1) +"</div>";
-				$(".oneListRow[data-id='" + U_id + "']").children('.auth').html(str);
+				str =  auth(1);
+				$(".one-list-row[data-id='" + U_id + "']").children('.auth').html(str);
 			}else{
 				alert("error");
 			}
@@ -617,12 +663,12 @@ $(document).on('click','#memberAuthModify1Btn',function() {
 });
 
 //멤버 권한양도 transfer modal창에서 권한양도버튼(#modalTransferBtn)을 눌렀을 때
- $(document).on('click','#authTransferBtn',function() { 
-   selectedMemberName = $("#authTransferSelect option:selected").val();//양도할 사람
+ $(document).on('click','#auth-transfer-btn',function() { 
+   selectedMemberName = $("#auth-transfer-select option:selected").val();//양도할 사람
    
    //소유자 권한을 양도받으려는 팀원들의 정보들(teamMember)
    var memberList = s_T_id.parent().next();//해당 t_id의  memberList
-   var oneListRow = memberList.children().children().eq(1).children();//memberList에 있는 .oneListRow.
+   var oneListRow = memberList.children().children().eq(1).children();//memberList에 있는 .one-list-row.
 	
    //selectedMemberName의 t_id, u_id가져오는 기능
    for (var i = 1; i < oneListRow.length; i++) {//oneList의 개수만큼 for문 돌림(멤버 명수만큼)
@@ -652,7 +698,7 @@ $(document).on('click','#memberAuthModify1Btn',function() {
       }),
       success : function(result) {
          location.reload();
-         $('#memberModalTransferDiv').hide();
+         $('#member-modal-transfer-div').hide();
          alert("권한이 정상적으로 양도되었습니다..");
       },
       error : function() {
@@ -662,7 +708,7 @@ $(document).on('click','#memberAuthModify1Btn',function() {
 });
 
 //팀리스트 검색에 keyword를 입력할경우
-$('#memberSearch').keyup(function(){
+$('#member-search').keyup(function(){
 	var keyword = $(this).val();
 	if(keyword != ''){
 	//검색어에 값이 있다면 결과를 보여주기
@@ -677,7 +723,8 @@ $('#memberSearch').keyup(function(){
 			contentType : 'text/javascript',
 			data : {u_id : U_ID},
 			success : function(data) {
-				$('#listContent').children('.listBoxBody').html('');
+				console.log(data);
+				$('#list-content').children('.list-box-body').html('');
 				for(var i=0; i< data.length; i++){
 					allTeamStr(data[i],1);
 				}
@@ -688,7 +735,7 @@ $('#memberSearch').keyup(function(){
 			}
 		}); 
 	}else{
-		$('#listContent').children('.listBoxBody').html('');
+		$('#list-content').children('.list-box-body').html('');
 		allTeamList();
 	}
 }); 

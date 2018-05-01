@@ -44,7 +44,7 @@ public class TeamDAOImpl implements TeamDAO {
 	// 팀삭제
 	@Override
 	public int deleteTeam(int t_id) throws Exception {
-		return session.delete(namespace + ".deleteTeam", t_id);
+		return session.update(namespace + ".deleteTeam", t_id);
 
 	}
 

@@ -169,15 +169,22 @@
 
 <!-- 팀 리스트 검색-->
 	<!-- 검키워드에 해당하는 멤버들을 출력, 색에 대한 멤버 결과를 가져오는 쿼리 -->	
-	<select id="searchMember" resultType="TeamMemberVO">
-	SELECT thu.t_id, thu.auth, t.name, thu.status, t.cdate
+	<select id="searchMember" resultType="TeamVO">
+	SELECT 
+		thu.t_id
+		, thu.auth
+		, t.name
+		, thu.status
+		, t.cdate
     FROM linker.user AS u 
     JOIN linker.team_has_user AS thu ON u.id=thu.u_id 
     JOIN linker.team AS t ON thu.t_id = t.id    
-    WHERE thu.status = 1
+    WHERE thu.status = 1 
+    AND t.status=0
     AND
     thu.t_id IN (
-     SELECT thu.t_id 
+     SELECT 
+     	thu.t_id 
      FROM linker.team_has_user AS thu
      WHERE thu.u_id=#{u_id}
      )
