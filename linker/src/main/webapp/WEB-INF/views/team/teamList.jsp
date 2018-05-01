@@ -8,7 +8,7 @@
 <link href="/resources/css/team/team.css?ver=222" type="text/css" rel="stylesheet" />
 </head>
 <body>
-	<%@include file="team_header.jsp"%>
+	<%@include file="../header.jsp"%>
 
 	<!-- content 시작 -->
 	<div class="content">
