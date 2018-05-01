@@ -8,7 +8,7 @@
 <link href="/resources/css/team/team.css?ver=222" type="text/css" rel="stylesheet" />
 </head>
 <body>
-	<%@include file="search_header.jsp"%>
+	<%@include file="../header.jsp"%>
 
 	<!-- content 시작 -->
 	<div class="content">
@@ -20,7 +20,7 @@
 				<div class="title-content">
 					<!-- 팀 목록 제목  -->
 					<div class="title">
-						<h3>Team List</h3>
+						<h3>Search List</h3>
 					</div>
 				</div>
 			</div>
