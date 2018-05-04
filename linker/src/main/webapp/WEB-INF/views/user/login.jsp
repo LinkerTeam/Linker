@@ -16,13 +16,21 @@
 </head>
 <body>
     <div class="wrap">
+      
+    
         <nav class="main-nav">
+			<ul class="image"><img alt="we" src="/resources/image/we.png" class="we-image"/></li> 
+			</ul>
+			<ul class="image" ><img alt="message" src="/resources/image/message.png" class="message-image"/> 
+			</ul>
+			<ul class="image"><img alt="mainlogo" src="/resources/image/mainlogo.png" class="mainlogo-image"/></ul>
+
             <ul>
                 <li>
-                    <a class="login_btn" href="#modal">로그인</a>
+                    <a class="login_btn" href="#modal"><img alt="login" src="/resources/image/login.png" class="login-image" width="60px"/></a>
                 </li>
                 <li>
-                    <a class="signup_btn" href="#0">회원가입</a>
+                    <a class="signup_btn" href="#0"><img alt="signup" src="/resources/image/signup.png" class="signup-image" width="80px"/></a>
                 </li>
             </ul>
         </nav>
@@ -105,7 +113,7 @@
                             <label for="email"> Password </label>
                             <input type="password" class="password" placeholder="Password" name="password" id="pw">
                             <a href="#0" class="hide-password" id="password2" >보이기</a>
-                            <div class="error-pw"><span class="password-confirm">패스워드는 8자이상 특수문자와 숫자를 한개이상씩  입력해야합니다.</span></div>
+                            <div class="error-pw"><span class="password-confirm">비밀번호는 8자 이상 영문,숫자,특수문자를 함께 조합하여야 합니다.</span></div>
                        
                             
                             <p class="fieldset agree">
@@ -121,7 +129,7 @@
                 </div>
              
             <div id="reset-password">
-                    <p class="form-message">비밀번호를 잃어 버렸습니까? 이메일 주소를 넣어주세요.</br> 새로운 비밀번호를 지정해 주세요.</p>
+                    <p class="form-message">비밀번호를 잃어 버렸습니까? 이메일 주소를 넣어주세요.</br> 해당 이메일로 임시 비밀번호를 보내드립니다.</p>
     
                     <form class="form" name="form3" method="post" action="/user/forget" onsubmit="return forgetcheck();" >
                         <p class="fieldset">
@@ -316,7 +324,7 @@
 				document.getElementById('nickname').focus();
 				return false;
 			} 
-			if(!(nickname.length >2 && nickname.length <16)){
+			if(!(nickname.length >=2 && nickname.length <16)){
 				alert("닉네임을 2자 이상 입력해주세요");
 				document.getElementById('nickname').focus();
 				return false;
@@ -327,18 +335,10 @@
 				document.getElementById('email2').focus();
 				return false;
 			}
-	       
-			//이메일 형식 검사
-			if(exptext.test(email2)==false){
-	        	 alert("이메일을 제대로 입력해주세요");
-	        	 document.getElementById('email2').focus();
-	        	 return false;
-			}
-        
-			
+		
 			//패스워드 특문 숫자 체크 정규식
 			if(pwcheck(password) == false){
-				alert("패스워드는 1개이상 숫자와 한개이상의 특수문자가 필요합니다.");
+				alert("패스워드는 1개 이상 숫자와 한개 이상의 특수문자가 필요합니다.");
 				return false;
 			}
 			
@@ -372,10 +372,9 @@
 					alert("이메일 중복확인 해주세요");
 					return false;
             }
-	         
                   //이메일이 중복이 중복돼었을때 빨간색이면 중복이라고 나옴 
             if(document.getElementById("echeck").style.color=='red'){
-					alert("이메일이 중복되었습니다 다른 이메일을 적어주세요");
+					alert("이메일이 틀렸습니다.이메일을 다시 확인해주세요.");
 					return false;
 	        }
           return true;
@@ -437,8 +436,10 @@
     		   data : {"email" : $('#email2').val()},
     		   success:function(data){
     			   //$.trim()은  데이터의 문자의 앞뒤의 공백을 제거해주는 것 중간의 공백은 제거하지않는다.
-    			   if($.trim(data)==0){
+    			   if($.trim(data) == 0){
     				  $('#EmailcheckMsg').html('<p style="color:blue" id="echeck">사용가능한 이메일 입니다. </p>');
+    			  }else if($.trim(data) == 2){
+    				  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이메일 형식이 틀렸습니다. 다시 확인해주세요. </p>');
     			  }else{
     				  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이미 가입한 이메일입니다 다시 확인해주세요. </p>');
     			  }

@@ -9,13 +9,6 @@
 <title>Insert title here</title>
 <style type="text/css">
 
-  *,
-*:after,
-*:before {
-    /* -webkit-,-moz-등의 접두사는 특정브라우저를 따로 안정성을위해서 적어둔다.  */
-    box-sizing: border-box;
-}
-  
 #main{
     font-family: Dotum,sans-serif;
     font-size: 12px;
@@ -24,14 +17,20 @@
     max-width: 954px;
     height: 100%;
     margin: 0px auto;
+    box-sizing: border-box;
+}
+
+.content{
+box-sizing: border-box;
 }
  
 #contain{
     position: relative;
     padding: 32px 51px 95px; 
+    
 }
 #content{
-    height : 500px;
+    height : 450px;
     line-height: 14px;
     width: 450px;
     margin: 100px auto;
@@ -48,7 +47,7 @@
   
 .password{
     height: 40px;
-    width:  100%;
+    width:  94.5%;
     border : 3px soild;
     padding-left: 20px;
  }
@@ -65,7 +64,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 18px;
 	cursor: pointer;
@@ -99,6 +98,9 @@ input[type="password"] {
 						</p>
 						<p>
 							<em class="pwWaring">이전에 사용한 적 없는 비밀번호</em>가 안전합니다.
+						</p>
+						<p>
+						패스워드는 <em class="pwWaring">8자이상 특수문자와 숫자를 한개이상씩  </em>입력해야합니다.
 						</p>
 						<form role='form' method="post">
 							<p>
@@ -176,9 +178,9 @@ input[type="password"] {
 			 //새비밀번호 체크
         	 var password2 =document.getElementById('password2').value;
 			 
-        	 var pwcheck = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,20}$/;
+        	
         	 
-        	 console.log(!(pwcheck.test(password1)));
+        	
         	 if(password0 == null || password0 ==''){
         		 alert("비밀번호를 입력해주세요");
         		 document.getElementById('password0').focus();
@@ -199,7 +201,6 @@ input[type="password"] {
         	 
         	 if(pwcheck(password1) == false){
         		 alert('비밀번호를 다시 입력해주세요. 8자리이상 영문자 대소문자 와 최소 1개의 숫자 혹은 특수 문자를 포함해주셔야합니다. ');
-        		 
         		 return false;
         	 }
         	 

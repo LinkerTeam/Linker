@@ -59,20 +59,29 @@ public class CardTestController {
 	};
 	
 	//팀멤버 가져오기
-		@ResponseBody
-		@RequestMapping(value="/team/list/{t_id}",method= RequestMethod.GET)
-		public ResponseEntity<List<UserVO>> teamProfile(@PathVariable int t_id)throws Exception{
-			System.out.println("멤버리스트");
-			ResponseEntity< List<UserVO>> entity = null;
-			
-			try {
-				entity=new ResponseEntity<>(tmService.hasTeamProfile(t_id),HttpStatus.OK);
-				System.out.println(tmService.hasTeamProfile(t_id));
-			}catch (Exception e) {
-				entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-			
-			return entity;
+	@ResponseBody
+	@RequestMapping(value="/team/list/{t_id}",method= RequestMethod.GET)
+	public ResponseEntity<List<UserVO>> teamProfile(@PathVariable int t_id)throws Exception{
+		System.out.println("멤버리스트");
+		ResponseEntity< List<UserVO>> entity = null;
+		
+		try {
+			entity=new ResponseEntity<>(tmService.hasTeamProfile(t_id),HttpStatus.OK);
+			System.out.println(tmService.hasTeamProfile(t_id));
+		}catch (Exception e) {
+			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
+		
+		return entity;
+	}
 	
+	@RequestMapping(value = "mycard", method = RequestMethod.GET)
+	public String myFavoriteCard() throws Exception{
+		
+		
+		return "user/favoriteCard";
+	}
+	
+	
+		
 }

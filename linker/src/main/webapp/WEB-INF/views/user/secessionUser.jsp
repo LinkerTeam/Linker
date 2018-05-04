@@ -6,10 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-*, *:after, *:before {
-	/* -webkit-,-moz-등의 접두사는 특정브라우저를 따로 안정성을위해서 적어둔다.  */
-	box-sizing: border-box;
-}
 
 #main {
 	font-family: Dotum, sans-serif;
@@ -24,10 +20,12 @@
 #contain {
 	position: relative;
 	padding: 32px 51px 95px;
+	box-sizing: border-box;
+	
 }
 
 #content {
-	height: 400px;
+	height: 300px;
 	line-height: 14px;
 	width: 450px;
 	margin: 100px auto;
@@ -43,7 +41,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 18px;
 	cursor: pointer;
@@ -52,7 +50,7 @@
 }
   .h1{
      font-size: 30px;
-     margin-bottom: 120px;
+     margin-bottom: 90px;
      text-align: center;
   }
   .label{
@@ -63,7 +61,7 @@
      margin-top: 40px;
      margin-bottom : 30px;
      height: 30px;
-     width: 100%;
+     width: 99%;
   }
 </style>
 </head>

@@ -19,7 +19,7 @@
 }
 #contain {
 	position: relative;
-	padding: 32px 51px 95px;
+	padding: 32px 51px 0px;
 }
 #content {
 	height: 760px;
@@ -38,7 +38,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 18px;
 	cursor: pointer;
@@ -87,7 +87,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 13px;
 	cursor: pointer;	
@@ -104,7 +104,7 @@
     overflow:hidden;
     width:250px;
     height:30px;
-    background:#FA5883;
+    background:#0067a3;
     color:#fff;
     text-align:center;
     line-height:30px;
@@ -119,6 +119,9 @@
 .secessionSpan{
 	padding-top: 15px;
 	text-align: center;
+}
+.secession{
+	color : #52c052;
 }
 </style>
 </head>
@@ -161,12 +164,14 @@
 								<td>
 									<div class="file_input">
 										<p>
-											<label> 프로필 사진올리기 <input type="file" name="profileName" class='uploadprofile' id='file' accept=".jpg, .jpge, .png, .gif">
+											<label>사진 올리기 <input type="file" name="profileName" class='uploadprofile' id='file' accept=".jpg, .jpge, .png, .gif">
 											</label>
 										<p id="status"></p>
-										<div id='holder'></div>
+										<div id='holder'>
+										 <img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile" alt="프로필 사진" width="200" height="170" />
+										</div>
 										<!-- accept=".jpg, .png "  특정파일만 올릴수있게 파일 업로드시 사용자설정해줌 -->
-										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  </br>용량은 최대 1MB까지 가능합니다.</span>
+										<span>프로필 사진을 올릴 시 이미지 파일만 업로드 가능하며  </br>용량은 최대 1MB까지 가능합니다.</span>
 								</div>
 								</td>
 										</p>

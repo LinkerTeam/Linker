@@ -39,10 +39,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, c.content
 			, c.cdate AS c_cdate
 			, c.udate AS c_udate
-			, c.ps_id AS c_ps_id            
+			, c.ps_id AS c_ps_id
+			, uhc.status            
 		FROM linker.cardlist cl
 		LEFT JOIN linker.card c ON cl.id = c.cl_id
-	    WHERE p_id = #{p_id}
+		LEFT JOIN linker.user_has_card AS uhc ON cl.p_id =uhc.p_id AND c.id = uhc.c_id
+	    WHERE cl.p_id = #{p_id}
 	    AND cl.ps_id = 1
     <!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
 	</select>

@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.linker.domain.CardVO;
+import com.linker.dto.CardFavoriteDTO;
 
 @Repository
 public class CardDAOImpl implements CardDAO{
@@ -47,4 +48,21 @@ public class CardDAOImpl implements CardDAO{
 	public CardVO readPopcard(CardVO vo) throws Exception {
 		return session.selectOne(namespace + ".readPopcard", vo);
 	}
+	//카드 즐겨찾기 추카
+	@Override
+	public void favoriteCard(CardFavoriteDTO dto) throws Exception {
+		session.insert(namespace+".favoriteCard",dto);
+	}
+	//카드 즐겨찾기 보기
+	@Override
+	public List<CardVO> allFavorite(CardFavoriteDTO dto) throws Exception {
+		return session.selectList(namespace+".allFavorite",dto);
+	}
+	//카드 즐겨찾기 삭제
+	@Override
+	public void cardFavoriteDelete(CardFavoriteDTO dto) throws Exception {
+		session.delete(namespace+".cardFavoriteDelete",dto);
+	}
+	
+	
 }

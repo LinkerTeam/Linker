@@ -9,6 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -88,7 +90,7 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	// DTO를 자동으로 STS가 매개변수에 넣어줌
+	//DTO를 자동으로 STS가 매개변수에 넣어줌
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	// @ModelAttribute은 해당객체를 자동으로 view 까지전달
 	public String loginGET(Model model, HttpSession session, HttpServletResponse response) throws IOException {
@@ -279,12 +281,14 @@ public class UserController {
 
 		// 화면으로 부터 받아온 닉네임을 받아옴 request.getParameter("nickname");으로 html태그에 name을 가져옴
 		String nickname = request.getParameter("nickname");
-
-		// 닉네임을 DB에 넣고 받아온 결과를 rowcount에 넣어줌 0이나 1이 들어옴 0이면 중복이 아니고 1이면 닉네임이 있어 중복임
-		int rowcount = service.checkSignup(nickname);
-
+		if(nickname.length() > 1) {
+			// 닉네임을 DB에 넣고 받아온 결과를 rowcount에 넣어줌 0이나 1이 들어옴 0이면 중복이 아니고 1이면 닉네임이 있어 중복임
+			int rowcount = service.checkSignup(nickname);
+			// JSON으로 값을 리턴함
+			return String.valueOf(rowcount);
+		}
 		// JSON으로 값을 리턴함
-		return String.valueOf(rowcount);
+		return "1";
 	}
 
 	// get방식으로 URI에서 ?fileName이후에 값을 매개변수로 넣어줌
@@ -387,12 +391,14 @@ public class UserController {
 	public String emailCheck(HttpServletRequest request) throws Exception {
 
 		String email = request.getParameter("email");
-
-		int count = service.emailCheck(email);
-
-		// String.valueOf()는 Int를 스트링으로 바꿔주는 매소드 int -> String 1 -> "1"로 바꿔줌
-		return String.valueOf(count);
-
+		
+		if(isEmail(email)) {
+			int count = service.emailCheck(email);
+			// String.valueOf()는 Int를 스트링으로 바꿔주는 매소드 int -> String 1 -> "1"로 바꿔줌
+			return String.valueOf(count);
+		} else {
+			return "2";
+		}
 	}
 
 	// 잃어버린 비밀번호를 찾는 것
@@ -788,4 +794,21 @@ public class UserController {
 
 		return "true";
 	}
+	
+	
+	
+	// ============================================ 이메일 정규식  ========================================================
+	
+	   //자바 이메일체크
+		private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		private static boolean isValid(final String regex, final String target) {
+		      Matcher matcher = Pattern.compile(regex).matcher(target);
+		      return matcher.matches();
+		}
+		
+		private static boolean isEmail(final String str) {
+		      return isValid(EMAIL_PATTERN, str);
+		}
+	
 } // end메인

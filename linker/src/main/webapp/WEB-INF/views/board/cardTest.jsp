@@ -28,8 +28,10 @@
 		<div class="projectTitle"><input type="text" name="projectTitle" value="${project.title}" onKeyUp='limitMemo(this, 20)'></div>
         <div class="cardlistContent">
 
+			 
 			<!-- 카드리스트 전체 -->
             <div class="cardlists">
+			<div class="cardlist favorite"></div>
             	<!-- 각각의 카드리스트가 삽입될 곳 -->
                 <!-- 카드리스트 제일 끝의 Add a list...버튼 -->
            		<div class="cardlist addCardlist">
@@ -86,6 +88,7 @@
 	var p_ps_id = ${project.ps_id}; //프로젝트 상태값
 </script>
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 <script src="../../../resources/js/board/cardTest.js" type="text/javascript"></script>
 
 </html>

@@ -44,7 +44,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 18px;
 	cursor: pointer;
@@ -61,7 +61,7 @@
     margin-top: 10px;
 	border: none;
 	outline: none;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 15px;
 	cursor: pointer;

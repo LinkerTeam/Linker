@@ -33,8 +33,9 @@ public class CardlistController{
 	@RequestMapping(value="/{p_id}", method = RequestMethod.GET)
 	public ResponseEntity<List<ReadCardlistVO>> readCardlistAll(@PathVariable("p_id") int p_id){
 		ResponseEntity<List<ReadCardlistVO>> entity = null;
-		
+	
 		try { 
+			System.out.println("카드 출력입니다."+service.readCardlistAll(p_id).toString());
 			entity=new ResponseEntity<>(service.readCardlistAll(p_id), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

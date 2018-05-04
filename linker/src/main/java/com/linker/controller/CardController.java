@@ -3,6 +3,7 @@ package com.linker.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.linker.domain.CardVO;
+import com.linker.domain.UserVO;
+import com.linker.dto.CardFavoriteDTO;
 import com.linker.service.CardService;
 
 @RestController
@@ -86,7 +89,7 @@ public class CardController{
 		CardVO vo = new CardVO();
 		vo.setP_id(p_id);
 		vo.setPs_id(ps_id);
-		
+		System.out.println("카드 불러오기 입니다."+vo);
 		try { 
 			entity = new ResponseEntity<>(service.statusCardList(vo), HttpStatus.OK);
 		} catch (Exception e) {
@@ -135,4 +138,70 @@ public class CardController{
 		return entity;
 	}
 	
+	
+	//카드 즐겨찾기
+	@RequestMapping(value ="/favorite", method = RequestMethod.POST)
+	public ResponseEntity<String> favoriteCard(@RequestBody CardFavoriteDTO dto, HttpSession session) throws Exception{
+	
+		UserVO vo = (UserVO) session.getAttribute("login");
+		dto.setU_id(vo.getId());
+		System.out.println(dto);
+		
+		ResponseEntity<String> entity = null;
+		
+		service.favoriteCard(dto);
+		try {
+			entity = new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	
+	//카드 즐겨찾기 보기
+	@RequestMapping(value ="/favoritelist/{p_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<CardVO>> allFavorite(@PathVariable int p_id, HttpSession session) throws Exception{
+	
+		CardFavoriteDTO dto = new CardFavoriteDTO();
+		UserVO vo = (UserVO) session.getAttribute("login");
+		dto.setU_id(vo.getId());
+		dto.setP_id(p_id);
+		System.out.println(dto);
+		
+		ResponseEntity<List<CardVO>> entity = null;
+		
+		System.out.println(service.allFavorite(dto)+"테스트중입니다.");
+		try {
+			entity = new ResponseEntity<>(service.allFavorite(dto),HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		System.out.println("테스트중입니다.");
+		return entity;
+	}
+	
+	
+	//카드즐겨찾기 삭제
+	@RequestMapping(value ="/favoriteDelete/{c_id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> cardFavoriteDelete(@PathVariable int c_id,HttpSession session) throws Exception{
+		System.out.println("카드 삭제입니다.");
+		CardFavoriteDTO dto = new CardFavoriteDTO();
+		UserVO vo = (UserVO) session.getAttribute("login");
+		dto.setU_id(vo.getId());
+		dto.setC_id(c_id);
+		System.out.println(dto);
+		
+		service.cardFavoriteDelete(dto);
+		
+		ResponseEntity<String> entity = null;
+		
+		try {
+			entity = new ResponseEntity<>("SUCCESS",HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+
 }

@@ -35,7 +35,7 @@ var STATUS_HIDDEN = 3; //가리기 (상태변경에 사용)
 
 var p_title; //프로젝트 title
 
-
+allFavorite();
 
 /* 프로젝트 title 수정 | 관련된 모든 이벤트 */
 $("input[name=projectTitle]").on({	
@@ -109,14 +109,19 @@ function newCardlistAdd(cardlistId, cardlistTitle){
 				
 
 /* 매개변수 카드id와 카드title이 주어지면 그것을 이용해 카드 태그를 문자열로 만드는 함수 */
-function newCardAdd(cardId, cardlistId, cardTitle){
-	var newTitle = "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='cardtitleLi' onclick='loadCardData(this)'>" + 
+function newCardAdd(cardId, cardlistId, cardTitle,favoriteStatus){
+	var newTitle = "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='cardtitleLi' onclick='loadCardData(this,event)'>" + 
 				   "    <div id='cardLink'>" + cardTitle + "</div>" + 
-				   "    <button class='cardModifyBtn' onclick='cardTitleModifyModal(this)'><i class='far fa-edit'></i></button>" + 
-				   "</div>";
+				   "    <button class='cardModifyBtn' onclick='cardTitleModifyModal(this)'><i class='far fa-edit'></i></button>";
+		if(favoriteStatus == 1){
+			newTitle += "<i class='fas fa-star delete-favo' id='"+cardId+"' data-c_id='" + cardId + "' data-t_id='" + cardlistId + "'>"
+			   		+"</div>";
+		} else{
+			newTitle += "<i class='far fa-star add-favo' id='"+cardId+"' data-c_id='" + cardId + "' data-t_id='" + cardlistId + "'>"
+	   				+"</div>";
+		}
 	return newTitle;
 };
-
 
 /* 글자수 제한 */
 function limitMemo(obj, cnt) {
@@ -144,6 +149,7 @@ function allCardlist(){
 	$.ajax({
 		type : "GET",
 		url : "/board/" + p_id,
+		async: false,
 		success : function(data) {
 			console.log(data);
 			var allID = new Array(); //카드리스트 id를 담을 배열
@@ -186,12 +192,13 @@ function allCardlist(){
 	  			for(var j = 0; j < data.length; j++){
 	  				//카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같고 ps_id가 1(진행)일 때
 		  			if(data[j].cl_id === uniqID[i] && data[j].c_ps_id === 1){ 
-		  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title); //문자열로 카드 태그를 만드는 함수 호출
+		  				console.log(data[j].status);
+		  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title,data[j].status); //문자열로 카드 태그를 만드는 함수 호출
 						$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
 		  			};
 	  			};
 			};
-	  		
+			
 		},//success
 		error : function() {
 	   		alert("에러가 발생했습니다.");
@@ -683,3 +690,130 @@ $('.popupMenuList li').on('click', function() {
 
 	cardlistStatusChange(cardlistId, state, cardlistTitle); //상태변경 ajax 처리 함수 호출
 });
+
+//즐겨찾기 추가
+$('.cards').on("click",".add-favo", function(event){	
+
+	//url에서 정보를 가져와서 /단위로 끈는다.
+	var link = document.location.href.split("/");
+	
+	var t_id = link[4];
+	var cl_id = $(this).parent().attr('data-clid');
+	var c_id = $(this).parent().attr('data-id') ;;
+	var title = $(this).parent().children('#cardLink').text();
+	$(this).addClass('delete-favo');
+	$(this).addClass('fas');
+	$(this).removeClass('add-favo');
+	$(this).removeClass('far');
+	console.log(title);
+	
+	$.ajax({
+		type : "post",
+		url : "/board/favorite",
+		headers :{     
+			'Content-Type' : 'application/json',
+			'X-HTTP-Method-Override' : 'POST'							
+		} ,
+		data : JSON.stringify({ t_id : t_id, 
+								p_id : p_id,
+								cl_id : cl_id,
+								c_id : c_id}),
+		dataType : "text",
+		success : function(result){
+			if($('.favorite').css("display") == "none"){
+				allFavorite();
+			}else{
+			var str = "<div class='cardtitleLi' data-id='"+c_id+"' data-clid='"+cl_id+"' onclick='loadCardData(this)'>"
+			+"<div id='cardLink'>"+title+"</div>"
+			+"<i class='fas fa-star delete-favo' data-p_id='"+p_id+"'></i>" 
+			+"</div>";
+			$('.favorite .cards').append(str);
+			}
+		}, error : function(){
+			alert("통신 오류 입니다.");
+		}
+	}) // ajax end
+	return false;
+	alert(2);
+	event.stopPropagation();
+	alert(1);
+	
+});
+
+	
+//즐겨찾기 불러오기	
+function allFavorite(){
+	$.ajax({
+		type : "get",
+		url : "/board/favoritelist/"+p_id,
+		success : function(data){
+			var cardlist = "<div class='cardlistTitleBox'>"
+				   +"<button type='button' class='cardlistPopBtn'></button>"
+				   +"<textare class='cardlistTitle' rows='1' onkeyup='limitMemo(this, 20)' style='height : 26px;'>즐겨찾기</textarea></div>"
+				   +"<div class='cards' style='max-height: calc(((100% - 26px) - 45px) - 20px);'>";
+
+					$('.favorite').html(cardlist);
+					$('.favorite').css("display","block");
+			if(data.length > 0){
+			
+				for(var i = 0; i < data.length;i++){
+					console.log(data[i]);
+					var str = "<div class='cardtitleLi' data-id='"+data[i].id+"' data-clid='"+data[i].cl_id+"' onclick='loadCardData(this)'>"
+								+"<div id='cardLink'>"+data[i].title+"</div>"
+								+"<i class='fas fa-star delete-favo' data-p_id='"+data[i].p_id+"'></i>" 
+								+"</div>";
+					$('.favorite .cards').eq(0).append(str);
+				}
+			var footer = "<footer class='favo-footer'></footer>";
+				$('.favorite').append(footer);
+			} else{
+				$('.favorite').css("display","none");
+			}
+		}, error : function(){
+			alert(2);
+			console.log("통신 오류입니다");
+		}
+	}) // end ajax
+	
+}
+
+//즐겨찾기 삭제
+$(document).on("click",".delete-favo",function(event){
+
+	var c_id = $(this).parent().attr('data-id');
+	$.ajax({
+		type : 'DELETE',
+		url : '/board/favoriteDelete/'+c_id,
+		success : function(data){
+			favoriteNumber();
+			allFavorite();
+			$('#'+c_id).addClass('add-favo');
+			$('#'+c_id).addClass('far');
+			$('#'+c_id).removeClass('delete-favo');
+			$('#'+c_id).removeClass('fas');
+			
+		}, error : function(){
+			alert("통신 오류 입니다.");
+		}
+	}) // end ajax
+	
+	event.stopPropagation();
+})
+
+
+//즐겨찾기갯수 체크
+function favoriteNumber(){
+	$.ajax({
+		type : "get",
+		url : "/board/favoritelist/"+p_id,
+		success : function(data){
+			console.log(data.length);
+					if(data.length == 0){
+						allFavorite();
+					}
+		}, error : function(){
+						console.log("통신 오류입니다");
+		}
+	}) // end ajax
+}
+

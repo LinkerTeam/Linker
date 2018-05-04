@@ -173,8 +173,8 @@
     width: 50%;
     font-weight: bold;
     color: #fff;
-    background-color:#FA5883;
-    border: 1px solid #fc4d7c;
+    background-color:#026aa7;
+    border: 1px solid #026aa7;
     padding: 10px 0;
     margin-top: 15px;
 }
@@ -280,8 +280,8 @@
     width: 50%;
     font-weight: bold;
     color: #fff;
-    background-color:#FA5883;
-    border: 1px solid #fc4d7c;
+    background-color:#026aa7;
+    border: 1px solid #026aa7;
     padding: 10px 0;
     margin-top: 15px;
 }
@@ -385,6 +385,7 @@ input#agree:focus {
 .profile-img{
 	width: 50px;
 	height: 50px;
+	border-radius: 40px;
 }
 
 .m-list{
@@ -437,4 +438,23 @@ input#agree:focus {
 	font-size: 23px;
 	font-weight: bold;
 	cursor: pointer;
+}
+.nick{
+	position: relative;
+    top: -30px;
+    left: 70px;
+	
+}
+.popupCardClose{
+	position: relative;
+    float: right;
+    color: gray;
+    bottom: 10px;
+    text-decoration: none;
+    font-size: 45px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 8888;
+    left: 25px;
+	
 }

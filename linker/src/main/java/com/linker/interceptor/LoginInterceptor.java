@@ -53,23 +53,23 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			  //페이지를 따로넘기지않고 alert창을 뛰움
 			  response.setContentType("text/html; charset=UTF-8");
 			  PrintWriter out = response.getWriter();
-			  out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1);</script>");
+			  out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1); </script>");
 			  out.flush();
 			  return;
 			  
-		}else {
+		} else {
 			  //페이지를 따로넘기지않고 alert창을 뛰움
 			  response.setContentType("text/html; charset=UTF-8");
 			  PrintWriter out = response.getWriter();
-			  out.println("<script>alert(' Email을 인증해주세요. '); history.go(-1);</script>");
+			  out.println("<script>alert(' Email을 인증해주세요. '); history.go(-1); </script>");
 			  out.flush();
 			  return;
-		  }
-	  }else{
+		  	 }
+	  } else {
 		  //userVO값이 널이면 DB로 부터 값을 가져오지못한것 아이디또는 암호가 틀려서 DB를 가져오지못한다 그럼 제대로된 로그인이안됐다는 증거
 		  response.setContentType("text/html; charset=UTF-8");
 		  PrintWriter out = response.getWriter();
-		  out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
+		  out.println("<script>alert('로그인 정보를 확인해주세요.');history.go(-1); </script>");
 		  out.flush();
 	  }
 	}

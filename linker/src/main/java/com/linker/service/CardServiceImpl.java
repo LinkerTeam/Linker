@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.linker.domain.CardAttachVO;
 import com.linker.domain.CardVO;
+import com.linker.dto.CardFavoriteDTO;
 import com.linker.persistence.CardAttachDAO;
 import com.linker.persistence.CardDAO;
 
@@ -67,5 +68,21 @@ public class CardServiceImpl implements CardService{
 	public void deleteAttach(String file) throws Exception {
 		attach_dao.deleteAttach(file);
 	}
+	//카드즐겨 찾기 추카
+	@Override
+	public void favoriteCard(CardFavoriteDTO dto) throws Exception {
+		dao.favoriteCard(dto);
+	}
+	//카드 즐겨찾기 보기
+	@Override
+	public List<CardVO> allFavorite(CardFavoriteDTO dto) throws Exception {
+		return dao.allFavorite(dto);
+	}
+	//카드즐겨찾기 삭제
+	@Override
+	public void cardFavoriteDelete(CardFavoriteDTO dto) throws Exception {
+		dao.cardFavoriteDelete(dto);
+	}
 	
+		
 }
