@@ -6,8 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
     <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=657" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -77,9 +75,9 @@
 						class="connectmodal"></a>
 				</div>
 				<div class="content-text">
-					<form>
-						<input type="input" class="team-title" value=""
-							placeholder="team name title">
+					<form name="form1" action="main/teamcreate" method="post" class="teamform">
+						<input type="input" name="name" class="team-title" value=""
+							placeholder="team name title" maxlength="20">
 						<button class="teambtn disabled" disabled="disabled">Create</button>
 					</form>
 					<span class="tclosebtn"><i class="fas fa-times"></i></span>
@@ -90,6 +88,7 @@
 		<!-- 팀 멤버 모달창 -->
 		<div class="member-modal">
 			<div class="member-content">
+				<div class="popupCardClose">×</div>
 				<h1 class="member-head"></h1>
 				<div class="member-list">
 				</div>
@@ -140,7 +139,7 @@
     	  u_id= $(this).parent().parent().children().eq(0).children('.uid').html();
           t_id= $(this).parent().parent().children().eq(0).children('.tid').html();
           //클릭한곳의 부모를 찾아서옴
-          parent = $(this).parent().parent().children('.teamInfo');
+          parent = $(this).parent();
            console.log(parent);
 
         $('.project-modal').addClass('is-visible');
@@ -215,9 +214,11 @@
           	   if(result != 0){
           		  var str ="<ul class='projects'><li>"
           		       +"<a href='http://localhost:9090/board/"+t_id+"/"+result+"'><span class='name'>"+title+"</span>"
-          		       +"</a></li>"
+          		       +"<span>"
+          		       +"<i class='far fa-star add-favo' id='"+result+"' data-p_id='"+result+"' data-t_id='t"+t_id+"'></i>"
+          		       +"</a></span></li>"
           		       +"</ul>";
-          		   $(parent).after(str);
+          		   $(parent).before(str);
           	   }
    		},error : function() {
           		alert('error');
@@ -259,39 +260,6 @@
     		$('.teambtn').removeAttr("disabled");	
     	}  	
     });
-    
-    //팀 추가 만들기
-    $('.teambtn').on("click", function(){
-    	var titleName= $('.team-title').val();
-    		if(titleName == '' || titleName == null){
-				alert('이름을 다시 입력해주세요');
-             	return;
-         	};
-          
-			$.ajax({
-				type : 'POST',
-             	url : '/main/team',
-             	contentType : 'text/javascript',
-             	headers : {
-					"X-HTTP-Method-Override" : "POST",
-                	"content-type" : "application/json"
-          		},
-              	dataType : 'json',
-              	data:JSON.stringify({
-					name : titleName               
-          		}),
-             	success : function(result) {  
-             	console.log(typeof(result));
-	           		if(result != null){
-	              		alert("팀이 추가되었습니다.");
-	              		self.location = '/main/team';
-	           		};
-          		},
-          		error : function(){
-                	alert('error');
-          		}   
-         	});
-      	});
 	
 	//버튼 눌렀을때 팀불러오기
 	$(document).on("click",".memberbtn",function(){
@@ -308,6 +276,10 @@
 			$('.member-modal').removeClass('is-visible');
 		}
 	})
+	//모달창 x로 닫기
+	$('.popupCardClose').on("click",function(){
+		$('.member-modal').removeClass('is-visible');
+	})
 	
 	//팀  프로필 ajax 불러오기
 	function memberlist(t_id){
@@ -322,7 +294,7 @@
 					for(var i = 0; i < data.length; i++ ){		
 						var str = "<div class='m-list'>"
 						+"<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate"+data[i].profile+"' class='profile-img'>"
-						+data[i].nickname+"</div>";
+						+"<div class='nick'>"+data[i].nickname+"</div></div>";
 						$('.member-list').append(str);
 					}
 				} else{
@@ -408,21 +380,7 @@
 				type : "get",
 				url : "main/favorite/"+p_id,
 				success : function(data){
-					console.log(data);
-					
-					//맨처음 아무것도 없을때는 불러오기 처리	
-					if($('.hidden').attr("class") != "hidden"){
-						favoriteList();
-					}else{
-					  str = "<ul class='projects'>"
-						  +"<li><a "
-						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
-						  +" class='name'>"+title+"</span>"		
-						  +"<span><i class='fas fa-star delete-favo' data-p_id='"+p_id+"' data-t_id='"+t_id+"'></i></span></a>"
-						  +"</li>"
-					      +"</ul>";
-					  $('.projects').eq(0).prepend(str);
-					}
+					favoriteList();
 				},error : function(){
 					alert("통신 오류 입니다.");
 				}				
@@ -482,6 +440,10 @@
 			}
 		})
 	}
+	$('.teambtn').on("click",function(){
+		var team = $('.teamform');
+		team.submit();
+	})
 	
 </script>
 </body>

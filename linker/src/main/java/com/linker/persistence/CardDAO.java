@@ -3,6 +3,7 @@ package com.linker.persistence;
 import java.util.List;
 
 import com.linker.domain.CardVO;
+import com.linker.dto.CardFavoriteDTO;
 
 public interface CardDAO {
 	
@@ -18,4 +19,10 @@ public interface CardDAO {
 	public List<CardVO> listCards(CardVO vo) throws Exception;
 	//팝업카드 조회
 	public CardVO readPopcard(CardVO vo) throws Exception;
+	//카드즐겨 찾기 추카
+	public void favoriteCard(CardFavoriteDTO dto) throws Exception;
+	//카드즐겨찾기 보기
+	public List<CardVO> allFavorite(CardFavoriteDTO dto) throws Exception;
+	//카드 즐겨찾기 삭제
+	public void cardFavoriteDelete(CardFavoriteDTO dto) throws Exception;
 }

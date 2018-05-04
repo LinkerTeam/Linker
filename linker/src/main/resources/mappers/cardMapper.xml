@@ -49,7 +49,7 @@
 			, c.ps_id
 			, cl.p_id
 		FROM linker.card c
-		INNER JOIN linker.cardlist cl ON c.cl_id=cl.id
+		INNER JOIN linker.cardlist AS cl ON c.cl_id=cl.id
 		WHERE p_id = #{p_id}
 		AND c.ps_id = #{ps_id}
 		ORDER BY udate DESC
@@ -124,6 +124,40 @@
 	<delete id="deleteAttach">
 		DELETE FROM linker.c_file
 		WHERE file = #{file}
+	</delete>
+	
+	<!-- 즐겨찾기 추카 -->
+	<insert id="favoriteCard">
+		INSERT INTO linker.user_has_card(u_id,t_id,p_id,cl_id,c_id)
+		VALUES (#{u_id},#{t_id},#{p_id},#{cl_id},#{c_id})
+	</insert>
+	
+	<!-- 즐겨찾기 조회 -->
+	<select id="allFavorite" resultType="CardVO">
+	SELECT c.id
+			, c.u_id
+			, c.title
+			, c.content
+			, c.cdate
+			, c.udate
+			, c.cl_id
+			, c.ps_id
+			, cl.p_id
+	FROM linker.user_has_card AS uhc
+	JOIN linker.card AS c ON c.id = uhc.c_id
+	JOIN linker.cardlist AS cl ON cl.id = uhc.cl_id
+	JOIN linker.project p ON uhc.p_id = p.id
+	WHERE uhc.u_id = #{u_id} 
+	AND uhc.p_id = #{p_id}
+	AND c.ps_id = 1
+	ORDER BY uhc.cdate ASC
+	</select>
+	
+	<!-- 카드즐겨찾기 삭제 -->
+	<delete id="cardFavoriteDelete">
+	DELETE 
+	FROM linker.user_has_card 
+	WHERE u_id=#{u_id} AND c_id =#{c_id}
 	</delete>
 	
 </mapper>

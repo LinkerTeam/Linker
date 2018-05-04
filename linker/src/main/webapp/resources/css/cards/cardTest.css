@@ -138,6 +138,17 @@ textarea.cardlistTitle:focus {
     font-weight: 400;
     cursor: pointer;
 }
+/* 즐겨찾기 footer  */
+.favo-footer {
+	display: block;
+    height: 40px;
+    line-height: 40px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+}
 .createCardBox:hover {
     background-color: #d4d4d4;
 }

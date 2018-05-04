@@ -1,5 +1,7 @@
 ﻿@charset "UTF-8";
-
+body{
+	background-color : #026aa7;
+}
 /* 수정사항 (by. 오윤주) */
 .wrap{
 	position: absolute;
@@ -10,7 +12,7 @@
 .main-nav {
     width: 360px;
     height:  100%;
-    margin: 0 auto;
+    margin: -250px auto;
 }
 .main-nav ul {
     position: relative;
@@ -69,24 +71,23 @@
 
  /* 메인버튼 로그인 */
 .main-nav li:nth-child(1) a {
-    background: #d83d3d;
+    background: #026aa7;
     border: 2px solid #fff;
 }
 
 .main-nav li:nth-child(1) a:hover {
     background: #fff;
-    color: #d83d3d;
 }
 
 /* 메인버튼 회원가입 */
 .main-nav li:nth-child(2) a {
-    background: #9e2c2c;
+    background: #026aa7;
     border: 2px solid #fff;
 }
 
 .main-nav li:nth-child(2) a:hover {
     background: #fff;
-    color: #7e0909;
+
 }
 
 /* ------------ 이 부분까지 메인창  ------------ */
@@ -246,7 +247,7 @@ label {
 /* 잃어버린 비밀번호 찾기 위치 선정 */
 #login .form-bottom-message > a {
     position: absolute;
-    top: 455px; /* top: 390px; */
+    top: 400px; 
     left: 220px;
     text-decoration: none;
     color: white;
@@ -396,4 +397,33 @@ label {
 	margin-top: -30px;
 	margin-left: 15px;
 }
+
+.we-image{
+	position: relative;
+	padding-left: 10px;
+    margin-bottom: 30px;
+	height: 320px;
+}
+.message-image{
+	margin-bottom: 20px;
+	padding-left : 50px;
+	height: 20px;
+}
+.mainlogo-image{
+	padding-left: 42px;
+    margin-bottom: 20px;
+	height : 60px;
+}
+
+.image{
+	position:relative;
+	margin: 0 auto;
+}
+.we-image{
+	
+}
+.login-image,.signup-image{
+    padding-top: 13px;
+}
+
    
