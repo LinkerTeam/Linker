@@ -7,9 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
-<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-<meta name="viewport" content="width=device-width" />
+<title>LINKER 팀 관리</title>
 <!-- My CSS -->
 <link href="/resources/css/admin/adminUser.css?ver=11" type="text/css" rel="stylesheet" />
 <!-- Bootstrap core CSS     -->
@@ -23,7 +21,42 @@
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 <link href="/resources/css/admin/themify-icons.css?ver=1" rel="stylesheet">
 </head>
+ 
 <body>
-	
+<div class="wrapper">
+	<div class="sidebar" data-background-color="white" data-active-color="danger">
+		<div class="sidebar-wrapper">
+			<div class="logo">
+			    <a href="http://localhost:9090/main" class="simple-text">
+			        LINKER
+			    </a>
+			</div>
+			
+			<ul class="nav">
+			    <li>
+			        <a href="userList">
+			            <i class="ti-user"></i>
+			            <p>회원 관리</p>
+			        </a>
+			    </li>
+			    <li class="active">
+			        <a href="teamList">
+			            <i class="ti-view-list-alt"></i>
+			            <p>팀 관리</p>
+			        </a>
+			    </li>
+			</ul>
+		</div>
+	</div>
+			
+			<%@include file="adminFooter.jsp"%>
+			
+		</div>
+	</div>
 </body>
+
+<script src="../../resources/js/jquery-3.3.1.min.js"></script>
+<script src="../../resources/js/admin/bootstrap.min.js" type="text/javascript"></script>
+<!-- <script src="../../resources/js/admin/readTeam.js?ver=1" type="text/javascript"></script> -->
+
 </html>

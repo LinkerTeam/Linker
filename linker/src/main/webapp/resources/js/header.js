@@ -12,7 +12,6 @@
 /* 헤더 검색창 | blur될 경우 입력한 내용 초기화 */
 $("#search").on("blur", function(){
 	$(".header-search").children("form").children("button").css("left", "140px");
-	$(this).val("");
 });
 $("#search").on("focus", function(){
 	$(".header-search").children("form").children("button").css("transition", "0.5s");

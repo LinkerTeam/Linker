@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.linker.domain.Criteria;
 import com.linker.dto.AdminUserDTO;
 import com.linker.persistence.AdminUserDAO;
 
@@ -33,9 +34,16 @@ public class AdminUserServiceImpl implements AdminUserService {
 	//유저 정보 수정
 	@Override
 	public void updateUser(AdminUserDTO dto) throws Exception {
-		String password = passwordEncoder.encode(dto.getPassword());
+		//스프링 시큐리티 암호화
+		String password = passwordEncoder.encode(dto.getPassword()); 
 		dto.setPassword(password);
 		dao.updateUser(dto);
+	}
+	
+	//페이징
+	@Override
+	public List<AdminUserDTO> listCriteria(Criteria cri) throws Exception {
+		return dao.listCriteria(cri);
 	}
 
 }

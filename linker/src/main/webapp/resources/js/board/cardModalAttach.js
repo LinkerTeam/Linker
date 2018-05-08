@@ -285,8 +285,15 @@ function fileCheck(file) {
 		contentType : false, //기본값인 application/x-www-form-urlencoded 말고 multipart/form-data방식으로 파일전송 하기 위해 false
 		type : "POST",
 		success : function(data) {
-			if (data !== null)
+			if (data !== null) {
+				var count = $(".attachLi").length; //첨부파일 개수
+				//첨부파일 아이콘이 없는 상태에서 새로 등록할 경우 아이콘과 1추가
+				if(count === 0)
+					$(".cardtitleLi[data-id=" + popCardId + "]").children(".cardIcon").append("<i class='fas fa-paperclip'></i><p>1</p>");
+				else //댓글 아이콘이 있는 상태에서 새로 등록할 경우 count +1
+					$(".cardtitleLi[data-id=" + popCardId + "]").children(".cardIcon").children(".svg-inline--fa.fa-paperclip.fa-w-14").next("p").html(count + 1);
 				allAttach(); //첨부파일 목록 갱신
+			};
 		},
 		error : function() {
 			alert("에러가 발생했습니다.");
@@ -310,7 +317,17 @@ $(".uploadedList").on("click", ".attachDeleteBtn", function(e) {
 		dataType : "text",
 		success : function(result) {
 			if (result === "DELETED") {
-				//deleteBtn.parent().parent().remove();
+				
+				var count = $(".attachLi").length; //첨부파일 개수
+				var attachIcon = $(".cardtitleLi[data-id=" + popCardId + "]").children(".cardIcon").children(".svg-inline--fa.fa-paperclip.fa-w-14");
+				
+				if(count === 1) { //첨부파일이 1개인 상태에서 삭제했을 경우 아이콘, 개수 p태그 삭제
+					$(attachIcon).next("p").remove();
+					$(attachIcon).remove();
+				} else { //삭제 후에도 첨부파일이 0개가 아니면 count -1
+					$(attachIcon).next("p").html(count - 1);
+				};
+				
 				allAttach();
 			};
 		}

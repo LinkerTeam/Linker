@@ -37,45 +37,72 @@
 	
 	
 	<!-- 상태값에 따른 카드 조회 -->
-	<select id="statusCardList" resultType="CardVO">
+	<select id="statusCardList" resultType="ReadCardlistVO">
 		SELECT
-			c.id
-			, c.u_id
-			, c.title
-			, c.content
-			, c.cdate
-			, c.udate
-			, c.cl_id
-			, c.ps_id
-			, cl.p_id
+			c.id AS c_id
+			, c.u_id AS c_u_id
+			, c.title AS c_title
+			, CASE
+	            WHEN c.content IS NULL THEN 0
+	            WHEN c.content = '' THEN 0
+	            ELSE 1
+	            END AS content
+			, c.cdate AS c_cdate
+			, c.udate AS c_udate
+			, c.cl_id 
+			, c.ps_id AS c_ps_id
+			, cl.p_id 
+			, uhc.status
+            , reply
+            , file
 		FROM linker.card c
-		INNER JOIN linker.cardlist AS cl ON c.cl_id=cl.id
-		WHERE p_id = #{p_id}
+		INNER JOIN linker.cardlist cl ON c.cl_id=cl.id
+		LEFT JOIN linker.user_has_card uhc ON cl.p_id = uhc.p_id AND c.id = uhc.c_id
+        LEFT JOIN (SELECT c_id, count(*) AS reply
+					FROM linker.c_reply
+					GROUP BY c_id) AS r ON c.id = r.c_id
+		LEFT JOIN (SELECT c_id, count(*) AS file
+					FROM linker.c_file
+					GROUP BY c_id) AS f ON c.id = f.c_id
+		WHERE cl.p_id = #{p_id}
 		AND c.ps_id = #{ps_id}
-		ORDER BY udate DESC
+		ORDER BY c.udate DESC
 	</select>
 	
 	
 	<!-- 특정 카드리스트에 대한 진행상태의 카드 목록 -->
-	<select id="listCards" resultType="CardVO">
+	<select id="listCards" resultType="ReadCardlistVO">
 		SELECT
-			c.id
-			, c.u_id
-			, c.title
-			, c.content
-			, c.cdate
-			, c.udate
-			, c.cl_id
-			, c.ps_id
+			c.id AS c_id
+			, c.u_id AS c_u_id
+			, c.title AS c_title
+			, CASE
+	            WHEN c.content IS NULL THEN 0
+	            WHEN c.content = '' THEN 0
+	            ELSE 1
+	            END AS content
+			, c.cdate AS c_cdate
+			, c.udate AS c_udate
+			, c.cl_id 
+			, c.ps_id AS c_ps_id
 			, cl.p_id
+			, uhc.status
+            , reply
+            , file
 		FROM linker.card c
 		INNER JOIN linker.cardlist cl ON c.cl_id=cl.id
-		WHERE p_id = #{p_id}
+		LEFT JOIN linker.user_has_card uhc ON cl.p_id = uhc.p_id AND c.id = uhc.c_id
+        LEFT JOIN (SELECT c_id, count(*) AS reply
+					FROM linker.c_reply
+					GROUP BY c_id) AS r ON c.id = r.c_id
+		LEFT JOIN (SELECT c_id, count(*) AS file
+					FROM linker.c_file
+					GROUP BY c_id) AS f ON c.id = f.c_id
+		WHERE cl.p_id = #{p_id}
 		AND c.cl_id = #{cl_id}
 		AND c.ps_id = 1
-		ORDER BY udate DESC
+		ORDER BY c_id ASC
 	</select>
-	
 	
 	<!-- 카드 상세내용 조회(카드모달창에 나오는 내용들) -->
 	<select id="readPopcard" resultType="CardVO">
@@ -84,6 +111,11 @@
 			, c.u_id
 			, c.title
 			, c.content
+			, CASE
+	            WHEN c.content IS NULL THEN 0
+	            WHEN c.content = '' THEN 0
+	            ELSE 1
+	            END AS checkContent
 			, c.cdate
 			, c.udate
 			, c.cl_id
@@ -92,9 +124,19 @@
 			, cl.ps_id AS cl_ps_id
             , u.nickname
             , u.profile
+            , uhc.status
+            , reply
+            , file
 		FROM linker.card c
 		INNER JOIN linker.cardlist cl ON c.cl_id = cl.id
 		INNER JOIN linker.user u ON c.u_id = u.id
+        LEFT JOIN linker.user_has_card uhc ON c.id = uhc.c_id
+        LEFT JOIN (SELECT c_id, count(*) AS reply
+					FROM linker.c_reply
+					GROUP BY c_id) AS r ON c.id = r.c_id
+		LEFT JOIN (SELECT c_id, count(*) AS file
+					FROM linker.c_file
+					GROUP BY c_id) AS f ON c.id = f.c_id
 		WHERE c.id = #{id}
 	</select>
 	
@@ -126,38 +168,50 @@
 		WHERE file = #{file}
 	</delete>
 	
-	<!-- 즐겨찾기 추카 -->
+	
+	<!-- 즐겨찾기 추가 -->
 	<insert id="favoriteCard">
-		INSERT INTO linker.user_has_card(u_id,t_id,p_id,cl_id,c_id)
-		VALUES (#{u_id},#{t_id},#{p_id},#{cl_id},#{c_id})
+		INSERT INTO linker.user_has_card(u_id, t_id, p_id, cl_id, c_id)
+		VALUES (#{u_id}, #{t_id}, #{p_id}, #{cl_id}, #{c_id})
 	</insert>
 	
 	<!-- 즐겨찾기 조회 -->
-	<select id="allFavorite" resultType="CardVO">
-	SELECT c.id
-			, c.u_id
-			, c.title
-			, c.content
-			, c.cdate
-			, c.udate
+	<select id="allFavorite" resultType="ReadCardlistVO">
+		SELECT c.id AS c_id
+			, c.u_id AS c_u_id
+			, c.title AS c_title
+			, c.cdate AS c_cdate
 			, c.cl_id
-			, c.ps_id
+			, c.ps_id AS c_ps_id
 			, cl.p_id
-	FROM linker.user_has_card AS uhc
-	JOIN linker.card AS c ON c.id = uhc.c_id
-	JOIN linker.cardlist AS cl ON cl.id = uhc.cl_id
-	JOIN linker.project p ON uhc.p_id = p.id
-	WHERE uhc.u_id = #{u_id} 
-	AND uhc.p_id = #{p_id}
-	AND c.ps_id = 1
-	ORDER BY uhc.cdate ASC
+			, CASE
+	            WHEN c.content IS NULL THEN 0
+	            WHEN c.content = '' THEN 0
+	            ELSE 1
+	            END AS content
+            , uhc.status
+            , reply
+            , file
+		FROM linker.user_has_card AS uhc
+		JOIN linker.card AS c ON uhc.c_id = c.id
+		JOIN linker.cardlist AS cl ON uhc.cl_id = cl.id
+        LEFT JOIN (SELECT c_id, count(*) AS reply
+					FROM linker.c_reply
+					GROUP BY c_id) AS r ON c.id = r.c_id
+		LEFT JOIN (SELECT c_id, count(*) AS file
+					FROM linker.c_file
+					GROUP BY c_id) AS f ON c.id = f.c_id
+		WHERE uhc.u_id = #{u_id} 
+		AND uhc.p_id = #{p_id}
+		AND c.ps_id = 1
+		ORDER BY uhc.cdate ASC
 	</select>
 	
-	<!-- 카드즐겨찾기 삭제 -->
+	<!-- 즐겨찾기 삭제 -->
 	<delete id="cardFavoriteDelete">
-	DELETE 
-	FROM linker.user_has_card 
-	WHERE u_id=#{u_id} AND c_id =#{c_id}
+		DELETE FROM linker.user_has_card 
+		WHERE u_id = #{u_id} 
+		AND c_id = #{c_id}
 	</delete>
 	
 </mapper>

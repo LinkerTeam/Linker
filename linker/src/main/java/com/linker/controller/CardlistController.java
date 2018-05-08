@@ -20,7 +20,7 @@ import com.linker.service.CardlistService;
 
 @RestController
 @RequestMapping("/board")
-public class CardlistController{
+public class CardlistController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(CardlistController.class);
 	
@@ -30,24 +30,23 @@ public class CardlistController{
 	
 	//카드리스트 조회 (특정 프로젝트에 대한 모든 카드리스트 목록
 	//URI에 특정 프로젝트id(p_id)를 넣으면 그 프로젝트에 대한 모든 카드리스트 보이도록 함.
-	@RequestMapping(value="/{p_id}", method = RequestMethod.GET)
-	public ResponseEntity<List<ReadCardlistVO>> readCardlistAll(@PathVariable("p_id") int p_id){
+	@RequestMapping(value = "/{p_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<ReadCardlistVO>> readCardlistAll(@PathVariable("p_id") int p_id) {
 		ResponseEntity<List<ReadCardlistVO>> entity = null;
 	
 		try { 
-			System.out.println("카드 출력입니다."+service.readCardlistAll(p_id).toString());
-			entity=new ResponseEntity<>(service.readCardlistAll(p_id), HttpStatus.OK);
+			entity = new ResponseEntity<>(service.readCardlistAll(p_id), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		return entity;
 	}
 	
 	
 	//상태값에 따른 카드 조회 (보관, 가리기 탭에서 조회하는 카드 목록)
-	@RequestMapping(value="/{p_id}/cardlist/{ps_id}", method = RequestMethod.GET)
-	public ResponseEntity<List<CardlistVO>> listCardlist(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id){
+	@RequestMapping(value = "/{p_id}/cardlist/{ps_id}", method = RequestMethod.GET)
+	public ResponseEntity<List<CardlistVO>> listCardlist(@PathVariable("p_id") int p_id, @PathVariable("ps_id") int ps_id) {
 		ResponseEntity<List<CardlistVO>> entity = null;
 		
 		CardlistVO vo = new CardlistVO();
@@ -78,7 +77,6 @@ public class CardlistController{
 		ResponseEntity<Integer> entity = null;
 	
 		try {
-			logger.info("============= registCardlist ==========" + vo.toString());
 			// 데이터베이스에 새로운 카드리스트 등록 요청
 			service.registCardlist(vo);
 			// 등록된 카드리스트 아이디를 반환
@@ -87,7 +85,6 @@ public class CardlistController{
 			e.printStackTrace();
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
 		return entity;
 	}
 	
@@ -107,7 +104,6 @@ public class CardlistController{
 		vo.setCl_id(cl_id);
 		
 		try {
-			logger.info("============= changeCardlist ==========" + vo.toString());
 			// 데이터베이스에 카드리스트 수정 요청
 			service.updateCardlist(vo);
 			// 요청이 성공적으로 반영됐음을 알리는 문자열를 반환
