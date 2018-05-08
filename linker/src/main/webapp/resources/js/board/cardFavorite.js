@@ -24,7 +24,7 @@ function allFavorite(){
 		
 		var str = "";
 		for(var i = 0; i < data.length;i++) //동적 카드 태그 생성
-			str += newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, 0, data[i].content, data[i].file, data[i].reply);
+			str += newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, 0, data[i].uhc_u_id, data[i].content, data[i].file, data[i].reply);
 			//status에 대한 매개변수로 0을 준 이유 : 즐겨찾기 리스트에 있는 카드는 왼쪽에 초록색 border속성 주지 않기 위해
 		$(".favorite > .cards").html(str); //생성한 카드 태그를 즐겨찾기 리스트 내부에 추가
 		$(".favorite").show(); //즐겨찾기 리스트 출력

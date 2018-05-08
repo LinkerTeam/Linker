@@ -45,6 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, c.udate AS c_udate
 			, c.ps_id AS c_ps_id
 			, uhc.status
+			, uhc.u_id AS uhc_u_id
             , reply
             , file
 		FROM linker.cardlist cl
