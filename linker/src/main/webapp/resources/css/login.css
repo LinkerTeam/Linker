@@ -183,11 +183,12 @@ form .fieldset:first-child {
 .form input[type="text"],
 input[type="password"], #reset-email {
     width: 95%;
-    color: white;
+    color: black;
     margin-right: 100px;
-    background-color: black;
+    background-color: #f2f2f2;
     /* 그림을 넣기위해서 왼쪽에 패딩을 넣어줌 */
     padding-left: 45px;
+    outline-color: white;
 }
 
 /* 로그인하기 버튼과 회원가입 버튼을 설정함 */
@@ -195,16 +196,12 @@ form button, .full-width.has-padding.input {
     border: none;
     outline: none;
     height: 40px;
-    background: #F64747;
+    background: #026aa7;
     color: #fff;
     font-size: 18px;
     margin-left: 15px;
     cursor: pointer;
     width: 95%;
-}
-
-.full-width.has-padding.input:hover{
-	background: #d83d3d;
 }
 
 .switcher {
@@ -271,18 +268,18 @@ label {
 
 /* 아이콘들 위치 선정과 아이콘 배경및 색깔 변경  */
 .fa-unlock-alt {
-    background-color: black;
-    color: white;
+    background-color: #f2f2f2;
+    color: black;
 }
 
 .fa-envelope {
-    background-color: black;
-    color: white;
+    background-color: #f2f2f2;
+    color: black;
 }
 
 .fa-user {
-    background-color: black;
-    color: white;
+    background-color: #f2f2f2;
+    color: black;
 }
 
 #mail {
@@ -337,7 +334,7 @@ label {
     border-left: 1px solid #d2d8d8;
     top: 43%;
     bottom: auto;
-    color: white;
+    color: black;
 }
 /* 비밀번호 암호 보이기와 감추기 회원가입창 */
 
@@ -351,7 +348,7 @@ label {
     border-left: 1px solid #d2d8d8;
     top: 20%;
     bottom: auto;
-    color: #ffffff;
+    color: black;
 }
 
 /* 소셜 로그인 */
@@ -363,7 +360,7 @@ label {
     display: block;
     text-align: center;
     color: white;
-    background: #DD4B39;
+    background: #003b5e;
     margin-left: 15px;
     width: 95%;
 }
@@ -372,7 +369,7 @@ label {
     display: inline-block;
     height: 40px;
     line-height: 40px;
-    background: url("/resources/image/gp-logo.png") no-repeat left 5px; 
+    background: url("/resources/image/google-logo.png") no-repeat left 5px; 
     background-size: auto 30px;
     padding-left: 37px;
 }
