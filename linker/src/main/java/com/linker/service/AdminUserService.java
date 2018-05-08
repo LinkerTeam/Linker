@@ -2,6 +2,7 @@ package com.linker.service;
 
 import java.util.List;
 
+import com.linker.domain.Criteria;
 import com.linker.dto.AdminUserDTO;
 
 public interface AdminUserService {
@@ -11,4 +12,7 @@ public interface AdminUserService {
 	public AdminUserDTO readUser(Integer id) throws Exception;
 	//유저 정보 수정
 	public void updateUser(AdminUserDTO dto) throws Exception;
+	
+	//페이징
+	public List<AdminUserDTO> listCriteria(Criteria cri) throws Exception;
 }

@@ -11,6 +11,7 @@
 
 
 var modifyModal = document.getElementsByClassName('modifyModal')[0]; // 카드title 수정하는 모달창
+var modifyTextarea = document.getElementById("modifyTextarea"); //카드 title 수정하는 textarea
 var closeModal = document.getElementsByClassName("closeModal")[0]; // 카드 title 수정하는 모달창의 닫힘버튼(X)
 	
 var addList = document.getElementsByClassName("addList")[0]; //카드리스트 제일 마지막의 Add a List...(카드 리스트 추가)
@@ -26,7 +27,7 @@ var createCardTextarea = document.getElementById("createCardTextarea"); //카드
 var cardlistIndex; //스크롤 조절에 쓸 카드리스트의 인덱스
 var modifyCardTitle; //수정할 카드의 title을 출력하는 div를 담을 변수
 
-var cardlistId = ""; //카드리스트 ...(팝업메뉴) 클릭 시 카드리스트의 id를 담을 변수
+var cardlistId; //카드리스트 ...(팝업메뉴) 클릭 시 카드리스트의 id를 담을 변수
 var cardlistTitle = ""; //카드리스트 ...(팝업메뉴) 클릭 시 카드리스트의 제목을 담을 변수
 
 var STATUS_ING = 1; //진행 (상태변경에 사용)
@@ -35,7 +36,7 @@ var STATUS_HIDDEN = 3; //가리기 (상태변경에 사용)
 
 var p_title; //프로젝트 title
 
-allFavorite();
+
 
 /* 프로젝트 title 수정 | 관련된 모든 이벤트 */
 $("input[name=projectTitle]").on({	
@@ -73,7 +74,6 @@ function projectTitleModify(p_title){
 		dataType : 'text', 
 		success : function(result) {
 			if(result === "SUCCESS"){
-				console.log(p_id + "번 프로젝트의 제목을 " + p_title + "로 변경했습니다.");
 				$("input[name=projectTitle]").val(p_title); //수정사항 input tag에 적용
 			};
 		},
@@ -87,20 +87,20 @@ function projectTitleModify(p_title){
 
 /* 매개변수 카드리스트id와 카드리스트title이 주어지면 그것을 이용해 카드리스트 태그를 문자열로 만드는 함수 */
 function newCardlistAdd(cardlistId, cardlistTitle){
-	var listStr = "<div data-id='" + cardlistId + "' class='cardlist'>" + 
-				  "	   <div class='cardlistTitleBox'>" +
-				  "	   	   <button type='button' class='cardlistPopBtn'><img src='/resources/image/more.png' class='cardlistMore'/></button>" +
-				  "	       <textarea class='cardlistTitle' rows='1' onKeyUp='limitMemo(this, 20)'>" + cardlistTitle + "</textarea>" +
-				  "	   </div>" +
-				  "	   <div class='cards'>" +
-				  "		   <div class='addCard'>" + 
-				  "    		   <textarea name='title' id='createCardTextarea' class='createCardTextarea' style='resize:none' onKeyUp='limitMemo(this, 20)'></textarea><br />" + 
-				  "    		   <button type='button' id='addBtn'>추가</button>" + 
-				  "    		   <button type='button' id='cancleBtn'>&times;</button>" + 
-				  "		   </div>" +
-				  "   	</div>" +
-				  "   	<footer class='createCardBox'>카드 추가</footer>" + 
-				  "</div>";
+	var listStr = "<div data-id='" + cardlistId + "' class='cardlist'>"
+				+ "	   <div class='cardlistTitleBox'>"
+				+ "	   	   <button type='button' class='cardlistPopBtn'><img src='/resources/image/more.png' class='cardlistMore'/></button>"
+				+ "	       <textarea class='cardlistTitle' rows='1' onKeyUp='limitMemo(this, 20)'>" + cardlistTitle + "</textarea>"
+				+ "	   </div>"
+				+ "	   <div class='cards'>"
+				+ "		   <div class='addCard'>"
+				+ "    		   <textarea name='title' id='createCardTextarea' class='createCardTextarea' style='resize:none' onKeyUp='limitMemo(this, 20)'></textarea><br />"
+				+ "    		   <button type='button' id='addBtn'>추가</button>"
+				+ "    		   <button type='button' id='cancleBtn'>&times;</button>"
+				+ "		   </div>"
+				+ "   	</div>"
+				+ "   	<footer class='createCardBox'>카드 추가</footer>"
+				+ "</div>";
 	$(".cardlists").children(".addCardlist").before(listStr);
 	// 타이틀 길이만큼 필드의 높이를 조정
 	var newTitle = $('[data-id='+cardlistId+']').find('textarea.cardlistTitle');
@@ -109,19 +109,29 @@ function newCardlistAdd(cardlistId, cardlistTitle){
 				
 
 /* 매개변수 카드id와 카드title이 주어지면 그것을 이용해 카드 태그를 문자열로 만드는 함수 */
-function newCardAdd(cardId, cardlistId, cardTitle,favoriteStatus){
-	var newTitle = "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='cardtitleLi' onclick='loadCardData(this,event)'>" + 
-				   "    <div id='cardLink'>" + cardTitle + "</div>" + 
-				   "    <button class='cardModifyBtn' onclick='cardTitleModifyModal(this)'><i class='far fa-edit'></i></button>";
-		if(favoriteStatus == 1){
-			newTitle += "<i class='fas fa-star delete-favo' id='"+cardId+"' data-c_id='" + cardId + "' data-t_id='" + cardlistId + "'>"
-			   		+"</div>";
-		} else{
-			newTitle += "<i class='far fa-star add-favo' id='"+cardId+"' data-c_id='" + cardId + "' data-t_id='" + cardlistId + "'>"
-	   				+"</div>";
-		}
+function newCardAdd(cardId, cardlistId, cardTitle, status, content, file, reply) {
+	if(status === undefined) status = 0;
+	if(content === undefined) content = 0;
+	if(file === undefined) file = 0;
+	if(reply === undefined) reply = 0;
+	
+	var cardClass = "cardtitleLi";
+	if(status === 1)
+		cardClass = "cardtitleLi favo";
+	var newTitle =  "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='" + cardClass + "' onclick='loadCardData(this)'>"
+				 +  "    <div id='cardLink'>" + cardTitle + "</div><div class='cardIcon'>";
+	if(content === 1)
+		newTitle += "<i class='fas fa-align-left'></i>";	
+	if(reply !== 0)
+		newTitle += "<i class='far fa-comment'></i><p>" + reply + "</p>";
+	if(file !== 0)
+		newTitle += "<i class='fas fa-paperclip'></i><p>" + file + "</p>";
+		newTitle += " 	 </div>"
+				 +  "    <button class='cardModifyBtn' onclick='cardTitleModifyModal(this)'><i class='far fa-edit'></i></button>"
+				 +  "</div>";
 	return newTitle;
 };
+
 
 /* 글자수 제한 */
 function limitMemo(obj, cnt) {
@@ -149,9 +159,7 @@ function allCardlist(){
 	$.ajax({
 		type : "GET",
 		url : "/board/" + p_id,
-		async: false,
 		success : function(data) {
-			console.log(data);
 			var allID = new Array(); //카드리스트 id를 담을 배열
 			var idIndex = new Array(); //data배열의 id에서 uniqID들의 index값
 			
@@ -177,7 +185,6 @@ function allCardlist(){
 
 			    uniqTitle.push(data[idIndex[i]].cl_title); //구한 index값을 이용하여 해당 title을 뽑아내 uniqTitle에 담음
 			};
-			
 			//카드리스트 출력하기
 			var listStr = ""; //동적으로 생성할 태그를 문자열로 담을 변수
 			for(var i = 0; i < uniqID.length; i++){ //for문을 돌면서 각각의 카드리스트에 대한 태그를 문자열로 만든다.
@@ -185,25 +192,25 @@ function allCardlist(){
 			
 				cardsHeightControl(i); //카드리스트 제목영역 높이에 따라 카드리스트 전체 높이 조정
 			};
-	  		
 	  		//카드 출력하기
 	  		//for문을 돌면서 각각의 카드에 대한 태그를 문자열로 만든다.
 	  		for(var i = 0; i < uniqID.length; i++){ 
 	  			for(var j = 0; j < data.length; j++){
 	  				//카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같고 ps_id가 1(진행)일 때
 		  			if(data[j].cl_id === uniqID[i] && data[j].c_ps_id === 1){ 
-		  				console.log(data[j].status);
-		  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title,data[j].status); //문자열로 카드 태그를 만드는 함수 호출
-						$(".cards").eq(i).children(".addCard").before(cardStr); //해당 카드리스트에 카드 태그 삽입
+		  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title, 
+		  						data[j].status, data[j].content, data[j].file, data[j].reply); //문자열로 카드 태그를 만드는 함수 호출
+		  				$(".cardlist[data-id=" + uniqID[i] + "]").children(".cards").children(".addCard").before(cardStr);
 		  			};
 	  			};
 			};
-			
+	  		
 		},//success
 		error : function() {
 	   		alert("에러가 발생했습니다.");
 	   	}
 	});//ajax
+	allFavorite(); //즐겨찾기 전체 목록 조회
 };
 
 
@@ -223,25 +230,18 @@ switch (p_ps_id) {
 
 
 
-/* 카드 조회 | 특정 카드리스트에 대한 카드 목록 조회 */
+/* 카드 조회 | 특정 카드리스트에 대한 카드 조회 */
 function listCards(cl_id){
-	$.ajax({
-		type : "GET",
-		url : "/board/" + p_id + "/cardlist/" + cl_id + "/cards",
-		success : function(data){
-			//for문을 돌면서 각각의 카드에 대한 태그를 문자열로 만든다.
-	  		for(var i = 0; i < data.length; i++){ 
-				var str = newCardAdd(data[i].c_id, data[i].cl_id, data[i].title); //문자열로 카드 태그를 만드는 함수 호출
-				//마지막 카드리스트(달성/가리기 카드리스트가 send to board가 되면 맨 마지막에 삽입되므로)에 카드 태그 삽입
-				$(".cards").last().children(".addCard").before(str); 
-			};
-		}, //success
-		error : function() {
-	   		alert("에러가 발생했습니다.");
-	   	}
-	}); //ajax
+	//기존 카드 태그 삭제 후
+	$(".cardlist[data-id='" + cl_id + "']").children(".cards").children(".cardtitleLi").remove();
+	//새로운 데이터 받아옴
+	$.getJSON("/board/" + p_id + "/cardlist/" + cl_id + "/cards", function(data) {
+  		for(var i = 0; i < data.length; i++) { 
+			var str = newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].status, data[i].content, data[i].file, data[i].reply); //문자열로 카드 태그를 만드는 함수 호출
+			$(".cardlist[data-id=" + cl_id + "]").children(".cards").children(".addCard").before(str); 
+		};
+	});
 };
-
 
 
 /* 카드 등록 | Add a card... 눌렀을 때 카드추가창 보이기 */
@@ -296,7 +296,7 @@ $(".cardlists").on("click", "#addBtn", function(){
 	if(title === ''){ return; }
 	
 	$.ajax({
-		type : 'post',
+		type : "post",
 		url : "/board/" + p_id + "/card",
 		headers : {
 			"Content-Type" : "application/json",
@@ -313,7 +313,7 @@ $(".cardlists").on("click", "#addBtn", function(){
 				var cardStr = newCardAdd(cardId, cl_id, title); //새로운 카드 태그 생성
 				$(".addCard").eq(cardlistIndex).before(cardStr); //카드추가창 위에 새카드 태그 삽입
 				$(".createCardTextarea").val(''); //textarea 초기화
-				cards[cardlistIndex].scrollTop = cards[cardlistIndex].scrollHeight; //스크롤 조정
+				cards[cardlistIndex + 1].scrollTop = cards[cardlistIndex + 1].scrollHeight; //스크롤 조정(즐겨찾기 리스트 때문에 +1)
 			};
 		},
 		error : function() {
@@ -327,12 +327,12 @@ $(".cardlists").on("click", "#addBtn", function(){
 /* 카드 제목 수정 |  카드 목록에서 수정 버튼 클릭할 경우 모달창 띄우기 */
 function cardTitleModifyModal(obj){
 	event.stopPropagation(); //이벤트 전파 방지. 부모의 이벤트인 카드모달창 띄우는 이벤트가 발생하지 않도록 한다.
-	
-	modifyCardTitle = $(obj).prev(); //수정할 카드의 title표시하는 div를 전역변수에 담아둠(수정 저장버튼 처리에 이용할 예정)
+
+	modifyCardTitle = $(obj).prev().prev(); //수정할 카드의 title표시하는 div를 전역변수에 담아둠(수정 저장버튼 처리에 이용할 예정)
 	// 모달창을 클릭한 카드의 위치에서 뜨도록 함.
 	// 1. 클릭한 수정버튼의 부모 찾아가서(cardtitleLi) 그 부모의 좌표값을 구하기
 	var cardtitleLiX = $(obj).parent("div").offset().left; //그 수정버튼의 부모 태그의 x좌표
-	var cardtitleLiY = $(obj).parent("div").offset().top; //그 수정버튼의 부모 태그의 y좌표
+	var cardtitleLiY = $(obj).parent("div").offset().top - 60; //그 수정버튼의 부모 태그의 y좌표에서 즐겨찾기 버튼의 height만큼을 뺀 좌표
 	
 	// 2. 카드리스트의 전체높이 구하기
 	var headerHeight = parseInt($(obj).parent().parent().prev().css("height")); //카드리스트 헤더 높이
@@ -345,15 +345,25 @@ function cardTitleModifyModal(obj){
 	var cardId = $(obj).parent().attr("data-id"); //카드의 id값을 담는다.
 	var title = $(obj).parent().children("a").text(); //카드의 자손 중 a태그의 내용을 담는다.
 	
+	
+	//즐겨찾기가 아닌 카드-수정버튼일 경우
+	if($(".favorite > .cards > .cardtitleLi[data-id='" + cardId + "']").length === 0) {
+		$(".favorite-btn").html("<i class='far fa-star'></i> 즐겨찾기 추가");
+		$(".favorite-btn").removeClass("delete").addClass("add"); //즐겨찾기 버튼의 클래스 이름 delete -> add로 변경
+	} else { //즐겨찾기된 카드-수정버튼일 경우
+		$(".favorite-btn").html("<i class='fas fa-star'></i> 즐겨찾기 해제");
+		$(".favorite-btn").removeClass("add").addClass("delete"); //즐겨찾기 버튼의 클래스 이름 add -> delete로 변경
+	};
+	
 	if(cardtitleLiY > x){ // 3. 클릭한 카드의 y좌표가 전체높이보다 크면 수정창 위치 조정하여 띄움
 		$(".modifyModal-content").css({
 			"left" : cardtitleLiX,
-			"top" : x + 15
+			"top" : x + 30
 		});
 	} else { // 4. 클릭한 카드의 y좌표가 전체높이보다 작으면 그 위치에서 수정창 띄움
 		$(".modifyModal-content").css({
 			"left" : cardtitleLiX,
-			"top" : cardtitleLiY
+			"top" : cardtitleLiY + 30
 		});
 	};
 	
@@ -376,7 +386,7 @@ function cardTitleModifyModal(obj){
 	});
 	// 모달창 범위 밖을 클릭하면 모달창 닫힘.
 	window.onclick = function(event) {
-		if (event.target == modifyModal)
+		if (event.target !== modifyTextarea)
 			modifyModal.style.display = "none";
 	}; 
 	
@@ -394,7 +404,7 @@ $("#saveBtn").on("click", function(){
 	if(title == '') return;
 	
 	$.ajax({
-		type : 'put',
+		type : "put",
 		url : "/board/" + p_id + "/card/" + id,
 		headers : {
 			"Content-Type" : "application/json",
@@ -405,8 +415,8 @@ $("#saveBtn").on("click", function(){
 		success : function(result){
 			if(result == 'SUCCESS'){
 				$(".modifyModal").hide(); //모달창 감추기
-				$(modifyCardTitle).text(title); //수정사항 적용
-			}
+				$(".cardtitleLi[data-id='" + id + "'] > #cardLink").text(title); //수정사항 적용
+			};
 		},
 		error : function() {
 			alert("에러가 발생했습니다.");
@@ -465,25 +475,21 @@ $(".cardlists").on("click", "#listAddBtn", function(){
 	if(title == ''){ return; }
 	
 	$.ajax({
-		type : 'post',
+		type : "post",
 		url : "/board/" + p_id,
 		headers : {
-			'Content-Type' : 'application/json',
-			'X-HTTP-Method-Override' : 'POST'
+			"Content-Type" : "application/json",
+			"X-HTTP-Method-Override" : "POST"
 		},
-		dataType : 'text',
+		dataType : "text",
 		data : JSON.stringify({
 			p_id : p_id,
 			u_id : u_id,
 			title : title
 		}),
 		success : function(cardlistID) {
-			console.log('cardlistID: ' + cardlistID);
-			
 			// 카드리스트가 성공적으로 등록 되면
 			if (cardlistID !== null || cardlistID !== 0) {
-				console.log('카드리스트가 성공적으로 등록 되었습니다.');
-				
 				newCardlistAdd(cardlistID, title); //주어진 매개변수로 카드리스트 태그 생성하여 삽입하는 함수
 		  		$("#createListTextarea").val(''); //textarea 초기화
 				
@@ -531,11 +537,10 @@ function modifyCardlistTitle(titleElement) {
 		data : JSON.stringify({cl_title : titleTxt}),
 		dataType : 'text',
 		success : function(result) {
-			console.log('result: ' + result);
 			// 카드리스트 제목 변경이 성공적으로 데이터베이스에 반영되면
 			if (result == 'SUCCESS') {
 				console.log('카드리스트 아이디 : ' + cardlistID + ', 제목 "' + titleTxt + '"(으)로 수정 되었습니다.');
-			}
+			};
 		},
 		error : function() {
 			alert("에러가 발생했습니다.");
@@ -546,14 +551,14 @@ function modifyCardlistTitle(titleElement) {
 	
 	
 /* 카드리스트 제목 수정 | 관련 이벤트 */
-$('.cardlists').on({
+$(".cardlists").on({
 	focusin: function (event) {
 		$(this).select(); // 카드리스트 제목 클릭하면 전체선택
-		$(this).data('data-title', $(this).val()); // 현재 입력된 카드리스트 제목 저장
+		$(this).data("data-title", $(this).val()); // 현재 입력된 카드리스트 제목 저장
 	},
 	focusout: function (event) {
 		// 입력된 글자가 MAX-LANGTH 넘어 갈 경우 필드 높이 자동 조절
-		$(this).trigger('input');
+		$(this).trigger("input");
 		// 카드리스트 제목을 수정하는 로직 실행
 		modifyCardlistTitle($(this));
 	},
@@ -631,6 +636,15 @@ $(document).click(function(e){
 });
 
 
+/* 카드리스트 보관/가리기 수정 | 해당 카드리스트의 카드 중 즐겨찾기에 있는 카드 삭제 */
+function deleteFavoriteCard(id) {
+	var array = $(".favorite").children(".cards").children(".cardtitleLi[data-clid=" + id + "]");
+	for(var i = 0; i < array.length; i++) {
+		var cardID = $(array).eq(i).attr("data-id");
+		deleteFavorite(cardID);
+	};
+};
+
 
 /* 카드리스트 보관/가리기 수정 | ajax처리 */
 function cardlistStatusChange(id, ps_id, title){
@@ -644,24 +658,23 @@ function cardlistStatusChange(id, ps_id, title){
 		data : JSON.stringify({cl_ps_id : ps_id}),
 		dataType : 'text',
 		success : function(result) {
-			console.log('result: ' + result);
 			// 카드리스트 상태 변경이 성공적으로 데이터베이스에 반영되면
 			if (result == 'SUCCESS') {
-				console.log('카드리스트 아이디 : ' + id + ', 상태 ' + ps_id + '(으)로 수정 되었습니다.');
-				
-				$(".cardlist[data-id=" + id + "]").parent(".nav-tab-content-Box-archive.archive-cards").remove(); //send to board, Trashbox 버튼까지 함께 삭제
+				$(".cardlist[data-id=" + id + "]").parent(".nav-tab-content-Box-archive.archive-cards").remove(); //프로젝트 버튼, 휴지통 버튼까지 함께 삭제
 				$('.cardlist[data-id="' + id + '"').remove(); // 상태 변경된 카드리스트 요소를 삭제
 				
 				switch (ps_id) {
 		            case 1: //보드에 카드리스트 태그 삽입
-		            	newCardlistAdd(id, title);
-		            	listCards(id); //소속된 카드 중 상태값이 1인 카드만 출력
+		            	newCardlistAdd(id, title); //동적 카드리스트 태그 생성하여 삽입
+		            	listCards(id); //해당 리스트 갱신
 		                break;
 		            case 2: //보관탭에 동적 카드리스트 태그 삽입
 		            	$(".nav-tab-content-Box-archive.archiveCardlist").prepend( createArchivedCardlist(id, title) );
+		            	deleteFavoriteCard(id); //즐겨찾기에 있는 해당 리스트의 카드 삭제
 		            	break;
 		            case 3: //가리기탭에 동적 카드리스트 태그 삽입
 		            	$(".nav-tab-content-Box-hidden.hiddenCardlist").prepend( createTrashboxCardlist(id, title) );
+		            	deleteFavoriteCard(id); //즐겨찾기에 있는 해당 리스트의 카드 삭제 
 		                break;
     			};
 			}//if
@@ -681,7 +694,7 @@ $('.popupMenuList li').on('click', function() {
 	if($(this).hasClass('to-archive')) { // 보관 버튼
 		state = STATUS_ARCHIVE;	
 	} else { // 가리기 버튼
-		if(confirm("Trashbox로 보내진 카드리스트는 되돌릴 수 없습니다. \n소속된 카드도 함께 이동되며 더이상 조회할 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
+		if(confirm("휴지통으로 보내진 카드리스트는 되돌릴 수 없습니다. \n소속된 카드도 함께 이동되며 더이상 조회할 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
 			state = STATUS_HIDDEN; 	
     	else return; //취소를 누르면 더이상 작업 수행하지 않고 return
 	};
@@ -690,130 +703,3 @@ $('.popupMenuList li').on('click', function() {
 
 	cardlistStatusChange(cardlistId, state, cardlistTitle); //상태변경 ajax 처리 함수 호출
 });
-
-//즐겨찾기 추가
-$('.cards').on("click",".add-favo", function(event){	
-
-	//url에서 정보를 가져와서 /단위로 끈는다.
-	var link = document.location.href.split("/");
-	
-	var t_id = link[4];
-	var cl_id = $(this).parent().attr('data-clid');
-	var c_id = $(this).parent().attr('data-id') ;;
-	var title = $(this).parent().children('#cardLink').text();
-	$(this).addClass('delete-favo');
-	$(this).addClass('fas');
-	$(this).removeClass('add-favo');
-	$(this).removeClass('far');
-	console.log(title);
-	
-	$.ajax({
-		type : "post",
-		url : "/board/favorite",
-		headers :{     
-			'Content-Type' : 'application/json',
-			'X-HTTP-Method-Override' : 'POST'							
-		} ,
-		data : JSON.stringify({ t_id : t_id, 
-								p_id : p_id,
-								cl_id : cl_id,
-								c_id : c_id}),
-		dataType : "text",
-		success : function(result){
-			if($('.favorite').css("display") == "none"){
-				allFavorite();
-			}else{
-			var str = "<div class='cardtitleLi' data-id='"+c_id+"' data-clid='"+cl_id+"' onclick='loadCardData(this)'>"
-			+"<div id='cardLink'>"+title+"</div>"
-			+"<i class='fas fa-star delete-favo' data-p_id='"+p_id+"'></i>" 
-			+"</div>";
-			$('.favorite .cards').append(str);
-			}
-		}, error : function(){
-			alert("통신 오류 입니다.");
-		}
-	}) // ajax end
-	return false;
-	alert(2);
-	event.stopPropagation();
-	alert(1);
-	
-});
-
-	
-//즐겨찾기 불러오기	
-function allFavorite(){
-	$.ajax({
-		type : "get",
-		url : "/board/favoritelist/"+p_id,
-		success : function(data){
-			var cardlist = "<div class='cardlistTitleBox'>"
-				   +"<button type='button' class='cardlistPopBtn'></button>"
-				   +"<textare class='cardlistTitle' rows='1' onkeyup='limitMemo(this, 20)' style='height : 26px;'>즐겨찾기</textarea></div>"
-				   +"<div class='cards' style='max-height: calc(((100% - 26px) - 45px) - 20px);'>";
-
-					$('.favorite').html(cardlist);
-					$('.favorite').css("display","block");
-			if(data.length > 0){
-			
-				for(var i = 0; i < data.length;i++){
-					console.log(data[i]);
-					var str = "<div class='cardtitleLi' data-id='"+data[i].id+"' data-clid='"+data[i].cl_id+"' onclick='loadCardData(this)'>"
-								+"<div id='cardLink'>"+data[i].title+"</div>"
-								+"<i class='fas fa-star delete-favo' data-p_id='"+data[i].p_id+"'></i>" 
-								+"</div>";
-					$('.favorite .cards').eq(0).append(str);
-				}
-			var footer = "<footer class='favo-footer'></footer>";
-				$('.favorite').append(footer);
-			} else{
-				$('.favorite').css("display","none");
-			}
-		}, error : function(){
-			alert(2);
-			console.log("통신 오류입니다");
-		}
-	}) // end ajax
-	
-}
-
-//즐겨찾기 삭제
-$(document).on("click",".delete-favo",function(event){
-
-	var c_id = $(this).parent().attr('data-id');
-	$.ajax({
-		type : 'DELETE',
-		url : '/board/favoriteDelete/'+c_id,
-		success : function(data){
-			favoriteNumber();
-			allFavorite();
-			$('#'+c_id).addClass('add-favo');
-			$('#'+c_id).addClass('far');
-			$('#'+c_id).removeClass('delete-favo');
-			$('#'+c_id).removeClass('fas');
-			
-		}, error : function(){
-			alert("통신 오류 입니다.");
-		}
-	}) // end ajax
-	
-	event.stopPropagation();
-})
-
-
-//즐겨찾기갯수 체크
-function favoriteNumber(){
-	$.ajax({
-		type : "get",
-		url : "/board/favoritelist/"+p_id,
-		success : function(data){
-			console.log(data.length);
-					if(data.length == 0){
-						allFavorite();
-					}
-		}, error : function(){
-						console.log("통신 오류입니다");
-		}
-	}) // end ajax
-}
-

@@ -36,17 +36,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, c.id AS c_id
 			, c.u_id AS c_u_id
 			, c.title AS c_title
-			, c.content
+			, CASE
+	            WHEN c.content IS NULL THEN 0
+	            WHEN c.content = '' THEN 0
+	            ELSE 1
+	            END AS content
 			, c.cdate AS c_cdate
 			, c.udate AS c_udate
 			, c.ps_id AS c_ps_id
-			, uhc.status            
+			, uhc.status
+            , reply
+            , file
 		FROM linker.cardlist cl
 		LEFT JOIN linker.card c ON cl.id = c.cl_id
-		LEFT JOIN linker.user_has_card AS uhc ON cl.p_id =uhc.p_id AND c.id = uhc.c_id
+		LEFT JOIN linker.user_has_card uhc ON cl.p_id = uhc.p_id AND c.id = uhc.c_id
+        LEFT JOIN (SELECT c_id, count(*) AS reply
+					FROM linker.c_reply
+					GROUP BY c_id) AS r ON c.id = r.c_id
+		LEFT JOIN (SELECT c_id, count(*) AS file
+					FROM linker.c_file
+					GROUP BY c_id) AS f ON c.id = f.c_id
 	    WHERE cl.p_id = #{p_id}
 	    AND cl.ps_id = 1
-    <!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
+	    ORDER BY c_id ASC
+    	<!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
 	</select>
 	
 	<!-- 상태값에 따른 카드리스트 조회 -->

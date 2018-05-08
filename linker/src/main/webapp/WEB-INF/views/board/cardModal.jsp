@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardModal.css?ver=1111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardModal.css?ver=1111111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -25,7 +25,7 @@
         	<div class="popCard-banner hide"><p><i class="fas fa-archive"></i> 이 카드는 휴지통에 있습니다. 조회만 가능합니다.</p></div>
             <!-- 헤더 | 카드 제목 -->
             <header class="cardTitle">
-                <span><i class="far fa-credit-card"></i></span>          
+                <span></span>          
                 <div class="title-cardTitle">
                 	<!--카드 제목 DB에서 가져옴-->
                 	<input type="text" class="title-modify" maxlength="20"  onkeydown="enterPress(event); limitMemo(this, 20);"/>
@@ -36,8 +36,10 @@
                 </div>
                 <div class="popupCardUserInfo">
                 	<div class="popupCardProfile"></div>
-                	<p class="popupCardUserNickname"></p>
-                	<p class="popupCardCdate"></p>
+                	<div class="popupcard-info">
+	                	<p class="popupCardUserNickname"></p>
+	                	<p class="popupCardCdate"></p>
+                	</div>
                 </div>
                 <!-- 카드모달 드롭다운 메뉴 -->
                 <div class="popCardMenu">
@@ -139,7 +141,7 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardModal.js" type="text/javascript"></script>
-<script src="../../../resources/js/board/cardModalReply.js" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardModal.js?ver=1111111" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardModalReply.js?ver=11" type="text/javascript"></script>
 
 </html>

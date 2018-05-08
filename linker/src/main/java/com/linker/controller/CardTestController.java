@@ -44,44 +44,36 @@ public class CardTestController {
 		check.setT_id(teamID);
 		check.setU_id(vo.getId());
 		//해당팀원이 아니면 그 팀에 모든 프로젝트에 들어갈수없게 막는다.
-		if(proService.checkProject(check)==0) {	
-			System.out.println("해당 팀원이아닌 사람이 접속했습니다.");
+		if(proService.checkProject(check) == 0) {	
 			return "redirect:/main";  //redirect:는  해당 jsp가 아니라 해당 mapping을 URI를 찾아감   
 		} else {
-		ProjectVO pvo = proService.titleName(p_ID);
-		pvo.setT_id(teamID);
-		pvo.setId(p_ID);
-		pvo.setU_id(vo.getId());
-		System.out.println(pvo.toString());
-		model.addAttribute("project",pvo);
-		return "/board/cardTest";
+			ProjectVO pvo = proService.titleName(p_ID);
+			pvo.setT_id(teamID);
+			pvo.setId(p_ID);
+			pvo.setU_id(vo.getId());
+			model.addAttribute("project",pvo);
+			return "/board/cardTest";
 		}
 	};
 	
 	//팀멤버 가져오기
 	@ResponseBody
-	@RequestMapping(value="/team/list/{t_id}",method= RequestMethod.GET)
-	public ResponseEntity<List<UserVO>> teamProfile(@PathVariable int t_id)throws Exception{
-		System.out.println("멤버리스트");
-		ResponseEntity< List<UserVO>> entity = null;
+	@RequestMapping(value = "/team/list/{t_id}",method = RequestMethod.GET)
+	public ResponseEntity<List<UserVO>> teamProfile(@PathVariable int t_id)throws Exception {
+		ResponseEntity<List<UserVO>> entity = null;
 		
 		try {
-			entity=new ResponseEntity<>(tmService.hasTeamProfile(t_id),HttpStatus.OK);
-			System.out.println(tmService.hasTeamProfile(t_id));
-		}catch (Exception e) {
-			entity=new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<>(tmService.hasTeamProfile(t_id),HttpStatus.OK);
+		} catch (Exception e) {
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
 		return entity;
 	}
 	
 	@RequestMapping(value = "mycard", method = RequestMethod.GET)
-	public String myFavoriteCard() throws Exception{
-		
-		
+	public String myFavoriteCard() throws Exception {
 		return "user/favoriteCard";
 	}
 	
-	
-		
 }

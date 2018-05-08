@@ -25,19 +25,26 @@
 	<div class="content board">
 		<%@include file="cardShowMenu.jsp"%>
 		
-		<div class="projectTitle"><input type="text" name="projectTitle" value="${project.title}" onKeyUp='limitMemo(this, 20)'></div>
+		<div class="projectTitle"><input type="text" name="projectTitle" value="${project.title}" onKeyUp="limitMemo(this, 20)"></div>
         <div class="cardlistContent">
 
 			 
 			<!-- 카드리스트 전체 -->
             <div class="cardlists">
-			<div class="cardlist favorite"></div>
+            	<!-- 즐겨찾기 -->
+				<div class="cardlist favorite">
+					<div class="cardlistTitleBox">
+						<div class="cardlistTitle">즐겨찾기</div>
+					</div>
+					<div class="cards"></div>
+					<footer class="createCardBox favorite"></footer>
+				</div>
             	<!-- 각각의 카드리스트가 삽입될 곳 -->
                 <!-- 카드리스트 제일 끝의 Add a list...버튼 -->
            		<div class="cardlist addCardlist">
 	                <div class="addList">카드리스트 추가</div>
 	                <div class="cardlistCreateBox">
-	                    <textarea name="title" id="createListTextarea" placeholder="카드리스트 추가" onKeyUp='limitMemo(this, 20)'></textarea><br />
+	                    <textarea name="title" id="createListTextarea" placeholder="카드리스트 추가" onKeyUp="limitMemo(this, 20)"></textarea><br />
 	                    <button type="button" id="listAddBtn">추가</button>
 	                    <button type="button" id="listCancleBtn">&times;</button>
 	                </div>
@@ -50,6 +57,7 @@
 			<div class="modifyModal-title"></div>
 			<!-- 수정 모달 내용 -->
 			<div class="modifyModal-content" style="top: 0; left: 0;">
+				<div class="favorite-btn add"></div>
 			    <textarea name="content" id="modifyTextarea" rows="2" style="resize:none" onKeyPress="javascript: if(event.keyCode == 13) return false;" onKeyUp="limitMemo(this, 20)"></textarea><br />
 			    <button type="button" id="saveBtn" class="saveBtn">저장</button>
 			    <span class="closeModal modifyCardTitle">&times;</span>
@@ -88,7 +96,7 @@
 	var p_ps_id = ${project.ps_id}; //프로젝트 상태값
 </script>
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<script src="../../../resources/js/board/cardTest.js" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardFavorite.js?ver=11" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardTest.js?ver=11" type="text/javascript"></script>
 
 </html>

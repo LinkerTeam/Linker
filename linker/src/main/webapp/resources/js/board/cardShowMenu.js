@@ -133,12 +133,12 @@ function readCardStatus(ps_id){
 			
 	  		if(ps_id === 2){ //보관카드 조회
 	  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드 태그 생성
-					str += createArchivedCard(data[i].id, data[i].cl_id, data[i].title);
+					str += createArchivedCard(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].content, data[i].reply, data[i].file);
 				};
 				$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
 	  		} else if(ps_id === 3) { //휴지통 카드 조회
 	  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 태그 생성
-					str += createTrashboxCard(data[i].id, data[i].cl_id, data[i].title);
+					str += createTrashboxCard(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].content, data[i].reply, data[i].file);
 				};
 				$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //휴지통탭에 동적 태그 삽입
 	  		};
@@ -216,7 +216,6 @@ $(".tab-content-box").on("click", ".return", function(){
 	var id = $(this).parent().prev().attr("data-id"); //카드 아이디
 	var title = $(this).parent().prev().children(":first").text();
 	var cl_id = $(this).parent().prev().attr("data-clId"); //선택한 카드의 카드리스트 id
-	console.log(cl_id);
 	
 	switch (className) {
         case "archive-reopen switchBtn-archive return returnCard": //카드의 '프로젝트로' 버튼
@@ -238,7 +237,7 @@ $(".tab-content-box").on("click", ".return", function(){
             cardlistStatusChange(id, ps_id, title);
         	break;
 	};
-	cardStatusChange(id, ps_id, cl_id, title); //상태변경에 대한 ajax처리 함수 호출
+	//cardStatusChange(id, ps_id, cl_id, title); //상태변경에 대한 ajax처리 함수 호출
 });
 	
 	

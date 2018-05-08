@@ -5,10 +5,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.linker.domain.CardAttachVO;
 import com.linker.domain.CardVO;
+import com.linker.domain.ReadCardlistVO;
 import com.linker.dto.CardFavoriteDTO;
 import com.linker.persistence.CardAttachDAO;
 import com.linker.persistence.CardDAO;
@@ -39,12 +39,12 @@ public class CardServiceImpl implements CardService{
 	}
 	//상태값에 따른 카드 목록 조회
 	@Override
-	public List<CardVO> statusCardList(CardVO vo) throws Exception {
+	public List<ReadCardlistVO> statusCardList(CardVO vo) throws Exception {
 		return dao.statusCardList(vo);
 	}
 	//특정 카드리스트에 대한 진행상태의 카드 목록 조회
 	@Override
-	public List<CardVO> listCards(CardVO vo) throws Exception {
+	public List<ReadCardlistVO> listCards(CardVO vo) throws Exception {
 		return dao.listCards(vo);
 	}
 	//카드 상세내용 조회
@@ -68,17 +68,18 @@ public class CardServiceImpl implements CardService{
 	public void deleteAttach(String file) throws Exception {
 		attach_dao.deleteAttach(file);
 	}
-	//카드즐겨 찾기 추카
-	@Override
-	public void favoriteCard(CardFavoriteDTO dto) throws Exception {
-		dao.favoriteCard(dto);
-	}
-	//카드 즐겨찾기 보기
+	
+	//즐겨찾기 조회
 	@Override
 	public List<CardVO> allFavorite(CardFavoriteDTO dto) throws Exception {
 		return dao.allFavorite(dto);
 	}
-	//카드즐겨찾기 삭제
+	//즐겨찾기 추가
+	@Override
+	public void favoriteCard(CardFavoriteDTO dto) throws Exception {
+		dao.favoriteCard(dto);
+	}
+	//즐겨찾기 삭제
 	@Override
 	public void cardFavoriteDelete(CardFavoriteDTO dto) throws Exception {
 		dao.cardFavoriteDelete(dto);
