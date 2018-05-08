@@ -250,7 +250,7 @@
 	border: 1px solid #d6d6d6;
 }
 .cardtitleLi.tab-cards > #cardLink {
-	line-height: 30px;
+	line-height: 25px;
 	padding: 5px 10px;
 }
 .tab-cardlist {
@@ -268,10 +268,13 @@
     cursor: default;
 }
 .cardStatus {
-	margin-left: 15px;
-	padding: 0 5px 5px 5px;
+	margin-left: 10px;
+	padding: 5px 5px 10px 0;
 	font-size: 12px;
 	color: #bfbfbf;
+}
+.cardStatus > svg {
+	margin: 0 5px 0px 10px;
 }
 .switchBtn-archive, .switchBtn-hidden, .quiet {
 	border: none;

@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LINKER 회원 관리</title>
+<title>LINKER 팀 관리</title>
 <!-- My CSS -->
 <link href="/resources/css/admin/adminUser.css?ver=11" type="text/css" rel="stylesheet" />
 <!-- Bootstrap core CSS     -->
@@ -33,13 +33,13 @@
 			</div>
 			
 			<ul class="nav">
-			    <li class="active">
+			    <li>
 			        <a href="userList">
 			            <i class="ti-user"></i>
 			            <p>회원 관리</p>
 			        </a>
 			    </li>
-			    <li>
+			    <li class="active">
 			        <a href="teamList">
 			            <i class="ti-view-list-alt"></i>
 			            <p>팀 관리</p>
@@ -81,32 +81,33 @@
 		            <div class="col-md-12">
 		                <div class="card card-plain">
 		                    <div class="header">
-		                        <h4 class="title">회원 관리</h4>
-		                        <p class="category">LINKER의 모든 회원 관리</p>
+		                        <h4 class="title">팀 관리</h4>
+		                        <p class="category">LINKER의 모든 팀 관리</p>
 		                    </div>
 		                    <div class="content table-responsive table-full-width">
 		                        <table class="table table-hover">
 		                            <thead style="background-color:#fff;">
 		                                <th><!-- <input id="all-checked" class="form-check-input" type="checkbox"> --></th>
-		                                <th>이메일</th>
-		                                <th>닉네임</th>
-		                                <th>가입구분</th>
-		                                <th>상태</th>
+		                                <th>팀이름</th>
+		                                <th>총관리자</th>
+		                                <th>생성일</th>
+		                                <!-- <th>상태</th>
 		                                <th>가입일</th>
 		                                <th>정보수정일</th>
-		                                <th>탈퇴일</th>
+		                                <th>탈퇴일</th> -->
 		                            </thead>
 		                            <tbody>
-		                                <c:forEach items="${userList}" var="user">
-											<tr onClick="location.href='/admin/readUser?id=${user.id}'" style="cursor:pointer;">
+		                                <c:forEach items="${allTeamList}" var="team">
+											<tr onClick="location.href='/admin/readTeam?id=${team.t_id}'" style="cursor:pointer;">
 												<td onclick="event.cancelBubble = true;" style="cursor:default;"><!-- <input class="form-check-input" type="checkbox"> --></td>
-												<td>${user.email}</td>
-												<td>${user.nickname}</td>
-												<td>${user.google}</td>
-												<td>${user.viewStatus}</td>
-												<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${user.cdate}"/></td>
-												<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${user.udate}"/></td>
-												<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${user.ddate}"/></td>
+												<td>${team.name}</td>
+												<td>${team.nickname}</td>
+												<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${team.cdate}"/></td>
+												<%-- <td>${team.cdate}</td>
+												<td>${team.google}</td>
+												<td>${team.viewStatus}</td>
+												<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${team.udate}"/></td>
+												<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${team.ddate}"/></td> --%>
 											</tr>
 										</c:forEach>
 		                            </tbody>

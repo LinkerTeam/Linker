@@ -16,7 +16,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=1111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css?ver=11111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -45,10 +45,9 @@
 										</div>
 									</div> <!-- 이력내용 -->
 									<div class="pic-list-desc">
-										<span class="name">백다방</span> added Checklist to git 수정된 문서
-										확인
+										<span class="name">왕링커</span>님이 '다이어리' 카드를 추가했습니다.
 									</div> <!-- 시간/날짜 -->
-									<p class="pic-list-datetime">2 hours ago</p>
+									<p class="pic-list-datetime">2018.04.23 18:00</p>
 								</li>
 							</ul>
 							<!-- 이력 더 보기 -->
@@ -151,6 +150,6 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardShowMenu.js" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardShowMenu.js?ver=11" type="text/javascript"></script>
 	
 </html>

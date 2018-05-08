@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,15 +24,13 @@ import com.linker.util.UploadFileUtils;
 @RequestMapping("/admin")
 public class AdminUserController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(AdminUserController.class);
 	
 	@Inject
 	private AdminUserService adminService;
 	@Inject
 	private UserService userService;
-	@Inject
-	private BCryptPasswordEncoder pwdEncoder; //스프링 시큐리티 암호화
-	
+
 	
 	//모든 유저 조회
 	@RequestMapping(value = "/userList", method = RequestMethod.GET)

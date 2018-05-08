@@ -95,8 +95,14 @@ $(".saveBtn.reply.create").click(function(){
 		dataType : 'text', 
 		success : function(result) {
 			if(result === "SUCCESS") {
+				var count = $(".replyArea").length; //댓글 개수
+				//댓글 아이콘이 없는 상태에서 새로 등록할 경우 아이콘과 1추가
+				if(count === 0)
+					$(".cardtitleLi[data-id=" + popCardId + "]").children(".cardIcon").append("<i class='far fa-comment'></i><p>1</p>");
+				else //댓글 아이콘이 있는 상태에서 새로 등록할 경우 count +1
+					$(".cardtitleLi[data-id=" + popCardId + "]").children(".cardIcon").children(".svg-inline--fa.fa-comment.fa-w-18").next("p").html(count + 1);
     			allReply(); //댓글 목록 갱신
-    			modifyReplyCancel();
+    			modifyReplyCancel(); //textarea value 초기화
 			};
 		},
 		error : function() {
@@ -211,6 +217,15 @@ $(".closeBoardBtn.reply").click(function(){
 		dataType : "text",
 		success : function(result){
 			if(result === "SUCCESS"){
+				var count = $(".replyArea").length; //댓글 개수
+				var replyIcon = $(".cardtitleLi[data-id=" + popCardId + "]").children(".cardIcon").children(".svg-inline--fa.fa-comment.fa-w-18");
+				if(count === 1) { //댓글이 1개인 상태에서 삭제했을 경우 아이콘, 개수 p태그 삭제
+					$(replyIcon).next("p").remove();
+					$(replyIcon).remove();
+				} else { //삭제 후에도 댓글이 0개가 아니면 count -1
+					$(replyIcon).next("p").html(count - 1);
+				};
+    			
 				$(".replyArea[data-id=" + deleteReplyId + "]").remove(); //해당 댓글 삭제
 			};
 		},

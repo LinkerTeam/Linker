@@ -232,7 +232,8 @@ $("input[name=password]").on("input", function(){
 /* 전체 수정 버튼 */
 //전송해야 할 경우 true를 반환하고 하지말아야 할 경우 false를 반환
 function check() {
-	if($(".statusSelect").val(2))
+	console.log($(".statusSelect").val());
+	if($(".statusSelect").val() == 2)
 		if(confirm("이 회원을 정말 탈퇴 시키시겠습니까?") === false) return false; 
 	if(nicknameCheck === true && passwordCheck1 === true && passwordCheck2 === true) {
 		return true;
@@ -246,3 +247,9 @@ function check() {
 $(".btn.btn-info.btn-fill.btn-wd").eq(3).on("click", function(){
 	self.location = "/admin/userList";
 });
+
+
+if($(location).attr("pathname") === "/admin/userList" || $(location).attr("pathname") === "/admin/readUser")
+	$(".nav > li").eq(0).addClass("active");
+else if($(location).attr("pathname") === "/admin/teamList" || $(location).attr("pathname") === "/admin/readTeam")
+	$(".nav > li").eq(1).addClass("active");

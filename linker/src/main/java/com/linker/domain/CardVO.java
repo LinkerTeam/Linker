@@ -10,7 +10,7 @@ public class CardVO {
 	private int u_id;		//회원 아이디
 	private String title;	//카드 제목
 	private String content;	//카드 내용
-	private String cdate;		//카드 생성날짜
+	private String cdate;	//카드 생성날짜
 	private Date udate;		//카드 업데이트날짜
 	private int ps_id;		//카드 상태값
 	
@@ -22,6 +22,10 @@ public class CardVO {
 	private String nickname;//작성자의 닉네임
 	private String profile; //작성자의 프로필
 	
+	private Integer status; //즐겨찾기 여부
+	private int checkContent; //내용 여부
+	private int reply; 		//댓글 개수
+	private int file;		//파일 개수
 	
 	
 	public int getP_id() {
@@ -96,13 +100,37 @@ public class CardVO {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
-	
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public int getCheckContent() {
+		return checkContent;
+	}
+	public void setCheckContent(int checkContent) {
+		this.checkContent = checkContent;
+	}
+	public int getReply() {
+		return reply;
+	}
+	public void setReply(int reply) {
+		this.reply = reply;
+	}
+	public int getFile() {
+		return file;
+	}
+	public void setFile(int file) {
+		this.file = file;
+	}
 	
 	@Override
 	public String toString() {
 		return "CardVO [id=" + id + ", u_id=" + u_id + ", title=" + title + ", content=" + content + ", cdate=" + cdate
 				+ ", udate=" + udate + ", ps_id=" + ps_id + ", cl_id=" + cl_id + ", cl_ps_id=" + cl_ps_id + ", p_id="
-				+ p_id + ", nickname=" + nickname + ", profile=" + profile + "]";
+				+ p_id + ", nickname=" + nickname + ", profile=" + profile + ", status=" + status + ", checkContent="
+				+ checkContent + ", reply=" + reply + ", file=" + file + "]";
 	}
 	
 }
