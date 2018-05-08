@@ -21,6 +21,8 @@ public class ReadCardlistVO {
 	private int c_ps_id; //카드 상태코드
 	
 	private int status;//즐겨찾기 상태코드
+	private int t_id; // 팀 id
+	private String t_name;// 팀이름 
 
 	public int getP_id() {
 		return p_id;
@@ -142,13 +144,33 @@ public class ReadCardlistVO {
 		this.status = status;
 	}
 
+	public int getT_id() {
+		return t_id;
+	}
+
+	public void setT_id(int t_id) {
+		this.t_id = t_id;
+	}
+
+	
+	public String getT_name() {
+		return t_name;
+	}
+
+	public void setT_name(String t_name) {
+		this.t_name = t_name;
+	}
+
 	@Override
 	public String toString() {
 		return "ReadCardlistVO [p_id=" + p_id + ", cl_id=" + cl_id + ", cl_u_id=" + cl_u_id + ", cl_title=" + cl_title
 				+ ", cl_cdate=" + cl_cdate + ", cl_udate=" + cl_udate + ", cl_ps_id=" + cl_ps_id + ", c_id=" + c_id
 				+ ", c_u_id=" + c_u_id + ", c_title=" + c_title + ", content=" + content + ", c_cdate=" + c_cdate
-				+ ", c_udate=" + c_udate + ", c_ps_id=" + c_ps_id + ", status=" + status + "]";
+				+ ", c_udate=" + c_udate + ", c_ps_id=" + c_ps_id + ", status=" + status + ", t_id=" + t_id
+				+ ", t_name=" + t_name + "]";
 	}
+
+	
 	
 	
 }

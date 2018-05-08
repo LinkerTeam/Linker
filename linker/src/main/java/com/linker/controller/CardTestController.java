@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.linker.domain.ProjectVO;
+import com.linker.domain.ReadCardlistVO;
+import com.linker.domain.TeamVO;
 import com.linker.domain.UserVO;
 import com.linker.service.CardlistService;
+import com.linker.service.MyCardFavoriteService;
 import com.linker.service.ProjectService;
 import com.linker.service.TeamMemberService;
  
@@ -35,6 +38,9 @@ public class CardTestController {
 	
 	@Inject
 	private TeamMemberService tmService;
+	
+	@Inject
+	private MyCardFavoriteService mcfSerivice; 
 	
 	//카드리스트와 카드 페이지 
 	@RequestMapping(value = "/board/{teamID}/{p_ID}", method = RequestMethod.GET)
@@ -74,14 +80,31 @@ public class CardTestController {
 		
 		return entity;
 	}
-	
-	@RequestMapping(value = "mycard", method = RequestMethod.GET)
+	//나의 즐겨찾기
+	@RequestMapping(value = "board/mycard", method = RequestMethod.GET)
 	public String myFavoriteCard() throws Exception{
 		
 		
 		return "user/favoriteCard";
 	}
 	
+	//즐겨찾기 된 팀리스트
+	@ResponseBody
+	@RequestMapping(value = "board/favoteam", method = RequestMethod.GET)
+	public ResponseEntity<List<ReadCardlistVO>> myTeam(HttpSession session) throws Exception {
+		System.out.println("팀리스트입니다.");
+		UserVO vo = (UserVO)session.getAttribute("login");
+		ResponseEntity<List<ReadCardlistVO>> entity = null;
+		System.out.println(mcfSerivice.myTeamList(vo.getId()));
+		try {
+			System.out.println(mcfSerivice.myTeamList(vo.getId()));
+			entity = new ResponseEntity<List<ReadCardlistVO>>(mcfSerivice.myTeamList(vo.getId()),HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println("팀리스트입니다3.");
+			entity = new ResponseEntity<List<ReadCardlistVO>>(HttpStatus.BAD_REQUEST);		}
+		return entity;
+	}
 	
-		
+	
+	
 }
