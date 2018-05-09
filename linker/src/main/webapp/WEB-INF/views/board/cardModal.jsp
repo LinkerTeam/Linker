@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardModal.css?ver=1111111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardModal.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -141,7 +141,7 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardModal.js?ver=1111111" type="text/javascript"></script>
-<script src="../../../resources/js/board/cardModalReply.js?ver=11" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardModal.js?ver=11" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardModalReply.js" type="text/javascript"></script>
 
 </html>

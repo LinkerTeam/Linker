@@ -16,7 +16,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=11111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css?ver=111111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -29,7 +29,7 @@
 			<ul class="nav-tabs">
 				<!-- .active | 탭 메뉴 활성화 상태 -->
 				<!-- Tab1 | 이력목록 -->
-				<li>
+				<%-- <li>
 					<div class="nav-tab-btn">
 						<a href="#" class="activity-tab">이력</a>
 					</div>
@@ -54,7 +54,7 @@
 							<a class="show-more" href="#">View all activity…</a>
 						</div>
 					</div>
-				</li>
+				</li> --%>
 				<!-- /이력목록 -->
 			
 				<!-- Tab2 | 보관목록 -->
@@ -99,9 +99,9 @@
 							<div class="tab-content-box-controls">
 								<div class="tab-trashbox-title">
 									<span class="tab-trashbox-title-card">카드 휴지통</span>
-									<button class="switchBtn-hidden swhitchCard">카드리스트 보관함으로</button><!-- 카드목록일 때 출력 -->
+									<button class="switchBtn-hidden swhitchCard">카드리스트 휴지통으로</button><!-- 카드목록일 때 출력 -->
 									<span class="tab-trashbox-title-cardlist">카드리스트 휴지통</span>
-									<button class="switchBtn-hidden swhitchCardlist">카드 보관함으로</button><!-- 카드리스트일 때 출력 -->
+									<button class="switchBtn-hidden swhitchCardlist">카드 휴지통으로</button><!-- 카드리스트일 때 출력 -->
 								</div>
 								<form class="tab-search-form">
 							        <input type="search" value="" placeholder="Search" class="tab-search-input">
