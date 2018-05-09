@@ -5,10 +5,14 @@ import java.util.List;
 
 import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
+import com.linker.domain.SearchVO;
 import com.linker.domain.TeamVO;
 
 public interface SearchService {
 	
+	//전체 검색에서 카드 검색
+	public List<SearchVO> searchCard(int u_id, String keyword) throws Exception;
+		
 	//팀리스트에서 멤버 검색
 	public List<TeamVO> searchMember(int u_id, String keyword) throws Exception;
 	

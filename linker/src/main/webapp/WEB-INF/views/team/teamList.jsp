@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Linker</title>
 <link href="/resources/css/team/team.css?ver=222" type="text/css" rel="stylesheet" />
+<link href="/resources/css/common.css?ver=22" type="text/css" rel="stylesheet" />
 </head>
 <body>
 	<%@include file="../header.jsp"%>
@@ -31,7 +32,7 @@
 					<!-- 팀 추가 버튼  -->
 					<div class="title">
 						<input type="button" class="add-team" id="add-team-btn"
-							value="Add Team" />
+							value="Add Team" style="width:150px;"/>
 					</div>
 				</div>
 				<!-- 팀 목록 작은 컨텐트 -->
@@ -51,13 +52,14 @@
 		<!-- 팀 추가 모달창 -->
 		<div class="modal" id="team-modal-add-div">
 			<div class="modal-content">
+				팀 추가<hr/>
 				<div>
 					<label for="name">팀이름: </label> <input type="text" id="name"
 						name="name" placeholder="write team name here." />
 				</div>
 				<div>
-					<input type="button" id="team-modal-add-btn" value="확인" /> <input
-						type="button" class="modal-cancle-btn" name="cancle" value="취소" />
+					<input type="button" id="team-modal-add-btn" style='cursor:pointer;' value="확인" />
+					<input type="button" class="modal-cancle-btn" name="cancle" style='cursor:pointer;' value="취소" />
 				</div>
 			</div>
 		</div>
@@ -65,13 +67,14 @@
 		<!-- 팀이름수정 모달 창 -->
 		<div class="modal" id="team-modal-modify-div">
 			<div class="modal-content">
+				팀 이름 수정<hr/>
 				<div>
 					<p>수정할 팀 이름을 입력하세요.</p>
 					이름 : <input type="text" id="modal-text-txt" name="modalTextTxt" maxlength="20" />
 				</div>
 				<div>
-					<input type="button" id="team-modal-modify-btn" value="수정" /> 
-					<input type="button" class="modal-cancle-btn" value="취소" />
+					<input type="button" id="team-modal-modify-btn" style='cursor:pointer;' value="수정" /> 
+					<input type="button" class="modal-cancle-btn" style='cursor:pointer;' value="취소" />
 				</div>
 			</div>
 		</div>
@@ -79,10 +82,11 @@
 		<!--팀삭제 모달 창-->
 		<div class="modal" id="team-modal-delete-div">
 			<div class="modal-content">
-				<p>정말로 삭제 하시겠습니까?</p>
+				팀 삭제<hr/>
+				<p>정말로 팀을 삭제 하시겠습니까?</p>
 				<div>
-					<input type="button" id="team-modal-delete-btn" value="삭제" /> 
-					<input type="button" class="modal-cancle-btn" value="취소" />
+					<input type="button" id="team-modal-delete-btn" style='cursor:pointer;' value="삭제" /> 
+					<input type="button" class="modal-cancle-btn" style='cursor:pointer;' value="취소" />
 				</div>
 			</div>
 		</div>
@@ -95,20 +99,22 @@
 		<!-- 멤버권한수정 모달 창 -->
 		<div class="modal" id="member-modal-modify-div">
 			<div class="modal-content">
+				팀원 권한 수정<hr/>
 				<p>수정할 권한을 클릭하십시오.</p>
-				<input type="button" id="member-auth-modify-2-btn" value="팀원" /> 
-				<input type="button" id="member-auth-modify-1-btn" value="관리자" /> 
-				<input type="button" class="modal-cancle-btn" value="취소" />
+				<input type="button" id="member-auth-modify-2-btn" style='cursor:pointer;' value="팀원" /> 
+				<input type="button" id="member-auth-modify-1-btn" style='cursor:pointer;' value="관리자" /> 
+				<input type="button" class="modal-cancle-btn" style='cursor:pointer;' value="취소" />
 			</div>
 		</div>
 
-		<!-- 멤버 삭제 모달 창 -->
+		<!-- 멤버 탈퇴 모달 창 -->
 		<div class="modal" id="member-modal-delete-div">
 			<div class="modal-content">
-				<div>정말로 팀원을 탈퇴 하시겠습니까?</div>
+			팀원 탈퇴<hr/>
+				<div>정말로 탈퇴 하시겠습니까?</div>
 				<div>
-					<input type="button" id="member-modal-delete-btn" value="삭제" /> 
-					<input type="button" class="modal-cancle-btn" value="취소" />
+					<input type="button" id="member-modal-delete-btn" style='cursor:pointer;' value="삭제" /> 
+					<input type="button" class="modal-cancle-btn" style='cursor:pointer;' value="취소" />
 				</div>
 			</div>
 		</div>
@@ -116,10 +122,11 @@
 		<!--  한 명의 멤버 추가버튼을 누를 때 모달창 -->
 		<div class="modal" id="add-member-modal">
 			<div class="modal-content">
+				팀원 추가<hr/>
 				<p>새로운 사람을 초대 할 이메일 주소를 입력하십시오.</p>
 				Email: <input type="text" id="member-txt" name="member-txt" placeholder="e.g. linker@gmail.com"><br>
-				<input type="submit" id="member-modal-add-btn" value="Add To Team.." />
-				<input type="button" class="modal-cancle-btn" name="cancle" value="취소" />
+				<input type="submit" id="member-modal-add-btn" value="Add To Team.." style="cursor:pointer; width:150px;"/>
+				<input type="button" class="modal-cancle-btn" name="cancle" style='cursor:pointer;' value="취소" />
 			</div>
 		</div>
 		<!-- 모달창 끝 -->

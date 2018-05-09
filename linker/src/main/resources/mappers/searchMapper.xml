@@ -4,6 +4,91 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.linker.mapper.searchMapper">
+<!-- 전체검색 -->
+<select id="n_searchCard" resultType="SearchVO">
+SELECT 
+	c.id as c_id
+	, c.u_id
+	, u.nickname
+	, c.title as c_title
+	, c.content
+	, c.cdate
+	, c.cl_id
+	, cl.title as cl_title
+	, cl.p_id
+	, p.title as p_title
+	, p.t_id
+	, t.name as t_name
+  , f.cnt_f_cid
+  , r.cnt_r_cid
+FROM linker.card AS c
+left JOIN (
+select * from linker.card as a1
+join(
+select c_id,count(c_id) as cnt_f_cid from linker.c_file as f group by c_id) as f on a1.id=f.c_id
+) as f ON c.id = f.c_id
+left join (
+ SELECT * FROM linker.card as c
+left join(
+select c_id, count(c_id) as cnt_r_cid from linker.c_reply as r group by r.c_id) as r on c.id = r.c_id
+) as r on c.id = r.c_id
+JOIN linker.cardlist AS cl ON cl.id = c.cl_id
+JOIN linker.project AS p ON cl.p_id = p.id
+JOIN (
+select thu.t_id, t.name, t.id from linker.team_has_user as thu
+left join linker.team as t on t.id = thu.t_id
+where u_id = 13 and t.status = 0
+) AS t ON t.id = p.t_id
+JOIN linker.user AS u ON c.u_id = u.id
+WHERE c.ps_id = 1 
+AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
+		  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
+		  OR c.cdate like CONCAT ('%', #{keyword}, '%') 
+		)
+ORDER BY c.cdate desc;
+</select>
+<!-- 전체검색 -->
+<select id="e_searchCard" resultType="SearchVO">
+SELECT 
+	c.id as c_id
+	, c.u_id
+	, u.nickname
+	, c.title as c_title
+	, c.content
+	, c.cdate
+	, c.cl_id
+	, cl.title as cl_title
+	, cl.p_id
+	, p.title p_title
+	, p.t_id
+	, t.name as t_name
+  , f.cnt_f_cid
+  , r.cnt_r_cid
+FROM linker.card AS c
+left JOIN (
+select * from linker.card as a1
+join(
+select c_id,count(c_id) as cnt_f_cid from linker.c_file as f group by c_id) as f on a1.id=f.c_id
+) as f ON c.id = f.c_id
+left join (
+ SELECT * FROM linker.card as c
+left join(
+select c_id, count(c_id) as cnt_r_cid from linker.c_reply as r group by r.c_id) as r on c.id = r.c_id
+) as r on c.id = r.c_id
+JOIN linker.cardlist AS cl ON cl.id = c.cl_id
+JOIN linker.project AS p ON cl.p_id = p.id
+JOIN (
+select thu.t_id, t.name, t.id from linker.team_has_user as thu
+left join linker.team as t on t.id = thu.t_id
+where u_id = 13 and t.status = 0
+) AS t ON t.id = p.t_id
+JOIN linker.user AS u ON c.u_id = u.id
+WHERE c.ps_id = 1 
+AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
+		  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
+		)
+ORDER BY c.cdate desc;
+</select>
 <!-- 달성/가리기 탭에서 카드검색 -->	
 	<!-- 달성 탭에서 카드 출력 -->
 	<select id="n_searchArchiveCard" resultType="CardVO">
@@ -152,7 +237,7 @@
 	<!-- keyword가 한글이 들어간 경우. 가리기 탭에서 카드리스트 출력/ 진행 상태(ps_id = 1)인 모든 카드리스트와 카드 조회 -->
 	<!--     카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
 	<select id="e_searchHideCardlist" resultType="CardlistVO">
-		SELECT
+		SELECT 
 			id
 			, p_id
 			, u_id

@@ -12,15 +12,15 @@
 
 <body>
 	<div class="wrap">
-	<div class="logo_div">
-		<img class="logo_img" src="../resources/image/logo_img.png">
-	</div>
 		<div class="error-text">
-			<P id="error">error page</P>
+			<P id="error">Error page</P>
+	<div class="logo_div">
+		<img class="error_img" src="../resources/image/error_img.png">
+	</div>
 			<p class="error-page">죄송합니다! 문제가 발견되었습니다.
 			<ul>
 			<li class="error-page">url을 다시 한번 확인해 주십시오.</li>
-			<li class="error-page">태 전 되돌아가 다시 시도해주십시오.</li>
+			<li class="error-page">이전으로 돌아가 다시 시도해주십시오.</li>
 			<li class="error-page">
 				문의하기 <a href="mailto:intosy227@gmail.com" target="_top">linkers104@gmail.com</a>
 			</li>
