@@ -30,8 +30,8 @@ function teamButton(auth){
 	var str = "";
 	if(auth == 0 ){
 		str  =  "	<div class='list-btn'><input type='button' class='select-member-btn' name='selectMemberBtn' style='cursor:pointer;' value='멤버보기' /></div>"
-			 +  "	<div class='list-btn'><input type='button' class='delete-team-btn' name='deleteTeamBtn' style='cursor:pointer;' value='팀 삭제' /></div>"
-			 +  "	<div class='list-btn'><input type='button' class='modify-team-btn' name='modifyTeamBtn' style='cursor:pointer;' value='팀 이름 수정' /></div>";
+			 +  "	<div class='list-btn'><input type='button' class='delete-team-btn' name='deleteTeamBtn' style='cursor:pointer;' value='삭제' /></div>"
+			 +  "	<div class='list-btn'><input type='button' class='modify-team-btn' name='modifyTeamBtn' style='cursor:pointer;' value='수정' /></div>";
 	}else{
 		str  =  "	<div class='list-btn'><input type='button' class='select-member-btn' name='selectMemberBtn' style='cursor:pointer;' value='멤버보기' /></div>";
 	}
@@ -42,15 +42,15 @@ function teamButton(auth){
 function memberButton(data, myauth){
 	var str = "";
 	if(myauth== 0 && data == 0){
-		str =  "<div class='list-btn'><input type='button' class='transfer-auth-btn' name='transferAuthBtn' value='권한 양도' /></div>";
+		str =  "<div class='list-btn'><input type='button' class='transfer-auth-btn' name='transferAuthBtn' style='cursor:pointer;' value='권한 양도' /></div>";
 	}else if(myauth== 0 && data != 0){
-		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' value='권한수정' /></div>"
-			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' value='탈퇴' /></div>";
+		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' style='cursor:pointer;' value='권한수정' /></div>"
+			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
 	}else if(myauth== 1 && data != 0){
-		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' value='권한수정' /></div>"
-			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' value='탈퇴' /></div>";
+		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' style='cursor:pointer;' value='권한수정' /></div>"
+			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
 	}else if(myauth== 2 && data == 2){
-		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' value='탈퇴' /></div>";
+		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
 	}
 	return str;
 } 
@@ -60,7 +60,7 @@ function memberAdd(){
 	var memberStr = "";
 	memberStr	+=	"<div class='side-menu'>"
 				+	"	<h5 class='title'> Member Add </h5>"
-				+	"	<input type='button' class='add-member-btn' id='add-member-btn' value='Add by Name or Email' />"
+				+	"	<input type='button' class='add-member-btn' id='add-member-btn' value='Add by Name or Email' style='cursor:pointer; width:200px;' />"
 				+	"</div>";
 	$('.member-list').children('.list-box-body').append(memberStr);
 	return memberStr;
@@ -89,7 +89,7 @@ function allTeamStr(data){
 	str =   "<div id='team-list-table-body'>"
 		+   "	<div class='one-list-row' data-id='" + data.t_id + "'>"
 		+	"		<div class='t_id' style='display : none;'>" + data.t_id + "</div>"
-		+	"		<div class='name'>" + data.name + "</div>"
+		+	"		<div class='name'><i class='fas fa-users'></i>&nbsp&nbsp" + data.name + "</div>"
 		+	"		<div class='cdate'>" + data.cdate + "</div>";
 	str +=	"		<div class='auth'>" + auth(data.auth) +"</div>";
 	str +=	teamButton(data.auth);//권한 따라서 버튼이 달라짐
@@ -119,7 +119,7 @@ function allTeamStr(data, num){
 	str =   "<div id='team-list-table-body'>"
 		+   "	<div class='one-list-row' data-id='" + data.t_id + "'>"
 		+	"		<div class='t_id' style='display : none;'>" + data.t_id + "</div>"
-		+	"		<div class='name'>" + data.name + "</div>"
+		+	"		<div class='name'><i class='fas fa-users'></i>&nbsp&nbsp" + data.name + "</div>"
 		+	"		<div class='cdate'>" + data.cdate + "</div>";
 	str +=	"		<div class='auth'>" + auth(data.auth) +"</div>";
 	str +=			teamButton(data.auth);
@@ -169,7 +169,7 @@ function allMemberStr(data, myAuth){
 	var str = "";
 		str =  "<div class='one-list-row' data-id='" + data.u_id + "'>"
 			+	"	<div class='u_id' style='display:none;'  data-id='" + data.u_id + "'>" + data.u_id + "</div>"
-			+  "	<div class='email'>" + data.email + "</div>"
+			+  "	<div class='email'><i class='fas fa-user'></i>&nbsp&nbsp" + data.email + "</div>"
 			+  "	<div class='nickname'>" + data.nickname + "</div>";
 		str +=	"	<div class='auth'>" + auth(data.auth) +"</div>";
 		str +=	memberButton(data.auth, myAuth);
@@ -245,7 +245,7 @@ $('#team-modal-add-btn').click(function(){
 			str =   "<div id='team-list-table-body'>"
 				+   "	<div class='one-list-row' data-id='" + result.data_id + "'>"
 				+	"		<div class='t_id' style='display : none;'>" + result.data_id + "</div>"
-				+	"		<div class='name'>" + name + "</div>"
+				+	"		<div class='name'><i class='fas fa-users'></i>&nbsp&nbsp" + name + "</div>"
 				+	"		<div class='cdate'>" + today + "</div>";
 			str +=	"		<div class='auth'>" + auth(0) +"</div>";
 			str +=	teamButton(0);
@@ -262,7 +262,7 @@ $('#team-modal-add-btn').click(function(){
 		        +   "			<div class='member-list-table-body' data-id='" + result + "'>"
 		        +   "				<div class='one-list-row' data-id='" + U_ID + "'>"
 		        +   "					<div class='u_id' style='display:none;'  data-id='" + U_ID + "'>" + U_ID + "</div>"
-				+   "					<div class='email'>" + EMAIL + "</div>"
+				+   "					<div class='email'><i class='fas fa-user'></i>&nbsp&nbsp" + EMAIL + "</div>"
 				+   "					<div class='nickname'>" + NICKNAME + "</div>";
 			str +=  "					<div class='auth'>" + auth(0) +"</div>";
 			str +=  memberButton(0, 0);
@@ -357,7 +357,7 @@ $(document).on('click','.modify-team-btn',function() {
 	$('#team-modal-modify-div').show();
 	T_id = $(this).parent().parent().children('.t_id').html();
 	U_id = $(this).parent().parent().children('.u_id').html();
-	title = $(this).parent().parent().children('.name').html();
+	title = $.trim($(this).parent().parent().children('.name').text());
 	$('#modal-text-txt').val(title);
 });
 
@@ -367,7 +367,8 @@ $(document).on('click','.delete-team-btn',function() {
 	$('#team-modal-delete-div').show();
 	T_id = $(this).parent().parent().children('.t_id').html();
 	console.log(T_id);
-	teamName = $(this).parent().parent().children('.name').html();
+	teamName = $.trim($(this).parent().parent().children('.name').text());
+	console.log(teamName);
 });
 
 //modal창에서 취소버튼(.modal-cancle-btn)을 눌렀을 때
@@ -469,51 +470,6 @@ $('#team-modal-modify-btn').click(function() {
  $(".list-box-body").on('click','.select-member-btn',function() {  
 	  $(this).parents(".one-list-row").next().toggle(); 
 });
-  
-//멤버보기 버튼을 누를 경우2(소유자 권한 양도 모달 창 select의 option 값 가져오기)
-$(".list-box-body").on('click','.select-member-btn',function() {  
-      var str = "";
-      var checkBtn = $(this);
-      
-      //내가 선택한 버튼의 memberList 중 컬럼과 데이터 모두선택 (배열)
-      var memberList = checkBtn.parent().parent().next();
-      
-      //내가 선택한 버튼의 memberList 중 컬럼을 제외한 memberList 데이터만 선택 (배열)
-      var memberListTableBody = memberList.children().children(".member-list-table-body"); 
-      
-      //내가 선택한 버튼의 memberList에서 권한을 선택 (배열)
-      var Member = memberListTableBody.children('.one-list-row'); 
-       
-      //만약 member가 여러명이라면 
-      if (Member.length > 1) { 
-    	  
-         str = "<div class='modal-content'><p>&lt;경고&gt;<br>소유자는 권한을 양도하면 다시 소유자 권한으로 바꿀 수 없습니다.<br> 또한 팀에서 자동으로 탈퇴됩니다.</p>"
-             + "<label for='auth-transfer-select'>권한 양도할 팀원</label>"
-             + "   <select name='auth-transfer-select' id='auth-transfer-select'>";
-         
-         for (var i = 1; i < Member.length; i++) {
-            var userNickname = memberListTableBody.children().eq(i).children().eq(2).text();
-				str += "<option>"
-				+ userNickname
-				+ "</option>";
-		 }
-		
-         str += "   </select>"
-	         + "<input type='button' id='auth-transfer-btn' value='권한 양도'/>"
-	         + "<input type='button' class='modal-cancle-btn' value='취소'/></div>";
-
-	     //소유자 권한 양도 모달 창         
-	     $("#member-modal-transfer-div").html(str);
-	     str = "";
-	     
-	  }else{ //만약 member가 소유자만 있다면
-	     str += "<div class='modal-content'><h3 class='title'>팀원이 소유자만 있는 경우에는 권한 양도가 불가합니다. 팀을 삭제해주세요.</h3>"
-	         + "<input type='button' class='modal-cancle-btn' value='취소'/></div>";
-
-	     $("#member-modal-transfer-div").html(str);
-	     str = "";
-	  }  
-});
 			
 //멤버리스트에서 권한 양도 버튼을 눌렀을 경우
 $(document).on('click','.transfer-auth-btn',function() {
@@ -522,6 +478,44 @@ $(document).on('click','.transfer-auth-btn',function() {
 	s_T_id = $(this).parent().parent().parent().parent().parent().prev().children('.t_id'); //select option의 값을 가진 data를 추출하기 위해 만든 변수 .children('.t_id')
 	U_id = $(this).parents('div').children('.u_id').html();
 
+	 var str = "";
+     var checkBtn = $(this);
+     /* 내가 선택한 버튼의 memberList 중 컬럼을 제외한 memberList 데이터만 선택 (배열)*/
+     var memberListTableBody = checkBtn.parent().parent().parent();
+
+     //내가 선택한 버튼의 memberList에서 권한을 선택 (배열)
+     var Member = memberListTableBody.children('.one-list-row'); 
+      
+     //만약 member가 여러명이라면 
+     if (Member.length > 1) { 
+   	  
+        str = "<div class='modal-content'>권한양도<hr/><p>&lt;경고&gt;<br>소유자는 권한을 양도하면 다시 소유자 권한으로 바꿀 수 없습니다.<br> 또한 팀에서 자동으로 탈퇴됩니다.</p><br><br>"
+            + "<label for='auth-transfer-select'>권한 양도할 팀원</label>"
+            + "   <select name='auth-transfer-select' id='auth-transfer-select'>";
+        
+        for (var i = 1; i < Member.length; i++) {
+           var userNickname = memberListTableBody.children().eq(i).children().eq(2).text();
+				str += "<option>"
+				+ userNickname
+				+ "</option>";
+		 }
+		
+        str += "   </select><br><br>"
+	         + "<input type='button' id='auth-transfer-btn' style='cursor:pointer;' value='권한 양도'/>"
+	         + "<input type='button' class='modal-cancle-btn' style='cursor:pointer;' value='취소'/></div>";
+
+	     //소유자 권한 양도 모달 창         
+	     $("#member-modal-transfer-div").html(str);
+	     str = "";
+	     
+	  }else{ //만약 member가 소유자만 있다면
+	     str += "<div class='modal-content'>권한양도<hr/><p>팀원이 소유자만 있는 경우에는 권한 양도가 불가합니다. 팀을 삭제해주세요.</p><br><br>"
+	         + "<input type='button' class='modal-cancle-btn' style='cursor:pointer;' value='취소'/></div>";
+
+	     $("#member-modal-transfer-div").html(str);
+	     str = "";
+	  }
+     
 	$( '#member-modal-transfer-div' ).show();
 });
 					

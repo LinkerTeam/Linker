@@ -21,6 +21,20 @@ public class SearchDAOImpl implements SearchDAO{
 	@Inject
 	SqlSession session;
 	
+	//전체 검색에서 카드 검색
+	public List<SearchVO> e_searchCard(int u_id, String keyword) throws Exception{
+		SearchVO vo = new SearchVO();
+		vo.setU_id(u_id);
+		vo.setKeyword(keyword);
+		return session.selectList(namespace + ".e_searchCard", vo);
+	}
+	//전체 검색에서 카드 검색
+	public List<SearchVO> n_searchCard(int u_id, String keyword) throws Exception{
+		SearchVO vo = new SearchVO();
+		vo.setU_id(u_id);
+		vo.setKeyword(keyword);
+		return session.selectList(namespace + ".n_searchCard", vo);
+	}
 	//팀리스트에서 멤버 검색
 	@Override
 	public List<TeamVO> searchMember(int u_id, String keyword) throws Exception {

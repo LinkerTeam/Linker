@@ -32,7 +32,7 @@ public class HistoryDAOImpl implements HistoryDAO{
 	public int historyInsertTeamDelete(TeamVO vo) throws Exception {
 		HistoryVO hvo = new HistoryVO();
 		hvo.setU_id(vo.getU_id());
-		hvo.setBefore(vo.getBefore());
+/*		hvo.setBefore(vo.getBefore());*/
 		hvo.setAfter(vo.getName());
 		hvo.setT_id(vo.getT_id());
 		session.insert(namespace + ".historyInsertTeamDelete", hvo);

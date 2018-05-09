@@ -13,11 +13,10 @@ html, body{
 }
 .logo_div{
 	text-align: center;
-	margin-bottom: 10px;
-	
+	margin-bottom: 30px;
 }
-.logo_img{
-	margin-top: 70px;
+.error_img{
+	width : 400px;
 }
 .error-text{
 	color: white;
@@ -27,8 +26,8 @@ html, body{
 	text-align: center;
 }
 #error{
-	padding-top : 10px;
- 	font-size: 63pt;
+	padding : 200px 0 40px 0;
+ 	font-size: 90pt;
 	height: 100px;
 	text-align: center;
 }
