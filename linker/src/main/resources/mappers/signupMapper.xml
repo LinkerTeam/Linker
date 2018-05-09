@@ -24,8 +24,8 @@
    <!-- 구글 회원가입 -->
    <insert id="insertGoogle">
    INSERT INTO  
-   linker.user(email,nickname,google)
-   VALUES (#{email},#{nickname},1)
+   linker.user(email,nickname,google,status)
+   VALUES (#{email},#{nickname},1,1)
    </insert>
    
    <!-- 구글 로그인 처음인지 확인 -->

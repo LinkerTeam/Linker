@@ -68,7 +68,7 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping(value="/insertProject", method= RequestMethod.POST)
 	public ResponseEntity<Integer> createProject(@RequestBody ProjectVO vo) throws Exception{
-		System.out.println("프로젝트 생성");
+		//System.out.println("프로젝트 생성");
 		ResponseEntity<Integer> entity = null;
 		     service.createProject(vo);
 		     // 프로젝트 생성후에 생성된 기본키(PK)를 받아옴 
@@ -110,7 +110,7 @@ public class ProjectController {
 	public ResponseEntity<List<ProjectVO>> projectList(HttpServletRequest request) throws Exception{
 		HttpSession session = request.getSession();
 		UserVO vo = (UserVO)session.getAttribute("login");
-		System.out.println("projectlist");
+		//System.out.println("projectlist");
 		return new ResponseEntity<List<ProjectVO>>(service.hiddenList(vo.getId()),HttpStatus.OK);
 	}
 	
@@ -148,7 +148,7 @@ public class ProjectController {
 	@ResponseBody
 	@RequestMapping(value = "/favoriteDelete", method = RequestMethod.DELETE)
 	public ResponseEntity<String> favoriteDelete(@RequestBody ProjectVO pvo,HttpSession session) throws Exception{
-		System.out.println("즐겨찾기 삭제");
+		//System.out.println("즐겨찾기 삭제");
 		ResponseEntity<String> entity = null;
 		UserVO vo = (UserVO) session.getAttribute("login");
 		int u_id = vo.getId();

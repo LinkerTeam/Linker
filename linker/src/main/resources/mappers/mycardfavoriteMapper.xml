@@ -10,18 +10,29 @@
 			c.id AS c_id
 			, c.u_id AS c_u_id
 			, c.title AS c_title
-			, c.content
 			, c.cdate AS c_cdate
 			, c.udate AS c_udate
 			, c.ps_id AS c_ps_id
+			,CASE WHEN c.content IS NULL THEN 0
+			WHEN c.content = '' THEN 0
+			ELSE 1
+			END AS content
             , uhc.t_id 
 			, uhc.status
             , t.name AS t_name
+            , reply
+            , file
 		FROM linker.user_has_card AS uhc  
 		JOIN linker.card c ON uhc.c_id = c.id
 		JOIN linker.team_has_user AS thu ON thu.t_id = uhc.t_id
 		JOIN linker.team AS t ON t.id = thu.t_id
 		JOIN linker.project AS p ON p.id = uhc.p_id
+		LEFT JOIN (SELECT c_id, count(*) AS reply
+					FROM linker.c_reply
+					GROUP BY c_id) AS r ON c.id = r.c_id
+		LEFT JOIN (SELECT c_id, count(*) AS file
+					FROM linker.c_file
+					GROUP BY c_id) AS f ON c.id = f.c_id
 	    WHERE uhc.u_id =#{u_id} AND c.ps_id = 1 AND t.status = 0 AND p.ps_id = 1 AND thu.u_id=#{u_id}
  </select>
  </mapper>

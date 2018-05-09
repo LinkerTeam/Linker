@@ -6,73 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<style>
-
- #main{
-    font-family: Dotum,sans-serif;
-    font-size: 12px;
-    position: relative;
-    z-index: 20;
-    max-width: 954px;
-    height: 100%;
-    margin: 0px auto;
-}
- 
- #contain{
-    position: relative;
-    padding: 32px 51px 95px;
-    box-sizing: border-box;
-}
-  
-  #content{    
-    height : 400px;
-    line-height: 14px;
-    width: 450px;
-    margin: 100px auto;
-    padding: 32px 29px 32px;
-    border: 1px solid #dadada;
-    background: #fff;
-    border-radius: 5px;
-}
-
-.btn {
-	margin-top: 20px;
-	width: 400px;
-	border: none;
-	outline: none;
-	height: 40px;
-	background: #0067a3;
-	color: #fff;
-	font-size: 18px;
-	cursor: pointer;
-	width: 100%;
-	border-radius: 5px;
-}
-#agree{
-	height: 30px;
-	width: 100%;
-	margin: 30px 0 20px 0;
-}
- .head{
-    font-size: 25px;
-    font-weight:bold;
-    margin-top: 10px;
-    margin-bottom: 35px;
-    text-align: center;
-}
- .h1{
-    font-size: 13px;
-    margin-bottom: 10px;
-}
- .notes{
-	margin-bottom:  20px;
-}
- .agreetext{
-	color:red;
-}
-
-</style>
-
+<link href="/resources/css/user/secessionUserConfirm.css" type="text/css" rel="stylesheet" /> 
 <body>
 	<%@include file="../header.jsp"%>
 	<%@include file="../closeBoard.jsp"%>
@@ -87,37 +21,13 @@
 							   <form action="/user/secessionUserConfirm" method="post" onsubmit='return check();'>
 									<div class='h1'>위사항을 다 읽고 동의하시면 <a class="agreetext">'탈퇴에 동의합니다.'</a>라고 적어주세요</div>
 										<input type="text" name="agree" id="agree">
-										<input type="submit" class="btn">
+										<input type="submit" class="submit">
 									<button class="btn">취소</button>
 								</form>
 					   </div>
 				  </div>
 			 </div>
 		</div>
-
-      <script>
-      function check(){
-
-    	 var agree = document.getElementById('agree').value;
-    	    
-    	       if(agree==null || agree == ""){
-    	    	   alert("탈퇴 동의 텍스트를 '탈퇴에 동의합니다.'를 입력해주세요");
-    	    
-    	    	   return false;
-    	       }
-    	       
-    	       if(agree !== "탈퇴에 동의합니다."){
-    	    	   alert("탈퇴 방지 문구가 틀렸습니다. 다시 입력해주세요.");
-    	    	   return false;
-    	       }
-    	     
-    	       if(confirm("정말로 탈퇴하시겠습니까?")==false){
-    	    	   return false;
-    	       }
-    	  return true;
-      }
-      
-      
-      </script>
+      <script src="/resources/js/user/secessionUserConfirm.js"></script>
 </body>
 </html>

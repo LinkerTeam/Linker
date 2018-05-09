@@ -86,6 +86,7 @@ public class CardTestController {
 	@ResponseBody
 	@RequestMapping(value = "board/favoteam", method = RequestMethod.GET)
 	public ResponseEntity<List<ReadCardlistVO>> myTeam(HttpSession session) throws Exception {
+
 		UserVO vo = (UserVO)session.getAttribute("login");
 		
 		ResponseEntity<List<ReadCardlistVO>> entity = null;
