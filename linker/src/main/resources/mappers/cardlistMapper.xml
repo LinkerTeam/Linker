@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					GROUP BY c_id) AS f ON c.id = f.c_id
 	    WHERE cl.p_id = #{p_id}
 	    AND cl.ps_id = 1
-	    ORDER BY c_id ASC
+	    ORDER BY cl_id ASC, c.id ASC
     	<!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
 	</select>
 	

@@ -233,15 +233,16 @@ switch (p_ps_id) {
 
 /* 카드 조회 | 특정 카드리스트에 대한 카드 조회 */
 function listCards(cl_id){
-	//기존 카드 태그 삭제 후
-	$(".cardlist[data-id='" + cl_id + "']").children(".cards").children(".cardtitleLi").remove();
+	var addCard = $(".cardlist[data-id=" + cl_id + "]").children(".cards").children(".addCard").clone(); //복사
+	var str = "";
 	//새로운 데이터 받아옴
 	$.getJSON("/board/" + p_id + "/cardlist/" + cl_id + "/cards", function(data) {
   		for(var i = 0; i < data.length; i++) { 
-			var str = newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].status, 
+			str += newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].status, 
 					data[i].uhc_u_id, data[i].content, data[i].file, data[i].reply); //문자열로 카드 태그를 만드는 함수 호출
-			$(".cardlist[data-id=" + cl_id + "]").children(".cards").children(".addCard").before(str); 
 		};
+		$(".cardlist[data-id=" + cl_id + "]").children(".cards").html(str); //동적 카드 태그 삽입
+		$(".cardlist[data-id=" + cl_id + "]").children(".cards").append(addCard); //마지막에 카드 등록 textarea태그 추가
 	});
 };
 
