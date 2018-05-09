@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+/*사이드 컨텐트 + 팀목록 컨텐트 */
+.wrap-content{
+	width:100%;
+	height: 100%;
+	margin:0;
+	padding:0;
+	z-index:999;
+	background: #fcfcfc;
+	overflow-x: hidden; 
+}
+/* 팀목록 제목 + 팀 멤버 검색 + 팀 추가 버튼 컨텐츠*/
+.title{
+	padding : 60px 30px 10px 30px;
+	height : 60px;
+	font-size: 20pt;
+}
+.filter{
+	font-size : 9pt;
+	float : right;
+	display : block;
+	background: none;
+	border: none;
+	
+}
+/* 검색 작은 컨텐츠 : 목록 + 내용 */
+.list-box-body{
+	font-size : 11pt;
+	padding : 10px 30px;
+	height: 80%;
+}
+/* 팀리스트  y 스크롤 */
+.wrap-content::-webkit-scrollbar {
+    width: 10px;
+    height: 12px;
+}
+.wrap-content::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.05);
+    border-radius: 3px;
+}
+.wrap-content::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.1);
+    border-radius: 10px;
+}
+/* 목록 컬럼 row */
+.category.search-category{
+	line-height : 40px;
+	background : #4e97c2;
+	padding-left : 20px;
+}
+.category.search-category div{
+	display : inline-block;
+	width : 200px;	
+}
+/* 팀, 멤버 목록 한줄 한줄 */
+.one-list-row{
+	padding : 15px 30px 15px 20px;
+	font-size: 11pt;
+	line-height : 40px;
+	border : 1px solid #c4c9cc;
+}
+.one-list-row div{
+	width : 200px;
+	display: inline-block;
+}
+/*모든 버튼 설정*/
+input[type=button]{
+	background-color: #f0f0f0;
+	border : none;
+    border-bottom: 1px solid #ccc;
+    color : #777;
+    box-shadow : 0px 0px 0px 0px #B8B8B8;
+    width : 100px;
+    height: 40px;
+    font-weight: bold;
+}
+/* .card-content 속성 값 설정*/
+div.card-content{
+	height: 40px;
+	overflow: hidden;
+	vertical-align: bottom;
+}
+.content-null{
+color : #bfbfbf;
+}
+input:focus, input[type="submit"]:focus, input[type="button"]:focus{
+	outline : none;
+}

@@ -369,11 +369,10 @@ label {
     display: inline-block;
     height: 40px;
     line-height: 40px;
-    background: url("/resources/image/google-logo.png") no-repeat left 5px; 
+    background: url("/resources/image/google.png") no-repeat left 5px; 
     background-size: auto 30px;
     padding-left: 37px;
 }
-
 
 #checkMsg,#EmailcheckMsg{
 	height: 15px;

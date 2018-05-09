@@ -216,7 +216,7 @@ z-index: 9997;
 .content-content > div {
     position: absolute;
     width: 100%;
-    top: 378px;
+    top: 375px;
     left: 0;
 	height: 100px;
     background: linear-gradient(rgba(255, 255, 255, 0.21), #edeff0);

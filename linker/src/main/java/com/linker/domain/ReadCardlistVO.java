@@ -4,7 +4,11 @@ import java.util.Date;
 
 public class ReadCardlistVO {
 	
-	private int p_id;
+	private int p_id; //프로젝트 id
+	
+	private int t_id; //팀 id
+	private String t_name; // 팀 이름 
+	
 	private int cl_id; //카드리스트 id
 	private int cl_u_id; //카드리스트 user id
 	private String cl_title; //카드리스트 title
@@ -20,14 +24,11 @@ public class ReadCardlistVO {
 	private Date c_udate; //카드 업뎃날짜
 	private int c_ps_id; //카드 상태코드
 	
-
-	private int t_id; // 팀 id
-	private String t_name;// 팀이름 
-
 	private Integer status; //즐겨찾기
+	private Integer uhc_u_id; //즐겨찾기한 유저
+
 	private int reply; //댓글 개수
 	private int file; //첨부파일 개수
-
 
 	
 	public int getP_id() {
@@ -35,6 +36,18 @@ public class ReadCardlistVO {
 	}
 	public void setP_id(int p_id) {
 		this.p_id = p_id;
+	}
+	public int getT_id() {
+		return t_id;
+	}
+	public void setT_id(int t_id) {
+		this.t_id = t_id;
+	}
+	public String getT_name() {
+		return t_name;
+	}
+	public void setT_name(String t_name) {
+		this.t_name = t_name;
 	}
 	public int getCl_id() {
 		return cl_id;
@@ -120,6 +133,12 @@ public class ReadCardlistVO {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public Integer getUhc_u_id() {
+		return uhc_u_id;
+	}
+	public void setUhc_u_id(Integer uhc_u_id) {
+		this.uhc_u_id = uhc_u_id;
+	}
 	public int getReply() {
 		return reply;
 	}
@@ -133,33 +152,13 @@ public class ReadCardlistVO {
 		this.file = file;
 	}
 
-	public int getT_id() {
-		return t_id;
-	}
-
-	public void setT_id(int t_id) {
-		this.t_id = t_id;
-	}
-
-	
-	public String getT_name() {
-		return t_name;
-	}
-
-	public void setT_name(String t_name) {
-		this.t_name = t_name;
-	}
-
-@Override
+	@Override
 	public String toString() {
-		return "ReadCardlistVO [p_id=" + p_id + ", cl_id=" + cl_id + ", cl_u_id=" + cl_u_id + ", cl_title=" + cl_title
-				+ ", cl_cdate=" + cl_cdate + ", cl_udate=" + cl_udate + ", cl_ps_id=" + cl_ps_id + ", c_id=" + c_id
-				+ ", c_u_id=" + c_u_id + ", c_title=" + c_title + ", content=" + content + ", c_cdate=" + c_cdate
-				+ ", c_udate=" + c_udate + ", c_ps_id=" + c_ps_id + ", status=" + status + ", reply=" + reply
-				+ ", file=" + file + ", t_id=" + t_id + ", t_name=" + t_name + "]";
+		return "ReadCardlistVO [p_id=" + p_id + ", t_id=" + t_id + ", t_name=" + t_name + ", cl_id=" + cl_id
+				+ ", cl_u_id=" + cl_u_id + ", cl_title=" + cl_title + ", cl_cdate=" + cl_cdate + ", cl_udate="
+				+ cl_udate + ", cl_ps_id=" + cl_ps_id + ", c_id=" + c_id + ", c_u_id=" + c_u_id + ", c_title=" + c_title
+				+ ", content=" + content + ", c_cdate=" + c_cdate + ", c_udate=" + c_udate + ", c_ps_id=" + c_ps_id
+				+ ", status=" + status + ", uhc_u_id=" + uhc_u_id + ", reply=" + reply + ", file=" + file + "]";
 	}
-
-
-	
 	
 }

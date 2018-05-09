@@ -18,7 +18,6 @@
 /* 목록 제목 + 멤버검색 + 팀추가버튼 요소*/
 .title-content > .title{
 	display : inline-block;
-	
 }
 h5.title{
 	margin : 20px;
@@ -33,6 +32,7 @@ h5.title{
 .title:nth-child(2){
 	position : absolute;
 	left : 50%;
+	top : 50px;
 }
 /* 팀 추가 버튼*/
 .title:nth-child(3){
@@ -49,7 +49,6 @@ h5.title{
 } 
 /* 팀목록, 멤버목록의 작은 컨텐츠 */
 .list-box-body{
-/* 	border-radius : 16px; */
 	padding : 10px 30px;
 	height: 80%;
 }
@@ -97,6 +96,7 @@ h5.title{
 .team-category{
 	background : #4e97c2;
 	padding-left : 65px;
+	color : #f0f0f0;
 }
 /* 멤버 목록 컬럼 */
 .member-category{
@@ -106,7 +106,7 @@ h5.title{
 .team-category div, .member-category div, .one-list-row div{
 	display:inline-block;
 	padding : 0 0 0 40px;
-	width : 150px;
+	width : 200px;
 }
 /* 팀, 멤버 목록 한줄 한줄 */
 .one-list-row{
@@ -123,26 +123,25 @@ div.side-menu{
 div.side-menu *{
 	margin : 20px;
 } 
-/*멤버추가, 팀 추가 버튼 구체적 설정*/
-input[type=button].add-member-btn, .add-team{
-    font-size: 11pt;
-	padding : 15px 15px;
-	width: 200px;
-}
 /*검색 텍스트 요소*/
-#member-search{
+input[type="text"]#member-search{
     border: 3px solid #4e97c2;
     background-color: #fcfcfc;
     height: 36px;
     width: 250px;
     margin : 10px 0;
-    vertical-align: middle;
-    
+    vertical-align: middle; 
 }
 /*모든 버튼 설정*/
-input[type=button], input[type=submit]{
-	background-color: #eee;
-    border: 3px solid #4e97c2;
+div#list-content input[type=button], input[type=submit]{
+	background-color: #f0f0f0;
+	border : none;
+    border-bottom: 1px solid #ccc;
+    color : #777;
+    box-shadow : 0px 0px 0px 0px #B8B8B8;
+    width : 100px;
+    height: 40px;
+    font-weight: bold;
 }
 /*모달 창 배경 설정*/
  .modal{
@@ -155,6 +154,7 @@ input[type=button], input[type=submit]{
     overflow: scroll;
     position: fixed;
     z-index: 2; 
+    font-size: 10pt;
 } 
 /*모달 컨텐츠 설정*/
 .modal-content{
@@ -163,21 +163,29 @@ input[type=button], input[type=submit]{
     text-align: center;
     margin: 0 auto;
     padding: 20px;
+    line-height : 30px;
     top:30%;
-    width: 500px;
-    height: 300px;   
+    width: 320px;
+    height: 280px;   
 }
 /*모달 버튼 구체적 설정*/
-.modal-content button{
+.modal-content input[type="button"]{
+	background-color: #a1a1a1;
+	border : none;
+    border-bottom: 1px solid #ccc;
+    color : #fff;
+    box-shadow : 0px 0px 0px 0px #B8B8B8;
+    width : 100px;
+    height: 40px;
+    font-weight: bold;
 	display:inline-block;
 	 margin : 10px;
-}
-.modal-content>input[type=button], input[type=submit]{
-	margin : 10px;
 }
 /*모달 div 구체적 설정*/
 .modal-content div, .modal-content input[type="text"]{
     padding: 5px;
     margin : 10px;
 }
-
+input:focus, input[type="submit"]:focus, input[type="button"]:focus{
+	outline : none;
+}

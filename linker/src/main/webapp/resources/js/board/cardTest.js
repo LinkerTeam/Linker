@@ -109,14 +109,15 @@ function newCardlistAdd(cardlistId, cardlistTitle){
 				
 
 /* 매개변수 카드id와 카드title이 주어지면 그것을 이용해 카드 태그를 문자열로 만드는 함수 */
-function newCardAdd(cardId, cardlistId, cardTitle, status, content, file, reply) {
+function newCardAdd(cardId, cardlistId, cardTitle, status, uhc_u_id, content, file, reply) {
 	if(status === undefined) status = 0;
+	if(uhc_u_id === undefined) status = null;
 	if(content === undefined) content = 0;
 	if(file === undefined) file = 0;
 	if(reply === undefined) reply = 0;
 	
 	var cardClass = "cardtitleLi";
-	if(status === 1)
+	if(status === 1 && uhc_u_id === u_id)
 		cardClass = "cardtitleLi favo";
 	var newTitle =  "<div data-id='" + cardId + "' data-clId='" + cardlistId + "' class='" + cardClass + "' onclick='loadCardData(this)'>"
 				 +  "    <div id='cardLink'>" + cardTitle + "</div><div class='cardIcon'>";
@@ -199,7 +200,7 @@ function allCardlist(){
 	  				//카드리스트id가 위에서 만든 카드리스트id 배열의 값과 같고 ps_id가 1(진행)일 때
 		  			if(data[j].cl_id === uniqID[i] && data[j].c_ps_id === 1){ 
 		  				var cardStr = newCardAdd(data[j].c_id, data[j].cl_id, data[j].c_title, 
-		  						data[j].status, data[j].content, data[j].file, data[j].reply); //문자열로 카드 태그를 만드는 함수 호출
+		  						data[j].status, data[j].uhc_u_id, data[j].content, data[j].file, data[j].reply); //문자열로 카드 태그를 만드는 함수 호출
 		  				$(".cardlist[data-id=" + uniqID[i] + "]").children(".cards").children(".addCard").before(cardStr);
 		  			};
 	  			};
@@ -232,14 +233,16 @@ switch (p_ps_id) {
 
 /* 카드 조회 | 특정 카드리스트에 대한 카드 조회 */
 function listCards(cl_id){
-	//기존 카드 태그 삭제 후
-	$(".cardlist[data-id='" + cl_id + "']").children(".cards").children(".cardtitleLi").remove();
+	var addCard = $(".cardlist[data-id=" + cl_id + "]").children(".cards").children(".addCard").clone(); //복사
+	var str = "";
 	//새로운 데이터 받아옴
 	$.getJSON("/board/" + p_id + "/cardlist/" + cl_id + "/cards", function(data) {
   		for(var i = 0; i < data.length; i++) { 
-			var str = newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].status, data[i].content, data[i].file, data[i].reply); //문자열로 카드 태그를 만드는 함수 호출
-			$(".cardlist[data-id=" + cl_id + "]").children(".cards").children(".addCard").before(str); 
+			str += newCardAdd(data[i].c_id, data[i].cl_id, data[i].c_title, data[i].status, 
+					data[i].uhc_u_id, data[i].content, data[i].file, data[i].reply); //문자열로 카드 태그를 만드는 함수 호출
 		};
+		$(".cardlist[data-id=" + cl_id + "]").children(".cards").html(str); //동적 카드 태그 삽입
+		$(".cardlist[data-id=" + cl_id + "]").children(".cards").append(addCard); //마지막에 카드 등록 textarea태그 추가
 	});
 };
 

@@ -11,8 +11,7 @@ public class TeamVO {
 	private int u_id; //회원아이디
 	private int auth; //그 팀에 대한 회원의 권한
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone="GMT+9")
-	private Date cdate; //생성 날짜
-	
+	private Date cdate; //생성 날짜	
 	private String before; //팀 수정할 때 전 팀이름 가져오는 변수(team.js에서 이력 기능에 쓰임) history table에서  before컬럼임.
 	
 	public int getT_id() {
@@ -45,15 +44,12 @@ public class TeamVO {
 	public void setCdate(Date cdate) {
 		this.cdate = cdate;
 	}
-	
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 	public int getId() {
 		return id;
 	}
-	
 	public String getBefore() {
 		return before;
 	}
@@ -62,8 +58,8 @@ public class TeamVO {
 	}
 	@Override
 	public String toString() {
-		return "TeamVO [t_id=" + t_id + ", id=" + id + ", name=" + name + ", u_id=" + u_id
-				+ ", auth=" + auth + ", cdate=" + cdate + ", before=" + before + "]";
+		return "TeamVO [t_id=" + t_id + ", id=" + id + ", name=" + name + ", u_id=" + u_id + ", auth=" + auth
+				+ ", cdate=" + cdate + ", before=" + before + "]";
 	}
 
 }

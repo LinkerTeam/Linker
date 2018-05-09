@@ -96,7 +96,7 @@
 	var p_ps_id = ${project.ps_id}; //프로젝트 상태값
 </script>
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardFavorite.js?ver=11" type="text/javascript"></script>
-<script src="../../../resources/js/board/cardTest.js?ver=11" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardFavorite.js?ver=111" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardTest.js?ver=11111111" type="text/javascript"></script>
 
 </html>

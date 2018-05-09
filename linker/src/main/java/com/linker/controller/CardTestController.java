@@ -73,15 +73,12 @@ public class CardTestController {
 		} catch (Exception e) {
 			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		
 		return entity;
 	}
 
 	//나의 즐겨찾기
 	@RequestMapping(value = "board/mycard", method = RequestMethod.GET)
 	public String myFavoriteCard() throws Exception{
-		
-		
 		return "user/favoriteCard";
 	}
 	
@@ -89,18 +86,16 @@ public class CardTestController {
 	@ResponseBody
 	@RequestMapping(value = "board/favoteam", method = RequestMethod.GET)
 	public ResponseEntity<List<ReadCardlistVO>> myTeam(HttpSession session) throws Exception {
-		//System.out.println("리스트입니다.");
+
 		UserVO vo = (UserVO)session.getAttribute("login");
+		
 		ResponseEntity<List<ReadCardlistVO>> entity = null;
+		
 		try {
-			//System.out.println(mcfSerivice.myTeamList(vo.getId()));
 			entity = new ResponseEntity<List<ReadCardlistVO>>(mcfSerivice.myTeamList(vo.getId()),HttpStatus.OK);
 		} catch (Exception e) {
 			entity = new ResponseEntity<List<ReadCardlistVO>>(HttpStatus.BAD_REQUEST);		}
 		return entity;
 	}
-	
-	
-	
 
 }

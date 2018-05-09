@@ -49,6 +49,9 @@ function cardStatus(ps_id){
     	$(".title-modify").prop("disabled", false); //제목 수정 할 수 있게
     	$(".content-textarea").prop("disabled", false); //내용 수정 할 수 있게
     	$(".attach-content").show(); //첨부파일 추가 영역 출력
+    	$(".content-content > div").css("top", "375px"); //read more 위치 조정
+    	$(".comment").show(); //댓글 작성 보이기
+    	$(".popCardMenu").show(); //메뉴버튼 보이기
     	$(".cardTitle > span").addClass("star");
     	if(popCardFavorite === 1) //즐겨찾기된 경우
 			$(".cardTitle > .star").html("<i class='fas fa-star'></i>"); //채워진 별 아이콘
@@ -62,6 +65,9 @@ function cardStatus(ps_id){
     	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 보관버튼 숨기기
     	$(".popupCard-aside-hide").removeClass("changeStatus"); //3. 휴지통버튼 출력
     	$(".popupCard-aside-sendToCardlist").addClass("changeStatus"); //4. '프로젝트로' 메뉴 출력
+    	$(".content-content > div").css("top", "423px"); //read more 위치 조정
+    	$(".comment").hide(); //댓글 작성 숨기기
+    	$(".popCardMenu").show(); //메뉴버튼 보이기
     	$(".cardTitle > span").html("<i class='far fa-credit-card'></i>"); //별 아이콘 없앰
     	$(".star").removeClass("star");
     	
@@ -76,6 +82,9 @@ function cardStatus(ps_id){
     	$(".popupCard-aside-archive").addClass("changeStatus"); //3. 보관버튼 숨기기
     	$(".popupCard-aside-hide").addClass("changeStatus"); //3. 휴지통버튼 숨기기
     	$(".popupCard-aside-sendToCardlist").removeClass("changeStatus"); //4. '프로젝트로' 메뉴 숨기기
+    	$(".content-content > div").css("top", "423px"); //read more 위치 조정
+    	$(".comment").hide(); //댓글 작성 숨기기
+    	$(".popCardMenu").hide();//메뉴 버튼 숨기기
     	$(".cardTitle > span").html("<i class='far fa-credit-card'></i>"); //별 아이콘 없앰
     	$(".star").removeClass("star");
     	
@@ -497,7 +506,7 @@ $(".popupCard-aside ul li div").click(function(){
 	} else if(className === "popupCard-aside-archive"){ //보관 버튼이면
 		popCardPsId = STATUS_ARCHIVE; //ps_id = 2
 	} else if(className === "popupCard-aside-hide"){ //휴지통 버튼이면
-		if(confirm("Trashbox로 보내진 카드는 되돌릴 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
+		if(confirm("휴지통으로 보내진 카드는 되돌릴 수 없습니다. \n정말 보내시겠습니까?") === true) //확인을 눌렀을 때 로직 실행
     		popCardPsId = STATUS_HIDDEN; //ps_id = 3
     	else return; //취소를 누르면 더이상 작업 수행하지 않고 return
 	} else { 
