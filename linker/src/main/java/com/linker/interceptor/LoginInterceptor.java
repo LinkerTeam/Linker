@@ -33,14 +33,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		  UserVO userVO2 = (UserVO)userVO;
 		  //이메일 인증을 했는지 안햇는지 판단 0이면 아직 이메일은 인증 안함 1이면 이메일인증함
 		  if(userVO2.getStatus()==1) {
-			logger.info("new login success");
+			//logger.info("new login success");
 			//session에 LOGIN키값으로 userVO객체를 저장 그럼 세션에는 email password ninkname 등등 다들어있음 
 			session.setAttribute(LOGIN, userVO);
 	        //쿠키는 값을 값이 들어있으면 on 없으면 false로 찍힘
 
 			//리멤버미를 클릭시 체크온시 쿠키를 생성해서 값을 저장해서 보내준다.
 			if (request.getParameter("useCookie") != null) {
-				logger.info("remeber me.....");
+				//logger.info("remeber me.....");
 				Cookie loginCookie = new Cookie("loginCookie", session.getId());
 				loginCookie.setPath("/");
 				loginCookie.setMaxAge(60 * 60 * 24 * 7);
@@ -82,7 +82,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		// 로그인하면서 세션이 존재하면 세션을 제거한다. 새로운 세션을 생성하기위해서 
 		if (session.getAttribute(LOGIN) != null) {
-			logger.info("clear login data before");
+			//logger.info("clear login data before");
 			session.removeAttribute(LOGIN);
 		}
 		return true;

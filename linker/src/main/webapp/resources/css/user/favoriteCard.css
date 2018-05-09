@@ -1,0 +1,285 @@
+﻿.content{
+	background-color: #0067a3;
+	overflow: hidden;
+}
+.content.board {
+    width: 100%;
+	background-color: #0079bf;
+	overflow: hidden;
+}
+
+/* 헤더, 양쪽메뉴 제외한 본문영역 중 상단 프로젝트 타이틀 영역 */
+.projectTitle > div {
+    width: 400px;
+    margin: 10px;
+    padding: 5px;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #0079bf;
+}
+
+/* 본문영역 중 프로젝트 타이틀을 제외한 영역 */
+.cardlistContent {
+    display: flex; 
+    float: left;
+    width: 100%;
+    height: calc(100% - 60px); /* 상단 프로젝트 타이틀과 하단 스크롤 영역을 제외한 높이 */
+    line-height: 1.3em; /* 가변단위. 1em은 현재 폰트크기임. */
+}
+
+/* 전체 카드리스트의 실질적 영역 */
+.cardlists {
+    display: flex;
+    overflow-y: hidden; /* 가로스크롤만 생기도록 */
+    transition: 0.2s;
+}
+.cardlists > * {
+    flex: 0 0 auto;
+}
+/* 스크롤 디자인~ */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 12px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.32);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.55);
+    border-radius: 10px;
+}/* ~스크롤디자인 */
+
+/* 동적으로 생성되는 각각의 카드리스트 */
+.cardlist {
+    width: 236px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+    border-radius: 2px;
+}
+/* 카드리스트의 자식 전체에 공통으로 적용되는 속성들 */
+.cardlist > * {
+    background-color: #e2e4e6;
+    color: #333;
+    padding: 0 10px;
+}
+
+/* 카드리스트의 상단 | textarea + more버튼 */
+.cardlistTitleBox {
+	position: relative;
+	width: 196px;
+	padding: 10px 30px 5px 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+/* 카드리스트의 상단 | textarea */
+textarea.cardlistTitle {
+	resize: none; /* 사용자가 임의로 크기를 조절할 수 없게 함 */
+	width: 100%;
+	padding: 0 0 0 3px;
+    border: none;
+	border-radius: 0;
+	background-color: #e2e4e6;
+    color: #484848;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 165%;
+	box-sizing: border-box;
+	overflow-y: hidden; /* 가끔 스크롤 짧게 잡혀서 추가 */
+}
+
+/* 카드리스트의 하단 | (Add a card...상자) */
+.createCardBox {
+	display: block;
+    height: 40px;
+    line-height: 40px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.cardtitleLi:not(:last-child) {
+    margin-bottom: 7px;
+}
+.cardtitleLi {
+    display: block;
+    position: relative;
+    background-color: #fff;
+    border-radius: 3px;
+    color: #5e5e5e;
+    font-size: 11pt;
+    word-break: break-word;
+    cursor: pointer;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.card-footer{
+	display: block;
+    height: 12px;
+    line-height: 40px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: #656565;
+    font-size: 16px;
+    font-weight: 400;
+}
+#cardLink{   
+	 padding: 6px 6px 0 8px;
+    font-size: 16px;
+}
+.cards {
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.cardModifyBtn {
+    display: none;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 28px;
+    height: 26px;
+    border: none;
+    border-radius: 2px;
+    background-color: #edeff0;
+    opacity: 0.2;
+    font-size: 16px;
+    cursor: pointer;
+}
+.cardModifyBtn:hover {
+    background-color: #b6b6b6;
+    opacity: 0.4;
+    border-radius: 2px;
+} 
+/* 카드에 마우스를 올리면 수정버튼 보이게 */
+.cardtitleLi:hover > .cardModifyBtn{
+	display: block;
+}
+
+.cardIcon {
+    padding-bottom: 6px;
+    color: #9a9a9a;
+    font-size: 13px;
+    font-weight: bold;
+}
+.cardIcon > svg {
+    margin: 0 5px 0px 10px;
+}
+.cardIcon > p {
+    display: inline-block;
+}
+
+/* 카드 수정모달창 뒷배경 */
+.modifyModal {
+    display: none; /* 기본값: 숨김 */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; /* 모달 뒷배경이 화면에 꽉차도록 */
+    height: 100%; /* 모달 뒷배경이 화면에 꽉차도록 */
+    background-color: rgb(0,0,0); /* 모달 뒷배경색 */
+    background-color: rgba(0,0,0,0.6); /* 모달 뒷배경 opacity */
+    z-index: 3; 
+}
+/* 카드 제목 수정시 카드id 담기 위해(화면출력X) */
+.modifyModal-title{
+	display: none;
+}
+.add-favorite-btn:hover {
+	background: rgba(0,0,0,.8);
+	cursor: pointer;
+}
+/* 카드 제목 수정 모달 (textarea + button영역) */
+.modifyModal-content {
+    width: 217px;
+    height: 112px;
+    float: left;
+    position: absolute; /*수정란을 원하는 위치로 이동시킬 수 있도록*/
+}
+/* 제목수정 textarea, 카드리스트 추가 textarea */
+#modifyTextarea, #createListTextarea {
+	height: 38px;
+	resize:none; 
+}
+#modifyTextarea {
+    width: 211px;
+    border-radius: 3px;
+}
+.modifyModal-content > .closeModal {
+    position: absolute;
+    float: left;
+    color: #ffffffe3;
+    font-size: 33px;
+}
+/*수정 즐겨 찾기  */
+.favorite-btn {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-bottom: 4px;
+    padding: 6px 12px 6px 8px;
+    clear: both;
+    background: rgba(0,0,0,.6);
+    border-radius: 3px;
+    color: #e6e6e6;
+    font-size: 14px;
+}
+.cardtitleLi.favo {
+	border-left: solid 6px #ff7979;
+}
+.closeBoardModal-content.reply {
+    width: 262px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    height: 137px;
+}
+.closeTitle {
+    display: block;
+    margin: 0 7px;
+    border-bottom: solid 1px #d0d0d0;
+    color: #919191;
+}
+.closeBoardModal-content {
+    position: relative;
+    box-sizing: border-box;
+    width: 294px;
+    height: 186px;
+    background: #fff;
+    border-radius: 4px;
+    color: black;
+    font-size: 15px;
+    line-height: 1.1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.closeBoardModal-title {
+    text-align: center;
+    line-height: 34px;
+}
+.closeTitle {
+    display: block;
+    margin: 0 7px;
+    border-bottom: solid 1px #d0d0d0;
+    color: #919191;
+}
+.closeBoardModal-title > .closeModal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 5px;
+    line-height: 28px;
+}
+.closeModal {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.closeBoardModal-text.reply {
+    line-height: 1.2em;
+}

@@ -34,7 +34,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
 		// 세션을 체크하는 구간 세션이 없으면 로그인하지않았다고 판단
 		if (session.getAttribute("login") == null) {
-			logger.info("current user is not logined");
+			//logger.info("current user is not logined");
 			//브라우저로부터 자동저장 쿠키를 가져온다!
 			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
 			// 세션이없으면서 cookie에 세션id가 저장된경우를 체크 자동로그인처리
@@ -43,10 +43,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				String value = loginCookie.getValue();
 				//값이 있으면 자동로그인을위해 값을 넣어줌
 				UserVO userVO = service.checkLoginBefore(value);
-				System.out.println(userVO);
+				//System.out.println(userVO);
 				//값이 있으면 세션을 생성해준다. 자동로그인처리
 				if (userVO != null) {
-					System.out.println("세션생성");
+					//System.out.println("세션생성");
 					session.setAttribute("login", userVO);
 					return true;
 				}
