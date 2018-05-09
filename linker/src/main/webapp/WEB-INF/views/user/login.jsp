@@ -13,29 +13,24 @@
     <!-- css초기화 시트 -->
     <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
     <link href="/resources/css/login.css?ver=32" type="text/css" rel="stylesheet" />
-<style type="text/css">
-.password-confirm{
- display:block;
- padding-top : 10px;
- padding-left: 20px;
-}
-.password{
- margin-bottom: 15px;
-}
-</style>
-
 </head>
-
-
 <body>
     <div class="wrap">
+      
+    
         <nav class="main-nav">
+			<ul class="image"><img alt="we" src="/resources/image/we.png" class="we-image"/></li> 
+			</ul>
+			<ul class="image" ><img alt="message" src="/resources/image/message.png" class="message-image"/> 
+			</ul>
+			<ul class="image"><img alt="mainlogo" src="/resources/image/mainlogo.png" class="mainlogo-image"/></ul>
+
             <ul>
                 <li>
-                    <a class="login_btn" href="#modal">로그인</a>
+                    <a class="login_btn" href="#modal"><img alt="login" src="/resources/image/login.png" class="login-image" width="60px"/></a>
                 </li>
                 <li>
-                    <a class="signup_btn" href="#0">회원가입</a>
+                    <a class="signup_btn" href="#0"><img alt="signup" src="/resources/image/signup.png" class="signup-image" width="80px"/></a>
                 </li>
             </ul>
         </nav>
@@ -60,7 +55,6 @@
                             <label for="email"> Email </label>
                             <br>
                             <input type="text" class="email" placeholder="Email" name="email" id="email">
-                          
                         </p>
 
                         <p class="fieldset">
@@ -69,16 +63,12 @@
                             <Br>
                             <input type="password" class="password" placeholder="Password" name="password" id="password">
                             <a href="#0" class="hide-password"  id="password1">보이기</a>
-
-                        
                         </p>
 
                         <p class="fieldset agree">
                            <input type="checkbox" class="checkbox"  name="useCookie">
                             <a>자동로그인</a>
-
                         </p>
-
 
                         <p class="fieldset">
                             <button type="submit" value="Login">Login</button>
@@ -123,7 +113,7 @@
                             <label for="email"> Password </label>
                             <input type="password" class="password" placeholder="Password" name="password" id="pw">
                             <a href="#0" class="hide-password" id="password2" >보이기</a>
-                            <span class="password-confirm">패스워드는 8자이상 입력해야합니다.</span>
+                            <div class="error-pw"><span class="password-confirm">비밀번호는 8자 이상 영문,숫자,특수문자를 함께 조합하여야 합니다.</span></div>
                        
                             
                             <p class="fieldset agree">
@@ -139,7 +129,7 @@
                 </div>
              
             <div id="reset-password">
-                    <p class="form-message">비밀번호를 잃어 버렸습니까? 이메일 주소를 넣어주세요.</br> 새로운 비밀번호를 지정해 주세요.</p>
+                    <p class="form-message">비밀번호를 잃어 버렸습니까? 이메일 주소를 넣어주세요.</br> 해당 이메일로 임시 비밀번호를 보내드립니다.</p>
     
                     <form class="form" name="form3" method="post" action="/user/forget" onsubmit="return forgetcheck();" >
                         <p class="fieldset">
@@ -159,6 +149,7 @@
       </div><!-- 모달창 END -->
     </div>
 
+</body>
     <script>
     
       //모든 HTML 페이지 로드후 에 자바스크립트 시작  jquery는 $(document).ready(function(){ 내용 }) === $(function(){ 내용 });
@@ -322,88 +313,71 @@
                  
                //회원가입 유효성검사
 	     function signup_check() { 
-	         var nickname= document.getElementById('nickname').value;
-	         var email2 = document.getElementById('email2').value;
-	         var password = document.getElementById('pw').value;
-	         var check = document.getElementById('agree');
-             var nickch =document.getElementById('checkMsg');
-	         
-	         if(nickname == null  || nickname == "" ) {
-	            
-	        	 alert("닉네임을입력해주세요");
-	             document.getElementById('nickname').focus();
-	             return false;
-	
-	         } 
-	         if(!(nickname.length >2 && nickname.length <16)){
-	        	 alert("닉네임을 2자 이상 입력해주세요");
-	        	 document.getElementById('nickname').focus();
-	        	 return false;
-	         }
-	         //아이디 대문 소문 숫자 검사  
-	         for (i = 0; i < nickname.length; i++) {
-	             ch = document.getElementById('nickname').value.charAt(i)
-	             //아이디를 하나씩 하나씩 검사해서 숫자 소문자 대문자인지 체크해서 값을 비교함
-	             if (!(ch >= '0' && ch <= '9') && !(ch >= 'a' && ch <= 'z')&&!(ch >= 'A' && ch <= 'Z')) {
-	                  alert("아이디는 대소문자, 숫자만 입력가능합니다.")
-	                  document.getElementById('nickname').focus();      
-	                 return false;
-	             }
-	         }  
-	        
-	         if(email2 == null || email2 =="" )
-	        	 {
-	        	 alert("이메일을 입력해주세요");
-	        	 document.getElementById('email2').focus();
-	        	 return false;
-	        	 }
-	         
-	       
-	         //이메일 형식 검사
-	         if(exptext.test(email2)==false){
-	        	 alert("이메일을 제대로 입력해주세요");
-	        	 document.getElementById('email2').focus();
-	        	 return false;
-	         }
-        
-	         //비밀번호 자릿수 정하기 최소 8자리 이상 최대 16자리 이하
-	            if(!(password.length >= 8 && password.length <= 16)){
+			var nickname= document.getElementById('nickname').value;
+			var email2 = document.getElementById('email2').value;
+			var password = document.getElementById('pw').value;
+			var check = document.getElementById('agree');
+			var nickch =document.getElementById('checkMsg');
+			
+			if(nickname == null  || nickname == "" ) {
+				alert("닉네임을입력해주세요");
+				document.getElementById('nickname').focus();
+				return false;
+			} 
+			if(!(nickname.length >=2 && nickname.length <16)){
+				alert("닉네임을 2자 이상 입력해주세요");
+				document.getElementById('nickname').focus();
+				return false;
+			}
+			
+			if(email2 == null || email2 =="" ){
+				alert("이메일을 입력해주세요");
+				document.getElementById('email2').focus();
+				return false;
+			}
+		
+			//패스워드 특문 숫자 체크 정규식
+			if(pwcheck(password) == false){
+				alert("패스워드는 1개 이상 숫자와 한개 이상의 특수문자가 필요합니다.");
+				return false;
+			}
+			
+			//비밀번호 자릿수 정하기 최소 8자리 이상 최대 16자리 이하
+			if(!(password.length >= 8 && password.length <= 16)){
 	            	alert("비밀번호 8개이상 입력해주세요");
 	            	document.getElementById('pw').focus();
 	            	return false;
-	            }
-	             
+	        } 
 
-	           //체크박스 체크했으면 true 안했으면 false값을 반환함
-                  if(check.checked==false){
+			//체크박스 체크했으면 true 안했으면 false값을 반환함
+            if(check.checked==false){
                 	alert("가입에 동의해주세요");
                 	document.getElementById('agree').focus();
                 	return false;
-                }
-                  //닉네임 중복환인 안눌렀을떄
-                  if(document.getElementById("checkMsg").innerHTML==""){
-                	  alert("닉네임을 중복확인 해주세요");
-                	  return false;
-                  }
+            }
+            //닉네임 중복환인 안눌렀을떄
+            if(document.getElementById("checkMsg").innerHTML==""){
+					alert("닉네임을 중복확인 해주세요");
+					return false;
+            }
 	         
-                  //닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
-                  if(document.getElementById("nickcheck").style.color=='red'){
-	        	 alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
-	        	 return false;
-	         }
+            //닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
+            if(document.getElementById("nickcheck").style.color=='red'){
+					alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
+					return false;
+	      	}
                   
-                  //이메일 중복확인 안눌렀을떄
-                  if(document.getElementById("EmailcheckMsg").innerHTML==""){
-                	  alert("이메일 중복확인 해주세요");
-                	  return false;
-                  }
-	         
+            //이메일 중복확인 안눌렀을떄
+            if(document.getElementById("EmailcheckMsg").innerHTML==""){
+					alert("이메일 중복확인 해주세요");
+					return false;
+            }
                   //이메일이 중복이 중복돼었을때 빨간색이면 중복이라고 나옴 
-                  if(document.getElementById("echeck").style.color=='red'){
-	        	 alert("이메일이 중복되었습니다 다른 이메일을 적어주세요");
-	        	 return false;
-	         }
-        return true;
+            if(document.getElementById("echeck").style.color=='red'){
+					alert("이메일이 틀렸습니다.이메일을 다시 확인해주세요.");
+					return false;
+	        }
+          return true;
        }
                      
            //비밀번호 찾기 이메일 검사 
@@ -462,11 +436,11 @@
     		   data : {"email" : $('#email2').val()},
     		   success:function(data){
     			   //$.trim()은  데이터의 문자의 앞뒤의 공백을 제거해주는 것 중간의 공백은 제거하지않는다.
-    			   if($.trim(data)==0){
-    				  
+    			   if($.trim(data) == 0){
     				  $('#EmailcheckMsg').html('<p style="color:blue" id="echeck">사용가능한 이메일 입니다. </p>');
+    			  }else if($.trim(data) == 2){
+    				  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이메일 형식이 틀렸습니다. 다시 확인해주세요. </p>');
     			  }else{
-    				 
     				  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이미 가입한 이메일입니다 다시 확인해주세요. </p>');
     			  }
     		   },error:function(){
@@ -474,7 +448,11 @@
                }	   	   
     	   }); //end ajax
        }); // end 이벤트
+       
+     //패스워드에 숫자1개이상+특문 1개이상 체크
+       function pwcheck(password){
+    	   return /[\@\#\$\%\^\&\*\(\)\_\+\!]/.test(password) && /[0-9]/.test(password);
+       }
     </script>
-</body>
 
 </html>

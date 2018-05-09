@@ -16,11 +16,10 @@
 	max-width: 954px;
 	height: 100%;
 	margin: 0px auto;
-	overflow: hidden;
 }
 #contain {
 	position: relative;
-	padding: 32px 51px 95px;
+	padding: 32px 51px 0px;
 }
 #content {
 	height: 760px;
@@ -39,7 +38,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 18px;
 	cursor: pointer;
@@ -88,7 +87,7 @@
 	border: none;
 	outline: none;
 	height: 40px;
-	background: #FA5883;
+	background: #0067a3;
 	color: #fff;
 	font-size: 13px;
 	cursor: pointer;	
@@ -105,7 +104,7 @@
     overflow:hidden;
     width:250px;
     height:30px;
-    background:#FA5883;
+    background:#0067a3;
     color:#fff;
     text-align:center;
     line-height:30px;
@@ -121,12 +120,14 @@
 	padding-top: 15px;
 	text-align: center;
 }
+.secession{
+	color : #52c052;
+}
 </style>
 </head>
 <body>
 
 	<%@include file="../header.jsp"%>
-	<%@include file="../mainMenu.jsp"%>
 	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
@@ -135,7 +136,6 @@
 			<div id="contain">
 				<div id="content">
 					<h2 class="head">회원정보 수정</h2>
-
 
 					<!-- 데이터를 전송시에는  method="post" enctype="Multipart/form-data" 형식이여야함  사진, 동영상 등 글자가 아닌 파일은 모두 Multipart/form-data 형식의 데이터 데이터를 여러조각으로 나누어서 전송  -->
 					<form name="form1" method="post" enctype="multipart/form-data"
@@ -164,19 +164,17 @@
 								<td>
 									<div class="file_input">
 										<p>
-											
-											<label> 프로필 사진올리기 <input type="file"
-												name="profileName" class='uploadprofile' id='file'
-												accept=".jpg, .jpge, .png, .gif">
-
+											<label>사진 올리기 <input type="file" name="profileName" class='uploadprofile' id='file' accept=".jpg, .jpge, .png, .gif">
 											</label>
 										<p id="status"></p>
-										<div id='holder'></div>
-										<!-- accept=".jpg,png "  특정파일만 올릴수있게 파일 업로드시 설정해줌 -->
-										<span>프로필 사진을 올리시에 이미지 파일만 업로드 가능하며  </br>용량은 최대 1MB까지 가능합니다.</span>
-								</td>
-								</p>
+										<div id='holder'>
+										 <img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile" alt="프로필 사진" width="200" height="170" />
+										</div>
+										<!-- accept=".jpg, .png "  특정파일만 올릴수있게 파일 업로드시 사용자설정해줌 -->
+										<span>프로필 사진을 올릴 시 이미지 파일만 업로드 가능하며  </br>용량은 최대 1MB까지 가능합니다.</span>
 								</div>
+								</td>
+										</p>
 							</tr>
 							<%-- 이미지 불러오기!!  --%>
 						</table>
@@ -212,7 +210,6 @@
 			var fileValue = $("#file").val().split("\\");
 			var fileName = fileValue[fileValue.length-1]; // 업로드한 파일명
 			console.log(fileName);
-			
 			
 			if (nickname == null || nickname == '') {
 				alert('닉네임을 비울수 없습니다.');
@@ -277,7 +274,6 @@
 				//이미지 파일인지 체크함
 				if(!(checkImageType(fileName2))){
 					alert("이미지 파일이 아닙니다. 다시 확인 해주세요.");
-					
 					return;
 				}
 				console.log(fileName2);
@@ -301,12 +297,10 @@
 					holder.appendChild(img);
 				};
 				reader.readAsDataURL(file);
-
 				return false;
 			};
 			
 			function nameAndsizeCheck(){
-				
 			}
 
 			//이미지 타입체크
@@ -316,34 +310,24 @@
 			}
 
 			//닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
-			$('#checkbtn')
-					.on(
-							'click',
-							function() {
+			$('#checkbtn').on("click",function() {
 								//POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
-								$
-										.ajax({
-											type : 'POST', // POST 방식
-											url : '/user/checkSignup', //보내는 form action을 지정해줌
-											data : {
-												"nickname" : $('#nickname')
-														.val()
+								$.ajax({
+										type : 'POST', // POST 방식
+										url : '/user/checkSignup', //보내는 form action을 지정해줌
+										data : {
+											"nickname" : $('#nickname').val()
 											// 데이터를 지정해줌 nickname의 값을 받아와서 nickname에 넣어줌 매개변수 request.getparameter("nickname")을 여기서 가져옴
 											},
 											headers : {
-												//"Content-Type" : "application/json",
 												"X-HTTP-Method-Override" : "POST"
 											},
 											success : function(data) { //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
 												// 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
 												if ($.trim(data) == 0) {
-													$('#checkMsg')
-															.html(
-																	'<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
+													$('#checkMsg').html('<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
 												} else {
-													$('#checkMsg')
-															.html(
-																	'<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
+													$('#checkMsg').html('<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
 												}
 											}
 										}); //end ajax    
@@ -357,7 +341,6 @@
 			}
 			
 			$('#btnDelete').on("click",function(){
-			 	
 				history.go(-1);
 			});	
 			

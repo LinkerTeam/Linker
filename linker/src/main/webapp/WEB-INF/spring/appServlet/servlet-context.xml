@@ -55,6 +55,7 @@
 			<mapping path="/main/**"/>
 			<mapping path="/board/**"/>
 			<mapping path="/main"/>
+			<mapping path="/admin/*"/>
 			<beans:ref bean="authInterceptor" />
 		</interceptor>
 
@@ -64,18 +65,6 @@
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760"></beans:property>
-	</beans:bean>
-
-	<!-- 파일경로를 지정해줌 객체 -->
-	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg value="C:\\zzz\\upload">
-		</beans:constructor-arg>
-	</beans:bean>
-	
-	<!-- 첨부파일을 저장할 경로 설정 | 2018.04.15(일) 20:40 오윤주 -->
-	<beans:bean id="cardUploadPath" class="java.lang.String">
-		<beans:constructor-arg value="C:\\zzz\\cardUpload">
-		</beans:constructor-arg>
 	</beans:bean>
 
 </beans:beans>

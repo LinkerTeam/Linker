@@ -1,3 +1,11 @@
+
+<%-----------------------------------------------------------------------------
+ * 파일명칭 : mainMenu.jsp	
+ * 설    명 : header의 프로필사진을 누르면 출력되는 menu
+ * 작 성 자 : 오 윤 주
+ * 작성일자 : 2018/03
+------------------------------------------------------------------------------%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -6,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/mainMenu.css?ver=5" type="text/css" rel="stylesheet" />
+<link href="/resources/css/mainMenu.css?ver=111" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -38,17 +46,12 @@
 				<a href="http://localhost:9090/user/logout" class="logoutBtn">로그아웃</a>
 			</div>
 		</div>
-			<!-- 종료 프로젝트 모달창 -->
-			<!-- 	<div class="list-modal">
-					<div class="list-content">			 
-						<div class="head-list">Hidden Project List</div>
-						<div class="content-list"></div>
-					</div>
-				</div>   -->
 	</aside>
 	
-	
+	<script src="../../resources/js/jquery-3.3.1.min.js"></script>
 	<script>
+	//구글로그인시 비밀번호 변경 메뉴 안보이게만듬
+	googlecheck();
 		//모달창 띄우기
 		$(".closeBoardList").on("click",function(){	
 			$('.list-modal').addClass('is-visible');		
@@ -141,7 +144,7 @@
 			ps_id = 3;
 			var parent = $(this).parent();
 			
-			if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 보드는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true){
+			if(confirm("모든 카드리스트와 카드가 함께 삭제됩니다. \n삭제된 프로젝트는 복구가 불가능합니다. \n그래도 삭제하시겠습니까?") !== true){
 				return; //취소를 누를 경우 ajax처리로 넘어가지 않고 return				
 			}
 			
@@ -187,7 +190,18 @@
 				}
 			}); //ajax
 		}
-
+		
+		//구글로그인시에 비밀번호 변경 메뉴 가리기
+		function googlecheck(){
+			var key = ${login.google};
+			
+			if(key == 0){
+				$('.pwd-modify').css("display","block");
+			} else{
+				$('.pwd-modify').css("display","none");
+			}
+			
+		}
 		
 	</script>
 </body>

@@ -11,11 +11,9 @@ public class UserDTO {
 	private MultipartFile profileName;
 	private String profile;
 	
-	@Override
-	public String toString() {
-		return "UserDTO [email=" + email + ", password=" + password + ", nickname=" + nickname + ", profileName="
-				+ profileName + ", profile=" + profile + "]";
-	}
+	private Integer status;
+	
+
 	public String getEmail() {
 		return email;
 	}
@@ -45,6 +43,18 @@ public class UserDTO {
 	}
 	public void setProfile(String profile) {
 		this.profile = profile;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	
+	@Override
+	public String toString() {
+		return "UserDTO [email=" + email + ", password=" + password + ", nickname=" + nickname + ", profileName="
+				+ profileName + ", profile=" + profile + ", status=" + status + "]";
 	}
 }
 

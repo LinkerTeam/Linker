@@ -57,7 +57,9 @@
     text-align: center;
 }
 .my-aside-info-img > img {
-    width: 130px;
+	min-width: 130px;
+    max-width: 150px;
+    max-height: 135px;
     margin: 14px;
 }
 /* 메뉴 영역 */

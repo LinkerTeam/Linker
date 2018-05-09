@@ -87,7 +87,7 @@ textarea:focus {
 	border-top-right-radius: 5px;
 }
 /* 카드리스트의 상단 | textarea */
-textarea.cardlistTitle {
+.cardlistTitle {
 	resize: none; /* 사용자가 임의로 크기를 조절할 수 없게 함 */
 	width: 100%;
 	padding: 0 0 0 3px;
@@ -158,6 +158,7 @@ textarea.cardlistTitle:focus {
 
 /* 카드리스트의 가운데영역 | 각각의 카드가 추가되는 영역 */
 .cards {
+	max-height: calc(((100% - 26px) - 45px) - 20px);
     margin: 0;
     overflow-x: hidden;
     overflow-y: auto; /* 세로스크롤만 생기도록 */
@@ -173,6 +174,9 @@ textarea.cardlistTitle:focus {
     word-break: break-word; /*width 값에 맞춰 강제줄바꿈*/
     cursor: pointer;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1); /* 음영효과 */
+}
+.cardtitleLi.favo {
+	border-left: solid 6px #ff7979;
 }
 .cardtitleLi:hover{
 	background-color: #edeff0;
@@ -209,12 +213,24 @@ textarea.cardlistTitle:focus {
     outline: none;
 }
 
-/* .cardtitleLi의 첫번째 자식 | 실제 카드가 클릭되는 영역 */
-#cardLink{
-	padding: 6px;
+/* 카드 title영역 */
+#cardLink {
+	padding: 6px 6px 0 6px;
 	font-size: 16px;
 }
-
+/* 카드 하단 icon 영역 */
+.cardIcon {
+	padding-bottom: 6px;
+    color: #9a9a9a;
+    font-size: 13px;
+    font-weight: bold;
+}
+.cardIcon > svg {
+	margin: 0 5px 0px 10px;
+}
+.cardIcon > p {
+	display: inline-block;
+}
 
 /* 카드 추가 버튼, 리스트 추가 버튼 */
 #addBtn, #listAddBtn {
@@ -260,12 +276,16 @@ textarea.cardlistTitle:focus {
 .modifyModal-title{
 	display: none;
 }
+.add-favorite-btn:hover {
+	background: rgba(0,0,0,.8);
+	cursor: pointer;
+}
 /* 카드 제목 수정 모달 (textarea + button영역) */
 .modifyModal-content {
-    width: 202px;
-    height: 80px;
+    width: 217px;
+    height: 112px;
     float: left;
-    position: relative; /*수정란을 원하는 위치로 이동시킬 수 있도록*/
+    position: absolute; /*수정란을 원하는 위치로 이동시킬 수 있도록*/
 }
 /* 제목수정 textarea, 카드리스트 추가 textarea */
 #modifyTextarea, #createListTextarea {
@@ -348,8 +368,6 @@ textarea.cardlistTitle:focus {
 	border-bottom-right-radius: 5px;
 }
 
-
-
 /* 카드리스트의 제일 끝 Add a list...상자 */
 .addList {
     height: 40px;
@@ -368,7 +386,7 @@ textarea.cardlistTitle:focus {
 .cardlistCreateBox{
 	display: none;
 	width: 209px;
-	height: 89px;
+	height: 92px;
 	padding: 8px;
 	border-radius: 3px;
 }
@@ -477,4 +495,26 @@ textarea.cardlistTitle:focus {
 	margin: 0 auto;
 	margin-top: 30px;
 	font-size: 18px;
+}
+
+
+/* 즐겨찾기 관련 */
+.favorite {
+	display: none;
+}
+.favorite > footer {
+	height: 12px;
+}
+/* 즐겨찾기 | 버튼 */
+.favorite-btn {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin-bottom: 4px;
+    padding: 6px 12px 6px 8px;
+    clear: both;
+	background: rgba(0,0,0,.6);
+    border-radius: 3px;
+    color: #e6e6e6;
+    font-size: 14px;
 }

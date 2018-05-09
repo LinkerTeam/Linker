@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.linker.mapper.MyCardFavoriteMapper">
+ 
+ <select id="myTeamList" resultType="ReadCardlistVO">
+	     SELECT
+			c.id AS c_id
+			, c.u_id AS c_u_id
+			, c.title AS c_title
+			, c.content
+			, c.cdate AS c_cdate
+			, c.udate AS c_udate
+			, c.ps_id AS c_ps_id
+            , uhc.t_id 
+			, uhc.status
+            , t.name AS t_name
+		FROM linker.user_has_card AS uhc  
+		JOIN linker.card c ON uhc.c_id = c.id
+		JOIN linker.team_has_user AS thu ON thu.t_id = uhc.t_id
+		JOIN linker.team AS t ON t.id = thu.t_id
+		JOIN linker.project AS p ON p.id = uhc.p_id
+	    WHERE uhc.u_id =#{u_id} AND c.ps_id = 1 AND t.status = 0 AND p.ps_id = 1 AND thu.u_id=#{u_id}
+ </select>
+ </mapper>

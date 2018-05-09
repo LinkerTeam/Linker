@@ -9,6 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.http.Cookie;
@@ -88,7 +90,7 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	// DTO를 자동으로 STS가 매개변수에 넣어줌
+	//DTO를 자동으로 STS가 매개변수에 넣어줌
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	// @ModelAttribute은 해당객체를 자동으로 view 까지전달
 	public String loginGET(Model model, HttpSession session, HttpServletResponse response) throws IOException {
@@ -98,15 +100,12 @@ public class UserController {
 		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 
 		//System.out.println("구글:" + url);
-
 		model.addAttribute("google_url", url);
 
 		if (session.getAttribute("login") != null) {
 			// 로그인 한 상태로 uri접속시 자바스크립트 self.location을 통해서 다른페이지로 넘겨버림 main페이지로 넘김
 			PrintWriter out = response.getWriter();
-
 			out.println("<script>  self.location = '/main'; </script>");
-
 			out.flush();
 		}
 
@@ -128,19 +127,14 @@ public class UserController {
 		if ((pwdEncoder.matches(dto.getPassword(), service.getPassword(dto)))) {
 
 			UserVO vo = service.login(dto);
-
 			model.addAttribute("userVO", vo);
 
 			// 사용자에게 리멤버를 눌렀을 경우.. 세션을 DB에 저장한다.
 			if (dto.isUseCookie()) {
 				int amount = 60 * 60 * 24 * 7;
-
 				System.out.println(1000 * amount);
-
 				// 7일간 세션을 유지하는 시간 지정 (DB에 sessionlimit을 지정함)
-
 				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
-
 				service.keepLogin(vo.getEmail(), session.getId(), sessionLimit, vo.getProfile());
 			}
 		} else {
@@ -148,11 +142,6 @@ public class UserController {
 			model.addAttribute("userVO", vo);
 		}
 		// 4.interceptor posthandler() 사용 //컨트롤러의 매서드 이후에 사용됨
-	}
-
-	@RequestMapping(value = "/connect", method = RequestMethod.GET)
-	public void connect() {
-
 	}
 
 	// 로그아웃 페이지 세션을 session.invalidate()로 세션을 모두 종료
@@ -170,16 +159,12 @@ public class UserController {
 
 		if (obj != null) {
 			UserVO vo = (UserVO) obj;
-
 			session.removeAttribute("login");
-
 			// 세션을 강제종료 시킨다.
 			session.invalidate();
-
 			// 쿠키값을 브라우저로 부터 가져온다 WebUtils.getCookie(request, "loginCookie")로 브라우저로부터
 			// loginCookie키값의 쿠키를 가져옴
 			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-
 			// 쿠키가 있다면 그쿠키를 삭제 시키는것 유효시간을 0으로 조정해줌으로써 쿠키를 삭제시킴
 			if (loginCookie != null) {
 				loginCookie.setPath("/");
@@ -190,9 +175,7 @@ public class UserController {
 				response.addCookie(loginCookie);
 				service.keepLogin(vo.getEmail(), session.getId(), new Date(), vo.getProfile());
 			}
-
 		}
-
 		return "user/login";
 	}
 
@@ -229,15 +212,10 @@ public class UserController {
 	@RequestMapping(value = "/userModify", method = RequestMethod.POST)
 	public String UserUpdate(UserDTO dto, Model model, HttpServletRequest request,HttpServletResponse response) throws IOException, Exception {
 		// MultipartFile은 POST 방슥으로 들어온 파일 데이터를 의미
-		//System.out.println(dto);
 
 		//System.out.println(dto.getProfile());
 		// 화면으로 부터 받아온 파일을 MultipartFile타입 uploadfile에 넣어준다
 		MultipartFile uploadfile = dto.getProfileName();
-		System.out.println("나마에와?"+dto.getProfileName());
-		System.out.println("너는 뭐냐?" + uploadfile.getOriginalFilename().toLowerCase());
-		
-		
 
 		// 요청으로부터 세션을 받아와서 저장함 로그인한상태면 세션에 로그인 값이 지정됨
 		HttpSession session = request.getSession();
@@ -303,12 +281,14 @@ public class UserController {
 
 		// 화면으로 부터 받아온 닉네임을 받아옴 request.getParameter("nickname");으로 html태그에 name을 가져옴
 		String nickname = request.getParameter("nickname");
-
-		// 닉네임을 DB에 넣고 받아온 결과를 rowcount에 넣어줌 0이나 1이 들어옴 0이면 중복이 아니고 1이면 닉네임이 있어 중복임
-		int rowcount = service.checkSignup(nickname);
-
+		if(nickname.length() > 1) {
+			// 닉네임을 DB에 넣고 받아온 결과를 rowcount에 넣어줌 0이나 1이 들어옴 0이면 중복이 아니고 1이면 닉네임이 있어 중복임
+			int rowcount = service.checkSignup(nickname);
+			// JSON으로 값을 리턴함
+			return String.valueOf(rowcount);
+		}
 		// JSON으로 값을 리턴함
-		return String.valueOf(rowcount);
+		return "1";
 	}
 
 	// get방식으로 URI에서 ?fileName이후에 값을 매개변수로 넣어줌
@@ -332,20 +312,16 @@ public class UserController {
             String inputDirectory = "linker";
             URL url;
 
-
             try {
                 url = new URL(s3.getFileURL(bucketName, inputDirectory+fileName));
                 //System.out.println("https://s3.ap-northeast-2.amazonaws.com/"+inputDirectory+"/linker"+fileName);
                 uCon = (HttpURLConnection) url.openConnection();
-                System.out.println("���� :" + uCon);
                 in = uCon.getInputStream(); 
-                System.out.println("������ :" + in);
             } catch (Exception e) {
                 url = new URL(s3.getFileURL(bucketName, "default.jpg"));
                 uCon = (HttpURLConnection) url.openConnection();
                 in = uCon.getInputStream();
             }
-
             
             entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
             headers,
@@ -377,9 +353,7 @@ public class UserController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signupPOST(UserVO vo, Model model, RedirectAttributes rttr) throws Exception {
 		//logger.info("로그인 post............");
-
 		logger.info(vo.toString());
-
 		// 트랜잭션 처리한 서비스 이메일 보내기와 회원가입을 한번에처리함
 		singupService.insertMember(vo);
 
@@ -395,10 +369,7 @@ public class UserController {
 	public void signupConfirm(UserVO vo, Model model, RedirectAttributes rttr) throws Exception {
 		// void로 해준이유는 jsp에서 다른페이지로 넘어가게 해주는 자바스크립트에서 self.location = '/user/login'; 처리
 		// 해주기때문에 void처리해도된다.
-
 		logger.info(vo.toString());
-
-		
 	}
 
 	// 이메일 확인을 눌렀을떄 나오는 창
@@ -420,20 +391,20 @@ public class UserController {
 	public String emailCheck(HttpServletRequest request) throws Exception {
 
 		String email = request.getParameter("email");
-
-		int count = service.emailCheck(email);
-
-		// String.valueOf()는 Int를 스트링으로 바꿔주는 매소드 int -> String 1 -> "1"로 바꿔줌
-		return String.valueOf(count);
-
+		
+		if(isEmail(email)) {
+			int count = service.emailCheck(email);
+			// String.valueOf()는 Int를 스트링으로 바꿔주는 매소드 int -> String 1 -> "1"로 바꿔줌
+			return String.valueOf(count);
+		} else {
+			return "2";
+		}
 	}
 
 	// 잃어버린 비밀번호를 찾는 것
 	@RequestMapping(value = "/forget", method = RequestMethod.POST)
 	public void forgetPOST(UserVO vo, Model model, RedirectAttributes rttr, HttpServletResponse response,
 			HttpSession session) throws Exception {
-
-		System.out.println(service.serchEmail(vo.getEmail()));
 
 		// 클라이언트로 부터 받아온 이메일이 DB에 들어있는지 확인하는과정 1이면 가입되어있다고 판단해서 새로운 비밀번호를 설정하고 설정한 비밀번호를
 		// 이메일로 전송해줌.
@@ -479,7 +450,7 @@ public class UserController {
 			// 메일을 보내는 것
 			MailHandler sendMail = new MailHandler(mailSender); // 메일 핸들러객체생성
 
-			sendMail.setSubject("[Linker 회원가입 서비스 이메일 인증]"); // 메일제목
+			sendMail.setSubject("[Linker 임시 비밀번호 발송]"); // 메일제목
 			sendMail.setText( // 메일본문(내용)을 적음
 					new StringBuffer().append("<h1>임시 비밀번호입니다.</h1>").append("<a>").append(password).append("입니다.</a>")
 							.append("로그인후에 비밀번호를 변경해주세요.").toString());
@@ -637,12 +608,8 @@ public class UserController {
 		dto.setEmail(email);
 		dto.setPassword(password);
 
-		System.out.println(dto.toString());
-
 		service.updatePassword(dto);
-
 		System.out.println("비밀번호 변경 완료!");
-
 		return "redirect:/user/passwordchange";
 	}
 
@@ -679,14 +646,9 @@ public class UserController {
 	public String secessionUser(HttpSession session) throws Exception {
 
 		UserVO vo = (UserVO) session.getAttribute("login");
-
-		System.out.println("너는 뭐입니까??" + vo.getGoogle() + "+" + vo.getGoogle().equals("1"));
-
 		if (vo.getGoogle().equals("1")) {
-
 			return "redirect:/user/googleSescession";
 		}
-
 		return "user/secessionUser";
 	}
 
@@ -711,15 +673,10 @@ public class UserController {
 		// 비밀번호가 틀렸을떄 스프링시큐리티 matches() 매서드 사용
 		if (pwdEncoder.matches(password, service.getPassword(dto)) == false) {
 			System.out.println("비밀번호 틀려");
-
 			response.setContentType("text/html; charset=UTF-8");
-
 			PrintWriter out = response.getWriter();
-
 			out.println("<script>alert('비밀번호가 틀렸습니다 다시 입력해주세요.');</script>");
-
 			out.flush();
-
 			return "user/secessionUser";
 		}
 
@@ -732,25 +689,14 @@ public class UserController {
 	// 회원탈퇴 창
 	@RequestMapping(value = "/secessionUserConfirm", method = RequestMethod.GET)
 	public String secessionUserConfirm(HttpSession session) throws Exception {
-
-		System.out.println("일개미");
 		// 해당페이지에는 success 세션이 있어야만 들어올수있다. 비밀번호를 입력해야지만 들어올수있다.
-
 		if (session.getAttribute("success") == null) {
-
 			return "redirect:/user/secessionUser";
 		}
-
-		System.out.println("나다");
-
 		// 구글로 들어온 세션 삭제
 		session.removeAttribute("googlekey");
 		// 해당페이지로 들어왔으니 다시 못들어오게 바로 세션을 삭제해준다.
 		session.removeAttribute("success");
-
-		System.out.println("구글키" + session.getAttribute("googlekey"));
-		
-		System.out.println("성공" + session.getAttribute("success"));
 
 		return "user/secessionUserConfirm";
 	}
@@ -765,7 +711,6 @@ public class UserController {
 
 		// 해당 유저를 탈퇴함 상태코드를 2로 바꿈으로 탈퇴된 회원으로 변한다.
 		service.deleteUser(email);
-		System.out.println("나나");
 
 		// 회원 탈퇴와 세션을 종료함
 		session.invalidate();
@@ -776,17 +721,10 @@ public class UserController {
 	@RequestMapping(value = "/googleSescession", method = RequestMethod.GET)
 	public String googleSescession(HttpSession session) throws Exception {
 
-		System.out.println("/googleSescession");
-
 		UserVO vo = (UserVO) session.getAttribute("login");
-
-		System.out.println("너는 뭐입니까??" + vo.getGoogle() + "+" + vo.getGoogle().equals("0"));
-
 		if (vo.getGoogle().equals("0")) {
-
 			return "redirect:/user/secessionUser";
 		}
-
 		return "user/googleSescession";
 	}
 
@@ -813,26 +751,18 @@ public class UserController {
 
 			} else {
 				response.setContentType("text/html; charset=UTF-8");
-
 				PrintWriter out = response.getWriter();
-
 				out.println("<script>alert('인증번호가 틀렸습니다.');</script>");
-
 				out.flush();
-
 				return "user/googleSescession";
 			}
 
 		} else {
 
 			response.setContentType("text/html; charset=UTF-8");
-
 			PrintWriter out = response.getWriter();
-
 			out.println("<script>alert('인증번호가 틀렸습니다.');</script>");
-
 			out.flush();
-
 			return "user/googleSescession";
 		}
 
@@ -852,21 +782,33 @@ public class UserController {
 		String randompassword = uid.toString();
 		// 생성한 문자열중에서 6자리만 뽑아내서 googlekey로 넣어줌
 		String googlekey = randompassword.substring(0, 6);
-
 		session.setAttribute("googlekey", googlekey);
-
 		MailHandler sendMail = new MailHandler(mailSender);
-
 		sendMail.setSubject("[Linker 회원탈퇴 서비스 이메일 인증]");
 		sendMail.setText(
-
 				new StringBuffer().append("<h1>탈퇴 메일 인증번호</h1>").append("<a")
 						.append("><div> 인증번호 " + googlekey + " </div></a>").toString());
-
 		sendMail.setForm("linkers104@gmail.com", "Linker");
 		sendMail.setTo(vo.getEmail());
 		sendMail.send();
 
 		return "true";
 	}
+	
+	
+	
+	// ============================================ 이메일 정규식  ========================================================
+	
+	   //자바 이메일체크
+		private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+		private static boolean isValid(final String regex, final String target) {
+		      Matcher matcher = Pattern.compile(regex).matcher(target);
+		      return matcher.matches();
+		}
+		
+		private static boolean isEmail(final String str) {
+		      return isValid(EMAIL_PATTERN, str);
+		}
+	
 } // end메인

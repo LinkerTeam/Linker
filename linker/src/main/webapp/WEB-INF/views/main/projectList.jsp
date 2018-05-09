@@ -6,8 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
     <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=657" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,14 +14,13 @@
 </head>
 <body>
 	<%@include file="../header.jsp"%>
-	<%@include file="../mainMenu.jsp"%>
 	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
-
+		<!-- 즐겨찾기 목록  -->
 		<div class="main-favorite"></div>
 		<!-- Projects In a Team -->
-		<!-- 팀 정보 -->
+		  <!-- 팀 정보 -->
 		  <c:forEach items="${team}" var="teamList">
 			<div class="projectBox">
 				<div class="teamInfo">
@@ -32,26 +29,26 @@
 					<a class="uid">${teamList.u_id}</a>
 					<a class="memberbtn">팀멤버</a>
 				</div>
+				
 				<!-- 진행 프로젝트 목록 -->
-
 				<c:forEach items="${result}" var="projectList">
+					<!-- 팀의 id와 프로젝트의 t_id가 같은경우에만 출력  -->
 					<c:if test="${ teamList.t_id == projectList.t_id}">
+						<!-- 상태코드를 확인해서 1인경우 진행중인 상태만 나오기 위해서 -->
 						<c:if test="${projectList.ps_id ==1}">
 							<ul class="projects">
 								<li><a
-									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" "><span
-										class="name">${projectList.title}</span>
+									href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}" class="pj-url" ">
+									<span class="name">${projectList.title}</span>
+										<!-- 즐겨찾기 상태 확인  1인경우 즐겨찾기 -->
 										<c:choose>
-											    <c:when test="${projectList.favorite == 0}">
-											      <span ><i class="far fa-star add-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											    <c:when test="${projectList.favorite == 0}"> 
+											    	<span><i class="far fa-star add-favo" id='${projectList.id}' data-p_id="${projectList.id}" data-t_id="t${projectList.t_id}"></i></span>
 											    </c:when>
 											    <c:otherwise>
-											          <span ><i class="fas fa-star delete-favo" id='${projectList.id}' p_id="${projectList.id}" t_id="t${projectList.t_id}"></i></span>
+											    	<span><i class="fas fa-star delete-favo" id='${projectList.id}' data-p_id="${projectList.id}" data-t_id="t${projectList.t_id}"></i></span>
 											    </c:otherwise>
-											
-											
-										</c:choose>
-											
+										</c:choose>	
 									</a>
 								</li>
 							</ul>
@@ -59,12 +56,12 @@
 					</c:if>
 				</c:forEach> 
 			
-
 				<!-- 프로젝트 추가 버튼 -->
-				<span class="addProject"><button class="createProjectBtn"
-						type="button">Create new project…</button></span>
+				<span class="addProject"><button class="createProjectBtn" type="button">Create new project…</button></span>
 			</div>
-		</c:forEach>   
+		</c:forEach>
+		   
+		<!-- 팀추가  -->
 		<div class="teaminsert">
 			<a class="teaminsert-a" href="#"> <span>Create a new team…</span>
 			</a>
@@ -78,9 +75,9 @@
 						class="connectmodal"></a>
 				</div>
 				<div class="content-text">
-					<form>
-						<input type="input" class="team-title" value=""
-							placeholder="team name title">
+					<form name="form1" action="main/teamcreate" method="post" class="teamform">
+						<input type="input" name="name" class="team-title" value=""
+							placeholder="team name title" maxlength="20">
 						<button class="teambtn disabled" disabled="disabled">Create</button>
 					</form>
 					<span class="tclosebtn"><i class="fas fa-times"></i></span>
@@ -91,6 +88,7 @@
 		<!-- 팀 멤버 모달창 -->
 		<div class="member-modal">
 			<div class="member-content">
+				<div class="popupCardClose">×</div>
 				<h1 class="member-head"></h1>
 				<div class="member-list">
 				</div>
@@ -123,7 +121,6 @@
  var t_id =null;
  //생성한 프로젝트의 부모를 넣기위해서 지정해줌 ajax시 부모를 알기위해서
  var parent =null;
- 
 
     // 프로젝트 생성 모달창 닫기
     function closeProjectModal(){
@@ -142,7 +139,7 @@
     	  u_id= $(this).parent().parent().children().eq(0).children('.uid').html();
           t_id= $(this).parent().parent().children().eq(0).children('.tid').html();
           //클릭한곳의 부모를 찾아서옴
-          parent = $(this).parent().parent().children('.teamInfo');
+          parent = $(this).parent();
            console.log(parent);
 
         $('.project-modal').addClass('is-visible');
@@ -217,9 +214,11 @@
           	   if(result != 0){
           		  var str ="<ul class='projects'><li>"
           		       +"<a href='http://localhost:9090/board/"+t_id+"/"+result+"'><span class='name'>"+title+"</span>"
-          		       +"</a></li>"
+          		       +"<span>"
+          		       +"<i class='far fa-star add-favo' id='"+result+"' data-p_id='"+result+"' data-t_id='t"+t_id+"'></i>"
+          		       +"</a></span></li>"
           		       +"</ul>";
-          		   $(parent).after(str);
+          		   $(parent).before(str);
           	   }
    		},error : function() {
           		alert('error');
@@ -261,38 +260,6 @@
     		$('.teambtn').removeAttr("disabled");	
     	}  	
     });
-    
-    $('.teambtn').on("click", function(){
-    	var titleName= $('.team-title').val();
-    		if(titleName == '' || titleName == null){
-				alert('이름을 다시 입력해주세요');
-             	return;
-         	};
-          
-			$.ajax({
-				type : 'POST',
-             	url : '/main/team',
-             	contentType : 'text/javascript',
-             	headers : {
-					"X-HTTP-Method-Override" : "POST",
-                	"content-type" : "application/json"
-          		},
-              	dataType : 'json',
-              	data:JSON.stringify({
-					name : titleName               
-          		}),
-             	success : function(result) {  
-             	console.log(typeof(result));
-	           		if(result != null){
-	              		alert("팀이 추가되었습니다.");
-	              		self.location = '/main/team';
-	           		};
-          		},
-          		error : function(){
-                	alert('error');
-          		}   
-         	});
-      	});
 	
 	//버튼 눌렀을때 팀불러오기
 	$(document).on("click",".memberbtn",function(){
@@ -309,6 +276,10 @@
 			$('.member-modal').removeClass('is-visible');
 		}
 	})
+	//모달창 x로 닫기
+	$('.popupCardClose').on("click",function(){
+		$('.member-modal').removeClass('is-visible');
+	})
 	
 	//팀  프로필 ajax 불러오기
 	function memberlist(t_id){
@@ -323,7 +294,7 @@
 					for(var i = 0; i < data.length; i++ ){		
 						var str = "<div class='m-list'>"
 						+"<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate"+data[i].profile+"' class='profile-img'>"
-						+data[i].nickname+"</div>";
+						+"<div class='nick'>"+data[i].nickname+"</div></div>";
 						$('.member-list').append(str);
 					}
 				} else{
@@ -333,7 +304,7 @@
 			},error : function(){
 				alert("통신오류로인해 실패했습니다.");
 			}
-		})//ajax	
+		})//end ajax	
 	}	
 	
 	//즐겨찾기 해당리스트 함수
@@ -353,7 +324,7 @@
 								  +"<li><a "
 								  +"href='http://localhost:9090/board/"+data[i].t_id+"/"+data[i].id+"'><span"
 								  +" class='name'>"+data[i].title+"</span>"		
-								  +"<span><i class='fas fa-star delete-favo' p_id='"+data[i].id+"'></i></span></a>"
+								  +"<span><i class='fas fa-star delete-favo' data-p_id='"+data[i].id+"'></i></span></a>"
 								  +"</li>"
 							      +"</ul>";
 					}
@@ -388,8 +359,8 @@
 	//즐겨찾기 추가
 	$(document).on("click", '.add-favo', function(){
 		
-		p_id = $(this).attr("p_id");
-		t_id = $(this).attr("t_id").substring(1);
+		p_id = $(this).attr("data-p_id");
+		t_id = $(this).attr("data-t_id").substring(1);
 		title = $(this).parents().parents().children().eq(0).text();
 		favorites();
 		$(this).addClass('delete-favo');
@@ -409,21 +380,7 @@
 				type : "get",
 				url : "main/favorite/"+p_id,
 				success : function(data){
-					console.log(data);
-					
-					//맨처음 아무것도 없을때는 불러오기 처리	
-					if($('.hidden').attr("class") != "hidden"){
-						favoriteList();
-					}else{
-					  str = "<ul class='projects'>"
-						  +"<li><a "
-						  +"href='http://localhost:9090/board/"+t_id+"/"+p_id+"'><span"
-						  +" class='name'>"+title+"</span>"		
-						  +"<span><i class='fas fa-star delete-favo' p_id='"+p_id+"' t_id='"+t_id+"'></i></span></a>"
-						  +"</li>"
-					      +"</ul>";
-					  $('.projects').eq(0).prepend(str);
-					}
+					favoriteList();
 				},error : function(){
 					alert("통신 오류 입니다.");
 				}				
@@ -433,7 +390,7 @@
 	//즐겨찾기 삭제
 	$(document).on("click",'.delete-favo',function(){
 		
-		p_id = $(this).attr("p_id");
+		p_id = $(this).attr("data-p_id");
 		var tag = $(this).parents('li');
 		
 		$.ajax({
@@ -483,6 +440,10 @@
 			}
 		})
 	}
+	$('.teambtn').on("click",function(){
+		var team = $('.teamform');
+		team.submit();
+	})
 	
 </script>
 </body>
