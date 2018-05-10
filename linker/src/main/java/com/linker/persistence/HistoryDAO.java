@@ -1,5 +1,7 @@
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.persistence;
-
 
 import com.linker.domain.TeamVO;
 import com.linker.domain.HistoryVO;

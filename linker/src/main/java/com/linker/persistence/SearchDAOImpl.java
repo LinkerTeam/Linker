@@ -1,4 +1,6 @@
-
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.persistence;
 
 import java.util.List;

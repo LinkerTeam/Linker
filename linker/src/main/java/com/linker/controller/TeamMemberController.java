@@ -1,3 +1,4 @@
+
 package com.linker.controller;
 
 import javax.inject.Inject;
@@ -19,7 +20,7 @@ import com.linker.domain.TeamVO;
 import com.linker.service.TeamMemberService;
 import com.linker.service.TeamService;
  
-/*
+/* 작성자 : 김소영
  * memberController와 연결된 view: 멤버 추가(memberAdd).jsp, 이메일 확인(emailConfirm).jsp, 팀 목록 출력(teamList).jsp 출력 
  * teamController와 연결되 DB: team_has_user, user, team
  * 

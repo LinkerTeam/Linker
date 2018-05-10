@@ -1,4 +1,6 @@
-
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.service;
 
 import java.util.List;
@@ -19,8 +21,8 @@ public class SearchServiceImpl implements SearchService{
 	@Inject
 	SearchDAO sdao;
 	
-	String n_filter = "^[0-9\\s]*$"; //number
-	String e_filter = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]*$"; //english
+	String n_filter = "^[0-9\\s]*$"; //number 유효성겁사
+	String e_filter = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]*$"; //english/한글 유효성 검사
 	
 	@Override
 	public List<SearchVO> searchCard(int u_id, String keyword) throws Exception {
@@ -34,15 +36,12 @@ public class SearchServiceImpl implements SearchService{
 	
 	@Override
 	public List<TeamVO> searchMember(int u_id, String keyword) throws Exception {
-		//키워드에 대한 멤버가 있는지 검색한다.
 		List<TeamVO> teamVO = sdao.searchMember(u_id, keyword);
-		System.out.println(teamVO);
 		return teamVO;
 	}
 	
 	@Override
 	public List<CardVO> searchArchiveCard(int p_id, String keyword) throws Exception {
-		//키워드에 대한 카드가 있는지 검색한다.
 		if(keyword.matches(n_filter)) {
 			return sdao.n_searchArchiveCard(p_id, keyword);
 		}else if(keyword.matches(e_filter)){

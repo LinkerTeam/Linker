@@ -1,4 +1,7 @@
-﻿/* ---------------------------------------------------------------------------------------함수 정리 ----------------------------------------------------------------------------*/
+﻿/*
+ * 작성자 : 김소영
+ */
+/* ---------------------------------------------------------------------------------------함수 정리 ----------------------------------------------------------------------------*/
 
 //모달창을 모두 닫는 함수
 function hideModalDiv() {
@@ -39,7 +42,7 @@ function teamButton(auth){
 }
 
 //권한에 따라 멤버 목록에 버튼을 출력하는 함수
-function memberButton(data, myauth){
+function memberButton(data, myauth, u_id){
 	var str = "";
 	if(myauth== 0 && data == 0){
 		str =  "<div class='list-btn'><input type='button' class='transfer-auth-btn' name='transferAuthBtn' style='cursor:pointer;' value='권한 양도' /></div>";
@@ -49,7 +52,7 @@ function memberButton(data, myauth){
 	}else if(myauth== 1 && data != 0){
 		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' style='cursor:pointer;' value='권한수정' /></div>"
 			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
-	}else if(myauth== 2 && data == 2){
+	}else if( u_id == U_ID && myauth== 2 && data == 2 ){//권한이 2인 자기 자신일 경우
 		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
 	}
 	return str;
@@ -141,7 +144,6 @@ function allTeamStr(data, num){
 
 	$('#list-content').children('.list-box-body').append(str);
 	allMemberList(data.t_id, data.auth);
-
 }
 
 //각 팀에 해당하는 멤버목록 출력하는 함수
@@ -172,9 +174,8 @@ function allMemberStr(data, myAuth){
 			+  "	<div class='email'><i class='fas fa-user'></i>&nbsp&nbsp" + data.email + "</div>"
 			+  "	<div class='nickname'>" + data.nickname + "</div>";
 		str +=	"	<div class='auth'>" + auth(data.auth) +"</div>";
-		str +=	memberButton(data.auth, myAuth);
+		str +=	memberButton(data.auth, myAuth, data.u_id);
 		str	+=  "</div>";	
-
 	$(".member-list-table-body[data-id='" + data.t_id + "']").append(str);	
 }
 
@@ -183,23 +184,24 @@ function allMemberStr(data, myAuth){
 //카드동적생성		
 allTeamList();
 
-//팀 목록에서 팀 추가 버튼을 눌렀을 때
+//팀 목록에서 팀 추가 버튼(#add-team-btn)을 눌렀을 때
 $('#add-team-btn').click(function() {
 	$('#team-modal-add-div').show();
 });
 
-/* 팀 추가(teamAdd) 유효성 검사
- * 1. 최대 글자 수 제한
- * 2. 입력 필수
- */
+//팀 추가 모달창에서 팀 추가 버튼(#team-modal-add-btn)을 눌렀을 때
 $('#team-modal-add-btn').click(function(){
 	var name = $("#name").val();
+	
+	//날짜 가져오기
 	var date = new Date();
 	var year = date.getFullYear();
 	var month = date.getMonth()+1
 	var day = date.getDate();
 	var today = year+"-"+month+"-"+day;
-	var isRun = false;//버튼 다중클릭 방지 변수 초기화
+	
+	//버튼 다중클릭 방지 변수 초기화
+	var isRun = false;
 
 	//버튼 다중클릭 방지 검사
 	if(isRun == true){//버튼 클릭하지 않았을 경우
@@ -235,7 +237,6 @@ $('#team-modal-add-btn').click(function(){
 	         name : name
 	     }),
 	     success : function(result) {
-	    	console.log(result);
 	        isRun=false;//버튼 클릭 했을 경우
 	        if(result != null){
 	        hideModalDiv();
@@ -298,16 +299,20 @@ $('#team-modal-add-btn').click(function(){
 	});	                  
 });
 	    	                   
-//멤버 한명 추가하기 버튼을 눌렀을 유효성검사 + 추가하기
+//멤버 한명 추가하기 버튼(#member-modal-add-btn)을 눌렀을 때
 $(document).on('click','#member-modal-add-btn',function() {
 	var email = $('#member-txt').val();
 	var reg_email = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-	var isRun = false;// 버튼 다중 클릭 방지 버튼
+	
+	// 버튼 다중 클릭 방지 버튼
+	var isRun = false;
 
-	if(isRun == true){//버튼 클릭 안했을 때
+	//버튼 클릭 안했을 때
+	if(isRun == true){
 		return;
 	}
 	
+	//이메일 유효성 검사
 	if(email.length == 0){                         
 		alert("이메일을 입력해주세요.");
 		return;
@@ -366,9 +371,7 @@ $(document).on('click','.delete-team-btn',function() {
 	hideModalDiv();
 	$('#team-modal-delete-div').show();
 	T_id = $(this).parent().parent().children('.t_id').html();
-	console.log(T_id);
 	teamName = $.trim($(this).parent().parent().children('.name').text());
-	console.log(teamName);
 });
 
 //modal창에서 취소버튼(.modal-cancle-btn)을 눌렀을 때
@@ -378,7 +381,6 @@ $(document).on('click', '.modal-cancle-btn', function() {
 
 //팀 삭제 delete modal창에서 삭제버튼(#modalDeleteBtn)을 눌렀을 때
 $('#team-modal-delete-btn').click(function() {
-	console.log(T_id);
    $.ajax({
       type : 'put',
       headers : {
@@ -421,7 +423,6 @@ $('#team-modal-delete-btn').click(function() {
 
 //팀 목록 modify modal창에서 수정버튼(#modalModifyBtn)을 눌렀을 때
 $('#team-modal-modify-btn').click(function() {
-	console.log(T_id);
    var teamName = $('#modal-text-txt').val();
    $.ajax({
       type : 'put',
@@ -466,60 +467,59 @@ $('#team-modal-modify-btn').click(function() {
    });
 });
 
-//멤버보기 버튼을 누를 경우1(멤버리스트 동적 생성)
+//멤버보기 버튼(.select-member-btn)을 눌렀을 때
  $(".list-box-body").on('click','.select-member-btn',function() {  
 	  $(this).parents(".one-list-row").next().toggle(); 
 });
 			
-//멤버리스트에서 권한 양도 버튼을 눌렀을 경우
+//멤버리스트에서 권한 양도 버튼(.transfer-auth-btn)을 눌렀을 경우
 $(document).on('click','.transfer-auth-btn',function() {
-	//권한을 양도하고 탈퇴되려는 소유자의 t_id, u_id 
-	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
-	s_T_id = $(this).parent().parent().parent().parent().parent().prev().children('.t_id'); //select option의 값을 가진 data를 추출하기 위해 만든 변수 .children('.t_id')
+	var str = "";
+	var checkBtn = $(this);
+    /* 내가 선택한 버튼의 memberList 중 컬럼을 제외한 memberList 데이터만 선택 (배열)*/
+    var memberListTableBody = checkBtn.parent().parent().parent();
+    //내가 선택한 버튼의 memberList에서 권한을 선택 (배열)
+    var Member = memberListTableBody.children('.one-list-row'); 
+	
+	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html(); //권한을 양도하고 탈퇴되려는 소유자의 t_id, u_id 
+	s_T_id = $(this).parent().parent().parent().parent().parent().prev().children('.t_id');//select option의 값을 가진 data를 추출하기 위해 만든 변수 .children('.t_id')
 	U_id = $(this).parents('div').children('.u_id').html();
-
-	 var str = "";
-     var checkBtn = $(this);
-     /* 내가 선택한 버튼의 memberList 중 컬럼을 제외한 memberList 데이터만 선택 (배열)*/
-     var memberListTableBody = checkBtn.parent().parent().parent();
-
-     //내가 선택한 버튼의 memberList에서 권한을 선택 (배열)
-     var Member = memberListTableBody.children('.one-list-row'); 
+    
       
-     //만약 member가 여러명이라면 
-     if (Member.length > 1) { 
+    //만약 member가 여러명이라면 
+    if (Member.length > 1) { 
    	  
-        str = "<div class='modal-content'>권한양도<hr/><p>&lt;경고&gt;<br>소유자는 권한을 양도하면 다시 소유자 권한으로 바꿀 수 없습니다.<br> 또한 팀에서 자동으로 탈퇴됩니다.</p><br><br>"
-            + "<label for='auth-transfer-select'>권한 양도할 팀원</label>"
-            + "   <select name='auth-transfer-select' id='auth-transfer-select'>";
+       str = "<div class='modal-content'>권한양도<hr/><p>&lt;경고&gt;<br>소유자는 권한을 양도하면 다시 소유자 권한으로 바꿀 수 없습니다.<br> 또한 팀에서 자동으로 탈퇴됩니다.</p><br><br>"
+           + "<label for='auth-transfer-select'>권한 양도할 팀원</label>"
+           + "   <select name='auth-transfer-select' id='auth-transfer-select'>";
         
-        for (var i = 1; i < Member.length; i++) {
-           var userNickname = memberListTableBody.children().eq(i).children().eq(2).text();
-				str += "<option>"
-				+ userNickname
-				+ "</option>";
-		 }
+       for (var i = 1; i < Member.length; i++) {
+          var userNickname = memberListTableBody.children().eq(i).children().eq(2).text();
+          str += "<option>"
+        	  + userNickname
+        	  + "</option>";
+       }
 		
-        str += "   </select><br><br>"
-	         + "<input type='button' id='auth-transfer-btn' style='cursor:pointer;' value='권한 양도'/>"
-	         + "<input type='button' class='modal-cancle-btn' style='cursor:pointer;' value='취소'/></div>";
+       str += "   </select><br><br>"
+	        + "<input type='button' id='auth-transfer-btn' style='cursor:pointer;' value='권한 양도'/>"
+	        + "<input type='button' class='modal-cancle-btn' style='cursor:pointer;' value='취소'/></div>";
 
-	     //소유자 권한 양도 모달 창         
-	     $("#member-modal-transfer-div").html(str);
-	     str = "";
+	    //소유자 권한 양도 모달 창         
+	    $("#member-modal-transfer-div").html(str);
+	    str = "";
 	     
 	  }else{ //만약 member가 소유자만 있다면
-	     str += "<div class='modal-content'>권한양도<hr/><p>팀원이 소유자만 있는 경우에는 권한 양도가 불가합니다. 팀을 삭제해주세요.</p><br><br>"
-	         + "<input type='button' class='modal-cancle-btn' style='cursor:pointer;' value='취소'/></div>";
+	    str += "<div class='modal-content'>권한양도<hr/><p>팀원이 소유자만 있는 경우에는 권한 양도가 불가합니다. 팀을 삭제해주세요.</p><br><br>"
+	        + "<input type='button' class='modal-cancle-btn' style='cursor:pointer;' value='취소'/></div>";
 
-	     $("#member-modal-transfer-div").html(str);
-	     str = "";
+	    $("#member-modal-transfer-div").html(str);
+	    str = "";
 	  }
      
 	$( '#member-modal-transfer-div' ).show();
 });
 					
-//멤버리스트에서 권한수정 버튼을 눌렀을 경우
+//멤버리스트에서 권한수정 버튼(.modify-auth-btn)을 눌렀을 경우
 $(document).on('click','.modify-auth-btn',function() {
 	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
 	U_id = $(this).parents('div').children('.u_id').html();
@@ -527,7 +527,7 @@ $(document).on('click','.modify-auth-btn',function() {
 	$('#member-modal-modify-div').show();
 });
 
-//멤버리스트에서 탈퇴버튼을 눌렀을 경우
+//멤버리스트에서 탈퇴버튼(.delete-member-btn)을 눌렀을 경우
 $(document).on('click','.delete-member-btn',function() {
 	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
 	U_id = $(this).parents('div').children('.u_id').html();
@@ -535,7 +535,7 @@ $(document).on('click','.delete-member-btn',function() {
 	$('#member-modal-delete-div').show();
 });
 
-//멤버리스트에서 멤버 한명 추가버튼을 눌렀을 경우
+//멤버리스트에서 멤버 한명 추가버튼(.add-member-btn)을 눌렀을 경우
 $(document).on('click','.add-member-btn',function() {
 	T_id = $(this).parent().parent().parent().prev().children('.t_id').html();
 	$('#add-member-modal').show();
@@ -543,7 +543,8 @@ $(document).on('click','.add-member-btn',function() {
 
 //멤버 탈퇴 delete modal창에서 탈퇴버튼(#modalDeleteBtn)을 눌렀을 때
 $(document).on('click','#member-modal-delete-btn',function() {
-	if(U_id == U_ID){//소유자가 아닌 사용자가 해당 팀에서 자진으로 탈퇴할 경우
+	//소유자가 아닌 사용자가 해당 팀에서 자진으로 탈퇴할 경우
+	if(U_id == U_ID){
 		$.ajax({
 			url : 'team/delete/volunteer/'+ T_id + "/" + U_id,
 			type : 'delete',
@@ -570,7 +571,8 @@ $(document).on('click','#member-modal-delete-btn',function() {
 				alert("error");
 			}
 		});
-	}else{//소유자가 아닌 사용자가 해당 팀에서 타의로 탈퇴당한 경우
+	//소유자가 아닌 사용자가 해당 팀에서 타의로 탈퇴당한 경우
+	}else{
 		$.ajax({
 			url : 'team/delete/forced/'+ T_id + "/" + U_id,
 			type : 'delete',
@@ -600,7 +602,7 @@ $(document).on('click','#member-modal-delete-btn',function() {
 	}
 });
 
-//멤버 권한 수정 modify modal창에서 '팀원'을 눌렀을 때
+//멤버 권한 수정 modify modal창에서 '팀원'버튼(#member-auth-modify-2-btn)을 눌렀을 때
 $(document).on('click','#member-auth-modify-2-btn',function() {
 	$.ajax({
 		url : 'team/update/'+ T_id + "/" + U_id,
@@ -628,7 +630,7 @@ $(document).on('click','#member-auth-modify-2-btn',function() {
 	});
 });
 
-//멤버 권한 수정 modify modal창에서 '관리자'을 눌렀을 때
+//멤버 권한 수정 modify modal창에서 '관리자'버튼(#member-auth-modify-1-btn)을 눌렀을 때
 $(document).on('click','#member-auth-modify-1-btn',function() {
 	$.ajax({
 		url : 'team/update/'+ T_id + "/" + U_id,
@@ -717,7 +719,6 @@ $('#member-search').keyup(function(){
 			contentType : 'text/javascript',
 			data : {u_id : U_ID},
 			success : function(data) {
-				console.log(data);
 				$('#list-content').children('.list-box-body').html('');
 				for(var i=0; i< data.length; i++){
 					allTeamStr(data[i],1);

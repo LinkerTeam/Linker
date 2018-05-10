@@ -2,6 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <!-- 작성자 : 김소영 -->
  
 <mapper namespace="com.linker.mapper.teamMemberMapper">
 	<!-- 회원인지 아닌지 확인 / 결과=0 회원x, 결과=1 회원o -->
@@ -76,7 +78,7 @@
 	<!--email을 이용해서 userID정보를 가져옴/emailConfirm-->
  	 <select id="userEmail" resultType="TeamMemberVO">
         SELECT 
-        	id as u_id
+        	id AS u_id
         	, nickname
         	, email
 		FROM linker.user

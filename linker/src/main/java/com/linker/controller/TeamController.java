@@ -1,3 +1,4 @@
+
 package com.linker.controller;
 
 import java.util.List;
@@ -26,8 +27,7 @@ import com.linker.dto.TeamMemberDTO;
 import com.linker.service.TeamMemberService;
 import com.linker.service.TeamService;
 
-/* 코드 작성자 : 김소영
- * 주석 작성자 : 김소영
+/*  작성자 : 김소영
  * TeamController와 연결된 view: 팀 목록 출력(teamList.jsp) 출력
  * TeamController와 연결된 DB: team, team_has_user, user
  * 
@@ -130,13 +130,10 @@ public class TeamController {
 	 public ResponseEntity<HistoryVO> teamLsitPOST(@RequestBody TeamVO tvo,HttpSession session) throws Exception{
 	 	UserVO vo = (UserVO) session.getAttribute("login");
 	 	ResponseEntity<HistoryVO> entity = null;
-	 	System.out.println(tvo);
 	 	try {
 	 		teamService.createTeam(tvo);//DB에 팀을 만들어 준다(사용자와 팀을 연결시켜주지 x).team		
 	 		int t_id=tvo.getId();
-	 		System.out.println(t_id); 
 	 		HistoryVO hvo = memberService.connectTeamMember(vo.getId(), t_id, tvo.getName());//해당 팀에 사용자와 팀을 연결시켜준다.team_has_user
-	 		System.out.println(hvo);
 	 		entity = new ResponseEntity<HistoryVO>(hvo, HttpStatus.OK);
 	 	}catch(Exception e) {
 	 		entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -148,12 +145,9 @@ public class TeamController {
 	 @RequestMapping(value="/teamcreate", method=RequestMethod.POST)
 	 public String createTeam(TeamVO tvo,HttpSession session)throws Exception{
 		 UserVO vo = (UserVO) session.getAttribute("login");
-		 System.out.println("팀생성");
 		 teamService.createTeam(tvo);//DB에 팀을 만들어 준다(사용자와 팀을 연결시켜주지 x).team		
 		 int t_id=tvo.getId();
 		 HistoryVO hvo = memberService.connectTeamMember(vo.getId(), t_id, tvo.getName());//해당 팀에 사용자와 팀을 연결시켜준다.team_has_user
-		 System.out.println(tvo.getName());
-		 
 		 return "redirect:/main/team/";
 	 }
 	 
@@ -162,7 +156,6 @@ public class TeamController {
 	@RequestMapping(value="/team/update/{t_id}", method=RequestMethod.PUT)
 	public ResponseEntity<HistoryVO> teamListModifyUPDATE(@PathVariable("t_id") int t_id, @RequestBody TeamVO tvo) throws Exception{
 		ResponseEntity<HistoryVO> entity = null;
-		System.out.println("controller : " + t_id);
 		try {
 			tvo.setT_id(t_id);
 			HistoryVO hvo = teamService.modifyTeam(tvo);
@@ -180,7 +173,6 @@ public class TeamController {
 	public ResponseEntity<HistoryVO> teamListRemoveDELETE(@PathVariable("t_id") int t_id, @RequestBody TeamVO tvo) throws Exception{
 		ResponseEntity<HistoryVO> entity = null;
 		try {
-			System.out.println("contoller : " + t_id);
 			tvo.setT_id(t_id);
 			HistoryVO hvo = teamService.deleteTeam(tvo);
 			entity=new ResponseEntity<HistoryVO>(hvo, HttpStatus.OK);
