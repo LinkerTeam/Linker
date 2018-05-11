@@ -109,19 +109,14 @@ function getElementIndex(node) {
     return index;
 };
 	
-
-	
 /*
 * 보관/휴지통 탭 관련
 */
-	
-	
-	
-/* 보관/휴지통탭 | 검색창 blur되면 value값 초기화 */
+		
+/*보관/휴지통탭 | 검색창 blur되면 value값 초기화 */
 $(".tab-search-input").on("blur", function(){
 	$(this).val("");
 });
-	
 	
 /* 카드 보관/휴지통 조회 | 오른쪽 탭(보관, 휴지통)에서 카드 목록 조회 */
 function readCardStatus(ps_id){
@@ -240,7 +235,140 @@ $(".tab-content-box").on("click", ".return", function(){
 	//cardStatusChange(id, ps_id, cl_id, title); //상태변경에 대한 ajax처리 함수 호출
 });
 	
-	
+
+/* 달성탭에서 카드 검색한 경우 */
+$('#search-archive-txt').keyup(function(){
+	var ps_id = 2;
+	var keyword = $(this).val();
+	var searchArchiveBtn = $('.nav-tab-content-Box-archive.archiveCardlist').css("display");
+	if(keyword != ''){//입력한 글자가 null이 아닌경우
+		if(searchArchiveBtn == "none"){ //카드 검색한 경우
+			$.ajax({
+				type : "get",
+				url : "/board/" + p_id + "/searchCard/" + keyword,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				dataType : 'json',
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+				 	var str = "";
+				  		if(ps_id == 2){ //보관 카드리스트 조회
+							$(".nav-tab-content-Box-archive.archiveCard").html('');
+				  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드리스트 태그 생성
+								str += createArchivedCard(data[i].id, data[i].cl_id, data[i].title);
+							}
+							$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
+				  		}
+				}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+			});
+		}else{//카드리스트 검색한 경우
+			$.ajax({
+    			type : "GET",
+    			headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				url : "/board/" + p_id + "/searchCardlist/" + keyword,
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+			 		var str = "";
+		  			if(ps_id == 2){ //달성 카드 조회
+		  				$(".nav-tab-content-Box-archive.archiveCardlist").html('');
+		  				for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 카드 생성
+							str += createArchivedCardlist(data[i].id, data[i].title);
+						}
+						$(".nav-tab-content-Box-archive.archiveCardlist").html(str); //보관탭에 카드 삽입
+		  			}
+				}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+			});
+		}
+	}else{//입력한 글자가 null인 경우
+		if(searchArchiveBtn == "none"){ //카드 검색한 경우 
+			readCardStatus(2);
+		}else{//카드리스트 검색한 경우
+			readCardlistStatus(2);
+		}
+	}
+}); 
+
+/* 가리기탭에서 카드 검색한 경우  */
+$('#search-hide-txt').keyup(function(){
+	var ps_id = 3;
+	var keyword = $(this).val();
+	var searchHideBtn = $('.nav-tab-content-Box-hidden.hiddenCardlist').css("display");
+	if(keyword != ''){
+		if(searchHideBtn == "none"){ //카드 검색한 경우 
+			$.ajax({
+				type : "get",
+				url : "/board/" + p_id + "/searchCard/" + keyword,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				dataType : 'json',
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+				 	var str = "";
+				  			$(".nav-tab-content-Box-hidden.hiddenCard").html('');
+				  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드리스트 태그 생성
+				  				str += createTrashboxCard(data[i].id, data[i].cl_id, data[i].title);
+							}
+							$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //가리기탭에 동적 태그 삽입
+				  		}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+	    	}); //ajax
+		}else{//카드리스트 검색한 경우
+			$.ajax({
+	    		type : "GET",
+	    		headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				url : "/board/" + p_id + "/searchCardlist/" + keyword,
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+				 	var str = "";
+			  			$(".nav-tab-content-Box-hidden.hiddenCardlist").html('');
+			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 생성
+							str += createTrashboxCardlist(data[i].id, data[i].title);
+						}
+						$(".nav-tab-content-Box-hidden.hiddenCardlist").html(str); //가리기탭에 카드 삽입
+			  		}, //success
+				error : function() {
+			   		alert("에러가 발생했습니다.");
+			   	}
+	    	}); //ajax
+		}
+	}else{
+		if(searchHideBtn == "none"){ //카드 검색한 경우 
+			readCardStatus(3);
+		}else{//카드리스트 검색한 경우
+			readCardlistStatus(3);
+		}
+	}
+});	
 	
 /*
 * 프로젝트 닫기 관련
