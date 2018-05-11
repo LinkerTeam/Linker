@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
  <!-- 작성자  : 김소영 -->
+ 
 <mapper namespace="com.linker.mapper.teamMapper">
 	
 	<!-- 새로운 team 생성 -->

@@ -324,8 +324,11 @@
 			}
 		})
 	}
-	$('.teambtn').on("click",function(){
-		var team = $('.teamform');
-		team.submit();
-	})
 	
+	//팀 추가 후 경고창과 함께 location.reload됨.
+	   $('.teambtn').on("click",function(){
+		      event.preventDefault(); //기본 이벤트 제거
+		      alert("팀이 생성되었습니다.");
+		      $('.teamform').submit();
+		   });
+	       

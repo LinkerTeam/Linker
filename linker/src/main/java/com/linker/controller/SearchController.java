@@ -36,7 +36,7 @@ public class SearchController {
 	private SearchService searchService;
 	
 	//헤더에서 검색하기
-	@RequestMapping(value="/main/search/", method=RequestMethod.GET)
+	@RequestMapping(value="/main/search", method=RequestMethod.GET)
 	public String searchGET(@RequestParam ("keyword") String keyword, Model model,HttpSession session) throws Exception{	
 		 UserVO vo = (UserVO) session.getAttribute("login");
 		List<SearchVO> cardResult = searchService.searchCard(vo.getId(), keyword);
