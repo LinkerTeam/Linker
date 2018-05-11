@@ -141,14 +141,14 @@ public class TeamController {
 	 	return entity;
 	 }
 	 
-	 //프로젝트에서 팀추가 
+	 //프로젝트에서 팀 추가 
 	 @RequestMapping(value="/teamcreate", method=RequestMethod.POST)
 	 public String createTeam(TeamVO tvo,HttpSession session)throws Exception{
 		 UserVO vo = (UserVO) session.getAttribute("login");
 		 teamService.createTeam(tvo);//DB에 팀을 만들어 준다(사용자와 팀을 연결시켜주지 x).team		
 		 int t_id=tvo.getId();
-		 HistoryVO hvo = memberService.connectTeamMember(vo.getId(), t_id, tvo.getName());//해당 팀에 사용자와 팀을 연결시켜준다.team_has_user
-		 return "redirect:/main/team/";
+		 memberService.connectTeamMember(vo.getId(), t_id, tvo.getName());//해당 팀에 사용자와 팀을 연결시켜준다.team_has_user
+		 return "redirect:/main";
 	 }
 	 
 
@@ -197,28 +197,10 @@ public class TeamController {
 		}
 		return entity;
 	}
-	
-	//멤버 수정
-	@RequestMapping(value="/team/update/{t_id}/{u_id}", method=RequestMethod.PUT)
-	public @ResponseBody ResponseEntity<Boolean> memberListModifyUPDATE(@PathVariable("t_id") int t_id, @PathVariable("u_id") int u_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
-		UserVO vo = (UserVO) session.getAttribute("login");
-		ResponseEntity<Boolean> entity = null;
-			try {
-				mvo.setT_id(t_id);
-				mvo.setU_id(u_id);
-				memberService.modifyAuth(mvo);
-				entity=new ResponseEntity<Boolean>(true, HttpStatus.OK);
-			}catch(Exception e) {
-				e.printStackTrace();
-				entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-			}
-		return entity;
-	}
-		
+
 	//멤버 자진 탈퇴 
 	@RequestMapping(value="/team/delete/volunteer/{t_id}/{u_id}", method=RequestMethod.DELETE)
 	public @ResponseBody ResponseEntity<Boolean> memberListRemoveVolunteerDELETE(@PathVariable("t_id") int t_id, @PathVariable("u_id") int u_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
-		UserVO vo = (UserVO) session.getAttribute("login");
 		ResponseEntity<Boolean> entity = null;
 		try {
 			memberService.deleteMember(u_id,t_id);
@@ -233,7 +215,6 @@ public class TeamController {
 	//멤버 강제 탈퇴
 	@RequestMapping(value="/team/delete/forced/{t_id}/{u_id}", method=RequestMethod.DELETE)
 	public @ResponseBody ResponseEntity<Boolean> memberListRemoveForcedDELETE(@PathVariable("t_id") int t_id, @PathVariable("u_id") int u_id, @RequestBody TeamMemberVO mvo,HttpSession session) throws Exception{
-		UserVO vo = (UserVO) session.getAttribute("login");
 		ResponseEntity<Boolean> entity = null;
 		try {
 			memberService.deleteMember(u_id,t_id);

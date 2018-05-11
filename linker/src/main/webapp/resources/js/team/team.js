@@ -1,8 +1,8 @@
 ﻿/*
  * 작성자 : 김소영
  */
-/* ---------------------------------------------------------------------------------------함수 정리 ----------------------------------------------------------------------------*/
 
+/* ---------------------------------------------------------------------------------------함수 정리 ----------------------------------------------------------------------------*/
 //모달창을 모두 닫는 함수
 function hideModalDiv() {
 	$('#team-modal-add-div').hide();
@@ -18,12 +18,10 @@ function hideModalDiv() {
 function auth(auth){
 	var str = "";
 	switch (auth){
-	case 0 : str = "Owner";
-	break;
-	case 1 : str = "Admin";
-	break;
-	case 2 : str = "Team Member";
-	break;
+		case 0 : str = "팀장";
+		break;
+		case 1 : str = "팀원";
+		break;
 	}
 	return str;
 }
@@ -47,12 +45,8 @@ function memberButton(data, myauth, u_id){
 	if(myauth== 0 && data == 0){
 		str =  "<div class='list-btn'><input type='button' class='transfer-auth-btn' name='transferAuthBtn' style='cursor:pointer;' value='권한 양도' /></div>";
 	}else if(myauth== 0 && data != 0){
-		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' style='cursor:pointer;' value='권한수정' /></div>"
-			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
-	}else if(myauth== 1 && data != 0){
-		str = "	<div class='list-btn'><input type='button' class='modify-auth-btn' name='modifyAuthBtn' style='cursor:pointer;' value='권한수정' /></div>"
-			+ "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
-	}else if( u_id == U_ID && myauth== 2 && data == 2 ){//권한이 2인 자기 자신일 경우
+		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
+	}else if( u_id == U_ID && myauth== 1 && data == 1 ){//권한이 2인 자기 자신일 경우
 		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
 	}
 	return str;
@@ -518,14 +512,6 @@ $(document).on('click','.transfer-auth-btn',function() {
      
 	$( '#member-modal-transfer-div' ).show();
 });
-					
-//멤버리스트에서 권한수정 버튼(.modify-auth-btn)을 눌렀을 경우
-$(document).on('click','.modify-auth-btn',function() {
-	T_id =$(this).parent().parent().parent().parent().parent().prev().children('.t_id').html();
-	U_id = $(this).parents('div').children('.u_id').html();
-	hideModalDiv();
-	$('#member-modal-modify-div').show();
-});
 
 //멤버리스트에서 탈퇴버튼(.delete-member-btn)을 눌렀을 경우
 $(document).on('click','.delete-member-btn',function() {
@@ -600,62 +586,6 @@ $(document).on('click','#member-modal-delete-btn',function() {
 			}
 		});
 	}
-});
-
-//멤버 권한 수정 modify modal창에서 '팀원'버튼(#member-auth-modify-2-btn)을 눌렀을 때
-$(document).on('click','#member-auth-modify-2-btn',function() {
-	$.ajax({
-		url : 'team/update/'+ T_id + "/" + U_id,
-		type : 'put',
-		headers : {
-			"Content-Type" : "application/json",
-			"X-HTTP-Method-Override" : "PUT"
-		},
-		dataType : 'json',
-		data : JSON.stringify({
-			auth : 2
-		}),
-		success : function(result) {
-			if(result == true){
-				hideModalDiv();
-				str = auth(2);
-				$(".one-list-row[data-id='" + U_id + "']").children('.auth').html(str);
-			}else{
-				alert("error");
-			}
-		},
-		error : function() {
-			alert("error");
-		}
-	});
-});
-
-//멤버 권한 수정 modify modal창에서 '관리자'버튼(#member-auth-modify-1-btn)을 눌렀을 때
-$(document).on('click','#member-auth-modify-1-btn',function() {
-	$.ajax({
-		url : 'team/update/'+ T_id + "/" + U_id,
-		type : 'put',
-		headers : {
-			"Content-Type" : "application/json",
-			"X-HTTP-Method-Override" : "PUT"
-		},
-		dataType : 'json',
-		data : JSON.stringify({
-			auth : 1
-		}),
-		success : function(result) {
-			if(result == true){
-				hideModalDiv();
-				str =  auth(1);
-				$(".one-list-row[data-id='" + U_id + "']").children('.auth').html(str);
-			}else{
-				alert("error");
-			}
-		},
-		error : function() {
-			alert("error");
-		}
-	});
 });
 
 //멤버 권한양도 transfer modal창에서 권한양도버튼(#modalTransferBtn)을 눌렀을 때

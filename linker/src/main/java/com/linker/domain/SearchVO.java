@@ -156,5 +156,4 @@ public class SearchVO {
 				+ p_title + ", t_id=" + t_id + ", t_name=" + t_name + "]";
 	}
 	
-	
 }

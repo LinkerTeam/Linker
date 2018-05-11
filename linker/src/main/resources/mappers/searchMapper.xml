@@ -8,65 +8,7 @@
 <mapper namespace="com.linker.mapper.searchMapper">
 
 	<!-- 전체검색 -->
-	<select id="n_searchCard" resultType="SearchVO">
-		SELECT 
-			c.id AS c_id
-			, c.u_id
-			, u.nickname
-			, c.title AS c_title
-			, c.content
-			, c.cdate
-			, c.cl_id
-			, cl.title AS cl_title
-			, cl.p_id
-			, p.title AS p_title
-			, p.t_id
-			, t.name AS t_name
-		  	, f.cnt_f_cid
-		  	, r.cnt_r_cid
-		FROM linker.card AS c
-		LEFT JOIN (
-			SELECT * from linker.card AS a1
-			JOIN(
-				SELECT 
-					c_id
-					, count(c_id) AS cnt_f_cid
-				FROM linker.c_file AS f 
-				GROUP BY c_id
-			)AS f ON a1.id=f.c_id
-		) AS f ON c.id = f.c_id
-		LEFT JOIN (
-		 	SELECT * FROM linker.card AS c
-			LEFT JOIN(
-				SELECT 
-				c_id
-			, count(c_id) AS cnt_r_cid 
-			FROM linker.c_reply AS r
-			GROUP BY r.c_id
-			) AS r ON c.id = r.c_id
-		) AS r ON c.id = r.c_id
-		JOIN linker.cardlist AS cl ON cl.id = c.cl_id
-		JOIN linker.project AS p ON cl.p_id = p.id
-		JOIN (
-			SELECT 
-				thu.t_id
-				, t.name
-				, t.id 
-			FROM linker.team_has_user AS thu
-			LEFT JOIN linker.team AS t ON t.id = thu.t_id
-			WHERE u_id = 13 AND t.status = 0
-		) AS t ON t.id = p.t_id
-		JOIN linker.user AS u ON c.u_id = u.id
-		WHERE c.ps_id = 1 
-		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
-				  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
-				  OR c.cdate like CONCAT ('%', #{keyword}, '%') 
-				)
-		ORDER BY c.cdate desc;
-	</select>
-	
-	<!-- 전체검색 -->
-	<select id="e_searchCard" resultType="SearchVO">
+	<select id="searchCard" resultType="SearchVO">
 		SELECT 
 			c.id AS c_id
 			, c.u_id
@@ -112,42 +54,19 @@
 				, t.id 
 			FROM linker.team_has_user AS thu
 			LEFT JOIN linker.team AS t ON t.id = thu.t_id
-			WHERE u_id = 13 AND t.status = 0
+			WHERE u_id = #{u_id} AND t.status = 0
 		) AS t ON t.id = p.t_id
 		JOIN linker.user AS u ON c.u_id = u.id
 		WHERE c.ps_id = 1 
 		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
-				  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
-				)
-		ORDER BY c.cdate desc;
+			  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
+			)
+		ORDER BY c.cdate DESC
 	</select>
 	
-	<!-- 달성/가리기 탭에서 카드검색 -->	
-	<!-- 달성 탭에서 카드 출력 -->
-	<select id="n_searchArchiveCard" resultType="CardVO">
-		SELECT 
-			c.id
-			, c.u_id
-			, c.title
-			, c.content
-			, c.cdate
-			, c.udate
-			, c.cl_id
-			, c.ps_id
-			, cl.p_id
-		FROM linker.card AS c
-		JOIN linker.cardlist AS cl ON cl.id = c.cl_id
-		WHERE cl.p_id=#{p_id}
-		AND c.ps_id = 2
-		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
-			  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
-			  OR c.cdate like CONCAT ('%', #{keyword}, '%') 
-			)
-		ORDER BY c.cdate desc
-	</select>
-		 
-	<!-- 달성 탭에서 카드 출력 -->
-	<select id="e_searchArchiveCard" resultType="CardVO">
+	<!-- 보관함/휴지통 탭에서 카드검색 -->	
+	<!-- 보관함 탭에서 카드 출력 -->
+	<select id="searchArchiveCard" resultType="CardVO">
 		SELECT 
 			c.id
 			, c.u_id
@@ -165,11 +84,11 @@
 		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
 			  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
 			)
-		ORDER BY c.cdate desc
+		ORDER BY c.cdate DESC
 	</select>
 		
-	<!-- 가리기 탭에서 카드 출력 -->
-	<select id="n_searchHideCard" resultType="CardVO">
+	<!-- 휴지통 탭에서 카드 출력 -->
+	<select id="searchHideCard" resultType="CardVO">
 		SELECT
 			c.id
 			, c.u_id
@@ -185,55 +104,13 @@
 		WHERE cl.p_id=#{p_id}
 		AND c.ps_id = 3
 		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
-			  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
-			  OR cdate LIKE CONCAT ('%', #{keyword}, '%')
 			)
-		ORDER BY c.cdate desc
+		ORDER BY c.cdate DESC
 	</select>
 		
-	<!-- 가리기 탭에서 카드 출력 -->
-	<select id="e_searchHideCard" resultType="CardVO">
-		SELECT
-			c.id
-			, c.u_id
-			, c.title
-			, c.content
-			, c.cdate
-			, c.udate
-			, c.cl_id
-			, c.ps_id
-			, cl.p_id
-		FROM linker.card AS c
-		JOIN linker.cardlist AS cl ON cl.id = c.cl_id
-		WHERE cl.p_id=#{p_id}
-		AND c.ps_id = 3
-		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
-			  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
-			)
-		ORDER BY c.cdate desc
-	</select>
-		
-	<!-- 달성/가리기 탭에서 카드리스트 검색  -->
-	<!-- keyword가 영숫자인경우. 달성 탭에서 카드리스트 출력/ 진행 상태(ps_id = 2)인 모든 카드리스트와 카드 조회 -->
-	<select id="n_searchArchiveCardlist" resultType="CardlistVO">
-		SELECT
-		id
-		, p_id
-		, u_id
-		, title
-		, ps_id
-		, udate
-		FROM linker.cardlist
-		WHERE p_id = #{p_id}
-		AND ps_id = 2
-		AND ( title LIKE CONCAT ('%',#{keyword}, '%')
-			OR cdate LIKE CONCAT ('%', #{keyword}, '%')
-		)
-		ORDER BY udate DESC;
-	</select>
-		
+	<!-- 보관함/휴지통 탭에서 카드리스트 검색  -->
 	<!-- keyword가 한글이 들어간 경우. 달성 탭에서 카드리스트 출력/ 진행 상태(ps_id = 2)인 모든 카드리스트와 카드 조회 -->
-	<select id="e_searchArchiveCardlist" resultType="CardlistVO">
+	<select id="searchArchiveCardlist" resultType="CardlistVO">
 		SELECT
 		id
 		, p_id
@@ -245,12 +122,12 @@
 		WHERE p_id = #{p_id}
 		AND ps_id = 2
 		AND title LIKE CONCAT ('%',#{keyword}, '%')
-		ORDER BY udate DESC;
+		ORDER BY udate DESC
 	</select>
 		
 	<!-- keyword가 한글이 없는 경우. 가리기 탭에서 카드리스트 출력/ 진행 상태(ps_id = 1)인 모든 카드리스트와 카드 조회 -->
 	<!-- 카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
-	<select id="n_searchHideCardlist" resultType="CardlistVO">
+	<select id="searchHideCardlist" resultType="CardlistVO">
 		SELECT
 			id
 			, p_id
@@ -262,31 +139,12 @@
 		WHERE p_id = #{p_id}
 		AND ps_id = 3
 		AND ( title LIKE CONCAT ('%', #{keyword}, '%')
-		  OR cdate LIKE CONCAT ('%', #{keyword}, '%') 
 		)
 		ORDER BY udate DESC    
 	</select>
-		
-	<!-- keyword가 한글이 들어간 경우. 가리기 탭에서 카드리스트 출력/ 진행 상태(ps_id = 1)인 모든 카드리스트와 카드 조회 -->
-	<!--     카드가 없는 카드리스트도 조회해야 하기 때문에 c.ps_id IS NULL 조건을 부여함 -->
-	<select id="e_searchHideCardlist" resultType="CardlistVO">
-		SELECT 
-			id
-			, p_id
-			, u_id
-			, title
-			, ps_id
-			, udate
-		FROM linker.cardlist
-		WHERE p_id = #{p_id}
-		AND ps_id = 3
-		AND ( title LIKE CONCAT ('%', #{keyword}, '%')
-		)
-		ORDER BY udate DESC
-	</select>
-		
+
 	<!-- 팀 리스트 검색-->
-	<!-- 검키워드에 해당하는 멤버들을 출력, 색에 대한 멤버 결과를 가져오는 쿼리 -->	
+	<!-- 검키워드에 해당하는 멤버들을 출력, 색에 대한 멤버 결과를 가져오는 쿼리 -->
 	<select id="searchMember" resultType="TeamVO">
 		SELECT 
 			thu.t_id
@@ -294,19 +152,19 @@
 			, t.name
 			, thu.status
 			, t.cdate
-			FROM linker.user AS u 
-			JOIN linker.team_has_user AS thu ON u.id=thu.u_id 
-			JOIN linker.team AS t ON thu.t_id = t.id    
-			WHERE thu.status = 1 
-			AND t.status=0
-			AND
-			thu.t_id IN (
+		FROM linker.user AS u 
+		JOIN linker.team_has_user AS thu ON u.id=thu.u_id 
+		JOIN linker.team AS t ON thu.t_id = t.id    
+		WHERE thu.status = 1 
+		AND t.status=0
+		AND thu.t_id IN (
 			 SELECT 
 			 	thu.t_id 
 			 FROM linker.team_has_user AS thu
 			 WHERE thu.u_id=#{u_id}
 			 )
-			AND u.nickname LIKE CONCAT('%', #{keyword} , '%')
-		GROUP BY thu.t_id;
+		AND u.nickname LIKE CONCAT('%', #{keyword} , '%')
+		GROUP BY thu.t_id
+		ORDER BY t.name DESC
 	</select>
 </mapper>

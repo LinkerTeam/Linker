@@ -133,12 +133,6 @@ public class TeamMemberServiceImpl implements TeamMemberService{
       vo.setAuth(0);
       tmdao.transferMemberAuth(vo);
    }
-      
-   //멤버 권한 수정
-   @Override
-   public int modifyAuth(TeamMemberVO vo) throws Exception {
-      return tmdao.modifyMemberAuth(vo);
-   }
 
    //멤버 인증상태코드 수정
    @Override

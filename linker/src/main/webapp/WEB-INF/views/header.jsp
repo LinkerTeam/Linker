@@ -38,8 +38,8 @@
 	    
 	    <!--헤더 검색창-->
 	    <div class="header-search">
-	        <form>
-	            <input type="text" id="search" />
+	        <form action="/main/search" method="get">
+	            <input type="text" id="search" name="keyword" />
 	            <button type="submit"><span><i class="fas fa-search"></i></span></button>
 	        </form>
 	    </div>
