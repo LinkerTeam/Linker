@@ -46,7 +46,7 @@ function memberButton(data, myauth, u_id){
 		str =  "<div class='list-btn'><input type='button' class='transfer-auth-btn' name='transferAuthBtn' style='cursor:pointer;' value='권한 양도' /></div>";
 	}else if(myauth== 0 && data != 0){
 		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
-	}else if( u_id == U_ID && myauth== 1 && data == 1 ){//권한이 2인 자기 자신일 경우
+	}else if( u_id == U_ID && myauth== 1 && data == 1 ){//팀원이면서 자기 자신일 경우
 		str = "	<div class='list-btn'><input type='button' class='delete-member-btn' name='deleteMemberBtn' style='cursor:pointer;' value='탈퇴' /></div>";
 	}
 	return str;
@@ -336,6 +336,7 @@ $(document).on('click','#member-modal-add-btn',function() {
 	       if(result == "1"){
 	      	 hideModalDiv();
 	         alert("해당 회원에 메일을 보냈습니다. 해당 회원이 수락하는 동시에 팀에 해당회원이 등록됩니다.");
+	         $('#member-txt').val('');
 	      }else if(result == "0"){
 	         $('#member-txt').val('');
 	         alert(email+"은 이미 팀에 등록되어있습니다.");
