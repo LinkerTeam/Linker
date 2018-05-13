@@ -39,9 +39,10 @@ a {
     text-align: center;
 }
 .logo-link {
-	display: inline-block;
-	position: absolute;
+    display: table;
     height: 50px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
 .logo-full {
     position: relative;
@@ -66,8 +67,11 @@ a {
 }
 /* 오른쪽메뉴 설정단추 */
 .rtMenu-button {
+    position: absolute;
     float: right;
     margin: 6px;
+    top: 0;
+    right: 0;
 }
 .rtMenu-button > img {
 	float: left;

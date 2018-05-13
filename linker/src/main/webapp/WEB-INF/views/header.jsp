@@ -15,7 +15,7 @@
 <title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-<link href="/resources/css/header.css?ver=111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/header.css" type="text/css" rel="stylesheet" />
 <!-- fontawesome -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>

@@ -87,6 +87,7 @@
 			, c.ps_id AS c_ps_id
 			, cl.p_id
 			, uhc.status
+			, uhc.u_id AS uhc_u_id
             , reply
             , file
 		FROM linker.card c
@@ -125,6 +126,7 @@
             , u.nickname
             , u.profile
             , uhc.status
+            , uhc.u_id AS uhc_u_id
             , reply
             , file
 		FROM linker.card c

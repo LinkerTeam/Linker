@@ -45,5 +45,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 	public List<AdminUserDTO> listCriteria(Criteria cri) throws Exception {
 		return dao.listCriteria(cri);
 	}
+	//페이지 total count
+	@Override
+	public int listCountCriteria(Criteria cri) throws Exception {
+		return dao.countPaging(cri);
+	}
 
 }

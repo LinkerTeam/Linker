@@ -502,7 +502,8 @@ textarea.cardlistTitle:focus {
 .favorite {
 	display: none;
 }
-.favorite > footer {
+.createCardBox.favorite,
+.createCardBox.row {
 	height: 12px;
 }
 /* 즐겨찾기 | 버튼 */

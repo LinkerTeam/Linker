@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardModalAttach.css?ver=1" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardModalAttach.css" type="text/css" rel="stylesheet" />
 </head>
  
 <body>
@@ -38,6 +38,6 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardModalAttach.js?ver=1" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardModalAttach.js" type="text/javascript"></script>
 
 </html>

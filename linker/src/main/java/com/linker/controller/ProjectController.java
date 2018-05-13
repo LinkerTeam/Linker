@@ -72,7 +72,6 @@ public class ProjectController {
 		ResponseEntity<Integer> entity = null;
 		     service.createProject(vo);
 		     // 프로젝트 생성후에 생성된 기본키(PK)를 받아옴 
-		     System.out.println(vo);
 		     int p_id=vo.getId();
 		try {
 			entity = new ResponseEntity<Integer>(p_id,HttpStatus.OK);

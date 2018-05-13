@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>프로젝트화면</title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardTest.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardTest.css" type="text/css" rel="stylesheet" />
 </head>
 
 
@@ -96,7 +96,7 @@
 	var p_ps_id = ${project.ps_id}; //프로젝트 상태값
 </script>
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardFavorite.js?ver=111" type="text/javascript"></script>
-<script src="../../../resources/js/board/cardTest.js?ver=11111111" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardFavorite.js" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardTest.js" type="text/javascript"></script>
 
 </html>

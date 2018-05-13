@@ -15,4 +15,6 @@ public interface AdminUserService {
 	
 	//페이징
 	public List<AdminUserDTO> listCriteria(Criteria cri) throws Exception;
+	//페이지 total count
+	public int listCountCriteria(Criteria cri) throws Exception;
 }

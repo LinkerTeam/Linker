@@ -75,6 +75,7 @@ function openAside() {
         if (tabMenu[0].dataset.activenumber === undefined) {
         	tabMenu[0].dataset.activenumber = 0;
         	tabMenu[0].children[0].classList.add('active');
+        	readCardStatus(2);
         };
     } else { //클릭수가 짝수이면 숨기기
         boardAside.classList.remove('boardAside-open'); //클래스 이름 'boardAside-open' 제거
@@ -84,19 +85,19 @@ function openAside() {
 };
 	
 /* 탭버튼 제어 */
-var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
-for(var i = 0; i < tabMenu[0].childElementCount; i++){
+var tabMenu = document.getElementsByClassName("nav-tabs"); //탭 메뉴
+for(var i = 0; i < tabMenu[0].childElementCount; i++) {
 	tabMenu[0].children[i].addEventListener("click", function(){
 		
 		var clickedTabIndex = getElementIndex(this); //클릭한 탭 번호
 		var currentTabIndex = this.parentElement.dataset.activenumber; //현재 탭 변호
 		
-		//클릭한 탭이 현재 활성화 된 탭이 아닌 경우에만 탭의 내용 보여주기
+		//클릭한 탭이 현재 활성화 된 탭이 아니면 클릭한 탭의 내용 보여주기
 		if(currentTabIndex !== clickedTabIndex){
-	        tabMenu[0].children[currentTabIndex].classList.remove('active'); //현재 탭 비활성화
-		    this.classList.add('active'); //클릭한 탭 활성화
+	        tabMenu[0].children[currentTabIndex].classList.remove("active"); //현재 탭 비활성화
+		    this.classList.add("active"); //클릭한 탭 활성화
 		    this.parentElement.dataset.activenumber = clickedTabIndex; //클릭한 탭의 번호를 저장
-		}
+		};
 	});
 };
 	
@@ -109,14 +110,19 @@ function getElementIndex(node) {
     return index;
 };
 	
+
+	
 /*
 * 보관/휴지통 탭 관련
 */
-		
-/*보관/휴지통탭 | 검색창 blur되면 value값 초기화 */
+	
+	
+	
+/* 보관/휴지통탭 | 검색창 blur되면 value값 초기화 */
 $(".tab-search-input").on("blur", function(){
 	$(this).val("");
 });
+	
 	
 /* 카드 보관/휴지통 조회 | 오른쪽 탭(보관, 휴지통)에서 카드 목록 조회 */
 function readCardStatus(ps_id){
@@ -394,13 +400,13 @@ $(document).on("click", function(e){
 	
 /* 프로젝트 닫기 | 상태 2 - close화면에 대한 동적 태그 생성/삽입 */
 function closeBoardStr(){
-	var closeBoardStr = "<div class='content'>" +
-						"	<div class='closeBoardMessage'>" +
-						"		<div class='closeBoardTitle'>이 프로젝트는 종료되었습니다.</div>" +
-						"		<p class='boardReopen' onclick='closeBoard(1);'>다시 열기</p><br/>" +
-	    				"		<p class='boardDelete' onclick='closeBoard(3);'>삭제하기</p>" +
-						"	</div>" +
-						"</div>";
+	var closeBoardStr = "<div class='content'>"
+					  + "	<div class='closeBoardMessage'>"
+					  + "		<div class='closeBoardTitle'>이 프로젝트는 종료되었습니다.</div>"
+					  + "		<p class='boardReopen' onclick='closeBoard(1);'>다시 열기</p><br/>"
+		    		  + "		<p class='boardDelete' onclick='closeBoard(3);'>삭제하기</p>"
+					  + "	</div>"
+					  + "</div>";
 	//카드리스트 목록이 있는 content의 클래스이름을 hiddenContent로 바꿈으로써 화면에서 숨김(hiddenContent의 display속성: none)
 	$(".content").removeClass("content").addClass("hiddenContent");
 	$(".hiddenContent").before(closeBoardStr); //동적 태그 삽입
@@ -408,10 +414,10 @@ function closeBoardStr(){
 	
 /* 프로젝트 닫기 | 상태 3 - delete화면에 대한 동적 태그 생성/삽입 */
 function deleteBoardStr(){
-	var deleteBoardStr = "<div class='deleteBoardMessage'>" +
-						 "    <div class='deleteBoardTitle'>프로젝트가 영구적으로 삭제되었습니다.</div>" +
-						 "	  <p>이 프로젝트는 다시 열 수 없고 종료된 프로젝트 목록에서도 삭제됩니다.</p>" +
-						 "</div>";
+	var deleteBoardStr = "<div class='deleteBoardMessage'>"
+					   + "    <div class='deleteBoardTitle'>프로젝트가 영구적으로 삭제되었습니다.</div>"
+					   + "	  <p>이 프로젝트는 다시 열 수 없고 종료된 프로젝트 목록에서도 삭제됩니다.</p>"
+					   + "</div>";
 	$(".content").html(deleteBoardStr); //.content를 비우고 Board not found 띄움
 	$(".hiddenContent").remove(); //카드리스트 목록이 있는 hiddenContent는 완전 삭제
 };
@@ -463,4 +469,3 @@ function closeBoard(ps_id){
 $(".closeBoardBtn").click(function(){
 	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 프로젝트 닫기화면 출력
 });
-

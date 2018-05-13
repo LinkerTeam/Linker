@@ -131,13 +131,13 @@
         var pw = document.getElementById('password').value;
    
             if(id == null  || id == "" ) {
-        	alert("아이디를 입력해주세요");
+        	alert("아이디를 입력해주세요.");
         	document.getElementById('email').focus();
             return false;
         } 
         	
         if(pw ==null|| pw == ""){
-        	alert("비밀번호를 입력하세요");
+        	alert("비밀번호를 입력하세요.");
         	document.getElementById('password').focus();
         	document.getElementById('password').value="";
         	return false;
@@ -148,7 +148,7 @@
 
 	//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
 
-	alert("이 메일형식이 올바르지 않습니다.");
+	alert("이메일 형식이 올바르지 않습니다.");
 
 	document.getElementById('email').focus();
 	document.getElementById('email').value="";
@@ -167,7 +167,7 @@
 	var nickch =document.getElementById('checkMsg');
 	
 	if(nickname == null  || nickname == "" ) {
-		alert("닉네임을입력해주세요");
+		alert("닉네임을 입력해주세요.");
 		document.getElementById('nickname').focus();
 		return false;
 	} 
@@ -178,50 +178,50 @@
 	}
 	
 	if(email2 == null || email2 =="" ){
-		alert("이메일을 입력해주세요");
+		alert("이메일을 입력해주세요.");
 		document.getElementById('email2').focus();
 		return false;
 	}
 
 	//패스워드 특문 숫자 체크 정규식
 	if(pwcheck(password) == false){
-		alert("패스워드는 1개 이상 숫자와 한개 이상의 특수문자가 필요합니다.");
+		alert("패스워드는 1개 이상 숫자와 1개 이상의 특수문자가 필요합니다.");
 		return false;
 	}
 	
 	//비밀번호 자릿수 정하기 최소 8자리 이상 최대 16자리 이하
 	if(!(password.length >= 8 && password.length <= 16)){
-        	alert("비밀번호 8개이상 입력해주세요");
+        	alert("비밀번호 8개 이상 입력해주세요.");
         	document.getElementById('pw').focus();
         	return false;
     } 
 
 	//체크박스 체크했으면 true 안했으면 false값을 반환함
     if(check.checked==false){
-        	alert("가입에 동의해주세요");
+        	alert("가입에 동의해주세요.");
         	document.getElementById('agree').focus();
         	return false;
     }
     //닉네임 중복환인 안눌렀을떄
     if(document.getElementById("checkMsg").innerHTML==""){
-			alert("닉네임을 중복확인 해주세요");
+			alert("닉네임을 중복확인 해주세요.");
 			return false;
     }
      
     //닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
     if(document.getElementById("nickcheck").style.color=='red'){
-			alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
+			alert("닉네임이 중복되었습니다. 다른 닉네임을 적어주세요.");
 			return false;
   	}
           
     //이메일 중복확인 안눌렀을떄
     if(document.getElementById("EmailcheckMsg").innerHTML==""){
-			alert("이메일 중복확인 해주세요");
+			alert("이메일 중복확인 해주세요.");
 			return false;
     }
           //이메일이 중복이 중복돼었을때 빨간색이면 중복이라고 나옴 
     if(document.getElementById("echeck").style.color=='red'){
-			alert("이메일이 틀렸습니다.이메일을 다시 확인해주세요.");
+			alert("이메일이 틀렸습니다. 이메일을 다시 확인해주세요.");
 				return false;
         }
       return true;
@@ -261,9 +261,9 @@
          success: function(data){  //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
       	   // 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
              if($.trim(data) == 0){
-                 $('#checkMsg').html('<p style="color:blue" id="nickcheck">사용가능한 닉네임입니다.</p>');
+                 $('#checkMsg').html('<p style="color:blue" id="nickcheck">사용 가능한 닉네임입니다.</p>');
              }else{
-                 $('#checkMsg').html('<p style="color:red" id="nickcheck">사용불가능한 닉네임입니다.</p>');
+                 $('#checkMsg').html('<p style="color:red" id="nickcheck">사용 불가능한 닉네임입니다.</p>');
              }
          },error:function(){
         	 alert("error");
@@ -283,8 +283,8 @@
 	   data : {"email" : $('#email2').val()},
 	   success:function(data){
 		   //$.trim()은  데이터의 문자의 앞뒤의 공백을 제거해주는 것 중간의 공백은 제거하지않는다.
-		   if($.trim(data) == 0){
-			  $('#EmailcheckMsg').html('<p style="color:blue" id="echeck">사용가능한 이메일 입니다. </p>');
+		   if($.trim(data) == 0){ 
+			  $('#EmailcheckMsg').html('<p style="color:blue" id="echeck">사용 가능한 이메일입니다. </p>');
 		  }else if($.trim(data) == 2){
 			  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이메일 형식이 틀렸습니다. 다시 확인해주세요. </p>');
 		  }else{

@@ -1,19 +1,10 @@
 package com.linker.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +24,6 @@ import com.linker.util.UploadFileUtils;
 @RequestMapping("/board")
 @Controller
 public class UploadController {
-	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
-	
 	
 	@Inject
 	CardService service;

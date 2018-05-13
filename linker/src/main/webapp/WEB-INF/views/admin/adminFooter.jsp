@@ -39,9 +39,9 @@
 	</div>
 </div>
 </body>
+
 <script src="../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../resources/js/admin/paper-dashboard.js?ver=1" type="text/javascript"></script>
+<script src="../../resources/js/admin/paper-dashboard.js" type="text/javascript"></script>
 <script src="../../resources/js/admin/bootstrap.min.js" type="text/javascript"></script>
-<script src="../../resources/js/admin/userList.js" type="text/javascript"></script>
-<script src="../../resources/js/admin/readUser.js?ver=1111" type="text/javascript"></script>
+<script src="../../resources/js/admin/readUser.js" type="text/javascript"></script>
 </html>
