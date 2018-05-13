@@ -131,13 +131,13 @@
         var pw = document.getElementById('password').value;
    
             if(id == null  || id == "" ) {
-        	alert("아이디를 입력해주세요");
+        	alert("아이디를 입력해주세요.");
         	document.getElementById('email').focus();
             return false;
         } 
         	
         if(pw ==null|| pw == ""){
-        	alert("비밀번호를 입력하세요");
+        	alert("비밀번호를 입력하세요.");
         	document.getElementById('password').focus();
         	document.getElementById('password').value="";
         	return false;
@@ -148,7 +148,7 @@
 
 	//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
 
-	alert("이 메일형식이 올바르지 않습니다.");
+	alert("이메일 형식이 올바르지 않습니다.");
 
 	document.getElementById('email').focus();
 	document.getElementById('email').value="";
@@ -167,50 +167,50 @@
 	var nickch =document.getElementById('checkMsg');
 	
 	if(nickname == null  || nickname == "" ) {
-		alert("닉네임을입력해주세요");
+		alert("닉네임을 입력해주세요.");
 		document.getElementById('nickname').focus();
 		return false;
 	} 
 	if(!(nickname.length >=2 && nickname.length <16)){
-		alert("닉네임을 2자 이상 입력해주세요");
+		alert("닉네임을 2자 이상 입력해주세요.");
 		document.getElementById('nickname').focus();
 		return false;
 	}
 	
 	if(email2 == null || email2 =="" ){
-		alert("이메일을 입력해주세요");
+		alert("이메일을 입력해주세요.");
 		document.getElementById('email2').focus();
 		return false;
 	}
 
 	//패스워드 특문 숫자 체크 정규식
 	if(pwcheck(password) == false){
-		alert("패스워드는 1개 이상 숫자와 한개 이상의 특수문자가 필요합니다.");
+		alert("패스워드는 1개 이상의 숫자와 1개 이상의 특수문자가 필요합니다.");
 		return false;
 	}
 	
 	//비밀번호 자릿수 정하기 최소 8자리 이상 최대 16자리 이하
 	if(!(password.length >= 8 && password.length <= 16)){
-        	alert("비밀번호 8개이상 입력해주세요");
+        	alert("8자 이상 입력해주세요.");
         	document.getElementById('pw').focus();
         	return false;
     } 
 
 	//체크박스 체크했으면 true 안했으면 false값을 반환함
     if(check.checked==false){
-        	alert("가입에 동의해주세요");
+        	alert("가입에 동의해주세요.");
         	document.getElementById('agree').focus();
         	return false;
     }
     //닉네임 중복환인 안눌렀을떄
     if(document.getElementById("checkMsg").innerHTML==""){
-			alert("닉네임을 중복확인 해주세요");
+			alert("닉네임을 중복확인 해주세요.");
 			return false;
     }
      
     //닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
     if(document.getElementById("nickcheck").style.color=='red'){
-			alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
+			alert("닉네임이 중복되었습니다. 다른 닉네임을 적어주세요.");
 			return false;
   	}
           

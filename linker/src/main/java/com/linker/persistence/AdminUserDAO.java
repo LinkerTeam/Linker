@@ -15,5 +15,8 @@ public interface AdminUserDAO {
 	
 	//페이징
 	public List<AdminUserDTO> listPage(int page) throws Exception;
+	
 	public List<AdminUserDTO> listCriteria(Criteria cri) throws Exception;
+	//페이지 total count
+	public int countPaging(Criteria cri) throws Exception; 
 }

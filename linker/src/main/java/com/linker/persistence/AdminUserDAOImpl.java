@@ -45,4 +45,9 @@ public class AdminUserDAOImpl implements AdminUserDAO {
 	public List<AdminUserDTO> listCriteria(Criteria cri) throws Exception {
 		return session.selectList(namespace + ".listCriteria", cri);
 	}
+	//페이지 total count
+	@Override
+	public int countPaging(Criteria cri) throws Exception {
+		return session.selectOne(namespace + ".countPaging", cri);
+	}
 }

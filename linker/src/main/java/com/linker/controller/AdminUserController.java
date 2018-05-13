@@ -3,10 +3,9 @@ package com.linker.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.linker.domain.Criteria;
+import com.linker.domain.PageMaker;
 import com.linker.dto.AdminUserDTO;
 import com.linker.service.AdminUserService;
 import com.linker.service.UserService;
@@ -28,18 +29,26 @@ public class AdminUserController {
 	
 	@Inject
 	private AdminUserService adminService;
+	
 	@Inject
 	private UserService userService;
 
 	
 	//모든 유저 조회
 	@RequestMapping(value = "/userList", method = RequestMethod.GET)
-	public void userListAll(Model model) throws Exception {
-		model.addAttribute("userList", adminService.userListAll());
+	public void userListAll(Criteria cri, Model model) throws Exception {	
+		model.addAttribute("userList", adminService.listCriteria(cri));
+		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+		pageMaker.setTotalCount(adminService.listCountCriteria(cri));
+		
+		model.addAttribute("pageMaker", pageMaker);
 	}
+	
 	//한 유저의 정보 조회
 	@RequestMapping(value = "/readUser", method = RequestMethod.GET)
-	public void readUser(@RequestParam("id") int id, Model model) throws Exception {
+	public void readUser(@RequestParam("id") int id, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
 		model.addAttribute(adminService.readUser(id));
 	}
 	
@@ -72,7 +81,7 @@ public class AdminUserController {
 	}
 	
 	
-	// 닉네임 중복 검사
+	//닉네임 중복 검사
 	@ResponseBody
 	@RequestMapping(value = "/nicknameCheck", method = RequestMethod.POST)
 	public int nicknameCheck(@RequestParam("id") int id, HttpServletRequest request) throws Exception {
@@ -86,4 +95,5 @@ public class AdminUserController {
 		}
 		return userService.checkSignup(newNickname); //중복된 값의 개수
 	}
+	
 }

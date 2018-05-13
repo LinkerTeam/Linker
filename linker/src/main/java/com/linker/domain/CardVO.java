@@ -2,8 +2,6 @@ package com.linker.domain;
 
 import java.sql.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class CardVO {
 	
 	private int id; 		//카드 아이디
@@ -23,6 +21,7 @@ public class CardVO {
 	private String profile; //작성자의 프로필
 	
 	private Integer status; //즐겨찾기 여부
+	private Integer uhc_u_id; //즐겨찾기한 유저의 id
 	private int checkContent; //내용 여부
 	private int reply; 		//댓글 개수
 	private int file;		//파일 개수
@@ -106,6 +105,12 @@ public class CardVO {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public Integer getUhc_u_id() {
+		return uhc_u_id;
+	}
+	public void setUhc_u_id(Integer uhc_u_id) {
+		this.uhc_u_id = uhc_u_id;
+	}
 	public int getCheckContent() {
 		return checkContent;
 	}
@@ -129,8 +134,8 @@ public class CardVO {
 	public String toString() {
 		return "CardVO [id=" + id + ", u_id=" + u_id + ", title=" + title + ", content=" + content + ", cdate=" + cdate
 				+ ", udate=" + udate + ", ps_id=" + ps_id + ", cl_id=" + cl_id + ", cl_ps_id=" + cl_ps_id + ", p_id="
-				+ p_id + ", nickname=" + nickname + ", profile=" + profile + ", status=" + status + ", checkContent="
-				+ checkContent + ", reply=" + reply + ", file=" + file + "]";
+				+ p_id + ", nickname=" + nickname + ", profile=" + profile + ", status=" + status + ", uhc_u_id="
+				+ uhc_u_id + ", checkContent=" + checkContent + ", reply=" + reply + ", file=" + file + "]";
 	}
 	
 }

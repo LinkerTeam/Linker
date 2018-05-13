@@ -141,7 +141,7 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardModal.js?ver=11" type="text/javascript"></script>
+<script src="../../../resources/js/board/cardModal.js" type="text/javascript"></script>
 <script src="../../../resources/js/board/cardModalReply.js" type="text/javascript"></script>
 
 </html>

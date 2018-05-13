@@ -3,7 +3,7 @@
     	 var agree = document.getElementById('agree').value;
     	    
     	       if(agree==null || agree == ""){
-    	    	   alert("탈퇴 동의 텍스트를 '탈퇴에 동의합니다.'를 입력해주세요");
+    	    	   alert("탈퇴 동의 텍스트를 '탈퇴에 동의합니다.'를 입력해주세요.");
     	    
     	    	   return false;
     	       }

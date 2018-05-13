@@ -9,11 +9,18 @@
 
 
 var userId = $("input[name=id]").val(); //해당 회원의 id(PK)
+var profileCheck = true; //프로필 유효성 검사
 var nicknameCheck = true; //닉네임 유효성 검사 확인 
 var passwordCheck1 = true; //비밀번호 유효성 검사 확인
-var passwordCheck2 = true; //비밀번호 유효성 검사 확인
+var passwordCheck2 = true; //비밀번호 재입력 유효성 검사 확인
 
 
+
+/* 조회 | 구글회원일 경우 비밀번호 변경 폼 숨기기 */
+if($("input[name='google']").val() === "구글")
+	$(".row.password").hide();
+else
+	$(".row.password").show();
 
 /* 조회 | 탈퇴회원일 경우 조회만 가능 */
 if($(".statusSelect").val() == 2) {
@@ -62,18 +69,18 @@ function fileCheck(file) {
 	
 	fileSize = file.size; //첨부할 file의 size
 	console.log("파일사이즈 : " + fileSize + "byte, 최대파일사이즈 : 1048576byte");
-
+	
 	//확장자 유효성 검사
-	if(checkFileType(file.name) === false) return; //checkFileType함수 안에 경고창 출력 포함되어 있음
+	if(checkFileType(file.name) === false) return profileCheck = false; //checkFileType함수 안에 경고창 출력 포함되어 있음
 	//파일 크기 유효성 검사
 	if (fileSize > maxSize) { //파일 사이즈가 1MB가 넘을 경우
 		profileWarning("1MB 이하의 이미지파일만 등록 가능합니다.");
-		return;
+		return profileCheck = false;
 	};
 	//파일명 길이 유효성 검사
 	if(checkByte(file.name) > 75) { //파일명이 75byte를 초과할 경우
 		profileWarning("파일명은 한글 35자, 영어 70자까지 가능합니다.");
-		return; 
+		return profileCheck = false; 
 	};
 	
 	var str = "하단의 수정버튼을 누르면 저장됩니다.";
@@ -86,6 +93,8 @@ function fileCheck(file) {
 		$(".avatar.border-white").attr("src", event.target.result);
 	};
 	reader.readAsDataURL(file);
+	
+	return profileCheck = true;
 };
 
 /* 파일 확인 | 이미지파일인지 확인 */
@@ -232,10 +241,13 @@ $("input[name=password]").on("input", function(){
 /* 전체 수정 버튼 */
 //전송해야 할 경우 true를 반환하고 하지말아야 할 경우 false를 반환
 function check() {
-	console.log($(".statusSelect").val());
+	console.log("프로필 false : " + profileCheck);
+	console.log("닉네임 true : " + nicknameCheck);
+	console.log("비밀번호 true : " + passwordCheck1);
+	console.log("재비밀번호 true : " + passwordCheck2);
 	if($(".statusSelect").val() == 2)
 		if(confirm("이 회원을 정말 탈퇴 시키시겠습니까?") === false) return false; 
-	if(nicknameCheck === true && passwordCheck1 === true && passwordCheck2 === true) {
+	if(profileCheck === true && nicknameCheck === true && passwordCheck1 === true && passwordCheck2 === true) {
 		return true;
 	} else {
 		$(".error.submit").text("입력하신 정보를 다시 확인해주세요.");
@@ -245,11 +257,17 @@ function check() {
 
 /* 전체 취소 버튼 */
 $(".btn.btn-info.btn-fill.btn-wd").eq(3).on("click", function(){
-	self.location = "/admin/userList";
+	//self.location = "/admin/userList";
+	var formObj = $("form[role='form']");
+	formObj.attr("method", "get");
+	formObj.attr("action", "/admin/userList");
+	formObj.submit();
 });
 
 
+/* 전체 메뉴 페이지 이동 */
 if($(location).attr("pathname") === "/admin/userList" || $(location).attr("pathname") === "/admin/readUser")
 	$(".nav > li").eq(0).addClass("active");
 else if($(location).attr("pathname") === "/admin/teamList" || $(location).attr("pathname") === "/admin/readTeam")
 	$(".nav > li").eq(1).addClass("active");
+

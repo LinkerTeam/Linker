@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 <%-----------------------------------------------------------------------------
  * 파일명칭 : cardShowMenu.jsp	
@@ -16,7 +17,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=111111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -150,6 +151,6 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardShowMenu.js?ver=11111" type="text/javascript"></script>
-	
+<script src="../../../resources/js/board/cardShowMenu.js" type="text/javascript"></script>
+
 </html>

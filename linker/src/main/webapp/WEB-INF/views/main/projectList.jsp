@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="/resources/css/project/projectList.css?ver=657" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="/resources/css/project/projectList.css" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <title></title>
@@ -57,13 +57,13 @@
 				</c:forEach> 
 			
 				<!-- 프로젝트 추가 버튼 -->
-				<span class="addProject"><button class="createProjectBtn" type="button">Create new project…</button></span>
+				<span class="addProject"><button class="createProjectBtn" type="button">프로젝트 추가하기</button></span>
 			</div>
 		</c:forEach>
 		   
 		<!-- 팀추가  -->
 		<div class="teaminsert">
-			<a class="teaminsert-a" href="#"> <span>Create a new team…</span>
+			<a class="teaminsert-a" href="#"> <span>새로운 팀 추가하기</span>
 			</a>
 		</div>
 
@@ -71,14 +71,14 @@
 		<div class="create-modal">
 			<div class="modal-contents">
 				<div class="headtitle">
-					<span class="pop-over-header-title">Create Team</span> <a href="#"
+					<span class="pop-over-header-title">팀 추가</span> <a href="#"
 						class="connectmodal"></a>
 				</div>
 				<div class="content-text">
 					<form name="form1" action="main/teamcreate" method="post" class="teamform">
 						<input type="input" name="name" class="team-title" value=""
-							placeholder="team name title" maxlength="20">
-						<button class="teambtn disabled" disabled="disabled">Create</button>
+							placeholder="팀 이름을 입력하세요" maxlength="20">
+						<button class="teambtn disabled" disabled="disabled">추가</button>
 					</form>
 					<span class="tclosebtn"><i class="fas fa-times"></i></span>
 				</div>
@@ -94,6 +94,8 @@
 				</div>
 			</div>
 		</div>
+		
+		<%@include file="footer.jsp"%>
 	</div>
 
 	<!-- /프로젝트 본문 -->
@@ -103,9 +105,9 @@
     <div class="project-modal">
         <div class="createProjectBox">
             <form class="createProjectForm">
-                <label for="add-prj" class="hidden-txt">Add project title</label>
-                <input id="add-prj" class="projectNameInput" placeholder="Add project title" maxlength="20" onkeydown="enterPress(event);" value="">
-                <button class="registProjectBtn disabled" disabled type="button">Create Project</button>
+                <label for="add-prj" class="hidden-txt">프로젝트 이름을 입력하세요</label>
+                <input id="add-prj" class="projectNameInput" placeholder="프로젝트 이름을 입력하세요" maxlength="20" onkeydown="enterPress(event);" value="">
+                <button class="registProjectBtn disabled" disabled type="button">추가</button>
             </form>
             <span class="closeBtn"><i class="fas fa-times"></i></span>
         </div>

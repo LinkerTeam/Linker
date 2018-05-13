@@ -5,7 +5,7 @@ var fileSize = 0;
 console.log($('#file').val().slice(12));
 var orignalNick = document.getElementById('nickname').value;
 
-//유요성 검사 테스트
+//유효성 검사 테스트
 function subcheck() {
 	var nickname = document.getElementById('nickname').value;
 	//파일명 가져오기
@@ -14,12 +14,12 @@ function subcheck() {
 	console.log(fileName);
 	
 	if (nickname == null || nickname == '') {
-		alert('닉네임을 비울수 없습니다.');
+		alert('닉네임을 입력해주세요.');
 		document.getElementById('nickname').focus();
 		return false;
 	}
 	if (!(nickname.length >= 2 && nickname.length < 15)) {
-		alert('닉네임은 2자이상 16자이내에서 작성해주세요');
+		alert('닉네임은 2자 이상 16자 이내로 입력해주세요.');
 		document.getElementById('nickname').focus();
 		return false;
 	}
@@ -28,28 +28,28 @@ function subcheck() {
 	if (orignalNick != nickname) {
 		//닉네임 중복환인 안눌렀을떄
 		if (document.getElementById("checkMsg").innerHTML == "") {
-			alert("닉네임을 중복확인 해주세요");
+			alert("닉네임을 중복 확인 해주세요.");
 			return false;
 		}
 
 		//닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
 		if (document.getElementById("check").style.color === 'red') {
-			alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
+			alert("닉네임이 중복되었습니다. 다른 닉네임을 입력해주세요.");
 			return false;
 		}
 	}
 	
 	//이미지 파일 명 길이 제한 
 	if(!(fileName.length < 200)){
-		alert("파일명이 너무 깁니다 이름을 변경후 다시 등록 해주세요.");
+		alert("파일명이 너무 깁니다. 이름을 변경 후 다시 등록해주세요.");
 		return false;
 	}
 	//이미지 파일 사이즈  검사 1mb보다 큰지 작은지 체크
 	if(!(fileSize < (1*1024*1024))){
-		alert('이미지 용량이 너무 큽니다 이미지파일 용량을 확인해주세요.');
+		alert('이미지 용량이 너무 큽니다. 파일 용량을 확인해주세요.');
 		return false;
 	}
-	alert("회원수정가 되었습니다.");
+	alert("회원 정보가 수정되었습니다.");
 	return true;
 }
 
@@ -75,7 +75,7 @@ window.onload = function() {
 		var fileName2= fileValue2[fileValue2.length-1]; // 업로드한 파일명
 		//이미지 파일인지 체크함
 		if(!(checkImageType(fileName2))){
-			alert("이미지 파일이 아닙니다. 다시 확인 해주세요.");
+			alert("이미지 파일이 아닙니다. 다시 확인해주세요.");
 			return;
 		}
 		console.log(fileName2);
@@ -127,9 +127,9 @@ window.onload = function() {
 									success : function(data) { //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
 										// 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
 										if ($.trim(data) == 0) {
-											$('#checkMsg').html('<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
+											$('#checkMsg').html('<p id="check" style="color:blue">사용 가능한 닉네임입니다.</p>');
 										} else {
-											$('#checkMsg').html('<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
+											$('#checkMsg').html('<p id="check" style="color:red">사용 불가능한 닉네임입니다.</p>');
 										}
 									}
 								}); //end ajax    
