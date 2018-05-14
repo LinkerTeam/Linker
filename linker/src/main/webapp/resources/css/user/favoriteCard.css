@@ -1,4 +1,4 @@
-ï»¿.content{
+.content{
 	background-color: #0067a3;
 	overflow: hidden;
 }
@@ -8,7 +8,7 @@
 	overflow: hidden;
 }
 
-/* í—¤ë”, ì–‘ìª½ë©”ë‰´ ì œì™¸í•œ ë³¸ë¬¸ì˜ì—­ ì¤‘ ìƒë‹¨ í”„ë¡œì íŠ¸ íƒ€ì´í‹€ ì˜ì—­ */
+/* Çì´õ, ¾çÂÊ¸Þ´º Á¦¿ÜÇÑ º»¹®¿µ¿ª Áß »ó´Ü ÇÁ·ÎÁ§Æ® Å¸ÀÌÆ² ¿µ¿ª */
 .projectTitle > div {
     width: 400px;
     margin: 10px;
@@ -22,25 +22,25 @@
     background-color: #0079bf;
 }
 
-/* ë³¸ë¬¸ì˜ì—­ ì¤‘ í”„ë¡œì íŠ¸ íƒ€ì´í‹€ì„ ì œì™¸í•œ ì˜ì—­ */
+/* º»¹®¿µ¿ª Áß ÇÁ·ÎÁ§Æ® Å¸ÀÌÆ²À» Á¦¿ÜÇÑ ¿µ¿ª */
 .cardlistContent {
     display: flex; 
     float: left;
     width: 100%;
-    height: calc(100% - 60px); /* ìƒë‹¨ í”„ë¡œì íŠ¸ íƒ€ì´í‹€ê³¼ í•˜ë‹¨ ìŠ¤í¬ë¡¤ ì˜ì—­ì„ ì œì™¸í•œ ë†’ì´ */
-    line-height: 1.3em; /* ê°€ë³€ë‹¨ìœ„. 1emì€ í˜„ìž¬ í°íŠ¸í¬ê¸°ìž„. */
+    height: calc(100% - 60px); /* »ó´Ü ÇÁ·ÎÁ§Æ® Å¸ÀÌÆ²°ú ÇÏ´Ü ½ºÅ©·Ñ ¿µ¿ªÀ» Á¦¿ÜÇÑ ³ôÀÌ */
+    line-height: 1.3em; /* °¡º¯´ÜÀ§. 1emÀº ÇöÀç ÆùÆ®Å©±âÀÓ. */
 }
 
-/* ì „ì²´ ì¹´ë“œë¦¬ìŠ¤íŠ¸ì˜ ì‹¤ì§ˆì  ì˜ì—­ */
+/* ÀüÃ¼ Ä«µå¸®½ºÆ®ÀÇ ½ÇÁúÀû ¿µ¿ª */
 .cardlists {
     display: flex;
-    overflow-y: hidden; /* ê°€ë¡œìŠ¤í¬ë¡¤ë§Œ ìƒê¸°ë„ë¡ */
+    overflow-y: hidden; /* °¡·Î½ºÅ©·Ñ¸¸ »ý±âµµ·Ï */
     transition: 0.2s;
 }
 .cardlists > * {
     flex: 0 0 auto;
 }
-/* ìŠ¤í¬ë¡¤ ë””ìžì¸~ */
+/* ½ºÅ©·Ñ µðÀÚÀÎ~ */
 ::-webkit-scrollbar {
     width: 10px;
     height: 12px;
@@ -52,9 +52,9 @@
 ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.55);
     border-radius: 10px;
-}/* ~ìŠ¤í¬ë¡¤ë””ìžì¸ */
+}/* ~½ºÅ©·ÑµðÀÚÀÎ */
 
-/* ë™ì ìœ¼ë¡œ ìƒì„±ë˜ëŠ” ê°ê°ì˜ ì¹´ë“œë¦¬ìŠ¤íŠ¸ */
+/* µ¿ÀûÀ¸·Î »ý¼ºµÇ´Â °¢°¢ÀÇ Ä«µå¸®½ºÆ® */
 .cardlist {
     width: 236px;
     height: 100%;
@@ -63,14 +63,14 @@
     margin-left: 10px;
     border-radius: 2px;
 }
-/* ì¹´ë“œë¦¬ìŠ¤íŠ¸ì˜ ìžì‹ ì „ì²´ì— ê³µí†µìœ¼ë¡œ ì ìš©ë˜ëŠ” ì†ì„±ë“¤ */
+/* Ä«µå¸®½ºÆ®ÀÇ ÀÚ½Ä ÀüÃ¼¿¡ °øÅëÀ¸·Î Àû¿ëµÇ´Â ¼Ó¼ºµé */
 .cardlist > * {
     background-color: #e2e4e6;
     color: #333;
     padding: 0 10px;
 }
 
-/* ì¹´ë“œë¦¬ìŠ¤íŠ¸ì˜ ìƒë‹¨ | textarea + moreë²„íŠ¼ */
+/* Ä«µå¸®½ºÆ®ÀÇ »ó´Ü | textarea + more¹öÆ° */
 .cardlistTitleBox {
 	position: relative;
 	width: 196px;
@@ -78,9 +78,8 @@
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 }
-/* ì¹´ë“œë¦¬ìŠ¤íŠ¸ì˜ ìƒë‹¨ | textarea */
-textarea.cardlistTitle {
-	resize: none; /* ì‚¬ìš©ìžê°€ ìž„ì˜ë¡œ í¬ê¸°ë¥¼ ì¡°ì ˆí•  ìˆ˜ ì—†ê²Œ í•¨ */
+/* Ä«µå¸®½ºÆ®ÀÇ »ó´Ü | textarea */
+.cardlistTitle {
 	width: 100%;
 	padding: 0 0 0 3px;
     border: none;
@@ -91,10 +90,10 @@ textarea.cardlistTitle {
     font-weight: bold;
     line-height: 165%;
 	box-sizing: border-box;
-	overflow-y: hidden; /* ê°€ë” ìŠ¤í¬ë¡¤ ì§§ê²Œ ìž¡í˜€ì„œ ì¶”ê°€ */
+	overflow-y: hidden; /* °¡²û ½ºÅ©·Ñ Âª°Ô ÀâÇô¼­ Ãß°¡ */
 }
 
-/* ì¹´ë“œë¦¬ìŠ¤íŠ¸ì˜ í•˜ë‹¨ | (Add a card...ìƒìž) */
+/* Ä«µå¸®½ºÆ®ÀÇ ÇÏ´Ü | (Add a card...»óÀÚ) */
 .createCardBox {
 	display: block;
     height: 40px;
@@ -159,7 +158,7 @@ textarea.cardlistTitle {
     opacity: 0.4;
     border-radius: 2px;
 } 
-/* ì¹´ë“œì— ë§ˆìš°ìŠ¤ë¥¼ ì˜¬ë¦¬ë©´ ìˆ˜ì •ë²„íŠ¼ ë³´ì´ê²Œ */
+/* Ä«µå¿¡ ¸¶¿ì½º¸¦ ¿Ã¸®¸é ¼öÁ¤¹öÆ° º¸ÀÌ°Ô */
 .cardtitleLi:hover > .cardModifyBtn{
 	display: block;
 }
@@ -177,19 +176,19 @@ textarea.cardlistTitle {
     display: inline-block;
 }
 
-/* ì¹´ë“œ ìˆ˜ì •ëª¨ë‹¬ì°½ ë’·ë°°ê²½ */
+/* Ä«µå ¼öÁ¤¸ð´ÞÃ¢ µÞ¹è°æ */
 .modifyModal {
-    display: none; /* ê¸°ë³¸ê°’: ìˆ¨ê¹€ */
+    display: none; /* ±âº»°ª: ¼û±è */
     position: fixed; 
     top: 0;
     left: 0;
-    width: 100%; /* ëª¨ë‹¬ ë’·ë°°ê²½ì´ í™”ë©´ì— ê½‰ì°¨ë„ë¡ */
-    height: 100%; /* ëª¨ë‹¬ ë’·ë°°ê²½ì´ í™”ë©´ì— ê½‰ì°¨ë„ë¡ */
-    background-color: rgb(0,0,0); /* ëª¨ë‹¬ ë’·ë°°ê²½ìƒ‰ */
-    background-color: rgba(0,0,0,0.6); /* ëª¨ë‹¬ ë’·ë°°ê²½ opacity */
+    width: 100%; /* ¸ð´Þ µÞ¹è°æÀÌ È­¸é¿¡ ²ËÂ÷µµ·Ï */
+    height: 100%; /* ¸ð´Þ µÞ¹è°æÀÌ È­¸é¿¡ ²ËÂ÷µµ·Ï */
+    background-color: rgb(0,0,0); /* ¸ð´Þ µÞ¹è°æ»ö */
+    background-color: rgba(0,0,0,0.6); /* ¸ð´Þ µÞ¹è°æ opacity */
     z-index: 3; 
 }
-/* ì¹´ë“œ ì œëª© ìˆ˜ì •ì‹œ ì¹´ë“œid ë‹´ê¸° ìœ„í•´(í™”ë©´ì¶œë ¥X) */
+/* Ä«µå Á¦¸ñ ¼öÁ¤½Ã Ä«µåid ´ã±â À§ÇØ(È­¸éÃâ·ÂX) */
 .modifyModal-title{
 	display: none;
 }
@@ -197,14 +196,14 @@ textarea.cardlistTitle {
 	background: rgba(0,0,0,.8);
 	cursor: pointer;
 }
-/* ì¹´ë“œ ì œëª© ìˆ˜ì • ëª¨ë‹¬ (textarea + buttonì˜ì—­) */
+/* Ä«µå Á¦¸ñ ¼öÁ¤ ¸ð´Þ (textarea + button¿µ¿ª) */
 .modifyModal-content {
     width: 217px;
     height: 112px;
     float: left;
-    position: absolute; /*ìˆ˜ì •ëž€ì„ ì›í•˜ëŠ” ìœ„ì¹˜ë¡œ ì´ë™ì‹œí‚¬ ìˆ˜ ìžˆë„ë¡*/
+    position: absolute; /*¼öÁ¤¶õÀ» ¿øÇÏ´Â À§Ä¡·Î ÀÌµ¿½ÃÅ³ ¼ö ÀÖµµ·Ï*/
 }
-/* ì œëª©ìˆ˜ì • textarea, ì¹´ë“œë¦¬ìŠ¤íŠ¸ ì¶”ê°€ textarea */
+/* Á¦¸ñ¼öÁ¤ textarea, Ä«µå¸®½ºÆ® Ãß°¡ textarea */
 #modifyTextarea, #createListTextarea {
 	height: 38px;
 	resize:none; 
@@ -219,7 +218,7 @@ textarea.cardlistTitle {
     color: #ffffffe3;
     font-size: 33px;
 }
-/*ìˆ˜ì • ì¦ê²¨ ì°¾ê¸°  */
+/*¼öÁ¤ Áñ°Ü Ã£±â  */
 .favorite-btn {
     display: inline-block;
     position: relative;
@@ -269,18 +268,18 @@ textarea.cardlistTitle {
     line-height: 1.2em;
 }
 
-/* ëª¨ë‹¬ì°½ */
+/* ¸ð´ÞÃ¢ */
 .closeBoardModal {
     display: none;
     position: absolute;
-    z-index: 1001; /* í…ŒìŠ¤íŠ¸ í›„ ê°’ ì¡°ì • */
+    z-index: 1001; /* Å×½ºÆ® ÈÄ °ª Á¶Á¤ */
 }
 .closeBoardModal.is-visible {
     display: block;
     left: 18px;
     top: 78px;
 }
-/* ëª¨ë‹¬ì°½ | ë‚´ë¶€ìš”ì†Œ ì „ì²´ */
+/* ¸ð´ÞÃ¢ | ³»ºÎ¿ä¼Ò ÀüÃ¼ */
 .closeBoardModal-content {
     position: relative;
     box-sizing: border-box;
@@ -294,19 +293,19 @@ textarea.cardlistTitle {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
 				0 1px 2px rgba(0,0,0,0.24);
 }
-/* ëª¨ë‹¬ì°½ | ìƒë‹¨ íƒ€ì´í‹€ píƒœê·¸ + ë‹«ê¸°ë²„íŠ¼ */
+/* ¸ð´ÞÃ¢ | »ó´Ü Å¸ÀÌÆ² pÅÂ±× + ´Ý±â¹öÆ° */
 .closeBoardModal-title {
 	text-align: center;
 	line-height: 34px;
 }
-/* ëª¨ë‹¬ì°½ | ìƒë‹¨ íƒ€ì´í‹€ píƒœê·¸ */
+/* ¸ð´ÞÃ¢ | »ó´Ü Å¸ÀÌÆ² pÅÂ±× */
 .closeTitle {
 	display: block;
 	margin: 0 7px;
 	border-bottom: solid 1px #d0d0d0;
 	color: #919191;
 }
-/* ëª¨ë‹¬ì°½ | ë‹«ê¸° ë²„íŠ¼ */
+/* ¸ð´ÞÃ¢ | ´Ý±â ¹öÆ° */
 .closeBoardModal-title > .closeModal {
 	position: absolute;
 	top: 0;
@@ -314,13 +313,13 @@ textarea.cardlistTitle {
 	padding: 0 5px;
 	line-height: 28px;
 }
-/* ëª¨ë‹¬ì°½ | í•˜ë‹¨ ì„¤ëª… ë¶€ë¶„ */
+/* ¸ð´ÞÃ¢ | ÇÏ´Ü ¼³¸í ºÎºÐ */
 .closeBoardModal-text > p {
 	padding: 12px 15px;
 	color: #232323;
     line-height: 1.2em;
 }
-/* ëª¨ë‹¬ì°½ | closeë²„íŠ¼ */
+/* ¸ð´ÞÃ¢ | close¹öÆ° */
 .closeBoardBtn {
     width: 92%;
     height: 40px;

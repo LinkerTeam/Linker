@@ -22,7 +22,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
  	//나오는 값을 인터셉터함
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-		ModelAndView modelAndView) throws Exception {
+			ModelAndView modelAndView) throws Exception {
 		//세션값을 가져온다
 		HttpSession session = request.getSession();
         //modelmap 에는 loginDTO 가 들어있음 입력한 email과 password 그리고 useCookie 가 들어있다 쿠키는 선택시 true 미선택시 false가 들어옴
@@ -30,48 +30,47 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		//이메일값으로 그 userVO에 값들을 담아온다. 이메일 패스워드 닉네임 프로필경로  생성시간 업데이트시간을 가져온다.
 		Object userVO = modelmap.get("userVO");
 		if (userVO != null) {
-		  UserVO userVO2 = (UserVO)userVO;
-		  //이메일 인증을 했는지 안햇는지 판단 0이면 아직 이메일은 인증 안함 1이면 이메일인증함
-		  if(userVO2.getStatus()==1) {
-			//logger.info("new login success");
-			//session에 LOGIN키값으로 userVO객체를 저장 그럼 세션에는 email password ninkname 등등 다들어있음 
-			session.setAttribute(LOGIN, userVO);
-	        //쿠키는 값을 값이 들어있으면 on 없으면 false로 찍힘
-
-			//리멤버미를 클릭시 체크온시 쿠키를 생성해서 값을 저장해서 보내준다.
-			if (request.getParameter("useCookie") != null) {
-				//logger.info("remeber me.....");
-				Cookie loginCookie = new Cookie("loginCookie", session.getId());
-				loginCookie.setPath("/");
-				loginCookie.setMaxAge(60 * 60 * 24 * 7);
-				response.addCookie(loginCookie);
-			}	
-			// userVO가 null아니면 홈페이지로 넘어간다.	
-			response.sendRedirect("/main");
-	        //탈퇴된 회원을 체크한다.
-		  }else if (userVO2.getStatus()==2) {
-			  //페이지를 따로넘기지않고 alert창을 뛰움
-			  response.setContentType("text/html; charset=UTF-8");
-			  PrintWriter out = response.getWriter();
-			  out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1); </script>");
-			  out.flush();
-			  return;
-			  
+			UserVO userVO2 = (UserVO)userVO;
+			//이메일 인증을 했는지 안햇는지 판단 0이면 아직 이메일은 인증 안함 1이면 이메일인증함
+			if(userVO2.getStatus()==1 || userVO2.getStatus()==3) {
+				//logger.info("new login success");
+				//session에 LOGIN키값으로 userVO객체를 저장 그럼 세션에는 email password ninkname 등등 다들어있음 
+				session.setAttribute(LOGIN, userVO);
+				//쿠키는 값을 값이 들어있으면 on 없으면 false로 찍힘
+			
+				//리멤버미를 클릭시 체크온시 쿠키를 생성해서 값을 저장해서 보내준다.
+				if (request.getParameter("useCookie") != null) {
+					//logger.info("remeber me.....");
+					Cookie loginCookie = new Cookie("loginCookie", session.getId());
+					loginCookie.setPath("/");
+					loginCookie.setMaxAge(60 * 60 * 24 * 7);
+					response.addCookie(loginCookie);
+				}	
+				// userVO가 null아니면 홈페이지로 넘어간다.	
+				response.sendRedirect("/main");
+				//탈퇴된 회원을 체크한다.
+			} else if (userVO2.getStatus()==2) {
+				//페이지를 따로넘기지않고 alert창을 뛰움
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert(' 탈퇴된 회원입니다. 로그인 정보를 다시 확인해주세요. '); history.go(-1); </script>");
+				out.flush();
+				return;
+			} else {
+				//페이지를 따로넘기지않고 alert창을 뛰움
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert(' Email을 인증해주세요. '); history.go(-1); </script>");
+				out.flush();
+				return;
+			}
 		} else {
-			  //페이지를 따로넘기지않고 alert창을 뛰움
-			  response.setContentType("text/html; charset=UTF-8");
-			  PrintWriter out = response.getWriter();
-			  out.println("<script>alert(' Email을 인증해주세요. '); history.go(-1); </script>");
-			  out.flush();
-			  return;
-		  	 }
-	  } else {
 		  //userVO값이 널이면 DB로 부터 값을 가져오지못한것 아이디또는 암호가 틀려서 DB를 가져오지못한다 그럼 제대로된 로그인이안됐다는 증거
 		  response.setContentType("text/html; charset=UTF-8");
 		  PrintWriter out = response.getWriter();
 		  out.println("<script>alert('로그인 정보를 확인해주세요.');history.go(-1); </script>");
 		  out.flush();
-	  }
+		}
 	}
 	
 	//프리핸들러 들어가기전에 인터셉터함

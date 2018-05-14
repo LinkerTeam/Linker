@@ -59,11 +59,18 @@ a {
 }
 /* ~~~~~로고 영역 */
 
-
-/* 왼쪽메뉴 단추 */
-.ltMenu-button {
-    float: left;
-    margin: 15px 0 0 15px;
+/* 관리자모드 단추 */
+.admin {
+    display: inline-block;
+    position: absolute;
+    float: right;
+    top: 12px;
+    margin: 6px;
+    right: 50px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: underline;
 }
 /* 오른쪽메뉴 설정단추 */
 .rtMenu-button {
