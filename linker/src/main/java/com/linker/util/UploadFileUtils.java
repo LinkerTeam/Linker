@@ -24,7 +24,7 @@ public class UploadFileUtils {
 		//savedName : 570d570a-7af1-4afe-8ed5-391d660084b7_g.JPG 같은 형식으로 만들어준다.
 		String savedName = "/"+uid.toString() + "_" + originalName;
 
-		logger.info("업로드 경로 : "+uploadPath);
+		//logger.info("업로드 경로 : "+uploadPath);
 		//\2017\12\27 같은 형태로 저장해준다.
 		String savedPath = calcPath(uploadPath);
 
@@ -37,7 +37,7 @@ public class UploadFileUtils {
 
 		logger.info(uploadedFileName);
 		//	s3.fileUpload(bucketName, new File(fileName))
-		System.out.println("파일저장완료");
+		//  System.out.println("파일저장완료");
 		return uploadedFileName;
 
 	}
@@ -54,7 +54,7 @@ public class UploadFileUtils {
 
 		makeDir(uploadPath, yearPath, monthPath, datePath);
 
-		logger.info(datePath);
+		//logger.info(datePath);
 
 		return datePath;
 	}

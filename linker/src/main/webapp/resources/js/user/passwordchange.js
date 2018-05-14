@@ -24,7 +24,7 @@
 	        	  
 	             /*  $('#checkMsg').html('<p style="color:blue" id="nickcheck">사용가능한 닉네임입니다.</p>'); */
 	          }else{
-	        	  console.log(data);
+	        	  //console.log(data);
 	        	  alert("현재 비밀번호가 틀렸습니다 다시 입력해주세요");
 	             /*  $('#checkMsg').html('<p style="color:red" id="nickcheck">사용불가능한 닉네임입니다.</p>'); */
 	          }

@@ -456,5 +456,21 @@ input#agree:focus {
     cursor: pointer;
     z-index: 8888;
     left: 25px;
-	
+}
+/*  나의즐겨 찾기 버튼  */
+.my-favo{
+    background-color: #edeff0;
+    border-radius: 3px;
+    color: #838c91;
+    display: inline-block;
+    padding: 6px 12px 6px 12px;
+    text-decoration: none;
+    font-size: 17px;
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.my-favo:hover {
+	background-color: #D6DADC;
+	color: #4D4D4D;
 }

@@ -201,8 +201,6 @@ public class UserController {
 		// 들어있는 값이아닌 DB값으로
 		model.addAttribute("vo", service.viewUser(email));
 		// //System.out.println("클릭한 메일 확인 : "+email);
-		logger.info("클릭한 아이디 : " + email);
-		logger.info(service.viewUser(email).toString());
 		// member_view.jsp로 포워드
 		// return "member/member_view";
 
@@ -261,7 +259,6 @@ public class UserController {
 			dto.setProfile(realPath);
 			//System.out.println(realPath);
 		} 
-		//System.out.println(dto.getProfile());
        
 		dto.setEmail(email);
 
@@ -348,6 +345,41 @@ public class UserController {
         return entity;
     }
 	
+	//이미지 프로필 삭제 기본이미지로 변경
+	@ResponseBody
+	@RequestMapping(value="deleteProfile",method = RequestMethod.GET)
+	public ResponseEntity<String> deleteProfile(HttpSession session) throws Exception{
+		
+		UserVO user = (UserVO) session.getAttribute("login");
+		
+		ResponseEntity<String> entity = null;
+		
+		//System.out.println(!(user.getProfile().equals("/default.gif")));
+		if(!(user.getProfile().equals("/default.gif"))) {
+			S3Util s3 = new S3Util();
+			String bucketName = "linkers104";
+			//기존 DB에 있던 정보를 삭제 하고 들어온 정보로 다시 새롭게 쓴다.
+			s3.fileDelete(bucketName, uploadpath+user.getProfile());
+			
+			UserDTO dto = new UserDTO();
+			
+			String profile = "/default.gif";
+			String email = user.getEmail();
+			dto.setEmail(email);
+			dto.setProfile(profile);
+			service.updateUser(dto);
+			//세션정보를 새로받아옴 프로필사진이 기존사진 삭제로 X 뜨는걸 방지
+			session.setAttribute("login", service.viewUser(email));
+		}
+		try {
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK); 	
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST); 	
+		}
+		
+		return entity;
+	}
+	
 
 	// 회원가입 POST 이메일 인증 도 함께함
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -369,7 +401,7 @@ public class UserController {
 	public void signupConfirm(UserVO vo, Model model, RedirectAttributes rttr) throws Exception {
 		// void로 해준이유는 jsp에서 다른페이지로 넘어가게 해주는 자바스크립트에서 self.location = '/user/login'; 처리
 		// 해주기때문에 void처리해도된다.
-		logger.info(vo.toString());
+		//logger.info(vo.toString());
 	}
 
 	// 이메일 확인을 눌렀을떄 나오는 창

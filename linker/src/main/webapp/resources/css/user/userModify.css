@@ -13,7 +13,7 @@
 	padding: 32px 51px 0px;
 }
 #content {
-	height: 760px;
+	height: 780px;
 	line-height: 14px;
 	width: 550px;
 	margin: 30px auto;
@@ -88,18 +88,19 @@
     height: 30px;
  }
 .file_input label {
-    position:relative;
-    cursor:pointer;
-    display:inline-block;
-    vertical-align:middle;
-    overflow:hidden;
-    width:250px;
-    height:30px;
-    background:#0067a3;
-    color:#fff;
-    text-align:center;
-    line-height:30px;
+  position: relative;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    width: 127px;
+    height: 30px;
+    background: #0067a3;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
     border-radius: 5px;
+    top: 191px;
 }
 .file_input label input {
     position:absolute;
@@ -113,4 +114,30 @@
 }
 .secession{
 	color : #52c052;
+}
+
+.delete-profile{
+	cursor: pointer;
+    position: relative;
+    top: -29px;
+    left: 140px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    width: 127px;
+    height: 30px;
+    background: #0067a3;
+    color: white;
+}
+
+.profile{
+	position: relative;
+    top: -50px;
+}
+.war-message{
+	font-size: 15px;
+}
+.lasttr{
+	height: 320px;
 }

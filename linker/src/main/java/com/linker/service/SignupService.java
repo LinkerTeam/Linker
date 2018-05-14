@@ -5,7 +5,6 @@ package com.linker.service;
 import com.linker.domain.UserVO;
 
 public interface SignupService {
-	
 
 	//회원가입
 	public void insertMember(UserVO vo) throws Exception;

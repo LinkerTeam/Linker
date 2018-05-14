@@ -42,7 +42,7 @@
 									<div id="checkMsg"></div></td>
 							</tr>
 							<!-- 누락된 부분 -->
-							<tr>
+							<tr class="lasttr">
 								<td><p class="inputtext">프로필사진</p></td>
 								<td>
 									<div class="file_input">
@@ -52,9 +52,10 @@
 										<p id="status"></p>
 										<div id='holder'>
 										 <img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="profile" alt="프로필 사진" width="200" height="170" />
+										<button class="delete-profile">기본이미지로 변경</button>
 										</div>
 										<!-- accept=".jpg, .png "  특정파일만 올릴수있게 파일 업로드시 사용자설정해줌 -->
-										<span>프로필 사진을 올릴 시 이미지 파일만 업로드 가능하며  </br>용량은 최대 1MB까지 가능합니다.</span>
+										<div><span class="war-message">프로필 사진을 올릴 시 이미지 파일만 업로드 가능하며  용량은 최대 1MB까지 가능합니다.</span></div>
 								</div>
 								</td>
 										</p>

@@ -48,22 +48,17 @@ public class ProjectServiceImpl implements ProjectService {
 	public int checkProject(ProjectVO vo) throws Exception {
 		return dao.checkProject(vo);
 	}
-	//
+	//프로젝트 히든 리스트
 	@Override
 	public List<ProjectVO> hiddenList(int u_id) throws Exception {
 		return dao.hiddenList(u_id);
-	}
-
-	@Override
-	public void modifiyTitle(ProjectVO vo) throws Exception {
-		dao.modifiyTitle(vo);
 	}
 	//프로젝트 즐겨찾기
 	@Override
 	public void favoriteAdd(int u_id, int p_id) throws Exception {
 		dao.favoriteAdd(u_id, p_id);
 	}
-
+	//즐겨찾기 리스트
 	@Override
 	public List<ProjectVO> favoriteList(int u_id) throws Exception {
 		return dao.favoriteList(u_id);
@@ -72,7 +67,4 @@ public class ProjectServiceImpl implements ProjectService {
 	public void favoriteDelete(int u_id,int p_id) throws Exception{
 		dao.favoriteDelete(u_id, p_id);
 	}
-	
-	
-	
 }

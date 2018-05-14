@@ -22,6 +22,6 @@
 $('.btn').on("click",function(e){
 	e.preventDefault();
 	history.back();
-	alert(1);
+	
 });
       

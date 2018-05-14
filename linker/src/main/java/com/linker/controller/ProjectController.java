@@ -1,17 +1,10 @@
 package com.linker.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.linker.domain.CardVO;
 import com.linker.domain.ProjectVO;
-import com.linker.domain.TeamVO;
 import com.linker.domain.UserVO;
-import com.linker.dto.ProjectDTO;
 import com.linker.service.ProjectService;
 import com.linker.service.TeamService;
 
@@ -72,7 +62,7 @@ public class ProjectController {
 		ResponseEntity<Integer> entity = null;
 		     service.createProject(vo);
 		     // 프로젝트 생성후에 생성된 기본키(PK)를 받아옴 
-		     System.out.println(vo);
+		     //System.out.println(vo);
 		     int p_id=vo.getId();
 		try {
 			entity = new ResponseEntity<Integer>(p_id,HttpStatus.OK);
@@ -85,7 +75,7 @@ public class ProjectController {
 	//팀멤버 클릭시 그안에 들어있는 프로젝트들이 나옴
 	@ResponseBody
 	@RequestMapping(value="t/{teamID}/p", method = RequestMethod.GET)
-   public List<ProjectVO> listProject(@PathVariable int teamID) throws Exception{
+	public List<ProjectVO> listProject(@PathVariable int teamID) throws Exception{
 		return service.listProject(teamID);
 	}
 
@@ -104,7 +94,7 @@ public class ProjectController {
 		}
 			return entity;
 	}
-	
+	//히든 프로젝트 리스트
 	@ResponseBody
 	@RequestMapping(value="projectlist", method = RequestMethod.GET)
 	public ResponseEntity<List<ProjectVO>> projectList(HttpServletRequest request) throws Exception{

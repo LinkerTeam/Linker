@@ -24,7 +24,7 @@
           t_id= $(this).parent().parent().children().eq(0).children('.tid').html();
           //클릭한곳의 부모를 찾아서옴
           parent = $(this).parent();
-           console.log(parent);
+           //console.log(parent);
 
         $('.project-modal').addClass('is-visible');
     });
@@ -149,7 +149,7 @@
 	$(document).on("click",".memberbtn",function(){
 		t_id = $(this).parents().children().eq(2).text();
 		title =  $(this).parents().children().eq(1).text();
-		console.log(t_id);
+		//console.log(t_id);
 		$('.member-modal').addClass('is-visible');
 		memberlist(t_id);
 	});
@@ -172,7 +172,7 @@
 			url : "/team/list/"+t_id,
 			success : function(data){
 				if(data.length > 0){
-					console.log(data);
+					//console.log(data);
 					$('.member-head').html(title);
 					$('.member-list').html('');
 					for(var i = 0; i < data.length; i++ ){		
@@ -201,7 +201,7 @@
 				if(data.length > 0 ){
 					var str="";
 					
-					console.log(data);
+					//console.log(data);
 					for(var i = 0; i < data.length ; i++){
 						 
 						    str += "<ul class='projects'>"
@@ -313,7 +313,7 @@
 			type : "get",
 			url : "main/favoritelist",
 			success : function(data){
-				console.log(data.length == 0);
+				//console.log(data.length == 0);
 				if(data.length == 0){
 					$('.projectBox').eq(0).remove();
 					$('.hidden').remove();
@@ -324,8 +324,10 @@
 			}
 		})
 	}
-	$('.teambtn').on("click",function(){
-		var team = $('.teamform');
-		team.submit();
-	})
+
 	
+	$('.teambtn').on("click",function(){
+		event.preventDefault(); //기본 이벤트 제거
+		alert("팀이 생성되었습니다.");
+		$('.teamform').submit();
+	});

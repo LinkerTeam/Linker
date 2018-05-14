@@ -2,7 +2,7 @@
 //파일체인지 이벤트시에 용량을 넣고 유효성검사에 사용하기위해서 외부선언
 var fileSize = 0;
 
-console.log($('#file').val().slice(12));
+//console.log($('#file').val().slice(12));
 var orignalNick = document.getElementById('nickname').value;
 
 //유요성 검사 테스트
@@ -11,7 +11,7 @@ function subcheck() {
 	//파일명 가져오기
 	var fileValue = $("#file").val().split("\\");
 	var fileName = fileValue[fileValue.length-1]; // 업로드한 파일명
-	console.log(fileName);
+	//console.log(fileName);
 	
 	if (nickname == null || nickname == '') {
 		alert('닉네임을 비울수 없습니다.');
@@ -78,16 +78,15 @@ window.onload = function() {
 			alert("이미지 파일이 아닙니다. 다시 확인 해주세요.");
 			return;
 		}
-		console.log(fileName2);
+		//console.log(fileName2);
 	
 		reader.onload = function(event) {
 			var img = new Image();
-			img.src = event.target.result;
+			$('.profile').attr("src",event.target.result);
+			
+			
 			// note: no onload required since we've got the dataurl...I think! :)
-			console.log(img.width);
-			console.log(img.height);
-			console.log(img.name);
-			console.log(img.size);
+		
 			//이미지 크기가 너무크면 그 이미지를 줄여서 보여주는 조건
 			if (img.width > 56 && img.height > 56 || img.width == 0
 					&& img.height == 0) { // holder width
@@ -95,8 +94,7 @@ window.onload = function() {
 				img.height = 170;
 			}
 			//holder값을 삭제후에 자식으로 이미지를 넣어준다.
-			holder.innerHTML = "";
-			holder.appendChild(img);
+		
 		};
 		reader.readAsDataURL(file);
 		return false;
@@ -145,5 +143,17 @@ window.onload = function() {
 	$('#btnDelete').on("click",function(){
 			history.go(-1);
 	});	
+	
+	$('.delete-profile').on("click",function(){
+		event.preventDefault();
+		$.ajax({
+			type :"GET",
+			url : "/user/deleteProfile",
+			success : function(data){
+				//console.log(data);
+				$('.profile').attr("src","https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate/default.gif");
+			}
+		})
+	})
 	
 } // end window.onload
