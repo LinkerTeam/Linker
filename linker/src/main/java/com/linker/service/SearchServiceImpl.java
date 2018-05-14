@@ -22,8 +22,8 @@ public class SearchServiceImpl implements SearchService{
 	SearchDAO sdao;
 	
 	@Override
-	public List<SearchVO> searchCard(int u_id, String keyword) throws Exception {
-		return sdao.searchCard(u_id, keyword);
+	public List<SearchVO> searchCard(int u_id, String keyword, String alignState) throws Exception {
+		return sdao.searchCard(u_id, keyword, alignState);
 	}
 	
 	@Override

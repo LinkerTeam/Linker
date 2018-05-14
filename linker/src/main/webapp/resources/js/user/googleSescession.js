@@ -14,7 +14,7 @@
 			alert("EMAIL 전송 실패");
 		  }
 	   },error:function(){
-        	 alert("error");
-         }	   
+		   alert("통신 에러가 발생했습니다."); 
+       }	   
    }); //end ajax
  }); // end 이벤트

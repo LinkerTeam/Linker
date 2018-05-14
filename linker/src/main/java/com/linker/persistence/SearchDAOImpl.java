@@ -24,10 +24,11 @@ public class SearchDAOImpl implements SearchDAO{
 	SqlSession session;
 	
 	//전체 검색에서 카드 검색
-	public List<SearchVO> searchCard(int u_id, String keyword) throws Exception{
+	public List<SearchVO> searchCard(int u_id, String keyword, String alignState) throws Exception{
 		SearchVO vo = new SearchVO();
 		vo.setU_id(u_id);
 		vo.setKeyword(keyword);
+		vo.setAlignState(alignState);
 		return session.selectList(namespace + ".searchCard", vo);
 	}
 

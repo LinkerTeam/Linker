@@ -19,16 +19,19 @@
 	height : 60px;
 	font-size: 20pt;
 }
+#filter{
+	padding-right: 30px;
+	float: right;
+}
+/* 필터의 버튼들*/
 .filter{
 	font-size : 9pt;
-	float : right;
-	display : block;
 	background: none;
 	border: none;
-	
 }
 /* 검색 작은 컨텐츠 : 목록 + 내용 */
 .list-box-body{
+	clear : both;
 	font-size : 11pt;
 	padding : 10px 30px;
 	height: 80%;

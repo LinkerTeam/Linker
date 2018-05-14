@@ -75,7 +75,7 @@ function allTeamList(){
 			memberAdd();//멤버 추가하는 영역 출력하는 함수
 		},
 		error : function(){
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});	
 }
@@ -155,7 +155,7 @@ function allMemberList(myT_id, myAuth){
 			}
 		}, 
 		error : function(){
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 }
@@ -288,7 +288,7 @@ $('#team-modal-add-btn').click(function(){
 			      }
 		},
 		error : function() {
-			alert("error");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});	                  
 });
@@ -346,7 +346,7 @@ $(document).on('click','#member-modal-add-btn',function() {
 	      } 
 	   },
 	   error : function(xhr,status,error){
-	      alert("error");
+		   alert("통신 에러가 발생했습니다."); 
 	   }
 	}); 
 });
@@ -411,7 +411,7 @@ $('#team-modal-delete-btn').click(function() {
 		$('.pic-list').append(str2);
       },
       error : function() {
-    	  alert("error");
+    	  alert("통신 에러가 발생했습니다."); 
       }
    });
 });
@@ -457,7 +457,7 @@ $('#team-modal-modify-btn').click(function() {
 
       },
       error : function() {
-    	  alert("error");
+    	  alert("통신 에러가 발생했습니다."); 
       }
    });
 });
@@ -555,7 +555,7 @@ $(document).on('click','#member-modal-delete-btn',function() {
 				}
 			},
 			error : function() {
-				alert("error");
+				alert("통신 에러가 발생했습니다."); 
 			}
 		});
 	//소유자가 아닌 사용자가 해당 팀에서 타의로 탈퇴당한 경우
@@ -583,7 +583,7 @@ $(document).on('click','#member-modal-delete-btn',function() {
 				}
 			},
 			error : function() {
-				alert("error");
+				alert("통신 에러가 발생했습니다."); 
 			}
 		});
 	}
@@ -629,7 +629,7 @@ $(document).on('click','#member-modal-delete-btn',function() {
          alert("권한이 정상적으로 양도되었습니다..");
       },
       error : function() {
-         alert("error");
+    	  alert("통신 에러가 발생했습니다."); 
       } 
    });  
 });
@@ -657,7 +657,7 @@ $('#member-search').keyup(function(){
 				memberAdd();
 			},
 			error : function(){
-				alert("error");
+				alert("통신 에러가 발생했습니다."); 
 			}
 		}); 
 	}else{

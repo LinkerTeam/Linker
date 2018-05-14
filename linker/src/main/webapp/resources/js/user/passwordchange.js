@@ -29,7 +29,7 @@
 	             /*  $('#checkMsg').html('<p style="color:red" id="nickcheck">사용불가능한 닉네임입니다.</p>'); */
 	          }
 	      },error:function(){
-	     	 alert("데이터오류");
+	    	  alert("통신 에러가 발생했습니다."); 
 	      }
 	  });    //end ajax   
 	 

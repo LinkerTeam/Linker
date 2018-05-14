@@ -78,7 +78,7 @@ function projectTitleModify(p_title){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };
@@ -208,7 +208,7 @@ function allCardlist(){
 	  		
 		},//success
 		error : function() {
-	   		alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 	   	}
 	});//ajax
 	allFavorite(); //즐겨찾기 전체 목록 조회
@@ -320,7 +320,7 @@ $(".cardlists").on("click", "#addBtn", function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//Ajax
 });
@@ -422,7 +422,7 @@ $("#saveBtn").on("click", function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 });
@@ -503,7 +503,7 @@ $(".cardlists").on("click", "#listAddBtn", function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 });
@@ -546,7 +546,7 @@ function modifyCardlistTitle(titleElement) {
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 };
@@ -683,7 +683,7 @@ function cardlistStatusChange(id, ps_id, title){
 			}//if
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };

@@ -266,7 +266,7 @@
                  $('#checkMsg').html('<p style="color:red" id="nickcheck">사용 불가능한 닉네임입니다.</p>');
              }
          },error:function(){
-        	 alert("error");
+        	 alert("통신 에러가 발생했습니다."); 
          }
      });    //end ajax    
  });    //end on
@@ -291,7 +291,7 @@
 			  $('#EmailcheckMsg').html('<p style="color:red" id="echeck">이미 가입한 이메일입니다 다시 확인해주세요. </p>');
 		  }
 	   },error:function(){
-      	 alert("error");
+		   alert("통신 에러가 발생했습니다."); 
        }	   	   
    }); //end ajax
    }); // end 이벤트

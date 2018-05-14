@@ -106,7 +106,7 @@ $(".saveBtn.reply.create").click(function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 });
@@ -174,7 +174,7 @@ $(".activity-content").on("click", ".saveBtn.reply.modify", function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 });
@@ -230,7 +230,7 @@ $(".closeBoardBtn.reply").click(function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 });
