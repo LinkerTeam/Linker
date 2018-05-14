@@ -458,8 +458,7 @@ input#agree:focus {
     left: 25px;
 }
 /*  나의즐겨 찾기 버튼  */
-.my-favo{
-    background-color: #edeff0;
+.my-favo {
     border-radius: 3px;
     color: #838c91;
     display: inline-block;
@@ -467,8 +466,9 @@ input#agree:focus {
     text-decoration: none;
     font-size: 17px;
     float: right;
-    margin-right: 20px;
+    margin-right: 9px;
     margin-top: 10px;
+    text-decoration: underline;
 }
 .my-favo:hover {
 	background-color: #D6DADC;

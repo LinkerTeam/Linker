@@ -29,7 +29,9 @@
 	    	<a href="http://localhost:9090/main" class="logo-link">
 	        	<span class="logo-full"><img src="/resources/image/logo.png" width="100" /></span>
 	        </a>
-	        
+	        <c:if test="${login.status == 3}">
+	        	<a href="http://localhost:9090/admin/userList" class="admin"><i class="fas fa-cog"></i> 관리자 모드</a>
+	        </c:if>
 		    <!--오른쪽메뉴 설정단추-->
 		    <span class="rtMenu-button" style="cursor:pointer">
 		        <img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="header-profile" alt="프로필 사진" />

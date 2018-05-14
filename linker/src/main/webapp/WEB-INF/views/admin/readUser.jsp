@@ -39,12 +39,12 @@
 			            <p>회원 관리</p>
 			        </a>
 			    </li>
-			    <li>
+			    <!-- <li>
 			        <a href="teamList">
 			            <i class="ti-view-list-alt"></i>
 			            <p>팀 관리</p>
 			        </a>
-			    </li>
+			    </li> -->
 			</ul>
 		</div>
 	</div>

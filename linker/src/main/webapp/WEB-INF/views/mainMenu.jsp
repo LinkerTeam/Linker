@@ -22,7 +22,7 @@
 		<span class="my-aside-close">&times;</span>
 		<div class="header-menu my-aside-info">
 		    <div class="header-menu my-aside-info-text">
-				<p class="header-menu">${login.nickname}<br/>(${login.email}) ${login.status}</p>
+				<p class="header-menu">${login.nickname}<br/>(${login.email})</p>
 			</div>
 			<div class="header-menu my-aside-info-img">
 				<img src="https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate${login.profile}" class="header-menu" alt="프로필 사진" />

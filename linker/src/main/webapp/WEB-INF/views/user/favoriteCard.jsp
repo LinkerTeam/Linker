@@ -18,7 +18,7 @@ var u_id = ${login.id};
  	<div class="content board">
 		<!-- 이곳에 본문 입력 -->
  
- 		<div class="projectTitle"><div>나의 즐겨 찾기 카드</div>
+ 		<div class="projectTitle"><div>즐겨찾기</div>
  		</div>
              <div class="cardlistContent">
 				<!-- 카드리스트 전체 -->

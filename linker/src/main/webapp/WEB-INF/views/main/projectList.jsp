@@ -17,7 +17,7 @@
 	<%@include file="../closeBoard.jsp"%>
 
 	<div class="content">
-		<a href="http://localhost:9090/board/mycard" class="my-favo"> 나의 즐겨 찾기</a>
+		<a href="http://localhost:9090/board/mycard" class="my-favo">즐겨찾기</a>
 		<!-- 즐겨찾기 목록  -->
 		<div class="main-favorite"></div>
 		<!-- Projects In a Team -->
