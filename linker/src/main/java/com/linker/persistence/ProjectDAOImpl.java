@@ -58,11 +58,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public List<ProjectVO> hiddenList(int u_id) throws Exception {
 		return session.selectList(namespace+".hiddenList",u_id);
 	}
-	//프로젝트 이름 바꾸기
-	@Override
-	public void modifiyTitle(ProjectVO vo) throws Exception {
-		 session.update(namespace+".modifiyTitle",vo);
-	}
 	//프로젝트 즐겨찾기 추가
 	@Override
 	public void favoriteAdd(int u_id, int p_id) throws Exception {	
@@ -86,8 +81,4 @@ public class ProjectDAOImpl implements ProjectDAO {
 		session.delete(namespace+".favoriteDelete",map);
 		
 	}
-	
-	
-	
-	
 }

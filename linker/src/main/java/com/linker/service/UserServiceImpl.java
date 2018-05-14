@@ -40,22 +40,18 @@ public class UserServiceImpl implements UserService {
 	//로그인 체크	    
 	@Override
 	public UserVO login(LoginDTO dto) throws Exception {
-         
 		return dao.login(dto);
 	}
 	
 	//로그인한  회원정보 가져오기
 	@Override
 	public UserVO viewUser(String email) {
-		// TODO Auto-generated method stub
 		return dao.viewUser(email);
 	}
 
 	//회원정보 수정
 	@Override
 	public void updateUser(UserDTO dto) {
-		// TODO Auto-generated method stub
-		
 		 dao.updateUser(dto);
 	}
 	
@@ -68,7 +64,6 @@ public class UserServiceImpl implements UserService {
 	//유저가 가진 쿠키에 저장한 세션키를 DB에 들어간 세션키와 비교하는 과정 
 	@Override
 	public UserVO checkLoginBefore(String value) throws Exception {
-
 		return dao.chechUserWithSessionKey(value);
 	}
    
@@ -82,24 +77,21 @@ public class UserServiceImpl implements UserService {
 	//이메일을 확인한 매서드 
 	@Override
 	public void userAuth(String email) throws Exception {
-		// TODO Auto-generated method stub
 		dao.userAuth(email);
 	}
 
 	//이메일 중복확인 
 	@Override
 	public int emailCheck(String email) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.emailCheck(email);
 	}
 
 	//임의의 비밀번호로 지정한다.
 	@Override
 	public void forgetpassword(UserVO vo) throws Exception {
-		
 		dao.forgetpassword(vo);	
-		
 	}
+	
 	//이메일이 가입되있는지 체크
 	@Override
 	public int serchEmail(String email) throws Exception {
@@ -107,39 +99,24 @@ public class UserServiceImpl implements UserService {
 		return dao.serchEmail(email);
 	}
 
-	/*@Override
-	public boolean checkPw(String email, String password) throws Exception {
-	
-		return dao.checkPw(email, password);
-	}
-*/
-
 	//비밀번호 변경
 	@Override
 	public void updatePassword(UserDTO dto) throws Exception {
 		
 		String password = passwordEncoder.encode(dto.getPassword());
-		
 		dto.setPassword(password);
-		 
-	    System.out.println("변경된 비밀번호 뭐니"+dto.getPassword());
-		
 		dao.updatePassword(dto);
-		
 	}
 
 	//현재비밀번호 비교하기 위해 가져오기 
 	@Override
 	public String getPassword(LoginDTO dto) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.getPassword(dto);
 	}
 
 	//유저가 회원 탈퇴하기!!
 	@Override
 	public void deleteUser(String email) throws Exception {
-		
 		dao.deleteUser(email);
 	}
-	
 }

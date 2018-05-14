@@ -546,4 +546,11 @@ $(".cardTitle").on("click", ".star", function(){
 		popCardFavorite = null; //전역변수 status값 변경
 	};
 });
+
+// 수정 송성은 
+// 즐겨찾기 보드에서는 휴지통 가리기 메뉴 삭제
+if(p_id == 0 ){
+	$('.popCardMenuIcon').hide();
+}
+	
 	

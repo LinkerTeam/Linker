@@ -39,7 +39,6 @@
 	UPDATE linker.user
 	<set>
 	<if test="nickname!=null and nickname!=''">nickname=#{nickname},</if>
-	<!-- <if test="password!=null and password!=''" >password=#{password},</if> -->
 	<if test="profile!=null and profile!=''">profile=#{profile}</if> 
 	</set>
 	WHERE email = #{email}

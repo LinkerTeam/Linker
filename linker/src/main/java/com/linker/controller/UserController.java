@@ -99,7 +99,6 @@ public class UserController {
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
 		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
 
-		////System.out.println("구글:" + url);
 		model.addAttribute("google_url", url);
 
 		if (session.getAttribute("login") != null) {
@@ -132,7 +131,6 @@ public class UserController {
 			// 사용자에게 리멤버를 눌렀을 경우.. 세션을 DB에 저장한다.
 			if (dto.isUseCookie()) {
 				int amount = 60 * 60 * 24 * 7;
-				//System.out.println(1000 * amount);
 				// 7일간 세션을 유지하는 시간 지정 (DB에 sessionlimit을 지정함)
 				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
 				service.keepLogin(vo.getEmail(), session.getId(), sessionLimit, vo.getProfile());
@@ -192,7 +190,6 @@ public class UserController {
 		// 들어있다.
 		UserVO vo = (UserVO) session.getAttribute("login");
 
-		//System.out.println("session에 들어있는 값" + vo);
 		// session에 들어있는 값중 이메일만 따로 추출해서 문자열에 넣어준다.
 
 		String email = vo.getEmail();
@@ -200,9 +197,6 @@ public class UserController {
 		// 세션으로부터 받은 email값을 통해서 service.viewUser()매서드를 통해서 다시 DB로부터 값을 받아온다. 세션으로부터
 		// 들어있는 값이아닌 DB값으로
 		model.addAttribute("vo", service.viewUser(email));
-		// //System.out.println("클릭한 메일 확인 : "+email);
-		logger.info("클릭한 아이디 : " + email);
-		logger.info(service.viewUser(email).toString());
 		// member_view.jsp로 포워드
 		// return "member/member_view";
 
@@ -213,7 +207,6 @@ public class UserController {
 	public String UserUpdate(UserDTO dto, Model model, HttpServletRequest request,HttpServletResponse response) throws IOException, Exception {
 		// MultipartFile은 POST 방슥으로 들어온 파일 데이터를 의미
 
-		////System.out.println(dto.getProfile());
 		// 화면으로 부터 받아온 파일을 MultipartFile타입 uploadfile에 넣어준다
 		MultipartFile uploadfile = dto.getProfileName();
 
@@ -224,7 +217,6 @@ public class UserController {
 		// 들어있다.
 		UserVO user = (UserVO) session.getAttribute("login");
 
-		////System.out.println("session에 들어있는 값" + user);
 		// session에 들어있는 값중 이메일만 따로 추출해서 문자열에 넣어준다.
 		String email = user.getEmail();
 		
@@ -233,7 +225,6 @@ public class UserController {
 		//기본 파일인경우에는 기본 파일을 삭제 하기를 막기위해서 if문을 걸어둠
 		//기본파일이거나 본래파일과 같거나 아무 파일도안넣었을때
 		if(!(user.getProfile().equals("/default.gif")) && (!(uploadfile.getOriginalFilename().equals("")))) {
-		//System.out.println("기본파일 삭제하는데 성공");
 		S3Util s3 = new S3Util();
 		String bucketName = "linkers104";
 		//기존 DB에 있던 정보를 삭제 하고 들어온 정보로 다시 새롭게 쓴다.
@@ -244,24 +235,19 @@ public class UserController {
 		// 세션으로부터 받은 email값을 통해서 service.viewUser()매서드를 통해서 다시 DB로부터 값을 받아온다. 세션으로부터
 		// 들어있는 값이아닌 DB값으로
 		model.addAttribute("vo", service.viewUser(email));
-		// //System.out.println("클릭한 메일 확인 : "+email);
 		// return "redirect:/member/list.do";
 
 		// 오리지날 파일을 검사해서 파일타입을 체크할것 이미지파일만 올리기로
 		String imageType = uploadfile.getOriginalFilename()
 				.substring(uploadfile.getOriginalFilename().lastIndexOf(".") + 1);
 
-		////System.out.println("imageType는?" + imageType);
-		//System.out.println("bb는?" + (imageType.equals("jpg")));
 		// 이미지 타입을 검사해서 이미지인 경우에만 DB에 저장 한다. .toLowerCase()로 파일 확장자가 JPG 대문자인경우 소문자로 바꿔서 체크한다.
 		if (imageType.toLowerCase().equals("jpg") || imageType.toLowerCase().equals("png") || imageType.toLowerCase().equals("gif") || imageType.toLowerCase().equals("jpeg")) {
 			String realPath = UploadFileUtils.uploadFile(uploadpath, uploadfile.getOriginalFilename(),
 					uploadfile.getBytes());
 			// 들어온 파일의 주소를 db에 저장하기위해서 set으로 지정해줌 그런데 파일을 넣지않아도 파일이 저장된다.
 			dto.setProfile(realPath);
-			//System.out.println(realPath);
 		} 
-		//System.out.println(dto.getProfile());
        
 		dto.setEmail(email);
 
@@ -301,7 +287,6 @@ public class UserController {
 		InputStream in = null;
         ResponseEntity<byte[]> entity = null;
         HttpURLConnection uCon = null;
-       /* System.out.println("FILE NAME: " + fileName);*/
 
         try{
             String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
@@ -314,7 +299,6 @@ public class UserController {
 
             try {
                 url = new URL(s3.getFileURL(bucketName, inputDirectory+fileName));
-                //System.out.println("https://s3.ap-northeast-2.amazonaws.com/"+inputDirectory+"/linker"+fileName);
                 uCon = (HttpURLConnection) url.openConnection();
                 in = uCon.getInputStream(); 
             } catch (Exception e) {
@@ -327,7 +311,6 @@ public class UserController {
             headers,
             HttpStatus.CREATED);
         }catch (FileNotFoundException effe){
-            //System.out.println("File Not found Exception");
             String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
             MediaType mType = MediaUtils.getMediaType(formatName);
             HttpHeaders headers = new HttpHeaders();
@@ -347,6 +330,40 @@ public class UserController {
         }
         return entity;
     }
+	
+	//이미지 프로필 삭제 기본이미지로 변경
+	@ResponseBody
+	@RequestMapping(value="deleteProfile",method = RequestMethod.GET)
+	public ResponseEntity<String> deleteProfile(HttpSession session) throws Exception{
+		
+		UserVO user = (UserVO) session.getAttribute("login");
+		
+		ResponseEntity<String> entity = null;
+		
+		if(!(user.getProfile().equals("/default.gif"))) {
+			S3Util s3 = new S3Util();
+			String bucketName = "linkers104";
+			//기존 DB에 있던 정보를 삭제 하고 들어온 정보로 다시 새롭게 쓴다.
+			s3.fileDelete(bucketName, uploadpath+user.getProfile());
+			
+			UserDTO dto = new UserDTO();
+			
+			String profile = "/default.gif";
+			String email = user.getEmail();
+			dto.setEmail(email);
+			dto.setProfile(profile);
+			service.updateUser(dto);
+			//세션정보를 새로받아옴 프로필사진이 기존사진 삭제로 X 뜨는걸 방지
+			session.setAttribute("login", service.viewUser(email));
+		}
+		try {
+			entity = new ResponseEntity<String>("SUCCESS",HttpStatus.OK); 	
+		} catch (Exception e) {
+			entity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST); 	
+		}
+		
+		return entity;
+	}
 	
 
 	// 회원가입 POST 이메일 인증 도 함께함
@@ -369,7 +386,7 @@ public class UserController {
 	public void signupConfirm(UserVO vo, Model model, RedirectAttributes rttr) throws Exception {
 		// void로 해준이유는 jsp에서 다른페이지로 넘어가게 해주는 자바스크립트에서 self.location = '/user/login'; 처리
 		// 해주기때문에 void처리해도된다.
-		logger.info(vo.toString());
+		//logger.info(vo.toString());
 	}
 
 	// 이메일 확인을 눌렀을떄 나오는 창
@@ -411,7 +428,6 @@ public class UserController {
 		if (service.serchEmail(vo.getEmail()) == 1) {
 			// 해당회원이 탈퇴된 회원인지 체크함
 			UserVO vo2 = service.viewUser(vo.getEmail());
-			//System.out.println(vo2);
 
             //구글 회원은 비밀번호를 찾기를 못한다.
             if(vo2.getGoogle().equals("1")) {
@@ -484,7 +500,6 @@ public class UserController {
 			throws Exception {
 		// AIzaSyB3Ze-e-nlF4yAM0ca1WS9BbS2E9yz9OXA
 
-		//System.out.println("/user/googlecallback");
 
 		// ===========================사용자 정보 가져오는 로직
 		String code = request.getParameter("code");
@@ -516,16 +531,13 @@ public class UserController {
 		String email = person.getAccountEmail();
 		String nickname = person.getDisplayName();
 
-		//System.out.println(nickname);
 
 		UserVO vo = new UserVO();
 
 		vo.setEmail(email);
 		vo.setNickname(nickname);
 
-		//System.out.println("vo 뭐다냥" + vo.toString());
 
-		//System.out.println(singupService.serchGoogle(vo));
 
 		if (singupService.serchGoogle(vo) == null) {
 			// 처음 로그인한 사용자.
@@ -544,7 +556,6 @@ public class UserController {
 
 		// 만약 처음 접속시 값을 못가져오기때문에 순서가 중요하다.
 		UserVO vo2 = service.viewUser(vo.getEmail());
-		//System.out.println(vo2.toString());
 		if (vo2.getStatus() == 2) {
 			// 페이지를 따로넘기지않고 alert창을 뛰움
 			response.setContentType("text/html; charset=UTF-8");
@@ -558,7 +569,6 @@ public class UserController {
 		session.setAttribute("login", vo);
 		/*
 		 * vo.setNickname(profile.getAccountEmail());
-		 * System.out.println(profile.getDisplayName()==null);
 		 */
 		return "user/googleSuccess";
 	}
@@ -566,18 +576,14 @@ public class UserController {
 	// 비밀번호 변경창
 	@RequestMapping(value = "/passwordchange", method = RequestMethod.GET)
 	public String passwordconfirm(HttpServletRequest request, HttpSession session) throws Exception {
-		//System.out.println("현재 비밀번호 확인다");
 
 		UserVO vo = (UserVO) session.getAttribute("login");
 
 		// 로그인 하지않은 세션을 비교
 		if (vo == null) {
-			//System.out.println("로그인하지않은상태에서 url 접속");
 			return "redirect:/user/login";
 		}
 
-		//System.out.println(vo);
-		//System.out.println(vo.getGoogle());
 
 		// 구글 로그인으로 비밀번호창 으로 들어올땐 여길 들어올수없게 한다.
 		if (!(vo.getGoogle() == null)) {
@@ -592,7 +598,6 @@ public class UserController {
 	public String passwordchange(HttpServletRequest request, HttpServletResponse response, HttpSession session,
 			RedirectAttributes rttr) throws Exception {
 
-		//System.out.println("post 확인 다");
 
 		// 현재 비밀번호 입력시 확인하는 과정 true면 제대로 비밀번호를 입력한거고 false면 비밀번호를 틀림
 
@@ -609,7 +614,6 @@ public class UserController {
 		dto.setPassword(password);
 
 		service.updatePassword(dto);
-		//System.out.println("비밀번호 변경 완료!");
 		return "redirect:/user/passwordchange";
 	}
 
@@ -619,23 +623,18 @@ public class UserController {
 	public boolean passwordcheck(@RequestBody LoginDTO dto, HttpSession session) throws Exception {
 		// @RequestBody 는 JSP에서부터 JSON파일로 들어오게되면 그것을 받기 위해서 쓰는 애노테이션
 
-		System.out.println(dto.getPassword());
 
 		UserVO vo = (UserVO) session.getAttribute("login");
 		// json 형태로 들어와서 값이 password= 비밀번호를 나오게함 그래서 password=을 짤라버림
 		String pw = dto.getPassword();
-		//System.out.println(pw);
 		String email = vo.getEmail();
 
 		// dto로 만든이유는 두개이상의 값을 넣기위해서 사용 아니면 map같은걸 사용해야함
 		/*LoginDTO dto = new LoginDTO();*/
 		dto.setEmail(email);
-		//System.out.println("dto는 뭐들었니" + dto.toString());
 		if (pwdEncoder.matches(pw, service.getPassword(dto))) {
-			//System.out.println("비밀번호 성공");
 			return true;
 		} else {
-			//System.out.println("비밀번호 실패");
 			return false;
 		}
 
@@ -661,18 +660,14 @@ public class UserController {
 		String email = vo.getEmail();
 		String password = request.getParameter("password");
 
-		//system.out.println(email);
-		//system.out.println(password);
 
 		LoginDTO dto = new LoginDTO();
 
 		dto.setEmail(email);
 
-		//system.out.println("dto는 뭐들었니" + dto.toString());
 
 		// 비밀번호가 틀렸을떄 스프링시큐리티 matches() 매서드 사용
 		if (pwdEncoder.matches(password, service.getPassword(dto)) == false) {
-			//System.out.println("비밀번호 틀려");
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('비밀번호가 틀렸습니다 다시 입력해주세요.');</script>");
@@ -739,7 +734,6 @@ public class UserController {
 		// .equals()를 실행하게함
 		String googlekey = (String) session.getAttribute("googlekey");
 
-		//System.out.println(googlekey != null);
 
 		String confirm = request.getParameter("confirm");
 

@@ -232,9 +232,6 @@ textarea.cardlistTitle {
     color: #e6e6e6;
     font-size: 14px;
 }
-.cardtitleLi.favo {
-	border-left: solid 6px #ff7979;
-}
 .closeBoardModal-content.reply {
     width: 262px;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
     height: 137px;
@@ -244,18 +241,6 @@ textarea.cardlistTitle {
     margin: 0 7px;
     border-bottom: solid 1px #d0d0d0;
     color: #919191;
-}
-.closeBoardModal-content {
-    position: relative;
-    box-sizing: border-box;
-    width: 294px;
-    height: 186px;
-    background: #fff;
-    border-radius: 4px;
-    color: black;
-    font-size: 15px;
-    line-height: 1.1em;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .closeBoardModal-title {
     text-align: center;
@@ -282,4 +267,69 @@ textarea.cardlistTitle {
 }
 .closeBoardModal-text.reply {
     line-height: 1.2em;
+}
+
+/* 모달창 */
+.closeBoardModal {
+    display: none;
+    position: absolute;
+    z-index: 1001; /* 테스트 후 값 조정 */
+}
+.closeBoardModal.is-visible {
+    display: block;
+    left: 18px;
+    top: 78px;
+}
+/* 모달창 | 내부요소 전체 */
+.closeBoardModal-content {
+    position: relative;
+    box-sizing: border-box;
+    width: 294px;
+    height : 186px;
+    background: #fff;
+    border-radius: 4px;
+    color : black;
+    font-size: 15px;
+    line-height: 1.1em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 
+				0 1px 2px rgba(0,0,0,0.24);
+}
+/* 모달창 | 상단 타이틀 p태그 + 닫기버튼 */
+.closeBoardModal-title {
+	text-align: center;
+	line-height: 34px;
+}
+/* 모달창 | 상단 타이틀 p태그 */
+.closeTitle {
+	display: block;
+	margin: 0 7px;
+	border-bottom: solid 1px #d0d0d0;
+	color: #919191;
+}
+/* 모달창 | 닫기 버튼 */
+.closeBoardModal-title > .closeModal {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0 5px;
+	line-height: 28px;
+}
+/* 모달창 | 하단 설명 부분 */
+.closeBoardModal-text > p {
+	padding: 12px 15px;
+	color: #232323;
+    line-height: 1.2em;
+}
+/* 모달창 | close버튼 */
+.closeBoardBtn {
+    width: 92%;
+    height: 40px;
+    margin-left: 12px;
+    background: #eb5a46;
+    color: #fff;
+    font-size: 17px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

@@ -7,6 +7,10 @@
 <link href="/resources/css/user/favoriteCard.css" type="text/css" rel="stylesheet" />
 <title>LINKER FAVORITECARD</title>
 </head>
+<script type="text/javascript">
+var p_id = 0;
+var u_id = ${login.id};
+</script>
 <body>
  <%@include file="../header.jsp"%>
  <%@include file="../closeBoard.jsp"%>
@@ -35,12 +39,11 @@
 			</div>
         </div>
 			<!-- 카드팝업 jsp -->
-	<%@include file="../board/cardModal.jsp"%>
+			
+		<%@include file="../board/cardModal.jsp"%>
+	</div>
 </body>
-<script type="text/javascript">
-var p_id = 0;
-var u_id = ${login.id};
-</script>
+
 <script src="../../../resources/js/user/favoriteCard.js" type="text/javascript"></script>
 
 </html>

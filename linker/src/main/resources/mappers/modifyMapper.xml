@@ -7,23 +7,23 @@
  
 
  <update id="update">
- UPDATE linker.user
-        <set>
-			<if test="nickname!=null">nickname=#{nickname},</if>
-			<if test="password!=null">password=#{password},</if>
-			<if test="profile!=null">profile=#{profile}</if>
-		</set>
- WHERE email = #{email}
+	 UPDATE linker.user
+	        <set>
+				<if test="nickname!=null">nickname=#{nickname},</if>
+				<if test="password!=null">password=#{password},</if>
+				<if test="profile!=null">profile=#{profile}</if>
+			</set>
+	 WHERE email = #{email}
  </update>
  
  <select id="listAll" resultType="UserVO">
- <![CDATA[
-  SELECT 
-  email, password, nickname, profile
-  FROM linker.user
-  WHERE id > 0
-  ORDER BY email asc;
- ]]>
+	 <![CDATA[
+	  SELECT 
+	  email, password, nickname, profile
+	  FROM linker.user
+	  WHERE id > 0
+	  ORDER BY email asc;
+	 ]]>
  </select>
  </mapper>
  

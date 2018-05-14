@@ -8,8 +8,8 @@
 	<!-- useGeneratedKeys="true" keyProperty="id" 설정은 인설트후 생선된 칼럼의 pk반환 -->
 	<!-- project생성 -->
 	<insert id="createProject" useGeneratedKeys="true" keyProperty="id">
-	INSERT INTO linker.project(title, u_id, t_id) 
-	VALUES(#{title}, #{u_id}, #{t_id});
+		INSERT INTO linker.project(title, u_id, t_id) 
+		VALUES(#{title}, #{u_id}, #{t_id});
 	</insert>
 
 	<!-- 프로젝트리스트 표시(숨기기제외/가리기) -->
@@ -46,76 +46,69 @@
 
 	<!-- 카드리스트에서 프로젝트 이름나오기 -->
 	<select id="titleName" resultType="projectVO">
-	SELECT 
-		title
-		, ps_id
-	FROM linker.project
-	WHERE id = #{p_id}
+		SELECT 
+			title
+			, ps_id
+		FROM linker.project
+		WHERE id = #{p_id}
 	</select>
 	
 	
 	<!-- 해당 유저의 같은팀의 유저들을 가져오기 -->
 	<select id="teamProfile" resultType="userVO">
-	SELECT *
-	FROM linker.user
-    JOIN linker.team_has_user ON user.id = team_has_user.u_id
-	WHERE team_has_user.t_id = #{t_id};
+		SELECT *
+		FROM linker.user
+	    JOIN linker.team_has_user ON user.id = team_has_user.u_id
+		WHERE team_has_user.t_id = #{t_id};
 	</select>
 	
 	
 	<!-- 해당팀원이 아니면 프로젝트를 들어가는것을 막는 것 -->
 	<select id="checkProject" resultType="int">
-	SELECT count(*)
-	FROM linker.user 
-	JOIN linker.team_has_user 
-	ON user.id = team_has_user.u_id
-	WHERE team_has_user.u_id = #{u_id} AND team_has_user.t_id =#{t_id};
+		SELECT count(*)
+		FROM linker.user 
+		JOIN linker.team_has_user 
+		ON user.id = team_has_user.u_id
+		WHERE team_has_user.u_id = #{u_id} AND team_has_user.t_id =#{t_id};
 	</select>
 	
 	<!-- 종료 된 프로젝트리스트 -->
 	<select id="hiddenList" resultType="projectVO">
-	SELECT 
-		user.id AS u_id
-		,project.title
-		,project.ps_id
-		,project.t_id
-    	,project.id
-	FROM linker.user
-	JOIN linker.team_has_user ON user.id = team_has_user.u_id
-	JOIN linker.project ON team_has_user.t_id = project.t_id
-	WHERE user.id =#{u_id} AND project.ps_id =2;
+		SELECT 
+			user.id AS u_id
+			,project.title
+			,project.ps_id
+			,project.t_id
+	    	,project.id
+		FROM linker.user
+		JOIN linker.team_has_user ON user.id = team_has_user.u_id
+		JOIN linker.project ON team_has_user.t_id = project.t_id
+		WHERE user.id =#{u_id} AND project.ps_id =2;
 	</select>
-	
-	<!-- 프로젝트 타이틀 변경 -->
-	<update id="modifiyTitle">
-	UPDATE linker.project 
-	SET title=#{title} 
-	WHERE id =#{id};
-	</update>
 	
 	<!-- 즐겨찾기 추가 -->
 	<insert id="favoriteAdd" useGeneratedKeys="true" keyProperty="u_id">
-	INSERT INTO 
-		linker.user_has_project (u_id,p_id) 
-	VALUES (#{u_id},#{p_id});
+		INSERT INTO 
+			linker.user_has_project (u_id,p_id) 
+		VALUES (#{u_id},#{p_id});
 	</insert>
 	
 	<!--  즐겨찾기 리스트 가져오기 -->
 	<select id="favoriteList" resultType="ProjectVO">
-	SELECT title,project.u_id,project.id,t_id
-	FROM linker.user
-	JOIN linker.user_has_project ON user_has_project.u_id = user.id
-	JOIN linker.project ON project.id = user_has_project.p_id
-	WHERE user.id=#{u_id} 
-	AND project.ps_id = 1
-	ORDER BY user_has_project.cdate ASC;
+		SELECT title,project.u_id,project.id,t_id
+		FROM linker.user
+		JOIN linker.user_has_project ON user_has_project.u_id = user.id
+		JOIN linker.project ON project.id = user_has_project.p_id
+		WHERE user.id=#{u_id} 
+		AND project.ps_id = 1
+		ORDER BY user_has_project.cdate ASC;
 	</select>
 	
 	<!--즐겨찾기 삭제  -->
 	<delete id="favoriteDelete">
-	DELETE 
-	FROM linker.user_has_project 
-	WHERE u_id=#{u_id} AND p_id=#{p_id};
+		DELETE 
+		FROM linker.user_has_project 
+		WHERE u_id=#{u_id} AND p_id=#{p_id};
 	</delete>
 
 </mapper>

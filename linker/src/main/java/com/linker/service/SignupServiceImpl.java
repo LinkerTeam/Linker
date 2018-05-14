@@ -17,9 +17,10 @@ import com.linker.util.TempKey;
 //@Serviec는 애노테이션은 이클래스가 service클래스라는것 명시해주는것 component에서 읽을수있다 지정해줘야
 @Service
 public class SignupServiceImpl implements SignupService{
-   @Inject
-   SignupDAO dao;
-    //메일날리는 객체 주입해줌
+	@Inject
+	SignupDAO dao;
+    
+	//메일날리는 객체 주입해줌
 	@Inject
 	private JavaMailSender mailSender;
 	
@@ -33,15 +34,11 @@ public class SignupServiceImpl implements SignupService{
     @Transactional
 	@Override
 	public void insertMember(UserVO vo) throws Exception {
-		  
-    	
+
     	  //비밀번호를 엔코딩해서  암화 시키는 과정  암호가 1111이면 !@#!@#@!231이렇게 변환시켜줌
 		  String encPassword =  passwordEncoder.encode(vo.getPassword());
 		  //변환된 값을 다시 저장한다.
     	  vo.setPassword(encPassword);
-    	
-    	  
-    	  System.out.println(vo.getPassword());
     	  
     	  dao.insertMember(vo);
 		  
@@ -67,13 +64,10 @@ public class SignupServiceImpl implements SignupService{
 	@Override
 	public void insertGoogle(UserVO vo) throws Exception {
 		dao.insertGoogle(vo);
-		
 	}
 	//구글 회원 가입유무 체크
 	@Override
 	public UserVO serchGoogle(UserVO vo) throws Exception {
-		// TODO Auto-generated method stub
 		return dao.serchGoogle(vo);
 	}
-    
 }

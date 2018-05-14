@@ -25,7 +25,7 @@
 							<em class="pwWaring">이전에 사용한 적 없는 비밀번호</em>가 안전합니다.
 						</p>
 						<p>
-						패스워드는 <em class="pwWaring">8자이상 특수문자와 숫자를 한개이상씩  </em>입력해야합니다.
+						패스워드는 <em class="pwWaring">8자이상 특수문자와 숫자를 조합하여  </em>입력해야합니다.
 						</p>
 						<form role='form' method="post">
 							<p>

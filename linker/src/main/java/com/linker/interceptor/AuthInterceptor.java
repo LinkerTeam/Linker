@@ -43,10 +43,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				String value = loginCookie.getValue();
 				//값이 있으면 자동로그인을위해 값을 넣어줌
 				UserVO userVO = service.checkLoginBefore(value);
-				//System.out.println(userVO);
 				//값이 있으면 세션을 생성해준다. 자동로그인처리
 				if (userVO != null) {
-					//System.out.println("세션생성");
 					session.setAttribute("login", userVO);
 					return true;
 				}

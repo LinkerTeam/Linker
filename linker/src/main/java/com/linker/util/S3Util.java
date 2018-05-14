@@ -64,7 +64,7 @@ public class S3Util {
 	public void fileDelete(String bucketName, String fileName) {
 		String imgName = (fileName).replace(File.separatorChar, '/');
 		conn.deleteObject(bucketName, imgName);
-		System.out.println("삭제성공");
+		//System.out.println("삭제성공");
 	}
 
 	// 파일 URL
