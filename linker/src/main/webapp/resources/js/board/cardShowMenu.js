@@ -145,7 +145,7 @@ function readCardStatus(ps_id){
 	  		};
 		}, //success
 		error : function() {
-	   		alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 	   	}
 	}); //ajax
 };
@@ -171,7 +171,7 @@ function readCardlistStatus(ps_id){
 	  		};
 		}, //success
 		error : function() {
-	   		alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 	   	}
 	}); //ajax
 };
@@ -272,7 +272,7 @@ $('#search-archive-txt').keyup(function(){
 				  		}
 				}, //success
 				error : function() {
-			   		alert("에러가 발생했습니다.");
+					alert("통신 에러가 발생했습니다."); 
 			   	}
 			});
 		}else{//카드리스트 검색한 경우
@@ -298,7 +298,7 @@ $('#search-archive-txt').keyup(function(){
 		  			}
 				}, //success
 				error : function() {
-			   		alert("에러가 발생했습니다.");
+					alert("통신 에러가 발생했습니다."); 
 			   	}
 			});
 		}
@@ -339,7 +339,7 @@ $('#search-hide-txt').keyup(function(){
 							$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //가리기탭에 동적 태그 삽입
 				  		}, //success
 				error : function() {
-			   		alert("에러가 발생했습니다.");
+					alert("통신 에러가 발생했습니다."); 
 			   	}
 	    	}); //ajax
 		}else{//카드리스트 검색한 경우
@@ -363,7 +363,7 @@ $('#search-hide-txt').keyup(function(){
 						$(".nav-tab-content-Box-hidden.hiddenCardlist").html(str); //가리기탭에 카드 삽입
 			  		}, //success
 				error : function() {
-			   		alert("에러가 발생했습니다.");
+					alert("통신 에러가 발생했습니다."); 
 			   	}
 	    	}); //ajax
 		}
@@ -459,7 +459,7 @@ function closeBoard(ps_id){
 			};//if
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };

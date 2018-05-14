@@ -22,8 +22,8 @@
 			, p.title p_title
 			, p.t_id
 			, t.name AS t_name
-		  , f.cnt_f_cid
-		  , r.cnt_r_cid
+		  	, f.cnt_f_cid
+		  	, r.cnt_r_cid
 		FROM linker.card AS c
 		LEFT JOIN (
 			SELECT * from linker.card AS a1
@@ -61,7 +61,15 @@
 		AND ( c.title LIKE CONCAT ('%', #{keyword}, '%')
 			  OR c.content LIKE CONCAT ('%', #{keyword}, '%')
 			)
-		ORDER BY c.cdate DESC
+		<if test='alignState == "d"'>
+			ORDER BY c.cdate DESC
+		</if>
+		<if test='alignState == "t"'>
+			ORDER BY c_title ASC
+		</if>
+		<if test='alignState == "n"'>
+			ORDER BY u.nickname ASC
+		</if>
 	</select>
 	
 	<!-- 보관함/휴지통 탭에서 카드검색 -->	

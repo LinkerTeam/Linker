@@ -15,7 +15,7 @@
 		<div class="error-text">
 			<P id="error">Error page</P>
 	<div class="logo_div">
-		<img class="error_img" src="../resources/image/error_img.png">
+		<img class="error_img" src="/resources/image/error_img.png">
 	</div>
 			<p class="error-page">죄송합니다! 문제가 발견되었습니다.
 			<ul>

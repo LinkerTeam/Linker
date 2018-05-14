@@ -104,9 +104,8 @@
           		       +"</ul>";
           		   $(parent).before(str);
           	   }
-   		},error : function() {
-          		alert('error');
-   				
+             },error : function() {
+            	 alert("통신 에러가 발생했습니다.");   				
    			}
           }); 
          closeProjectModal(); //모달창 닫기	
@@ -182,11 +181,11 @@
 						$('.member-list').append(str);
 					}
 				} else{
-					alert("통신오류");	
+					 alert("통신 에러가 발생했습니다."); 
 				}
 				
 			},error : function(){
-				alert("통신오류로인해 실패했습니다.");
+				 alert("통신 에러가 발생했습니다."); 
 			}
 		})//end ajax	
 	}	
@@ -221,11 +220,10 @@
 							//태그 깨꿋이 지우기
 				    		$('.main-favorite').html('');
 							//태그를 붙이기 위해서 하나만듬.
-							$('.main-favorite').html(complete);
-							
+							$('.main-favorite').html(complete);			
 				}
 			},error : function(){
-				alert("통신오류입니다.")
+				 alert("통신 에러가 발생했습니다."); 
 				
 			}
 		})// end ajax
@@ -266,7 +264,8 @@
 				success : function(data){
 					favoriteList();
 				},error : function(){
-					alert("통신 오류 입니다.");
+					//alert("에러가 발생했습니다.");
+					self.location = "errorPage";
 				}				
 		})//end ajax
 	}
@@ -300,7 +299,7 @@
 					
 					}
 				},error : function(){
-					alert("통신 오류입니다.");
+					 alert("통신 에러가 발생했습니다."); 
 				}
 		
 		}); //end ajax
@@ -320,7 +319,7 @@
 					
 				}
 			},error : function(){
-				alert("통신오류입니다.");
+				 alert("통신 에러가 발생했습니다."); 
 			}
 		})
 	}

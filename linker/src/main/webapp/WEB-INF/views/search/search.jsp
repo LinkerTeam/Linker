@@ -24,9 +24,9 @@
 			</div>
 
 			<div id="filter">		
-			<button class="filter" id="search-align-cdate" style='cursor:pointer;'>작성일자순</button>
-			<button class="filter" id="search-align-title" style='cursor:pointer;'>제목순 |</button>
-			<button class="filter" id="search-align-nickname" style='cursor:pointer;'>작성자순 |</button>
+			<button class="filter" id="search-align-cdate" style='cursor:pointer;'>작성일자순</button>&#124;
+			<button class="filter" id="search-align-title" style='cursor:pointer;'>제목순 </button>&#124;
+			<button class="filter" id="search-align-nickname" style='cursor:pointer;'>작성자순 </button>
 			</div>
 			<!-- 목록 -->
 			<div class="list-box-body">
@@ -42,7 +42,7 @@
 				</div>
 				<!-- 검색 내용 -->
 				<c:forEach items="${cardResult}" var="cardResult">
-					<div class="one-list-row" data-id="${cardResult.c_id}">
+					<div class="one-list-row" data-id="${cardResult.c_id}" data-keyword="${keyword}">
 						<div class="card-title">${cardResult.c_title}</div>
 						<c:choose>
 						<c:when test="${cardResult.content.length() == 0 || cardResult.content == null}">
@@ -74,4 +74,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 <script type="text/javascript" src="/resources/js/search/search.js"></script>
+<script>
+var keyword = $(".one-list-row").attr("data-keyword");//검색 정렬을 위해 keyword 출력
+</script>
 </html>

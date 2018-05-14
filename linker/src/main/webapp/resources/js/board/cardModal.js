@@ -183,7 +183,7 @@ function popCardTitleModify(){
 					$(".cardtitleLi[data-id='" + popCardId + "'] > #cardLink").text(titleModify); //수정사항 카드리스트에 적용
 			},
 			error : function() {
-				alert("에러가 발생했습니다.");
+				alert("통신 에러가 발생했습니다."); 
 			}
 		});//ajax
 	};//if
@@ -333,7 +333,7 @@ function contentSave(){
 			
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };
@@ -491,7 +491,7 @@ function cardStatusChange(id, ps_id, cl_id){
 			cardStatus(ps_id); //상태값에 맞게 카드모달창 형태 변경 
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };
