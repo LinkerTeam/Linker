@@ -15,7 +15,7 @@
 <title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-<link href="/resources/css/header.css?ver=111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/header.css" type="text/css" rel="stylesheet" />
 <!-- fontawesome -->
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
@@ -38,12 +38,13 @@
 	    
 	    <!--헤더 검색창-->
 	    <div class="header-search">
-	        <form>
-	            <input type="text" id="search" />
+	        <form action="/main/search" method="get">
+	            <input type="text" id="search" name="keyword" />
 	            <button type="submit"><span><i class="fas fa-search"></i></span></button>
 	        </form>
 	    </div>
 	</header>
+	
 </body>
 
 <script src="../../resources/js/jquery-3.3.1.min.js"></script>

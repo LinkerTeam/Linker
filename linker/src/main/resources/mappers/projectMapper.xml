@@ -42,7 +42,6 @@
 			<if test="ps_id != 0">ps_id = #{ps_id}</if>
 		</set>
 		WHERE id = #{id}
-		AND u_id = #{u_id}
 	</update>
 
 	<!-- 카드리스트에서 프로젝트 이름나오기 -->

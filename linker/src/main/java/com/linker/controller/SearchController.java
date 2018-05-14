@@ -3,7 +3,6 @@ package com.linker.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,8 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,8 +25,9 @@ import com.linker.domain.TeamVO;
 import com.linker.domain.UserVO;
 import com.linker.service.SearchService;
 
-/* 코드 작성자 : 김소영
- * 주석 작성자 : 김소영*/
+/*
+ * 작성자 : 김소영
+ */
 @Controller
 public class SearchController {
 
@@ -37,19 +37,61 @@ public class SearchController {
 	private SearchService searchService;
 	
 	//헤더에서 검색하기
-	@RequestMapping(value="/main/search/", method=RequestMethod.GET)
+	@RequestMapping(value="/main/search", method=RequestMethod.GET)
 	public String searchGET(@RequestParam ("keyword") String keyword, Model model,HttpSession session) throws Exception{	
-		 UserVO vo = (UserVO) session.getAttribute("login");
-		logger.info("search : " + keyword);
-		List<SearchVO> cardResult = searchService.searchCard(vo.getId(), keyword);
-		System.out.println(cardResult);
+		
+		String alignState = "d";
+		List<SearchVO> cardResult;
+		UserVO vo = (UserVO) session.getAttribute("login");
+		cardResult = searchService.searchCard(vo.getId(), keyword, alignState);
+		
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("cardResult",cardResult);
+		return "search/search";//jsp를 찾아서 들어감
+	}
+
+	//헤더에서 검색하기
+	@RequestMapping(value="/main/search/{keyword}&d", method=RequestMethod.GET)
+	public String searchAlignDGET(@PathVariable ("keyword") String keyword, Model model,HttpSession session) throws Exception{	
+		String alignState = "d";
+		List<SearchVO> cardResult;
+		UserVO vo = (UserVO) session.getAttribute("login");
+		cardResult = searchService.searchCard(vo.getId(), keyword, alignState);
+		
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("cardResult",cardResult);
+		return "search/search";//jsp를 찾아서 들어감
+	}
+
+	//헤더에서 검색하기
+	@RequestMapping(value="/main/search/{keyword}&t", method=RequestMethod.GET)
+	public String searchAlignTGET(@PathVariable ("keyword") String keyword, Model model,HttpSession session) throws Exception{	
+		String alignState = "t";
+		List<SearchVO> cardResult;
+		UserVO vo = (UserVO) session.getAttribute("login");
+		cardResult = searchService.searchCard(vo.getId(), keyword, alignState);
+		
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("cardResult",cardResult);
 		return "search/search";//jsp를 찾아서 들어감
 	}
 	
+	//헤더에서 검색하기
+		@RequestMapping(value="/main/search/{keyword}&n", method=RequestMethod.GET)
+		public String searchAlignNGET(@PathVariable ("keyword") String keyword, Model model,HttpSession session) throws Exception{	
+			String alignState = "n";
+			List<SearchVO> cardResult;
+			UserVO vo = (UserVO) session.getAttribute("login");
+			cardResult = searchService.searchCard(vo.getId(), keyword, alignState);
+
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("cardResult",cardResult);
+			return "search/search";//jsp를 찾아서 들어감
+		}
+		
 	//팀 리스트에서 멤버 검색하기
-	@ResponseBody  //view단이 없다. 데이터만 들어가있다.
-	@RequestMapping(value="/main/team/search/{keyword}", method=RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value="/main/team/search?{keyword}", method=RequestMethod.GET)
 	public ResponseEntity<List<TeamVO>> searchMemberGET(@PathVariable("keyword") String keyword, int u_id) throws Exception{
 		ResponseEntity<List<TeamVO>> entity = null;
 		try {

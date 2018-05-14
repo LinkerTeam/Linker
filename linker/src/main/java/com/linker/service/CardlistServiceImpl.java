@@ -6,7 +6,6 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
 import com.linker.domain.ReadCardlistVO;
 import com.linker.persistence.CardlistDAO;

@@ -12,7 +12,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <!-- css초기화 시트 -->
     <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-    <link href="/resources/css/login.css?ver=32" type="text/css" rel="stylesheet" />
+    <link href="/resources/css/login.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
     <div class="wrap">
@@ -111,7 +111,7 @@
                             <label for="email"> Password </label>
                             <input type="password" class="password" placeholder="Password" name="password" id="pw">
                             <a href="#0" class="hide-password" id="password2" >보이기</a>
-                            <div class="error-pw"><span class="password-confirm">비밀번호는 8자 이상 영문,숫자,특수문자를 함께 조합하여야 합니다.</span></div>
+                            <div class="error-pw"><span class="password-confirm">비밀번호는 8자 이상 영문, 숫자, 특수문자를 함께 조합하여야 합니다.</span></div>
                        
                             
                             <p class="fieldset agree">
@@ -149,5 +149,5 @@
 
 </body>
     <script src="../../../resources/js/user/login.js" type="text/javascript"></script>
-
+    
 </html>

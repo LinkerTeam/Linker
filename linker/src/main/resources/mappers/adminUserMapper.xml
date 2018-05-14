@@ -66,6 +66,7 @@
 		WHERE id = #{id}	
 	</update>
 	
+	<!-- 페이징 -->
 	<select id="listPage" resultType="AdminUserDTO">
 		SELECT
 			id
@@ -112,5 +113,13 @@
 		WHERE id > 0
 		ORDER BY id DESC
 		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<!-- 페이지 total count -->
+	<select id="countPaging" resultType="int">
+		SELECT
+			count(id)
+		FROM linker.user
+		WHERE id > 0
 	</select>
 </mapper>

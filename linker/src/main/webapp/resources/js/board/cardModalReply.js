@@ -26,24 +26,24 @@ function allReply(){
     			edit = "<p class='edited'>(수정됨)</p>";
     		};
 			if(ps_id === 1 && this.u_id === u_id){ //카드의 상태값이 1일 때, 본인이 쓴 댓글에만 출력됨
-				myReply = "<div class='replyBtn reply'>" +
-					   	  "    <button class='replyModifyBtn reply'>수정</button>" +
-					   	  "    <button class='replyDeleteBtn reply'>삭제</button>" +
-					   	  "</div>";
+				myReply = "<div class='replyBtn reply'>"
+					   	+ "    <button class='replyModifyBtn reply'>수정</button>"
+					   	+ "    <button class='replyDeleteBtn reply'>삭제</button>"
+					   	+ "</div>";
 			};
 			
 			var content = this.content.replace(/(\n|\r\n)/g, '<br>');
-			
-			str += "<div data-id='" + this.id + "' data-uid='" + this.u_id + "'class='replyArea'>" +
-				   "	<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate" + this.profile + "' />" +
-				   "	<div class='reply-commentArea'>" +
-				   "		<div class='reply-info'>" +
-				   "        	<p class='reply-nickname'>" + this.nickname + "</p>" +
-				   "        	<p class='reply-cdate'>" + this.cdate + "</p>" + edit + myReply +
-				   "		</div>" +
-				   "		<p class='reply-content'>" + content + "</p>" +
-				   "	</div>" +
-				   "</div>";
+	
+			str += "<div data-id='" + this.id + "' data-uid='" + this.u_id + "'class='replyArea'>"
+				 + "	<img src='https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate" + this.profile + "' />"
+				 + "	<div class='reply-commentArea'>"
+				 + "		<div class='reply-info'>"
+				 + "        	<p class='reply-nickname'>" + this.nickname + "</p>"
+				 + "        	<p class='reply-cdate'>" + this.cdate + "</p>" + edit + myReply
+				 + "		</div>"
+				 + "		<p class='reply-content'>" + content + "</p>"
+				 + "	</div>"
+				 + "</div>";
 		});
 		$(".activity-content").html(str);
 	});
@@ -106,7 +106,7 @@ $(".saveBtn.reply.create").click(function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 });
@@ -122,13 +122,13 @@ function modifyReplyCancel() {
 	    
 /* 수정 | 수정 버튼을 클릭할 경우 수정textarea 출력 */
 $(".activity-content").on("click", ".replyModifyBtn", function() {
-	var str = "<div class='replyModify-area'>" +
-			  "	   <textarea class='content-textarea reply modify'></textarea>" +
-			  "    <div class='comment-Btn'>" +
-        	  "        <button class='saveBtn reply modify'>저장</button>" +
-        	  "        <button class='cancelBtn reply'>&times;</button>" +
-              "    </div>" +
-              "</div>";
+	var str = "<div class='replyModify-area'>"
+			+ "	   <textarea class='content-textarea reply modify'></textarea>"
+			+ "    <div class='comment-Btn'>"
+        	+ "        <button class='saveBtn reply modify'>저장</button>"
+        	+ "        <button class='cancelBtn reply'>&times;</button>"
+            + "    </div>"
+            + "</div>";
 	$(this).parent().parent().parent().append(str); //동적 태그 생성하여 해당 댓글 div에 추가
 	
 	var modifyBeforContent = $(this).parents(".reply-info").next().html(); //원래 댓글 내용 꺼내서
@@ -174,7 +174,7 @@ $(".activity-content").on("click", ".saveBtn.reply.modify", function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 });
@@ -230,7 +230,7 @@ $(".closeBoardBtn.reply").click(function(){
 			};
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 });

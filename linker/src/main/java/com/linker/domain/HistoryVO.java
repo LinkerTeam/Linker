@@ -1,3 +1,6 @@
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.domain;
 
 import java.util.Date;
@@ -128,6 +131,5 @@ public class HistoryVO {
 				+ ", f_id=" + f_id + ", r_id=" + r_id + ", data_id=" + data_id + ", nickname=" + nickname + ", profile="
 				+ profile + ", cdate=" + cdate + "]";
 	}
-	
 	
 }

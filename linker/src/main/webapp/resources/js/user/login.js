@@ -1,6 +1,6 @@
 ﻿//모든 HTML 페이지 로드후 에 자바스크립트 시작  jquery는 $(document).ready(function(){ 내용 }) === $(function(){ 내용 });
 window.onload = function () {
-
+ 
     var button = document.getElementsByClassName('login_btn');
     var modal = document.getElementsByClassName('user-modal');
     var box = document.getElementsByClassName('user-modal-container');
@@ -129,13 +129,13 @@ var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
         var pw = document.getElementById('password').value;
    
             if(id == null  || id == "" ) {
-        	alert("아이디를 입력해주세요");
+        	alert("아이디를 입력해주세요.");
         	document.getElementById('email').focus();
             return false;
         } 
         	
         if(pw ==null|| pw == ""){
-        	alert("비밀번호를 입력하세요");
+        	alert("비밀번호를 입력하세요.");
         	document.getElementById('password').focus();
         	document.getElementById('password').value="";
         	return false;
@@ -143,14 +143,16 @@ var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
          //이메일 a@naver.com 형식  유효성 검사
 		if(exptext.test(id)==false){
+
 			//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
-			alert("이메일형식이 올바르지 않습니다.");
+			alert("이메일 형식이 올바르지 않습니다.");
 			document.getElementById('email').focus();
 			document.getElementById('email').value="";
 			return false;
 		}           
 	  		return true;      
     }
+
          
 //회원가입 유효성검사
 function signup_check() { 
@@ -161,9 +163,11 @@ function signup_check() {
 	var nickch =document.getElementById('checkMsg');
 	
 	if(nickname == null  || nickname == "" ) {
+
 			alert("닉네임을 입력해주세요");
 			document.getElementById('nickname').focus();
 			return false;
+
 	} 
 	if(!(nickname.length >=2 && nickname.length <16)){
 			alert("닉네임을 2글자 이상 입력해주세요");
@@ -172,15 +176,19 @@ function signup_check() {
 	}
 	
 	if(email2 == null || email2 =="" ){
+
 			alert("이메일을 입력해주세요");
 			document.getElementById('email2').focus();
 			return false;
+
 	}
 
 	//패스워드 특문 숫자 체크 정규식
 	if(pwcheck(password) == false){
-			alert("패스워드는 1개 이상 숫자와  특수문자가 필요합니다.");
+
+			alert("패스워드는 1개 이상 숫자와 특수문자가 필요합니다.");
 			return false;
+
 	}
 	
 	//비밀번호 자릿수 정하기 최소 8자리 이상 최대 16자리 이하
@@ -210,7 +218,7 @@ function signup_check() {
           
     //이메일 중복확인 안눌렀을떄
     if(document.getElementById("EmailcheckMsg").innerHTML==""){
-			alert("이메일 중복확인 해주세요");
+			alert("이메일 중복확인 해주세요.");
 			return false;
     }
     //이메일이 중복이 중복돼었을때 빨간색이면 중복이라고 나옴 
@@ -220,6 +228,7 @@ function signup_check() {
     }
     	return true;
 }
+
                  
 //비밀번호 찾기 이메일 검사 
 function forgetcheck(){
@@ -241,6 +250,7 @@ function forgetcheck(){
 //닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
 $('#checkbtn').on('click', function(){
    //POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
+
 	$.ajax({
 		type: 'POST',    // POST 방식
 		url: '/user/checkSignup',  //보내는 form action을 지정해줌
@@ -261,10 +271,9 @@ $('#checkbtn').on('click', function(){
         }
 	});    //end ajax    
 });    //end on
+
  
  // 이메일 중복검사
-   
-
 $('#emailcheck').on('click', function(){
 //POST 방식으로 FROM 보내기 작성 $.ajax형식으로 보내기
 	$.ajax({
@@ -285,6 +294,7 @@ $('#emailcheck').on('click', function(){
 		}	   	   
 	}); //end ajax
 }); // end 이벤트
+
    
  //패스워드에 숫자1개이상+특문 1개이상 체크
 function pwcheck(password){

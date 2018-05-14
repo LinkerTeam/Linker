@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.linker.domain.CardVO;
 import com.linker.domain.CardlistVO;
 import com.linker.domain.ReadCardlistVO;
 

@@ -9,17 +9,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LINKER 회원 관리</title>
 <!-- My CSS -->
-<link href="/resources/css/admin/adminUser.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/admin/adminUser.css" type="text/css" rel="stylesheet" />
 <!-- Bootstrap core CSS     -->
 <link href="/resources/css/admin/bootstrap.min.css" rel="stylesheet" />
 <!-- Animation library for notifications   -->
-<link href="/resources/css/admin/animate.min.css?ver=1" rel="stylesheet"/>
+<link href="/resources/css/admin/animate.min.css" rel="stylesheet"/>
 <!--  Paper Dashboard core CSS    -->
-<link href="/resources/css/admin/paper-dashboard.css?ver=1" rel="stylesheet"/>
+<link href="/resources/css/admin/paper-dashboard.css" rel="stylesheet"/>
 <!--  Fonts and icons -->
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-<link href="/resources/css/admin/themify-icons.css?ver=1" rel="stylesheet">
+<link href="/resources/css/admin/themify-icons.css" rel="stylesheet">
 </head>
  
 <body>
@@ -39,12 +39,12 @@
 			            <p>회원 관리</p>
 			        </a>
 			    </li>
-			    <li>
+			   <!--  <li>
 			        <a href="teamList">
 			            <i class="ti-view-list-alt"></i>
 			            <p>팀 관리</p>
 			        </a>
-			    </li>
+			    </li> -->
 			</ul>
 		</div>
 	</div>
@@ -98,7 +98,7 @@
 		                            </thead>
 		                            <tbody>
 		                                <c:forEach items="${userList}" var="user">
-											<tr onClick="location.href='/admin/readUser?id=${user.id}'" style="cursor:pointer;">
+											<tr onClick="location.href='/admin/readUser${pageMaker.makeQuery(pageMaker.cri.page)}&id=${user.id}'" style="cursor:pointer;">
 												<td onclick="event.cancelBubble = true;" style="cursor:default;"><!-- <input class="form-check-input" type="checkbox"> --></td>
 												<td>${user.email}</td>
 												<td>${user.nickname}</td>
@@ -111,7 +111,24 @@
 										</c:forEach>
 		                            </tbody>
 		                        </table>
-			
+								<!-- 페이징 -->
+								<div class="text-center">
+									<ul class="pagination">
+										<c:if test="${pageMaker.prev}">
+											<li><a href="userList${pageMaker.makeQuery(pageMaker.startPage - 1)}">&laquo;</a></li>
+										</c:if>
+										<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage }" var="idx">
+											<li
+											<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+												<a href="userList${pageMaker.makeQuery(idx)}">${idx}</a>
+											</li>
+										</c:forEach>
+										<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+											<li><a href="userList${pageMaker.makeQuery(pageMaker.endPage +1)}">&raquo;</a></li>
+										</c:if>
+									</ul>
+								</div>
+								<!-- /페이징 -->
 		                    </div>
 		                </div>
 		            </div>

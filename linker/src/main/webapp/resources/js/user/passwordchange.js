@@ -21,6 +21,7 @@
 	                	    alert("비밀번호가 변경되었습니다.");
 	        	    formObj.submit();}
 	          }else{
+
 	        	  alert("현재 비밀번호가 틀렸습니다 다시 입력해주세요");
 	          }
 	      },error:function(){
@@ -39,6 +40,7 @@ function passwordcheck(){
 	var password2 =document.getElementById('password2').value;
 
 	if(password0 == null || password0 ==''){
+
 		alert("비밀번호를 입력해주세요");
 		document.getElementById('password0').focus();
 		return false;
@@ -77,7 +79,7 @@ function passwordcheck(){
 	}
 	
 	if(password0 == password1){
-		alert("현재 비밀번호 와 새로 지정 할 비밀번호가 같습니다.")
+		alert("현재 비밀번호와 새로 지정할 비밀번호가 같습니다.")
 		return false;
     }
 		return true;

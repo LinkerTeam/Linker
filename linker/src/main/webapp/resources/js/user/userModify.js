@@ -5,7 +5,7 @@ var fileSize = 0;
 //console.log($('#file').val().slice(12));
 var orignalNick = document.getElementById('nickname').value;
 
-//유요성 검사 테스트
+//유효성 검사 테스트
 function subcheck() {
 	var nickname = document.getElementById('nickname').value;
 	//파일명 가져오기
@@ -14,12 +14,12 @@ function subcheck() {
 	//console.log(fileName);
 	
 	if (nickname == null || nickname == '') {
-		alert('닉네임이 비었습니다. 다시 확인 해주세요.');
+		alert('닉네임이 잘못되었습니다. 다시 확인 해주세요.');
 		document.getElementById('nickname').focus();
 		return false;
 	}
 	if (!(nickname.length >= 2 && nickname.length < 15)) {
-		alert('닉네임은 2자이상 16자이내에서 작성해주세요.');
+		alert('닉네임은 2자 이상 16자 이내로 입력해주세요.');
 		document.getElementById('nickname').focus();
 		return false;
 	}
@@ -34,7 +34,7 @@ function subcheck() {
 
 		//닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
 		if (document.getElementById("check").style.color === 'red') {
-			alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요.");
+			alert("닉네임이 중복되었습니다. 다른 닉네임을 입력해주세요.");
 			return false;
 		}
 	}
@@ -49,7 +49,7 @@ function subcheck() {
 		alert('이미지 용량이 너무 큽니다 이미지파일 용량을 다시 확인해주세요.');
 		return false;
 	}
-	alert("회원수정가 되었습니다.");
+	alert("회원 정보가 수정되었습니다.");
 	return true;
 }
 

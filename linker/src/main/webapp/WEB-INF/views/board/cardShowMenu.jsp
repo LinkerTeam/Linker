@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 <%-----------------------------------------------------------------------------
  * 파일명칭 : cardShowMenu.jsp	
@@ -16,7 +17,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <!-- CSS -->
-<link href="/resources/css/cards/cardShowMenu.css?ver=111111" type="text/css" rel="stylesheet" />
+<link href="/resources/css/cards/cardShowMenu.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -72,7 +73,7 @@
 									<button class="switchBtn-archive swhitchCardlist">카드 보관함으로</button><!-- 카드리스트일 때 출력 -->
 								</div>
 								<form class="tab-search-form">
-							        <input type="search" value="" placeholder="Search" class="tab-search-input">
+							        <input type="search" value="" id="search-archive-txt" placeholder="Search" class="tab-search-input">
 							        <button type="submit" class="tab-search-button"><i class="fas fa-search"></i></button>
 							    </form>
 							</div>
@@ -104,7 +105,7 @@
 									<button class="switchBtn-hidden swhitchCardlist">카드 휴지통으로</button><!-- 카드리스트일 때 출력 -->
 								</div>
 								<form class="tab-search-form">
-							        <input type="search" value="" placeholder="Search" class="tab-search-input">
+							        <input type="search" value="" id="search-hide-txt" placeholder="Search" class="tab-search-input">
 							        <button type="submit" class="tab-search-button"><i class="fas fa-search"></i></button>
 							    </form>
 							</div>
@@ -150,6 +151,6 @@
 </body>
 
 <script src="../../../resources/js/jquery-3.3.1.min.js"></script>
-<script src="../../../resources/js/board/cardShowMenu.js?ver=11" type="text/javascript"></script>
-	
+<script src="../../../resources/js/board/cardShowMenu.js" type="text/javascript"></script>
+
 </html>

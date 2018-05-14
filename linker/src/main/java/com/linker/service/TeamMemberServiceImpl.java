@@ -1,3 +1,6 @@
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.service;
 
 import java.io.UnsupportedEncodingException;
@@ -41,12 +44,14 @@ public class TeamMemberServiceImpl implements TeamMemberService{
       int result = 0;
       //회원인지 체크
       if(tmdao.checkUser(email)== 1) {
-         //팀원인지 체크
+         //이미 팀원인 경우
          if(tmdao.checkMember(email, t_id) == 0) {
             result =  1;
+         //팀원이 아닌 경우
          }else if(tmdao.checkMember(email, t_id) == 1){
             result = 0;
          }
+      //회원이 아닐 경우
       }else{
          result = -1;
       }
@@ -127,12 +132,6 @@ public class TeamMemberServiceImpl implements TeamMemberService{
       vo.setU_id(dto.getTransferU_id());
       vo.setAuth(0);
       tmdao.transferMemberAuth(vo);
-   }
-      
-   //멤버 권한 수정
-   @Override
-   public int modifyAuth(TeamMemberVO vo) throws Exception {
-      return tmdao.modifyMemberAuth(vo);
    }
 
    //멤버 인증상태코드 수정

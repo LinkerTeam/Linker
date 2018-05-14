@@ -23,7 +23,7 @@ var popCardlistId; //카드 상세내용 조회할 때 클릭한 카드의 카�
 var popCardPsId; //카드 상세내용 조회할 때 클릭한 카드의 ps_id값을 담을 변수
 var popCardContent; //카드 상세내용 조회할 때 클릭한 카드 내용을 담을 변수
 var popCardFavorite; //즐겨찾기
-
+var popCardUhcUID; //즐겨찾기 한 유저
 
 
 /*
@@ -53,7 +53,7 @@ function cardStatus(ps_id){
     	$(".comment").show(); //댓글 작성 보이기
     	$(".popCardMenu").show(); //메뉴버튼 보이기
     	$(".cardTitle > span").addClass("star");
-    	if(popCardFavorite === 1) //즐겨찾기된 경우
+    	if(popCardFavorite === 1 && popCardUhcUID === u_id) //즐겨찾기된 경우
 			$(".cardTitle > .star").html("<i class='fas fa-star'></i>"); //채워진 별 아이콘
 		else  //즐겨찾기가 아닌 경우
 			$(".cardTitle > .star").html("<i class='far fa-star'></i>"); //빈 별 아이콘
@@ -102,19 +102,14 @@ function loadCardData(obj) {
    	
    	modifyCardTitle = $(obj).children().eq(0); //클릭한 카드의 title표시하는 div를 전역변수에 담아둠(제목 수정 처리에 이용할 예정)
 	
-	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data){
+	$.getJSON("/board/" + p_id + "/card/" + popCardId, function(data) {
 		popCardPsId = data.ps_id; //클릭한 카드의 ps_id값 전역변수에 담아두기 	
 		popCardlistId = data.cl_id; //클릭한 카드의 카드리스트 id값 전역변수에 담아두기(send to board에 쓸 예정)
 		popCardFavorite = data.status; //즐겨찾기 여부
+		popCardUhcUID = data.uhc_u_id; //즐겨찾기 한 유저
 		
 		//DB에서 카드 id, 내용 가져오기(id는 화면에 표시하지 않는다.)
 		$(".card-id-Hidden").eq(0).html(data.id);
-		
-		if(popCardFavorite === 1) { //즐겨찾기된 경우
-			$(".cardTitle > span").html("<i class='fas fa-star'></i>"); //채워진 별 아이콘
-		} else { //즐겨찾기가 아닌 경우
-			$(".cardTitle > span").html("<i class='far fa-star'></i>"); //빈 별 아이콘
-		};
 		
 		$(".title-cardTitle input").val(data.title);//카드제목 수정input태그에 'value'값으로 넣는다
 			//.html로 담았다가 7시간 삽질함.
@@ -188,7 +183,7 @@ function popCardTitleModify(){
 					$(".cardtitleLi[data-id='" + popCardId + "'] > #cardLink").text(titleModify); //수정사항 카드리스트에 적용
 			},
 			error : function() {
-				alert("에러가 발생했습니다.");
+				alert("통신 에러가 발생했습니다."); 
 			}
 		});//ajax
 	};//if
@@ -338,7 +333,7 @@ function contentSave(){
 			
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };
@@ -395,6 +390,10 @@ function modifyDescriptionCancel() {
 
 /* 카드 보관/휴지통 | 보관탭에 삽입될 카드 태그 생성 */
 function createArchivedCard(id, cl_id, title, content, reply, file) {
+	if(content === undefined) content = 0;
+	if(reply === undefined) reply = 0;
+	if(file === undefined) file = 0;
+	
 	var str =  "<div class='nav-tab-content-Box-archive archive-cards'>"
 			+  "    <div data-id='" + id + "' data-clId='"  + cl_id + "' class='cardtitleLi tab-cards' onclick='loadCardData(this)'>"
 			+  "        <div id='cardLink'>" + title + "</div><div class='cardStatus'>";
@@ -417,6 +416,10 @@ function createArchivedCard(id, cl_id, title, content, reply, file) {
 
 /* 카드 보관/휴지통 | 휴지통탭에 삽입될 카드 태그 생성 */
 function createTrashboxCard(id, cl_id, title, content, reply, file) {
+	if(content === undefined) content = 0;
+	if(reply === undefined) reply = 0;
+	if(file === undefined) file = 0;
+	
 	var str =  "<div data-id='" + id + "' data-clId='"  + cl_id + "' class='cardtitleLi tab-cards' onclick='loadCardData(this)'>"
 			+  "    <div id='cardLink'>" + title + "</div><div class='cardStatus'>";
 	if(content === 1)
@@ -488,7 +491,7 @@ function cardStatusChange(id, ps_id, cl_id){
 			cardStatus(ps_id); //상태값에 맞게 카드모달창 형태 변경 
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };
@@ -544,10 +547,10 @@ $(".cardTitle").on("click", ".star", function(){
 	};
 });
 
-// 수성 송성은 
+// 수정 송성은 
 // 즐겨찾기 보드에서는 휴지통 가리기 메뉴 삭제
 if(p_id == 0 ){
-	
 	$('.popCardMenuIcon').hide();
 }
+	
 	

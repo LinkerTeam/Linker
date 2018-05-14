@@ -35,9 +35,6 @@ public class ProjectDAOImpl implements ProjectDAO {
 	// 프로젝트 상태 변경(가리기/완전숨기기) & title 변경
 	@Override
 	public void modifyProject(ProjectVO vo) throws Exception {
-
-		//System.out.println(vo.toString());
-
 		session.update(namespace + ".modifyProject", vo);
 	}
 

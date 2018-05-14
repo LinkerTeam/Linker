@@ -1,4 +1,6 @@
-
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.domain;
 
 import java.util.Date;
@@ -25,7 +27,16 @@ public class SearchVO {
 	private String p_title; //프로젝트 이름
 	private int t_id; //팀 아이디
 	private String t_name; //팀 이름
-	
+	private String alignState; //내용 정렬 기준 d:date, t:title, n:nickname
+
+	public String getAlignState() {
+		return alignState;
+	}
+
+	public void setAlignState(String alignState) {
+		this.alignState = alignState;
+	}
+
 	public int getC_id() {
 		return c_id;
 	}
@@ -151,8 +162,7 @@ public class SearchVO {
 		return "SearchVO [keyword=" + keyword + ", c_id=" + c_id + ", c_title=" + c_title + ", content=" + content
 				+ ", u_id=" + u_id + ", nickname=" + nickname + ", cnt_f_cid=" + cnt_f_cid + ", cnt_r_cid=" + cnt_r_cid
 				+ ", cdate=" + cdate + ", cl_id=" + cl_id + ", cl_title=" + cl_title + ", p_id=" + p_id + ", p_title="
-				+ p_title + ", t_id=" + t_id + ", t_name=" + t_name + "]";
+				+ p_title + ", t_id=" + t_id + ", t_name=" + t_name + ", alignState=" + alignState + "]";
 	}
-	
 	
 }

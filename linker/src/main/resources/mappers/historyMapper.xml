@@ -3,141 +3,142 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- 작성자 : 김소영 -->
+
 <mapper namespace="com.linker.mapper.historyMapper">
 
 	<!-- 팀 이력 조회 -->
 	<select id="historySelectTeam" resultType="HistoryVO">
-	<!-- SELECT
-		h.id
-		, code
-		, query
-		, h.cdate
-		, h.before
-		, after
-		, u_id
-		, u.nickname
-		, u.profile
-	FROM linker.history AS h
-	JOIN linker.user AS u ON h.u_id = u.id
-	 -->
+		SELECT
+			h.id
+			, code
+			, query
+			, h.cdate
+			, h.before
+			, after
+			, u_id
+			, u.nickname
+			, u.profile
+		FROM linker.history AS h
+		JOIN linker.user AS u ON h.u_id = u.id
 	</select>
 	
 	<!-- 팀을 생성했을 때  -->
 	<insert id="historyInsertTeamAdd">
-	INSERT INTO linker.history(code, query, after, u_id, data_id)
-	VALUES(0, 0, #{after}, #{u_id}, #{t_id})
+		INSERT INTO linker.history(code, query, after, u_id, data_id)
+		VALUES(0, 0, #{after}, #{u_id}, #{t_id})
 	</insert>
 	
 	<!-- 팀 생성 데이터를 출력할 때  : "u_id 님 이 t_id 팀을 생성하였습니다." -->
 	<select id="historySelectTeamAdd" resultType="HistoryVO">
-	SELECT
-		h.id
-		, code
-		, query
-		, h.cdate
-		, after
-		, u_id
-		, data_id
-		, u.nickname
-		, u.profile
-	FROM linker.history AS h
-	JOIN linker.user AS u ON h.u_id = u.id
-	WHERE code = 0 
-	AND query = 0
-	AND u_id = #{u_id}
-	AND data_id = #{t_id};
+		SELECT
+			h.id
+			, code
+			, query
+			, h.cdate
+			, after
+			, u_id
+			, data_id
+			, u.nickname
+			, u.profile
+		FROM linker.history AS h
+		JOIN linker.user AS u ON h.u_id = u.id
+		WHERE code = 0 
+		AND query = 0
+		AND u_id = #{u_id}
+		AND data_id = #{t_id}
 	</select>
 	
 	<!-- 팀을 삭제했을 때 : "u_id 님 이 t_id 팀을 삭제하였습니다." -->
 	<insert id="historyInsertTeamDelete" keyProperty="id" parameterType="TeamVO" useGeneratedKeys="true">
-	INSERT INTO linker.history(code, query, after, u_id, data_id)
-	VALUES(0, 2, #{after}, #{u_id}, #{t_id})
+		INSERT INTO linker.history(code, query, after, u_id, data_id)
+		VALUES(0, 2, #{after}, #{u_id}, #{t_id})
 	</insert>
 	
 	<!-- 팀 삭제 데이터를 출력할 때   : "u_id 님 이 t_id 팀을 삭제하였습니다." -->
 	<select id="historySelectTeamDelete" resultType="HistoryVO">
-	SELECT
-		h.id
-		, code
-		, query
-		, h.cdate
-		, after
-		, u_id
-		, u.nickname
-		, u.profile
-	FROM linker.history AS h
-	JOIN linker.user AS u ON h.u_id = u.id
-	WHERE h.id=#{t_id}
+		SELECT
+			h.id
+			, code
+			, query
+			, h.cdate
+			, after
+			, u_id
+			, u.nickname
+			, u.profile
+		FROM linker.history AS h
+		JOIN linker.user AS u ON h.u_id = u.id
+		WHERE h.id=#{t_id}
 	</select>
 	
 	<!-- 팀의 이름을 수정했을 때 -->
 	<insert id="historyInsertTeamModify" keyProperty="id" parameterType="TeamVO" useGeneratedKeys="true">
-	INSERT INTO linker.history(code, query, history.before, after, u_id, data_id)
-	VALUES(0, 1, #{before}, #{after}, #{u_id}, #{t_id})
+		INSERT INTO linker.history(code, query, history.before, after, u_id, data_id)
+		VALUES(0, 1, #{before}, #{after}, #{u_id}, #{t_id})
 	</insert>
 	
 	<!-- 팀 수정 데이터를 출력할 때  : " user 님이 before 팀의 이름의 이름을 after 로 수정하였습니다.." -->
 	<select id="historySelectTeamModify" resultType="HistoryVO" >
-	SELECT
-		h.id
-		, code
-		, query
-		, h.cdate
-		, h.before
-		, after
-		, u_id
-		, u.nickname
-		, u.profile
-	FROM linker.history AS h
-	JOIN linker.user AS u ON h.u_id = u.id
-	WHERE h.id=#{id}
+		SELECT
+			h.id
+			, code
+			, query
+			, h.cdate
+			, h.before
+			, after
+			, u_id
+			, u.nickname
+			, u.profile
+		FROM linker.history AS h
+		JOIN linker.user AS u ON h.u_id = u.id
+		WHERE h.id=#{id}
 	</select>
 	
 	<!-- 팀원이 추가되었을 때  -->
 	<insert id="historyInsertTeamMemberAdd"  keyProperty="id" parameterType="TeamMemberVO" useGeneratedKeys="true">
-	 INSERT INTO linker.history(code, query, after, u_id, data_id, t_id)
-	VALUES(1, 0, #{nickname}, #{u_id}, #{inviteU_id}, #{t_id})
+		INSERT INTO linker.history(code, query, after, u_id, data_id, t_id)
+		VALUES(1, 0, #{nickname}, #{u_id}, #{inviteU_id}, #{t_id})
 	</insert>
 	
 	<!-- 팀원 추가 데이터를 출력할 때 : "u_id 님 이 t_id 팀에 inviteNickname(inviteU_id)님을 팀원으로 추가하였습니다." -->
 	<select id="historySelectTeamMemberAdd" resultType="HistoryVO">
-	SELECT
-		h.id
-		, code
-		, query
-		, h.cdate
-		, h.before
-		, after
-		, u_id
-		, u.nickname
-		, u.profile
-		, h.t_id
-	FROM linker.history AS h
-	JOIN linker.user AS u ON h.u_id = u.id
-	WHERE h.id=#{id}
+		SELECT
+			h.id
+			, code
+			, query
+			, h.cdate
+			, h.before
+			, after
+			, u_id
+			, u.nickname
+			, u.profile
+			, h.t_id
+		FROM linker.history AS h
+		JOIN linker.user AS u ON h.u_id = u.id
+		WHERE h.id=#{id}
 	</select>
 	
 	<!-- 팀원이 탈퇴되었을 떄 -->
 	<insert id="historyInsertTeamMemberDelete"  keyProperty="id" parameterType="TeamMemberVO" useGeneratedKeys="true">
-	INSERT INTO linker.history(code, query, u_id, data_id, t_id)
-	VALUES(1, 2, #{nickname}, #{u_id}, #{leavU_id}, #{t_id})
+		INSERT INTO linker.history(code, query, u_id, data_id, t_id)
+		VALUES(1, 2, #{nickname}, #{u_id}, #{leavU_id}, #{t_id})
 	</insert>
 	
 	<!-- 팀원 탈퇴 데이터를 출력할 때 : "u_id 님 이 t_id 팀에서 탈퇴하였습니다." -->
 	<select id="historySelectTeamMemberDelete" resultType="HistoryVO">
-	SELECT
-		h.id
-		, code
-		, query
-		, h.cdate
-		, h.before
-		, after
-		, u_id
-		, u.nickname
-		, u.profile
-		, h.t_id
-	FROM linker.history AS h
-	JOIN linker.user AS u ON h.u_id = u.id
-	WHERE h.id=#{id}
+		SELECT
+			h.id
+			, code
+			, query
+			, h.cdate
+			, h.before
+			, after
+			, u_id
+			, u.nickname
+			, u.profile
+			, h.t_id
+		FROM linker.history AS h
+		JOIN linker.user AS u ON h.u_id = u.id
+		WHERE h.id=#{id}
 	</select>
 </mapper>

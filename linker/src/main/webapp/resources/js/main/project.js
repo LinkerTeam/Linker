@@ -108,6 +108,7 @@ function registProject(){
 		}); 
         	closeProjectModal(); //모달창 닫기	
 } 
+
     
 //팀프로젝트 모달창 띄우기
 $('.teaminsert-a').on("click", function(){  	
@@ -178,11 +179,11 @@ function memberlist(t_id){
 						$('.member-list').append(str);
 					}
 				} else{
-					alert("통신오류");	
+					 alert("통신 에러가 발생했습니다."); 
 				}
 				
 			},error : function(){
-				alert("통신오류로인해 실패했습니다.");
+				 alert("통신 에러가 발생했습니다."); 
 			}
 		})//end ajax	
 }	
@@ -217,11 +218,10 @@ function favoriteList(){
 							//태그 깨꿋이 지우기
 				    		$('.main-favorite').html('');
 							//태그를 붙이기 위해서 하나만듬.
-							$('.main-favorite').html(complete);
-							
+							$('.main-favorite').html(complete);			
 				}
 			},error : function(){
-				alert("통신오류입니다.")
+				 alert("통신 에러가 발생했습니다."); 
 				
 			}
 		})// end ajax
@@ -260,7 +260,8 @@ function favorites(){
 				success : function(data){
 					favoriteList();
 				},error : function(){
-					alert("통신 오류 입니다.");
+					//alert("에러가 발생했습니다.");
+					self.location = "errorPage";
 				}				
 		})//end ajax
 }
@@ -293,7 +294,7 @@ $(document).on("click",'.delete-favo',function(){
 					
 					}
 				},error : function(){
-					alert("통신 오류입니다.");
+					 alert("통신 에러가 발생했습니다."); 
 				}
 		
 		}); //end ajax
@@ -312,14 +313,15 @@ function fovalist(){
 					$('.hidden').remove();
 				}
 			},error : function(){
-				alert("통신오류입니다.");
+				 alert("통신 에러가 발생했습니다."); 
 			}
 		})
-}
 
+	}
 	
+//팀 추가 후 경고창과 함께 location.reload됨.
 $('.teambtn').on("click",function(){
-	event.preventDefault(); //기본 이벤트 제거
-	alert("팀이 생성되었습니다.");
-	$('.teamform').submit();
-});
+    event.preventDefault(); //기본 이벤트 제거
+		alert("팀이 생성되었습니다.");
+    $('.teamform').submit();
+});       

@@ -1,4 +1,7 @@
-﻿@charset "UTF-8";
+﻿/*
+ * 작성자 : 김소영
+ */
+@charset "UTF-8";
 
 /*사이드 컨텐트 + 팀목록 컨텐트 */
 .wrap-content{
@@ -186,6 +189,7 @@ div#list-content input[type=button], input[type=submit]{
     padding: 5px;
     margin : 10px;
 }
+/*input 요소 focus일 경우 파란색 아웃라인 생기는 경우*/
 input:focus, input[type="submit"]:focus, input[type="button"]:focus{
 	outline : none;
 }

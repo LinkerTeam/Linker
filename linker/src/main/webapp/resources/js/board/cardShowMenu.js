@@ -75,6 +75,7 @@ function openAside() {
         if (tabMenu[0].dataset.activenumber === undefined) {
         	tabMenu[0].dataset.activenumber = 0;
         	tabMenu[0].children[0].classList.add('active');
+        	readCardStatus(2);
         };
     } else { //클릭수가 짝수이면 숨기기
         boardAside.classList.remove('boardAside-open'); //클래스 이름 'boardAside-open' 제거
@@ -84,19 +85,19 @@ function openAside() {
 };
 	
 /* 탭버튼 제어 */
-var tabMenu = document.getElementsByClassName('nav-tabs'); //탭 메뉴
-for(var i = 0; i < tabMenu[0].childElementCount; i++){
+var tabMenu = document.getElementsByClassName("nav-tabs"); //탭 메뉴
+for(var i = 0; i < tabMenu[0].childElementCount; i++) {
 	tabMenu[0].children[i].addEventListener("click", function(){
 		
 		var clickedTabIndex = getElementIndex(this); //클릭한 탭 번호
 		var currentTabIndex = this.parentElement.dataset.activenumber; //현재 탭 변호
 		
-		//클릭한 탭이 현재 활성화 된 탭이 아닌 경우에만 탭의 내용 보여주기
+		//클릭한 탭이 현재 활성화 된 탭이 아니면 클릭한 탭의 내용 보여주기
 		if(currentTabIndex !== clickedTabIndex){
-	        tabMenu[0].children[currentTabIndex].classList.remove('active'); //현재 탭 비활성화
-		    this.classList.add('active'); //클릭한 탭 활성화
+	        tabMenu[0].children[currentTabIndex].classList.remove("active"); //현재 탭 비활성화
+		    this.classList.add("active"); //클릭한 탭 활성화
 		    this.parentElement.dataset.activenumber = clickedTabIndex; //클릭한 탭의 번호를 저장
-		}
+		};
 	});
 };
 	
@@ -144,7 +145,7 @@ function readCardStatus(ps_id){
 	  		};
 		}, //success
 		error : function() {
-	   		alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 	   	}
 	}); //ajax
 };
@@ -170,7 +171,7 @@ function readCardlistStatus(ps_id){
 	  		};
 		}, //success
 		error : function() {
-	   		alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 	   	}
 	}); //ajax
 };
@@ -240,7 +241,140 @@ $(".tab-content-box").on("click", ".return", function(){
 	//cardStatusChange(id, ps_id, cl_id, title); //상태변경에 대한 ajax처리 함수 호출
 });
 	
-	
+
+/* 달성탭에서 카드 검색한 경우 */
+$('#search-archive-txt').keyup(function(){
+	var ps_id = 2;
+	var keyword = $(this).val();
+	var searchArchiveBtn = $('.nav-tab-content-Box-archive.archiveCardlist').css("display");
+	if(keyword != ''){//입력한 글자가 null이 아닌경우
+		if(searchArchiveBtn == "none"){ //카드 검색한 경우
+			$.ajax({
+				type : "get",
+				url : "/board/" + p_id + "/searchCard/" + keyword,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				dataType : 'json',
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+				 	var str = "";
+				  		if(ps_id == 2){ //보관 카드리스트 조회
+							$(".nav-tab-content-Box-archive.archiveCard").html('');
+				  			for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 동적 카드리스트 태그 생성
+								str += createArchivedCard(data[i].id, data[i].cl_id, data[i].title);
+							}
+							$(".nav-tab-content-Box-archive.archiveCard").html(str); //보관탭에 동적 태그 삽입
+				  		}
+				}, //success
+				error : function() {
+					alert("통신 에러가 발생했습니다."); 
+			   	}
+			});
+		}else{//카드리스트 검색한 경우
+			$.ajax({
+    			type : "GET",
+    			headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				url : "/board/" + p_id + "/searchCardlist/" + keyword,
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+			 		var str = "";
+		  			if(ps_id == 2){ //달성 카드 조회
+		  				$(".nav-tab-content-Box-archive.archiveCardlist").html('');
+		  				for(var i = 0; i < data.length; i++){ //상태값이 2인 데이터들을 돌면서 카드 생성
+							str += createArchivedCardlist(data[i].id, data[i].title);
+						}
+						$(".nav-tab-content-Box-archive.archiveCardlist").html(str); //보관탭에 카드 삽입
+		  			}
+				}, //success
+				error : function() {
+					alert("통신 에러가 발생했습니다."); 
+			   	}
+			});
+		}
+	}else{//입력한 글자가 null인 경우
+		if(searchArchiveBtn == "none"){ //카드 검색한 경우 
+			readCardStatus(2);
+		}else{//카드리스트 검색한 경우
+			readCardlistStatus(2);
+		}
+	}
+}); 
+
+/* 가리기탭에서 카드 검색한 경우  */
+$('#search-hide-txt').keyup(function(){
+	var ps_id = 3;
+	var keyword = $(this).val();
+	var searchHideBtn = $('.nav-tab-content-Box-hidden.hiddenCardlist').css("display");
+	if(keyword != ''){
+		if(searchHideBtn == "none"){ //카드 검색한 경우 
+			$.ajax({
+				type : "get",
+				url : "/board/" + p_id + "/searchCard/" + keyword,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				dataType : 'json',
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+				 	var str = "";
+				  			$(".nav-tab-content-Box-hidden.hiddenCard").html('');
+				  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드리스트 태그 생성
+				  				str += createTrashboxCard(data[i].id, data[i].cl_id, data[i].title);
+							}
+							$(".nav-tab-content-Box-hidden.hiddenCard").html(str); //가리기탭에 동적 태그 삽입
+				  		}, //success
+				error : function() {
+					alert("통신 에러가 발생했습니다."); 
+			   	}
+	    	}); //ajax
+		}else{//카드리스트 검색한 경우
+			$.ajax({
+	    		type : "GET",
+	    		headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "GET"
+				},
+				url : "/board/" + p_id + "/searchCardlist/" + keyword,
+				contentType : 'text/javascript',
+				data :{
+					ps_id : ps_id
+				},
+				success : function(data){
+				 	var str = "";
+			  			$(".nav-tab-content-Box-hidden.hiddenCardlist").html('');
+			  			for(var i = 0; i < data.length; i++){ //상태값이 3인 데이터들을 돌면서 동적 카드 생성
+							str += createTrashboxCardlist(data[i].id, data[i].title);
+						}
+						$(".nav-tab-content-Box-hidden.hiddenCardlist").html(str); //가리기탭에 카드 삽입
+			  		}, //success
+				error : function() {
+					alert("통신 에러가 발생했습니다."); 
+			   	}
+	    	}); //ajax
+		}
+	}else{
+		if(searchHideBtn == "none"){ //카드 검색한 경우 
+			readCardStatus(3);
+		}else{//카드리스트 검색한 경우
+			readCardlistStatus(3);
+		}
+	}
+});	
 	
 /*
 * 프로젝트 닫기 관련
@@ -266,13 +400,13 @@ $(document).on("click", function(e){
 	
 /* 프로젝트 닫기 | 상태 2 - close화면에 대한 동적 태그 생성/삽입 */
 function closeBoardStr(){
-	var closeBoardStr = "<div class='content'>" +
-						"	<div class='closeBoardMessage'>" +
-						"		<div class='closeBoardTitle'>이 프로젝트는 종료되었습니다.</div>" +
-						"		<p class='boardReopen' onclick='closeBoard(1);'>다시 열기</p><br/>" +
-	    				"		<p class='boardDelete' onclick='closeBoard(3);'>삭제하기</p>" +
-						"	</div>" +
-						"</div>";
+	var closeBoardStr = "<div class='content'>"
+					  + "	<div class='closeBoardMessage'>"
+					  + "		<div class='closeBoardTitle'>이 프로젝트는 종료되었습니다.</div>"
+					  + "		<p class='boardReopen' onclick='closeBoard(1);'>다시 열기</p><br/>"
+		    		  + "		<p class='boardDelete' onclick='closeBoard(3);'>삭제하기</p>"
+					  + "	</div>"
+					  + "</div>";
 	//카드리스트 목록이 있는 content의 클래스이름을 hiddenContent로 바꿈으로써 화면에서 숨김(hiddenContent의 display속성: none)
 	$(".content").removeClass("content").addClass("hiddenContent");
 	$(".hiddenContent").before(closeBoardStr); //동적 태그 삽입
@@ -280,10 +414,10 @@ function closeBoardStr(){
 	
 /* 프로젝트 닫기 | 상태 3 - delete화면에 대한 동적 태그 생성/삽입 */
 function deleteBoardStr(){
-	var deleteBoardStr = "<div class='deleteBoardMessage'>" +
-						 "    <div class='deleteBoardTitle'>프로젝트가 영구적으로 삭제되었습니다.</div>" +
-						 "	  <p>이 프로젝트는 다시 열 수 없고 종료된 프로젝트 목록에서도 삭제됩니다.</p>" +
-						 "</div>";
+	var deleteBoardStr = "<div class='deleteBoardMessage'>"
+					   + "    <div class='deleteBoardTitle'>프로젝트가 영구적으로 삭제되었습니다.</div>"
+					   + "	  <p>이 프로젝트는 다시 열 수 없고 종료된 프로젝트 목록에서도 삭제됩니다.</p>"
+					   + "</div>";
 	$(".content").html(deleteBoardStr); //.content를 비우고 Board not found 띄움
 	$(".hiddenContent").remove(); //카드리스트 목록이 있는 hiddenContent는 완전 삭제
 };
@@ -325,7 +459,7 @@ function closeBoard(ps_id){
 			};//if
 		},
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});//ajax
 };
@@ -335,4 +469,3 @@ function closeBoard(ps_id){
 $(".closeBoardBtn").click(function(){
 	closeBoard(2); //프로젝트 상태변경 ajax 함수를 호출하여 프로젝트 상태값을 2로 변경하고 프로젝트 닫기화면 출력
 });
-

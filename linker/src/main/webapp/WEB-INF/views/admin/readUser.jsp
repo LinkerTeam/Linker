@@ -9,17 +9,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LINKER 회원 관리</title>
 <!-- My CSS -->
-<link href="/resources/css/admin/adminUser.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/admin/adminUser.css" type="text/css" rel="stylesheet" />
 <!-- Bootstrap core CSS     -->
 <link href="/resources/css/admin/bootstrap.min.css" rel="stylesheet" />
 <!-- Animation library for notifications   -->
-<link href="/resources/css/admin/animate.min.css?ver=1" rel="stylesheet"/>
+<link href="/resources/css/admin/animate.min.css" rel="stylesheet"/>
 <!--  Paper Dashboard core CSS    -->
-<link href="/resources/css/admin/paper-dashboard.css?ver=1" rel="stylesheet"/>
+<link href="/resources/css/admin/paper-dashboard.css" rel="stylesheet"/>
 <!--  Fonts and icons -->
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-<link href="/resources/css/admin/themify-icons.css?ver=1" rel="stylesheet">
+<link href="/resources/css/admin/themify-icons.css" rel="stylesheet">
 </head>
 
 <body>
@@ -148,30 +148,28 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <c:if test="${adminUserDTO.google=='일반'}">
-	                                    <div class="row">
-	                                        <div class="col-md-5">
-	                                            <div class="form-group">
-	                                                <label>비밀번호 변경</label>
-	                                                <input type="password" class="form-control border-input password" placeholder="Password">
-	                                            </div>
-	                                        </div>
-	                                        <div class="col-md-7">
-	                                            <p class="error password"></p>
+	                                <div class="row password">
+	                                    <div class="col-md-5">
+	                                        <div class="form-group">
+	                                            <label>비밀번호 변경</label>
+	                                            <input type="password" class="form-control border-input password" placeholder="Password">
 	                                        </div>
 	                                    </div>
-	                                    <div class="row">
-	                                        <div class="col-md-5">
-	                                            <div class="form-group">
-	                                                <label>비밀번호 재확인</label>
-	                                                <input type="password" class="form-control border-input password" name="password" placeholder="Password">
-	                                            </div>
-	                                        </div>
-	                                        <div class="col-md-7">
-	                                            <p class="error password"></p>
+	                                    <div class="col-md-7">
+	                                        <p class="error password"></p>
+	                                    </div>
+	                                </div>
+	                                <div class="row password">
+	                                    <div class="col-md-5">
+	                                        <div class="form-group">
+	                                            <label>비밀번호 재확인</label>
+	                                            <input type="password" class="form-control border-input password" name="password" placeholder="Password">
 	                                        </div>
 	                                    </div>
-                                    </c:if>
+	                                    <div class="col-md-7">
+	                                        <p class="error password"></p>
+	                                    </div>
+	                                </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -198,8 +196,10 @@
                                         <button type="submit" class="btn btn-info btn-fill btn-wd">수정</button>
 		                                <button type="button" class="btn btn-info btn-fill btn-wd">취소</button>
                                     </div>
+                                    <input type="hidden" name="page" value="${cri.page}">
+                                	<input type="hidden" name="perPageNum" value="${cri.perPageNum}">
                                 </form>
-                                    <div class="clearfix"></div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>

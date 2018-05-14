@@ -1,3 +1,6 @@
+/*
+ * 작성자 : 김소영
+ */
 package com.linker.persistence;
 
 import java.util.List;
@@ -107,12 +110,6 @@ public class TeamMemberDAOImpl implements TeamMemberDAO {
       return session.update(namespace + ".modifyMemberStatus", vo);
    }
 
-   // 멤버권한수정
-   @Override
-   public int modifyMemberAuth(TeamMemberVO vo) throws Exception {
-      return session.update(namespace + ".modifyMemberAuth", vo);
-   }
-   
    // 멤버삭제
    @Override
    public int deleteMember(int u_id, int t_id) throws Exception {

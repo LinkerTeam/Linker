@@ -59,7 +59,7 @@ function addFavorite(cardID) {
 			};
 		}, 
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	}); //ajax
 };
@@ -76,7 +76,7 @@ function deleteFavorite(cardID) {
 			};			
 		}, 
 		error : function() {
-			alert("에러가 발생했습니다.");
+			alert("통신 에러가 발생했습니다."); 
 		}
 	});
 };

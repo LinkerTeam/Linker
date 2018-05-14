@@ -55,7 +55,7 @@ function favoriteTeam(){
 			};
 			
 		}, error : function(){
-			alert("통신오류입니다.")
+			alert("통신 에러가 발생했습니다."); 
 		}
 	})
 	

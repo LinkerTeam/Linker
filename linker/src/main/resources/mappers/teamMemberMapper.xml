@@ -2,6 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+ <!-- 작성자 : 김소영 -->
  
 <mapper namespace="com.linker.mapper.teamMemberMapper">
 	<!-- 회원인지 아닌지 확인 / 결과=0 회원x, 결과=1 회원o -->
@@ -9,7 +11,7 @@
 		SELECT 
 			count(email)
 		FROM linker.user AS u
-		WHERE email= #{email};
+		WHERE email = #{email};
 	</select> 
 
 	<!-- 회원 메일 인증 상태가 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
@@ -17,8 +19,8 @@
 		SELECT 
 			count(email)
 		FROM linker.user AS u
-		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
-		WHERE email= #{email} AND t_id = #{t_id} AND thu.status = 0;
+		JOIN linker.team_has_user AS thu ON u.id = thu.u_id
+		WHERE email = #{email} AND t_id = #{t_id} AND thu.status = 0;
 	</select>
 	
 	<!-- 회원이 중복되었는지 확인 / 결과=0 중복x, 결과=1 중복o -->
@@ -26,26 +28,26 @@
 		SELECT 
 			count(email)
 		FROM linker.user AS u
-		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
-		WHERE email= #{email} AND t_id = #{t_id} AND thu.status = 1;
+		JOIN linker.team_has_user AS thu ON u.id = thu.u_id
+		WHERE email = #{email} AND t_id = #{t_id} AND thu.status = 1;
 	</select>
 	
 	<!-- 팀에 속하면서 인증상태가 1인 멤버만 출력 : 멤버리스트 출력 시 사용  / ※검색결과에 사용하지 않음-->
-     <select id="TeamHasUsers" resultType="TeamMemberVO">
-	SELECT 
-		thu.t_id
-		, thu.u_id
-		, u.nickname
-		, thu.auth
-		, u.email
-		, thu.status
-	FROM linker.team_has_user AS thu
-	JOIN linker.user  AS u ON id = thu.u_id
-	WHERE thu.status = 1 AND t_id=#{t_id};   
-   </select>
+    <select id="TeamHasUsers" resultType="TeamMemberVO">
+		SELECT 
+			thu.t_id
+			, thu.u_id
+			, u.nickname
+			, thu.auth
+			, u.email
+			, thu.status
+		FROM linker.team_has_user AS thu
+		JOIN linker.user  AS u ON id = thu.u_id
+		WHERE thu.status = 1 AND t_id = #{t_id};   
+   	</select>
 
-   <!-- email과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 이메일 인증 하이퍼링크를 누르면 실행/ emailConfirm-->
- 	 <select id="userHasTeamEmail" resultType="TeamMemberVO">
+  	<!-- email과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 이메일 인증 하이퍼링크를 누르면 실행/ emailConfirm-->
+ 	<select id="userHasTeamEmail" resultType="TeamMemberVO">
         SELECT 
         	thu.u_id
         	, nickname
@@ -53,13 +55,13 @@
         	, thu.t_id
         	, email
 		FROM linker.user AS u
-		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
-		JOIN linker.team AS t ON t.id=thu.t_id
-		WHERE email= #{email} AND t_id = #{t_id}
-     </select> 
+		JOIN linker.team_has_user AS thu ON u.id = thu.u_id
+		JOIN linker.team AS t ON t.id = thu.t_id
+		WHERE email = #{email} AND t_id = #{t_id}
+    </select> 
       
     <!-- 회원 아이디과 팀 아이디로 user가 속한 특정 팀의 정보를 가져옴/ 멤버 초대 창 열 때 필요 버튼을 누르면 Query 실행-->
- 	 <select id="userHasTeamUid" resultType="TeamMemberVO">
+ 	<select id="userHasTeamUid" resultType="TeamMemberVO">
          SELECT 
          	thu.u_id
          	, nickname
@@ -68,20 +70,20 @@
          	, thu.t_id
          	, email
 		FROM linker.user AS u
-		JOIN linker.team_has_user AS thu ON u.id=thu.u_id
-		JOIN linker.team AS t ON t.id=thu.t_id
-		WHERE u_id= #{u_id} AND t_id = #{t_id}
-     </select>  
+		JOIN linker.team_has_user AS thu ON u.id = thu.u_id
+		JOIN linker.team AS t ON t.id = thu.t_id
+		WHERE u_id = #{u_id} AND t_id = #{t_id}
+    </select>  
      
 	<!--email을 이용해서 userID정보를 가져옴/emailConfirm-->
- 	 <select id="userEmail" resultType="TeamMemberVO">
+ 	<select id="userEmail" resultType="TeamMemberVO">
         SELECT 
-        	id as u_id
+        	id AS u_id
         	, nickname
         	, email
 		FROM linker.user
-		WHERE email= #{email}
-     </select> 
+		WHERE email = #{email}
+    </select> 
       
 	<!-- member 생성/ auth defualt 값: 2, status default 값: 0 / 멤버추가하고 메일 인증하면 실행됨-->
 	<insert id="createMember">
@@ -98,29 +100,24 @@
 	<!-- member 추방/그 팀에서 권한이 0 또는 1인 user만 가능 -->
 	<delete id="deleteMember">
 		DELETE FROM linker.team_has_user
-		WHERE u_id=#{u_id}
-		AND t_id=#{t_id}
+		WHERE u_id = #{u_id}
+		AND t_id = #{t_id}
 	</delete>
 
-	<!-- member 수정(권한수정)/그 팀에서 권한이 0 또는 1인 user만 가능-->
-	<update id="modifyMemberAuth">
-		UPDATE linker.team_has_user
-		SET auth = #{auth}
-		WHERE u_id=#{u_id}
-		AND t_id=#{t_id}
-	</update>
-	
 	<!-- member 인증 상태코드 변경. default값은 0. 인증완료는 1. -->
 	<update id="modifyMemberStatus">
 		UPDATE linker.team_has_user
 		SET status = 1
-		WHERE u_id=#{u_id}
-		AND t_id=#{t_id}
+		WHERE u_id = #{u_id}
+		AND t_id = #{t_id}
 	</update>
 
 	<!-- 팀 멤버의 프로필사진 가져오기 -->
 	<select id="hasTeamProfile" resultType="UserVO">
-		SELECT nickname,profile,email
+		SELECT 
+			nickname
+			,profile
+			,email
 		FROM linker.user
 		JOIN linker.team_has_user ON team_has_user.u_id = user.id
 		WHERE team_has_user.t_id = #{t_id};

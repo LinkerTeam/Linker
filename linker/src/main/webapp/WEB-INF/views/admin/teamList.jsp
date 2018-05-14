@@ -9,17 +9,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>LINKER 팀 관리</title>
 <!-- My CSS -->
-<link href="/resources/css/admin/adminUser.css?ver=11" type="text/css" rel="stylesheet" />
+<link href="/resources/css/admin/adminUser.css" type="text/css" rel="stylesheet" />
 <!-- Bootstrap core CSS     -->
 <link href="/resources/css/admin/bootstrap.min.css" rel="stylesheet" />
 <!-- Animation library for notifications   -->
-<link href="/resources/css/admin/animate.min.css?ver=1" rel="stylesheet"/>
+<link href="/resources/css/admin/animate.min.css" rel="stylesheet"/>
 <!--  Paper Dashboard core CSS    -->
-<link href="/resources/css/admin/paper-dashboard.css?ver=1" rel="stylesheet"/>
+<link href="/resources/css/admin/paper-dashboard.css" rel="stylesheet"/>
 <!--  Fonts and icons -->
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-<link href="/resources/css/admin/themify-icons.css?ver=1" rel="stylesheet">
+<link href="/resources/css/admin/themify-icons.css" rel="stylesheet">
 </head>
  
 <body>
