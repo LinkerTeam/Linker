@@ -14,12 +14,12 @@ function subcheck() {
 	//console.log(fileName);
 	
 	if (nickname == null || nickname == '') {
-		alert('닉네임을 비울수 없습니다.');
+		alert('닉네임이 비었습니다. 다시 확인 해주세요.');
 		document.getElementById('nickname').focus();
 		return false;
 	}
 	if (!(nickname.length >= 2 && nickname.length < 15)) {
-		alert('닉네임은 2자이상 16자이내에서 작성해주세요');
+		alert('닉네임은 2자이상 16자이내에서 작성해주세요.');
 		document.getElementById('nickname').focus();
 		return false;
 	}
@@ -28,25 +28,25 @@ function subcheck() {
 	if (orignalNick != nickname) {
 		//닉네임 중복환인 안눌렀을떄
 		if (document.getElementById("checkMsg").innerHTML == "") {
-			alert("닉네임을 중복확인 해주세요");
+			alert("닉네임을 중복 확인 해주세요.");
 			return false;
 		}
 
 		//닉네임이 중복돼었을때 빨간색이면 중복이라고 나옴 
 		if (document.getElementById("check").style.color === 'red') {
-			alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요");
+			alert("닉네임이 중복되었습니다 다른 닉네임을 적어주세요.");
 			return false;
 		}
 	}
 	
 	//이미지 파일 명 길이 제한 
 	if(!(fileName.length < 200)){
-		alert("파일명이 너무 깁니다 이름을 변경후 다시 등록 해주세요.");
+		alert("이미지 파일명이 너무 깁니다 이름을 변경후 다시 등록 해주세요.");
 		return false;
 	}
 	//이미지 파일 사이즈  검사 1mb보다 큰지 작은지 체크
 	if(!(fileSize < (1*1024*1024))){
-		alert('이미지 용량이 너무 큽니다 이미지파일 용량을 확인해주세요.');
+		alert('이미지 용량이 너무 큽니다 이미지파일 용량을 다시 확인해주세요.');
 		return false;
 	}
 	alert("회원수정가 되었습니다.");
@@ -75,7 +75,7 @@ window.onload = function() {
 		var fileName2= fileValue2[fileValue2.length-1]; // 업로드한 파일명
 		//이미지 파일인지 체크함
 		if(!(checkImageType(fileName2))){
-			alert("이미지 파일이 아닙니다. 다시 확인 해주세요.");
+			alert("해당 파일은 이미지 파일이 아닙니다. 다시 확인 해주세요.");
 			return;
 		}
 		//console.log(fileName2);
@@ -99,9 +99,6 @@ window.onload = function() {
 		reader.readAsDataURL(file);
 		return false;
 	};
-	
-	function nameAndsizeCheck(){
-	}
 
 	//이미지 타입체크
 	function checkImageType(fileName) {
@@ -111,37 +108,39 @@ window.onload = function() {
 
 	//닉네임 중복검사 하는 매소드 버튼을 눌러서 중복확인검사
 	$('#checkbtn').on("click",function() {
-						//POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
-						$.ajax({
-								type : 'POST', // POST 방식
-								url : '/user/checkSignup', //보내는 form action을 지정해줌
-								data : {
-									"nickname" : $('#nickname').val()
-									// 데이터를 지정해줌 nickname의 값을 받아와서 nickname에 넣어줌 매개변수 request.getparameter("nickname")을 여기서 가져옴
-									},
-									headers : {
-										"X-HTTP-Method-Override" : "POST"
-									},
-									success : function(data) { //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
-										// 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
-										if ($.trim(data) == 0) {
-											$('#checkMsg').html('<p id="check" style="color:blue">사용가능한 닉네임입니다.</p>');
-										} else {
-											$('#checkMsg').html('<p id="check" style="color:red">사용불가능한 닉네임입니다.</p>');
-										}
-									}
-								}); //end ajax    
-					}); //end on
+		//POST 형식으로 FORM 보내기 작성 $.ajax형식으로 보내기
+		$.ajax({
+			type : 'POST', // POST 방식
+			url : '/user/checkSignup', //보내는 form action을 지정해줌
+			data : {
+					// 데이터를 지정해줌 nickname의 값을 받아와서 nickname에 넣어줌 매개변수 request.getparameter("nickname")을 여기서 가져옴
+					"nickname" : $('#nickname').val()
+			},
+			headers : {
+						"X-HTTP-Method-Override" : "POST"
+			},success : function(data) { //요청을 성공시에 함수를 실행함 data는 스프링에서 값을 받아옴
+					// 0이면 닉네임중복아니고 0이외에 숫자는 모두 중복임 닉네임은 유니크값이라 1개라도 나오면 닉네임 존재한다는 얘기
+					if ($.trim(data) == 0) {
+						$('#checkMsg').html('<p id="check" style="color:blue">사용 가능한 닉네임입니다.</p>');
+					} else {
+						$('#checkMsg').html('<p id="check" style="color:red">사용 불가능한 닉네임입니다.</p>');
+					}
+			},
+			error:function(){
+				alert("통신 에러가 발생했습니다.");
+			}	   	  
+		}); //end ajax    
+	}); //end on
 	
-		//이미지 체크 매개변수에 값을넣어서 맞으면 true 틀리면 false를 반환함 if()에 사용 
+	//이미지 체크 매개변수에 값을넣어서 맞으면 true 틀리면 false를 반환함 if()에 사용 
 	function checkImageType(fileName) {
 			// i는 대.소 문자의 구분없음
 			var pattern = /jpg$|gif$|png$|jpeg$/i;
 			return fileName.match(pattern);
-		}
+	}
 		
 	$('#btnDelete').on("click",function(){
-			history.go(-1);
+		history.go(-1);
 	});	
 	
 	$('.delete-profile').on("click",function(){
@@ -150,10 +149,12 @@ window.onload = function() {
 			type :"GET",
 			url : "/user/deleteProfile",
 			success : function(data){
-				//console.log(data);
 				$('.profile').attr("src","https://s3.ap-northeast-2.amazonaws.com/linkers104/linker/certificate/default.gif");
-			}
-		})
+			},
+			error:function(){
+				alert("통신 에러가 발생했습니다.");
+			}	   	  
+		}) //end ajax
 	})
 	
 } // end window.onload

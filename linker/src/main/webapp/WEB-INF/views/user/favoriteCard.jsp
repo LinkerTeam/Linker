@@ -39,7 +39,9 @@ var u_id = ${login.id};
 			</div>
         </div>
 			<!-- 카드팝업 jsp -->
-	<%@include file="../board/cardModal.jsp"%>
+			
+		<%@include file="../board/cardModal.jsp"%>
+	</div>
 </body>
 
 <script src="../../../resources/js/user/favoriteCard.js" type="text/javascript"></script>
