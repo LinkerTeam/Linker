@@ -30,7 +30,7 @@
 						<a class="tid">${teamList.t_id}</a> <a class="uid">${teamList.u_id}</a>
 						<a class="memberbtn">팀멤버</a>
 					</div>
-
+ 
 					<!-- 진행 프로젝트 목록 -->
 					<c:forEach items="${result}" var="projectList">
 						<!-- 팀의 id와 프로젝트의 t_id가 같은경우에만 출력  -->
