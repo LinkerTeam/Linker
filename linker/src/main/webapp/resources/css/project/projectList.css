@@ -474,3 +474,6 @@ input#agree:focus {
 	background-color: #D6DADC;
 	color: #4D4D4D;
 }
+.wrapper{
+	min-height: 90%;
+}
