@@ -91,7 +91,7 @@ public class SearchController {
 		
 	//팀 리스트에서 멤버 검색하기
 	@ResponseBody
-	@RequestMapping(value="/main/team/search?{keyword}", method=RequestMethod.GET)
+	@RequestMapping(value="/main/team/search/{keyword}", method=RequestMethod.GET)
 	public ResponseEntity<List<TeamVO>> searchMemberGET(@PathVariable("keyword") String keyword, int u_id) throws Exception{
 		ResponseEntity<List<TeamVO>> entity = null;
 		try {
