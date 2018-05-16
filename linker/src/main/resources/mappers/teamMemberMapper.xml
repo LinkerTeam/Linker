@@ -103,7 +103,15 @@
 		WHERE u_id = #{u_id}
 		AND t_id = #{t_id}
 	</delete>
-
+	
+	<!-- member 수정(권한수정)/그 팀에서 권한이 0 또는 1인 user만 가능-->
+	<update id="modifyMemberAuth">
+		UPDATE linker.team_has_user
+		SET auth = #{auth}
+		WHERE u_id = #{u_id}
+		AND t_id = #{t_id}
+	</update>
+	
 	<!-- member 인증 상태코드 변경. default값은 0. 인증완료는 1. -->
 	<update id="modifyMemberStatus">
 		UPDATE linker.team_has_user
