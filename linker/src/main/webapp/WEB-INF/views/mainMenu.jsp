@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/mainMenu.css" type="text/css" rel="stylesheet" />
 </head>
@@ -31,19 +31,19 @@
 		<!--메뉴-->
 		<div class="my-aside-menu">
 			<div class="setting-menu team-modify">
-				<a href="http://localhost:9090/main/team">팀 정보 수정</a>
+				<a href="http://linker.zz.am/main/team">팀 정보 수정</a>
 			</div>
 			<div class="setting-menu board-status-modify">
 				<a href="#" class="closeBoardList">종료된 프로젝트 관리</a>
 			</div>
 			<div class="setting-menu user-modify">
-				<a href="http://localhost:9090/user/userModify">회원정보수정</a>
+				<a href="http://linker.zz.am/user/userModify">회원정보수정</a>
 			</div>
 			<div class="setting-menu pwd-modify">
-				<a href="http://localhost:9090/user/passwordchange">비밀번호변경</a>
+				<a href="http://linker.zz.am/user/passwordchange">비밀번호변경</a>
 			</div>
 			<div class="setting-menu logout">
-				<a href="http://localhost:9090/user/logout" class="logoutBtn">로그아웃</a>
+				<a href="http://linker.zz.am/user/logout" class="logoutBtn">로그아웃</a>
 			</div>
 		</div>
 	</aside>

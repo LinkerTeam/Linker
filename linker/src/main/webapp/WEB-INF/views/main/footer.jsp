@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/project/footer.css" type="text/css" rel="stylesheet" />
 </head>
@@ -20,8 +20,8 @@
 	<footer class="footer">
 		<div class="footer-link">
 			<ul>
-				<li><a href="http://localhost:9090/board/1/36">LINKER 사용법</a></li>
-				<li><span class="block"></span><a href="http://localhost:9090/board/adminBoard">개발일지</a></li>
+				<li><a href="http://linker.zz.am/board/1/36">LINKER 사용법</a></li>
+				<li><span class="block"></span><a href="http://linker.zz.am/board/adminBoard">개발일지</a></li>
 			</ul>
 		</div>
 		<div class="copyright">

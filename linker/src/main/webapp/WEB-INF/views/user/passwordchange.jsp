@@ -7,7 +7,7 @@
 <link href="/resources/css/user/passwordchange.css" type="text/css" rel="stylesheet" /> 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-<title>회원 비밀번호 수정</title>
+<title>LINKER</title>
 </head>
 <body>
    <%@include file="../header.jsp"%>

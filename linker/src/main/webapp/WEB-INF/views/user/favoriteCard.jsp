@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <link href="/resources/css/user/favoriteCard.css" type="text/css" rel="stylesheet" />
-<title>LINKER FAVORITECARD</title>
+<title>LINKER</title>
 </head>
 <script type="text/javascript">
 var p_id = 0;

@@ -24,31 +24,8 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
+		return "redirect:/user/login";
 	}
 
-	@RequestMapping(value="/doA",method=RequestMethod.GET)
-	 public String doA(Locale locale,Model model) {
-		System.out.println("doA............");
-		return "home";
-				
-	}
-	
-	@RequestMapping(value="/doB",method=RequestMethod.GET)
-	 public String doB(Locale locale,Model model) {
-		System.out.println("doB............");
-		model.addAttribute("result","DOB RESULT");
-		return "home";
-				
-	}
 	
 }

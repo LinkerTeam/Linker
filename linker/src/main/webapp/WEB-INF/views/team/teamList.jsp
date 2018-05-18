@@ -5,13 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Linker</title>
+<title>LINKER</title>
 <link href="/resources/css/team/team.css?ver=222" type="text/css" rel="stylesheet" />
 <link href="/resources/css/common.css?ver=22" type="text/css" rel="stylesheet" />
 </head>
 <body>
 	<%@include file="../header.jsp"%>
-
+	<%@include file="../closeBoard.jsp"%>
 	<!-- content 시작 -->
 	<div class="content">
 		<!-- wrap-content 시작 -->

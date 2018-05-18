@@ -11,7 +11,7 @@ googlecheck();
 					if(data.length !== 0){
 						$('.content-list').html("");
 						for(var i = 0; i < data.length ; i++){
-							var str ="<div class='listbox'><div class='list-li'><a href='http://localhost:9090/board/"
+							var str ="<div class='listbox'><div class='list-li'><a href='http://linker.zz.am/board/"
 							+data[i].t_id+
 							"/"
 							+data[i].id+"'>"

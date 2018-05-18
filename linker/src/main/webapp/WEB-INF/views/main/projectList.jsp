@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/resources/css/project/projectList.css" type="text/css" rel="stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<title></title>
+<title>LINKER</title>
 
 </head>
 <body>
@@ -18,7 +18,7 @@
 
 	<div class="content">
 		<div class="wrapper">
-			<a href="http://localhost:9090/board/mycard" class="my-favo">즐겨찾기</a>
+			<a href="http://linker.zz.am/board/mycard" class="my-favo">즐겨찾기</a>
 			<!-- 즐겨찾기 목록  -->
 			<div class="main-favorite"></div>
 			<!-- Projects In a Team -->
@@ -39,7 +39,7 @@
 							<c:if test="${projectList.ps_id ==1}">
 								<ul class="projects">
 									<li><a
-										href="http://localhost:9090/board/${teamList.t_id}/${projectList.id}"
+										href="http://linker.zz.am/board/${teamList.t_id}/${projectList.id}"
 										class="pj-url""> <span class="name">${projectList.title}</span>
 											<!-- 즐겨찾기 상태 확인  1인경우 즐겨찾기 --> <c:choose>
 												<c:when test="${projectList.favorite == 0}">

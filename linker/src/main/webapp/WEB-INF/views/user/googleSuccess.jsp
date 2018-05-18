@@ -26,8 +26,8 @@ h3 {
 
 	self.location = '/main';
 </script>
-
 </head>
+<title>LINKER</title>
 <body>
 	<div style="background-color: #15a181; width: 100%; height: 50px; text-align: center; color: white;">
 		<h3>SIST Google_Login Success</h3>

@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>프로젝트화면</title>
+<title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/cards/cardTest.css" type="text/css" rel="stylesheet" />
 </head>

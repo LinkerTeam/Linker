@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Linker</title>
+<title>LINKER</title>
 <link href="/resources/css/search/search.css?ver=222" type="text/css" rel="stylesheet" />
 </head>
 <body>

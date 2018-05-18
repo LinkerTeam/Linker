@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Linker</title>
+<title>LINKER</title>
     <!-- css초기화 시트 -->
-    <link href="/resources/css/common.css" type="text/css" rel="stylesheet" />
-    <link href="/resources/css/errorPage.css?ver=32" type="text/css" rel="stylesheet" />
+    <link href="../../../resources/css/common.css" type="text/css" rel="stylesheet" />
+    <link href="../../../resources/css/errorPage.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>

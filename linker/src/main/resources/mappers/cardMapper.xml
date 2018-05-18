@@ -205,6 +205,7 @@
 					GROUP BY c_id) AS f ON c.id = f.c_id
 		WHERE uhc.u_id = #{u_id} 
 		AND uhc.p_id = #{p_id}
+		AND cl.ps_id = 1
 		AND c.ps_id = 1
 		ORDER BY uhc.cdate ASC
 	</select>
