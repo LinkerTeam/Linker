@@ -57,7 +57,7 @@ function memberAdd(){
 	var memberStr = "";
 	memberStr	+=	"<div class='side-menu'>"
 				+	"	<h5 class='title'> Member Add </h5>"
-				+	"	<input type='button' class='add-member-btn' id='add-member-btn' value='Add by Name or Email' style='cursor:pointer; width:200px;' />"
+				+	"	<input type='button' class='add-member-btn' id='add-member-btn' value='팀원 초대' style='cursor:pointer; width:200px;' />"
 				+	"</div>";
 	$('.member-list').children('.list-box-body').append(memberStr);
 	return memberStr;

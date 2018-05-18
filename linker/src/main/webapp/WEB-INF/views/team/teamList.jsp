@@ -33,7 +33,7 @@
 					<!-- 팀 추가 버튼  -->
 					<div class="title">
 						<input type="button" class="add-team" id="add-team-btn"
-							value="Add Team" style="width:150px;"/>
+							value="팀 추가" style="width:150px;"/>
 					</div>
 				</div>
 				<!-- 팀 목록 작은 컨텐트 -->
@@ -126,7 +126,7 @@
 				팀원 추가<hr/>
 				<p>새로운 사람을 초대 할 이메일 주소를 입력하십시오.</p>
 				Email: <input type="text" id="member-txt" name="member-txt" placeholder="e.g. linker@gmail.com"><br>
-				<input type="submit" id="member-modal-add-btn" value="Add To Team.." style="cursor:pointer; width:150px;"/>
+				<input type="submit" id="member-modal-add-btn" value="팀원 초대" style="cursor:pointer; width:150px;"/>
 				<input type="button" class="modal-cancle-btn" name="cancle" style='cursor:pointer;' value="취소" />
 			</div>
 		</div>
