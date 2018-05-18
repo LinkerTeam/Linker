@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="/resources/css/user/secessionUser.css" type="text/css" rel="stylesheet" /> 
-<title>로컬 회원 탈퇴페이지</title>
+<title>LINKER</title>
 </head>
 <body>
 	<%@include file="../header.jsp"%>

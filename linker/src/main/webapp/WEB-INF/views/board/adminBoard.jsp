@@ -12,7 +12,7 @@ pageEncoding="UTF-8"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LINKER 개발일지</title>
+<title>LINKER</title>
 <link href="/resources/css/cards/cardTest.css" type="text/css" rel="stylesheet" />
 </head>
 

@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>임시 회원정보처리</title>
+<title>LINKER</title>
 </head>
 <body>
-<a href="http://localhost:9090/user/logout">로그아웃</a>
+<a href="http://linker.zz.am/user/logout">로그아웃</a>
 
 
 

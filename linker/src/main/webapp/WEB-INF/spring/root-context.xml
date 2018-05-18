@@ -67,7 +67,7 @@
 	<!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
 	<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
 	  <property name="scope" value="https://www.googleapis.com/auth/plus.profile.emails.read" />
-	  <property name="redirectUri" value="http://localhost:9090/user/googlecallback" />
+	  <property name="redirectUri" value="http://linker.zz.am/user/googlecallback" />
 	</bean>
 
 	<tx:annotation-driven />

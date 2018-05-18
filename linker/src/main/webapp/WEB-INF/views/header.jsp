@@ -28,11 +28,11 @@
 	<header id="header">
 	    <!--로고부분-->
 	    <div class="header-background">
-	    	<a href="http://localhost:9090/main" class="logo-link">
+	    	<a href="http://linker.zz.am/main" class="logo-link">
 	        	<span class="logo-full"><img src="/resources/image/logo.png" width="100" /></span>
 	        </a>
 	        <c:if test="${login.status == 3}">
-	        	<a href="http://localhost:9090/admin/userList" class="admin"><i class="fas fa-cog"></i> 관리자 모드</a>
+	        	<a href="http://linker.zz.am/admin/userList" class="admin"><i class="fas fa-cog"></i> 관리자 모드</a>
 	        </c:if>
 		    <!--오른쪽메뉴 설정단추-->
 		    <span class="rtMenu-button" style="cursor:pointer">

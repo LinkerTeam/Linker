@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>LINKER</title>
 <!-- CSS -->
 <link href="/resources/css/cards/cardModal.css" type="text/css" rel="stylesheet" />
 </head>

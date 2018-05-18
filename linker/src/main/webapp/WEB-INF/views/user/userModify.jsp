@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="/resources/css/user/userModify.css" type="text/css" rel="stylesheet" /> 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<title>회원정보 상세 페이지</title>
+<title>LINKER</title>
 </head>
 <body>
 
@@ -72,7 +72,7 @@
 					</form>
 					<div class="secessionSpan">
 						Linker를 더 이상 이용하지 않는다면 <a
-							href="http://localhost:9090/user/secessionUser" class="secession">회원탈퇴
+							href="http://linker.zz.am/user/secessionUser" class="secession">회원탈퇴
 							바로가기▶</a>
 					</div>
 				</div>

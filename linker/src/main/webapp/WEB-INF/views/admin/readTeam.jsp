@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>LINKER 팀 관리</title>
+<title>LINKER</title>
 <!-- My CSS -->
 <link href="/resources/css/admin/adminUser.css" type="text/css" rel="stylesheet" />
 <!-- Bootstrap core CSS     -->
@@ -27,7 +27,7 @@
 	<div class="sidebar" data-background-color="white" data-active-color="danger">
 		<div class="sidebar-wrapper">
 			<div class="logo">
-			    <a href="http://localhost:9090/main" class="simple-text">LINKER</a>
+			    <a href="http://linker.zz.am/main" class="simple-text">LINKER</a>
 			</div>
 			
 			<ul class="nav">
